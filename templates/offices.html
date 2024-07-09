@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block title %}Home - Offices{% endblock %}
+
+{% block content %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='offices_style.css') }}">
+    <table id="main_table">
+        <tr>
+            <td>
+                <table style="border-bottom: 5px dashed grey;border-right: 5px dashed grey;">
+                    <tr><td></td><td><span class="kpi_bubble"></span></td><td><span class="kpi_bubble"></span></td><td>   </td></tr>
+                    <tr><td><span class="kpi_bubble"></span></td><td><span class="kpi_bubble"></span></td><td><span class="kpi_bubble"></span></td><td><span class="policies_bubble"></span></td></tr>
+                    <tr><td><span class="kpi_bubble"></span></td><td><span class="kpi_bubble"></span></td><td><span class="policies_bubble"></span></td><td><span class="policies_bubble"></span></td></tr>
+                    <tr><td></td><td><span class="policies_bubble"></span></td><td><span class="policies_bubble"></span></td><td><span class="main_bubble"></span></td></tr>
+                </table>
+            </td>
+            <td>
+                <table style="border-bottom: 5px dashed grey;">
+                    <tr><td></td><td><span class="kpi_bubble"></span></td><td><span class="kpi_bubble"></span></td></tr>
+                    <tr><td><span class="policies_bubble"></span></td><td><span class="kpi_bubble"></span></td><td><span class="kpi_bubble"></span></td><td><span class="kpi_bubble"></span></td></tr>
+                    <tr><td><span class="policies_bubble"></span></td><td><span class="policies_bubble"></span></td><td><span class="kpi_bubble"></span></td><td><span class="kpi_bubble"></span></td></tr>
+                    <tr><td><span class="main_bubble"></span></td><td><span class="policies_bubble"></span></td><td><span class="policies_bubble"></span></td><td></td></tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <table  style="border-right: 5px dashed grey;">
+                    <tr><td></td><td><span class="policies_bubble"></span></td><td><span class="policies_bubble"></span></td><td><span class="main_bubble"></span></td></tr>
+                    <tr><td><span class="kpi_bubble"></span></td><td><span class="kpi_bubble"></span></td><td><span class="policies_bubble"></span></td><td><span class="policies_bubble"></span></td></tr>
+                    <tr><td><span class="kpi_bubble"></span></td><td><span class="kpi_bubble"></span></td><td><span class="kpi_bubble"></span></td><td><span class="policies_bubble"></span></td></tr>
+                    <tr><td></td><td><span class="kpi_bubble"></span></td><td><span class="kpi_bubble"></span></td><td></td></tr>
+                </table>
+            </td>
+            <td>
+                <table>
+                    <tr><td><span class="main_bubble"></span></td><td><span class="policies_bubble"></span></td><td><span class="policies_bubble"></span></td><td></td></tr>
+                    <tr><td><span class="policies_bubble"></span></td><td><span class="policies_bubble"></span></td><td><span class="kpi_bubble"></span></td><td><span class="kpi_bubble"></span></td></tr>
+                    <tr><td><span class="policies_bubble"></span></td><td><span class="kpi_bubble"></span></td><td><span class="kpi_bubble"></span></td><td><span class="kpi_bubble"></span></td></tr>
+                    <tr><td></td><td><span class="kpi_bubble"></span></td><td><span class="kpi_bubble"></span></td><td></td></tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+{% endblock %}
