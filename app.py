@@ -2,16 +2,14 @@ from flask import Flask, render_template
 from datetime import datetime
 
 app = Flask(__name__)
+app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
 
 def get_date(): # return today's date
     return datetime.today().strftime('%d.%m.%Y')
 
 @app.route('/')
 def home():
-    return render_template('offices.html', today_date=get_date())
+    return render_template('offices.html', today_date=get_date(), number=3)
 
 if __name__ == '__main__':
     app.run(debug=True)
-
-
- 

@@ -5,37 +5,36 @@ body {
     padding: 0;
 }
 .header {
-    max-width: 80%;
+    max-width: 65%;
     margin: 10px auto;
     padding: 5px;
     background-color: rgb(255, 255, 255);
     border-bottom: 1.5px solid grey;
+    
 }
 
 .sidebar {
     height: 100%;
-    width: 20%;
+    width: 20vw;
     position: fixed;
     z-index: 1;
     top: 0;
     left: 0;
-    background-color: #F0F8FF;
-    overflow-x: hidden;
-    padding-top: 20px;
+    background-color: #d8d8d8;
+    overflow: hidden;
+    padding-top: 10px;
   }
   .site {
     margin-left: 20%;
   }
   .main{
-    width: 80%;
+    width: 60%;
     margin: 10px auto;
     padding: 5px;
     border: 1px solid #000;
-    min-height: 430px;
   }
   #main_table{
-    width: 80%;
-    height: 80%;
+    width: 60%;
   }
 
   p{
@@ -43,3 +42,10 @@ body {
     margin: 0;
   }
   
+  #menu_icon{
+    width: 60px;
+    height: 80px;
+    margin-left: 20px;
+    position: fixed;
+    z-index: 0;
+  }

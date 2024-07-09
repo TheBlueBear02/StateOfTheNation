@@ -1,20 +1,28 @@
 .header_table{
     width: 100%;
-    height: 50px; 
+    height: 5vh; 
     padding: 0;
-    margin: 0px;    
+    margin-top: 2vh;    
 }
 .header_info{
     color: rgb(103, 103, 103);
     padding: 0px;
-    font-size: 12px;
+    font-size: 14px;
     margin: 0;
-    font-weight: bold;
+    font-weight: 0;
     width: 100%;
-    display: flex; 
+    display: flex;
+    
 }
 .nav_table{
     direction: rtl;
     width: 100%;
-    height: 100%;
+    height: 80%;
+    margin: 0;
+    padding: 0;
+}
+p {
+    margin: 0;
+    padding: 0;
+    padding-right: 5px;
 }
