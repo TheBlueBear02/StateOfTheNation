@@ -1,14 +1,12 @@
 #main_table{
     width: 100%;
-    height: 80vh;
-    border: 1px static black;
+    height: 95%;
     border-collapse: collapse;
     line-height: 30px;
     padding: 0;
     margin: 0;
 }
 table{
-    border: 1px static black;
     width: 100%;
     height: 100%;
     padding: 0;
@@ -21,8 +19,8 @@ tr, td{
 }
 .kpi_bubble{
     margin-left: 25%;
-    height: 3vw;
-    width: 3vw;
+    height: 6vw;
+    width: 6vw;
     background-color: #1f7fed;
     border-radius: 50%;
     display: inline-block;
@@ -30,15 +28,21 @@ tr, td{
     box-shadow: 0px 3px 3px .1em rgb(201, 201, 201);
   }
 .kpi_bubble:hover{
-    height: 3.1vw;
-    width: 3.1vw;
+    height: 6vw;
+    width: 6vw;
     background-color:  #56a2fa;
     margin-left: 25%;
 }
+.kpi_icon{
+    width: 4vw;
+    display: block;
+    margin: auto;
+    margin-top: 30%;
+}
 .policies_bubble{
     margin-left: 25%;
-    height: 2.5vw;
-    width: 2.5vw;
+    height: 4.5vw;
+    width: 4.5vw;
     background-color: rgb(204, 204, 204);
     border-radius: 50%;
     display: inline-block;
@@ -46,27 +50,34 @@ tr, td{
     box-shadow: 0px 3px 3px .1em rgb(218, 218, 218);
 }
 .policies_bubble:hover{
-    height: 2.6vw;
-    width: 2.6vw;
+    height: 4.6vw;
+    width: 4.6vw;
     background-color:  rgb(221, 221, 221);
     margin-left: 25%;
 }
+.policies_icon{
+    width: 3vw;
+    display: block;
+    margin: auto;
+    margin-top: 30%;
+}
 
 .main_bubble{
-    margin-left: 20%;
-    height: 4vw;
-    width: 4vw;
+    height: 7vw;
+    width: 7vw;
     background-color: grey;
     border-radius: 50%;
     display: inline-block;
     cursor: pointer;
     box-shadow: 0px 3px 3px .1em rgb(201, 201, 201);
-
+    display: block;
+    margin: auto;
 }
 .main_bubble:hover{
-    width: 4.1vw;
-    height: 4.1vw;
-    margin-left: 20%;
+    width: 7.1vw;
+    height: 7.1vw;
+    display: block;
+    margin: auto;
     background-color: rgb(155, 155, 155);
 
 }

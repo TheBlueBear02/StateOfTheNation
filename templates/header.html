@@ -1,3 +1,4 @@
+
 <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='header_style.css') }}">
 
 <table class="header_table">
@@ -8,17 +9,30 @@
                     <td class="header_info"><p>ממשלת ישראל ה37 | הכנסת ה25</p></td>
                 </tr>
                 <tr>
-                    <td class="header_info"><p> ט' בניסן ה' תשפ"ג  </p><p> | {{today_date}}</p></td>
+                    <td class="header_info"><p> ט' בניסן התשפ"ג  </p><p> | {{today_date}}</p></td>
                 </tr>
             </table>
         </td>
         <td style="width: 50%;">
-            <table id="nav_table">
-                <td></td>
-                <td></td>
-                <td></td>
+            <table style="float: right; width: 30%;margin-right: 5px;" id="nav_table">
+                <th><a href="#"><img class="nav_icon" src="/static/images/elections_icon.png" ></a></th>
+                <th><div class="line"><a href="#"><img class="nav_icon" src="/static/images/shekel_icon.png" ></a></div></th>
+                <th><a onclick="change_view(1)" href="#"><img class="nav_icon" src="/static/images/people_icon.png" ></a></th>
+
             </table>
         </td>
-        <td><img style="float: right;" src="/static/images/logo3.png" width="160vw"></td>
+        <td><a href="#" ><img onclick="change_view(0)" style=" float: right;" src="/static/images/logo3.png" width="160vw"></a></td>
     </tr>
 </table>    
+
+<script>
+    function change_view(id){
+
+        for(var i = 0; i <= 1; i++){
+            if(!document.getElementById(i).classList.contains('hidden'))
+                document.getElementById(i).classList.toggle('hidden');
+        }
+        document.getElementById(id).classList.toggle('hidden');
+
+    }
+</script>

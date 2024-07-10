@@ -1,21 +1,17 @@
-{% extends 'base.html' %}
 
-{% block title %}Home - Offices{% endblock %}
-
-{% block content %}
     <link rel="stylesheet" href="{{ url_for('static', filename='offices_style.css') }}">
     <table id="main_table">
         <tr>
             <td>
-                <table style="border-bottom: 10px dashed rgb(153, 153, 153);border-right: 10px dashed rgb(153, 153, 153)">
-                    <tr><td></td><td><span class="kpi_bubble" style=""></span></td><td><span class="kpi_bubble"></span></td><td>   </td></tr>
+                <table style="border-right: 12px solid; border-image-slice: 1; border-width: 4px;  border-image-source: linear-gradient(#ffffff, #858585);">
+                    <tr><td></td><td><span class="kpi_bubble"><img class="kpi_icon" src="/static/images/offices/white_glass_icon.png"></span></td><td><span class="kpi_bubble"></span></td><td>   </td></tr>
                     <tr><td><span class="kpi_bubble"></span></td><td><span class="kpi_bubble"></span></td><td><span class="kpi_bubble"></span></td><td><span class="policies_bubble"></span></td></tr>
                     <tr><td><span class="kpi_bubble"></span></td><td><span class="kpi_bubble"></span></td><td><span class="policies_bubble"></span></td><td><span class="policies_bubble"></span></td></tr>
-                    <tr><td></td><td><span class="policies_bubble"></span></td><td><span class="policies_bubble"></span></td><td><span class="main_bubble"></span></td></tr>
+                    <tr><td></td><td><span class="policies_bubble"><img class="policies_icon" src="/static/images/offices/grey_glass_icon.png"></span></td><td><span class="policies_bubble"></span></td><td><span class="main_bubble" style="background-image: url('/static/images/ministers/galant.jpg'); background-size: cover;"></span></td></tr>
                 </table>
             </td>
             <td>
-                <table style="border-bottom: 10px dashed rgb(153, 153, 153)">
+                <table style="border-bottom: 12px solid; border-image-slice: 1; border-width: 4px;  border-image-source: linear-gradient(to right, #858585, #ffffff);">
                     <tr><td></td><td><span class="kpi_bubble"></span></td><td><span class="kpi_bubble"></span></td></tr>
                     <tr><td><span class="policies_bubble"></span></td><td><span class="kpi_bubble"></span></td><td><span class="kpi_bubble"></span></td><td><span class="kpi_bubble"></span></td></tr>
                     <tr><td><span class="policies_bubble"></span></td><td><span class="policies_bubble"></span></td><td><span class="kpi_bubble"></span></td><td><span class="kpi_bubble"></span></td></tr>
@@ -25,7 +21,7 @@
         </tr>
         <tr>
             <td>
-                <table  style="border-right: 10px dashed rgb(153, 153, 153)">
+                <table  style="border-top: 12px solid; border-image-slice: 1; border-width: 4px;  border-image-source: linear-gradient(to left, #858585, #ffffff);">
                     <tr><td></td><td><span class="policies_bubble"></span></td><td><span class="policies_bubble"></span></td><td><span class="main_bubble"></span></td></tr>
                     <tr><td><span class="kpi_bubble"></span></td><td><span class="kpi_bubble"></span></td><td><span class="policies_bubble"></span></td><td><span class="policies_bubble"></span></td></tr>
                     <tr><td><span class="kpi_bubble"></span></td><td><span class="kpi_bubble"></span></td><td><span class="kpi_bubble"></span></td><td><span class="policies_bubble"></span></td></tr>
@@ -33,7 +29,7 @@
                 </table>
             </td>
             <td>
-                <table>
+                <table  style="border-left: 12px solid; border-image-slice: 1; border-width: 4px;  border-image-source: linear-gradient( #858585, #ffffff);">
                     <tr><td><span class="main_bubble"></span></td><td><span class="policies_bubble"></span></td><td><span class="policies_bubble"></span></td><td></td></tr>
                     <tr><td><span class="policies_bubble"></span></td><td><span class="policies_bubble"></span></td><td><span class="kpi_bubble"></span></td><td><span class="kpi_bubble"></span></td></tr>
                     <tr><td><span class="policies_bubble"></span></td><td><span class="kpi_bubble"></span></td><td><span class="kpi_bubble"></span></td><td><span class="kpi_bubble"></span></td></tr>
@@ -42,4 +38,3 @@
             </td>
         </tr>
     </table>
-{% endblock %}
