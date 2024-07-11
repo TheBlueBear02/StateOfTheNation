@@ -1,0 +1,23 @@
+<html>
+    <head>
+        <link rel="stylesheet" href="{{ url_for('static', filename='knesschat.css') }}">
+    </head>
+    <body>
+        <div id="knesschat_header"><img id="knesschat_logo" src="/static/images/knesschat_logo1.png"></div>
+        <div id="buttons_div">
+            <button class="filter_button" type="button">מלחמה</button>
+            <button class="filter_button" type="button">חוק הגיוס</button>
+            <button class="filter_button" type="button">חטופים</button>
+            <button class="filter_button" id="all_button" type="button">כל הציוצים</button>
+        </div>
+        <div id="chat_div">
+                <div id="oposition_bubble">
+                    <table id="oposition_table">
+                        <tr></tr>
+                        <tr></tr>
+                        <tr></tr>
+                    </table>
+            </div>
+        </div>
+    </body>
+</html>
