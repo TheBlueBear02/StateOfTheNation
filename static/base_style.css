@@ -1,4 +1,9 @@
+html {
+  touch-action: manipulation;
+  zoom: 100%;
+}
 body {
+
     font-family: Arial, sans-serif;
     background-color: #fff;
     margin: 0;

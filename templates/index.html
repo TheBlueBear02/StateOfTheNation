@@ -1,8 +1,12 @@
 {% extends 'base.html' %}
 {% block body %}
-<link rel="stylesheet" href="{{ url_for('static', filename='base_style.css') }}">
+<head>
+    <link rel="stylesheet" href="{{ url_for('static', filename='base_style.css') }}">
+</head>
+<body>
+    <iframe src="{{ url_for('offices') }}" class="iframe_main" id="0"></iframe>
+    <iframe src="{{ url_for('demography') }}" class="iframe_main hidden" id="1"></iframe>
+</body>
 
-<iframe src="{{ url_for('offices') }}" class="iframe_main" id="0"></iframe>
-<iframe src="{{ url_for('demography') }}" class="iframe_main hidden" id="1"></iframe>
 
 {% endblock %}
