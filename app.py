@@ -13,11 +13,11 @@ def index():
 
 @app.route('/offices')
 def offices():
-    return render_template('offices.html', today_date=get_date())
+    return render_template('offices.html')
 
 @app.route('/demography')
 def demography():
-    return render_template('demography.html', today_date=get_date())
+    return render_template('demography.html')
 
 if __name__ == '__main__':
     app.run(debug=True)

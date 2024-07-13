@@ -7,7 +7,7 @@
                     <tr><td></td><td><span class="kpi_bubble"><img class="kpi_icon" src="/static/images/offices/white_glass_icon.png"></span></td><td><span class="kpi_bubble"></span></td><td>   </td></tr>
                     <tr><td><span class="kpi_bubble"></span></td><td><span class="kpi_bubble"></span></td><td><span class="kpi_bubble"></span></td><td><span class="policies_bubble"></span></td></tr>
                     <tr><td><span class="kpi_bubble"></span></td><td><span class="kpi_bubble"></span></td><td><span class="policies_bubble"></span></td><td><span class="policies_bubble"></span></td></tr>
-                    <tr><td></td><td><span class="policies_bubble"><img class="policies_icon" src="/static/images/offices/grey_glass_icon.png"></span></td><td><span class="policies_bubble"></span></td><td><span class="main_bubble" style="background-image: url('/static/images/ministers/galant.jpg'); background-size: cover;"></span></td></tr>
+                    <tr><td></td><td><span class="policies_bubble"><img class="policies_icon" src="/static/images/offices/grey_glass_icon.png"></span></td><td><span class="policies_bubble"></span></td><td><span class="main_bubble" style="background-image: url('/static/images/KMs/galant.jpg'); background-size: cover;"></span></td></tr>
                 </table>
             </td>
             <td>
@@ -38,3 +38,78 @@
             </td>
         </tr>
     </table>
+
+
+<dialog data-modal class="kpi_modal">
+    <button close_modal onclick="close_moadal()" id="close_button" >X</button>
+
+    <table style="width: 100%; margin: 0px; padding: 0px;height: 10%;">
+        <tr style="height: 50px;">
+            <th>
+            </th>
+            <th style="width: 45%;">
+               
+            </th>
+            <th style="float: right;">
+                <div style="border-bottom: 2px solid #4890FD;"><p style="font-size: 34px; padding: 0; margin: 0;">המשרד לביטחון לאומי</h1></div>
+                <p style="float: right; margin: 0;padding: 0; font-size: 24px;">מספר פיגועים בחודש</h5>
+            </th>
+            <th>
+                <span style="
+                height: 6vw;
+                width: 6vw;
+                background-color: #4890FD;
+                border-radius: 50%;
+                float: left;
+                "></span>
+
+            </th>
+        </tr>
+        <tr>
+            <table style="height: 60%; text-align: right;">
+                <tr>
+                    <th style="">
+                        <div id="graph_div">
+                        </div>
+                    </th>
+                    <th style="width: 20%; float: right; direction: rtl; ">
+                        <p style="direction: rtl; font-size: 22px; float: right;margin-right: 30px;">מספר הפיגועים בישראל בכל חודש בישראל ויהודה ושומרון. 
+                            המספר מציג את כלל הפיגועים עם נפגעים וללא נפגעים.</p>
+                    </th>
+                </tr>
+            </table>
+        </tr>
+        <tr>
+
+        </tr>
+    </table>
+
+
+</dialog>
+
+
+<script>
+const kpi_modal = document.querySelector("[data-modal]")
+const closeB = document.querySelector("[close_modal]")
+
+
+    function close_moadal(){
+        kpi_modal.close()
+    }
+
+
+    document.body.onclick = function(e) {   //when the document body is clicked
+    if (window.event) {
+        e = event.srcElement;           //assign the element clicked to e (IE 6-8)
+    }
+    else {
+        e = e.target;                   //assign the element clicked to e
+    }
+
+    if (e.className && e.className.indexOf('kpi_bubble') != -1) {
+        //if the element has a class name, and that is 'someclass' then...
+        kpi_modal.showModal()
+    }
+
+}
+</script>
