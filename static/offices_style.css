@@ -21,6 +21,50 @@ tr, td{
     padding: 0;
     margin: 0;
 }
+@keyframes myAnim {
+	0% {
+		animation-timing-function: ease-in;
+		opacity: 0;
+		transform: scale(0);
+	}
+
+	38% {
+		animation-timing-function: ease-out;
+		opacity: 1;
+		transform: scale(1);
+	}
+
+	55% {
+		animation-timing-function: ease-in;
+		transform: scale(0.7);
+	}
+
+	72% {
+		animation-timing-function: ease-out;
+		transform: scale(1);
+	}
+
+	81% {
+		animation-timing-function: ease-in;
+		transform: scale(0.84);
+	}
+
+	89% {
+		animation-timing-function: ease-out;
+		transform: scale(1);
+	}
+
+	95% {
+		animation-timing-function: ease-in;
+		transform: scale(0.95);
+	}
+
+	100% {
+		animation-timing-function: ease-out;
+		transform: scale(1);
+	}
+}
+
 .kpi_bubble{
     margin-left: 25%;
     height: 6vw;
@@ -30,8 +74,7 @@ tr, td{
     display: inline-block;
     cursor: pointer;
     box-shadow: 0px 0.4vw 0.4vw .1em rgb(201, 201, 201);
-
-
+    animation: myAnim 1.5s ease 0s 1 normal forwards    ;
   }
 .kpi_bubble:hover{
     height: 6vw;
@@ -56,6 +99,8 @@ tr, td{
     display: inline-block;
     cursor: pointer;
     box-shadow: 0px 0.4vw 0.4vw .1em rgb(218, 218, 218);
+    animation: myAnim 1s ease 0s 1 normal forwards;
+
 
 }
 .policies_bubble:hover{
