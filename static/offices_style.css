@@ -63,6 +63,9 @@ tr, td{
     padding: 0;
     margin: 0;
 }
+.transform_div:hover{
+    transform: scale(1.2);
+}
 
 
 .kpi_bubble{
@@ -77,8 +80,6 @@ tr, td{
     animation: myAnim 1.6s ease 0s 1 normal forwards    ;
   }
 .kpi_bubble:hover{
-    height: 6vw;
-    width: 6vw;
     background-color:  rgb(39, 140, 255);
     margin-left: 25%;
     transform: scale(1.2);
