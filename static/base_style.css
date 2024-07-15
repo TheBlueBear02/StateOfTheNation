@@ -15,7 +15,7 @@ body {
     padding: 5px;
     background-color: rgb(255, 255, 255);
     border-bottom: 0.3vh solid rgb(177, 177, 177);
-    
+
 }
 
 .sidebar {
@@ -30,13 +30,15 @@ body {
     padding-top: 10px;
   }
 .site {
+  padding: 0;
+  margin: 0;
   margin-left: 20%;
+
 }
 .main{
   width: 60%;
-  margin: 10px auto;
-  padding: 1vh;
-  height: 80vh;
+  margin: 0 auto;
+  height: 82vh;
 }
 .hidden{
   display: none;
@@ -59,8 +61,7 @@ p{
 }
 .iframe_main{
   width: 100%;
-  margin: 10px auto;
-  padding: 1vh;
+  margin: 0px auto;
   height: 100%;
   border: none; 
 }

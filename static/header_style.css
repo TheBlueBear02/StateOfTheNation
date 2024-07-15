@@ -4,15 +4,13 @@ html {
 }
 .header_table{
     width: 100%;
-    height: 5vh; 
     padding: 0;
-    margin-top: 2vh;    
     max-height: 5vh;
 }
 .header_info{
     color: rgb(103, 103, 103);
     padding: 0px;
-    font-size: 0.75vw;
+    font-size: 0.75rem;
     margin: 0;
     font-weight:500;
     width: 100%;
