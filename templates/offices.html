@@ -40,7 +40,7 @@
     </table>
 
 
-<dialog data-modal class="kpi_modal">
+<dialog kpi-modal class="kpi_modal">
     <button close_modal onclick="close_moadal()" id="close_button" >X</button>
 
     <table style="width: 100%; margin: 0px; padding: 0px;height: 10%;">
@@ -80,16 +80,59 @@
 
 </dialog>
 
+<dialog policies-modal class="policies_modal">
+    <button close_modal onclick="close_moadal()" id="close_button" >X</button>
+
+    <table style="width: 100%; margin: 0px; padding: 0px;height: 10%;">
+        <tr style="height: 50px;">
+            <th>
+            </th>
+            <th style="width: 45%;">
+               
+            </th>
+            <th style="float: right;">
+                <div style="border-bottom: 2px solid #cfcfcf;"><p style="font-size: 1.5rem; padding: 0; margin: 0;">המשרד לביטחון לאומי</h1></div>
+                <p style="float: right; margin: 0;padding: 0; font-size: 1rem;">מספר פיגועים בחודש</h5>
+            </th>
+            <th>
+                <span style="height: 6vw;width: 6vw;background-color: #4890FD;border-radius: 50%;float: left;"></span>
+            </th>
+        </tr>
+        <tr>
+            <table style="height: 60%; text-align: right;">
+                <tr>
+                    <th>
+                        <div id="graph_div">
+                        </div>
+                    </th>
+                    <th style="width: 20%; float: right; direction: rtl; ">
+                        <p style="direction: rtl; font-size: 1rem; float: right;margin-right: 30px;">מספר הפיגועים בישראל בכל חודש בישראל ויהודה ושומרון. 
+                            המספר מציג את כלל הפיגועים עם נפגעים וללא נפגעים.</p>
+                    </th>
+                </tr>
+            </table>
+        </tr>
+        <tr>
+
+        </tr>
+    </table>
+
+
+</dialog>
 
 <script>
-const kpi_modal = document.querySelector("[data-modal]")
+const kpi_modal = document.querySelector("[kpi-modal]")
+const policies_modal = document.querySelector("[policies_modal]")
+
 const closeB = document.querySelector("[close_modal]")
 
+    
 
     function close_moadal(){
         kpi_modal.close()
-    }
+        policies_modal.close()
 
+    }
 
     document.body.onclick = function(e) {   //when the document body is clicked
     if (window.event) {
