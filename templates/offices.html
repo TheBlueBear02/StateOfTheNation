@@ -95,7 +95,7 @@
                 <p style="float: right; margin: 0;padding: 0; font-size: 1rem;">מספר פיגועים בחודש</h5>
             </th>
             <th>
-                <span style="height: 6vw;width: 6vw;background-color: #4890FD;border-radius: 50%;float: left;"></span>
+                <span style="height: 6vw;width: 6vw;background-color: rgb(224, 224, 224);border-radius: 50%;float: left;"></span>
             </th>
         </tr>
         <tr>
@@ -122,7 +122,7 @@
 
 <script>
 const kpi_modal = document.querySelector("[kpi-modal]")
-const policies_modal = document.querySelector("[policies_modal]")
+const policies_modal = document.querySelector("[policies-modal]")
 
 const closeB = document.querySelector("[close_modal]")
 
@@ -145,6 +145,8 @@ const closeB = document.querySelector("[close_modal]")
     if (e.className && e.className.indexOf('kpi_bubble') != -1) {
         //if the element has a class name, and that is 'someclass' then...
         kpi_modal.showModal()
+    } else if (e.className && e.className.indexOf('policies_bubble') != -1) {
+        policies_modal.showModal()
     }
 
 }

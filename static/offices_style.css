@@ -121,7 +121,7 @@ tr, td{
     margin-left: 25%;
     height: 4.5vw;
     width: 4.5vw;
-    background-color: rgb(204, 204, 204);
+    background-color: rgb(224, 224, 224);
     border-radius: 50%;
     display: inline-block;
     cursor: pointer;
@@ -176,7 +176,15 @@ tr, td{
 .kpi_modal::backdrop{
     background-color: white;
 }
-
+.policies_modal{
+    width: 100%;
+    height: 100%;
+    border: 2px solid  rgb(224, 224, 224);
+    border-radius: 25px;
+}
+.policies_modal::backdrop{
+    background-color: white;
+}
 #close_button{
     border: none;
     font-weight: 700;
