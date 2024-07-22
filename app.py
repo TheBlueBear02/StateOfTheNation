@@ -1,8 +1,8 @@
 from flask import Flask, render_template, request
 from datetime import datetime
 
+
 app = Flask(__name__)
-app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
 
 def get_date(): # return today's date
     return datetime.today().strftime('%d.%m.%Y')
