@@ -69,15 +69,6 @@
 		transform: translateY(-6.4px);
 	}
 }
-#main_table{
-    width: 100%;
-    height: 95%;
-    border-collapse: collapse;
-    line-height: 30px;
-    padding: 0;
-    margin: 0;
-
-}
 table{
     width: 100%;
     height: 100%;
@@ -86,6 +77,16 @@ table{
     align-items: center;
 
 }
+#main_table{
+    margin-left:10%;
+    width: 80%;
+    height: 95%;
+    border-collapse: collapse;
+    padding: 0;
+    margin: 0, auto;
+
+}
+
 tr, td{
     padding: 0;
     margin: 0;
@@ -146,8 +147,8 @@ tr, td{
 }
 
 .main_bubble{
-    height: 7vw;
-    width: 7vw;
+    height: 5vw;
+    width: 5vw;
     background-color: grey;
     border-radius: 50%;
     display: inline-block;
@@ -159,8 +160,8 @@ tr, td{
 
 }
 .main_bubble:hover{
-    width: 7.1vw;
-    height: 7.1vw;
+    width: 5.1vw;
+    height: 5.1vw;
     display: block;
     margin: auto;
     background-color: rgb(155, 155, 155);
