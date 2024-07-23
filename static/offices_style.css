@@ -69,6 +69,7 @@
 		transform: translateY(-6.4px);
 	}
 }
+
 table{
     width: 100%;
     height: 100%;
@@ -219,4 +220,19 @@ p{
     border-image-slice: 1;
     border-width: 0.8vh;
     border-image-source: linear-gradient(#ffffff, #858585);
+}
+#explain_span{
+    margin-right: 6vw; 
+    display: block;
+    float: right; 
+    height: 3vw;
+    width: 3vw;
+    background: radial-gradient(#cecece, #ababab);
+    border-radius: 50%;
+    cursor: pointer;
+
+}
+#explain_span:hover{
+    transform: scale(1.1);
+    
 }
