@@ -1,6 +1,8 @@
-<link rel="stylesheet" href="{{ url_for('static', filename='offices_style.css') }}">
 
-<span id="explain_span"></span>
+<link rel="stylesheet" href="{{ url_for('static', filename='offices_style.css') }}">
+<script type="text/javascript" src="/utils.js"></script>
+
+<span class="explain_span"><img class="explain_icon" style="width: 2.5vw;display: block;margin: auto;margin-top: 2px;" src="/static/images/offices/question_mark.png"></span>
 
 <table id="main_table">
     <tr>
@@ -78,8 +80,6 @@
 
         </tr>
     </table>
-
-
 </dialog>
 
 <dialog policies-modal class="policies_modal">
@@ -115,25 +115,28 @@
             </table>
         </tr>
         <tr>
-
         </tr>
     </table>
-
-
 </dialog>
 
-<script>
-const kpi_modal = document.querySelector("[kpi-modal]")
-const policies_modal = document.querySelector("[policies-modal]")
+<dialog explain-modal class="explain_modal">
+    <button close_modal onclick="close_moadal()" style="display: block;" id="close_button" >X</button>
+    <img style="width: 85vw; height: 55vw; margin-left:6rem;" src="/static/images/offices/explain.png">
+</dialog>
 
-const closeB = document.querySelector("[close_modal]")
+
+<script>
+    const kpi_modal = document.querySelector("[kpi-modal]")
+    const policies_modal = document.querySelector("[policies-modal]")
+    const explain_modal = document.querySelector("[explain-modal]")
+    const closeB = document.querySelector("[close_modal]")
 
     
 
     function close_moadal(){
         kpi_modal.close()
         policies_modal.close()
-
+        explain_modal.close()
     }
 
     document.body.onclick = function(e) {   //when the document body is clicked
@@ -149,7 +152,13 @@ const closeB = document.querySelector("[close_modal]")
         kpi_modal.showModal()
     } else if (e.className && e.className.indexOf('policies_bubble') != -1 || e.className && e.className.indexOf('policies_icon') != -1) {
         policies_modal.showModal()
+    } else if (e.className && e.className.indexOf('explain_span') != -1 || e.className && e.className.indexOf('explain_icon') != -1) {
+        explain_modal.showModal()
     }
+    else{
+
+    }
+    
 
 }
 </script>
