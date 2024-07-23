@@ -4,10 +4,10 @@
         <tr>
             <td>
                 <table class="up-left">
-                    <tr><td></td><td><div class="transform_div"><span class="kpi_bubble" style="width: 5vw; height: 5vw;"><img class="kpi_icon" src="/static/images/offices/white_glass_icon.png"></span></div></td><td><div class="transform_div"><span class="kpi_bubble" style="width: 3vw; height: 3vw;"></span></div></td><td></td></tr>
+                    <tr><td></td><td><div class="transform_div"><span class="kpi_bubble" style="width: 5vw; height: 5vw;"><img class="kpi_icon" style="width: 3vw;" src="/static/images/offices/white_glass_icon.png"></span></div></td><td><div class="transform_div"><span class="kpi_bubble" style="width: 3vw; height: 3vw;"></span></div></td><td></td></tr>
                     <tr>         <td><div class="transform_div"><span class="kpi_bubble" style="width: 3vw; height: 3vw;"></span></div></td><td><div class="transform_div"><span class="kpi_bubble" style="width: 4vw; height: 4vw;"></span></div></td><td><div class="transform_div"><span class="kpi_bubble" style="width: 5vw; height: 5vw;"></span></td><td><div class="transform_div"><span class="policies_bubble" style="width: 4vw; height: 4vw;"></span></div></td></tr>
                     <tr>         <td><div class="transform_div"><span class="kpi_bubble" style="width: 4vw; height: 4vw;"></span></div></td><td><div class="transform_div"><span class="kpi_bubble" style="width: 5vw; height: 5vw;"></span></div></td><td><div class="transform_div"><span class="policies_bubble" style="width: 4vw; height: 4vw;"></span></div></td><td><div class="transform_div"><span class="policies_bubble" style="width: 3vw; height: 3vw;"></span></div></td></tr>
-                    <tr><td></td><td><div class="transform_div"><span class="policies_bubble" style="width: 3vw; height: 3vw;"><img class="policies_icon" src="/static/images/offices/grey_glass_icon.png"></span></div></td><td><div class="transform_div"><span class="policies_bubble"  style="width: 3vw; height: 3vw;"></span></div></td><td><span class="main_bubble" style=" background-image: url('/static/images/KMs/galant.jpg'); background-size: cover;"></span></td></tr>
+                    <tr><td></td><td><div class="transform_div"><span class="policies_bubble" style="width: 3vw; height: 3vw;"><img class="policies_icon" style="width: 2vw;" src="/static/images/offices/grey_glass_icon.png"></span></div></td><td><div class="transform_div"><span class="policies_bubble"  style="width: 3vw; height: 3vw;"></span></div></td><td><span class="main_bubble" style=" background-image: url('/static/images/KMs/galant.jpg'); background-size: cover;"></span></td></tr>
                 </table>
             </td>
             <td>
@@ -55,7 +55,7 @@
                 <p style="float: right; margin: 0;padding: 0; font-size: 1rem;">מספר פיגועים בחודש</h3>
             </th>
             <th style="width: 5%;"> 
-                <span style="height: 5vw;width: 5vw;background-color: #4890FD;border-radius: 50%;float: left;"></span>
+                <span style="height: 5vw;width: 5vw;background: radial-gradient(#75acff, #2b80ff);border-radius: 50%;float: left;"></span>
             </th>
         </tr>
         <tr>
@@ -95,7 +95,7 @@
                 <p style="float: right; margin: 0;padding: 0; font-size: 1rem;">מספר פיגועים בחודש</h3>
             </th>
             <th style="width: 5%;">
-                <span style="height: 5vw;width: 5vw;background-color: rgb(224, 224, 224);border-radius: 50%;float: left;"></span>
+                <span style="height: 5vw;width: 5vw;background: radial-gradient(#e3e3e3, #c3c3c3);border-radius: 50%;float: left;"></span>
             </th>
         </tr>
         <tr>
@@ -142,10 +142,10 @@ const closeB = document.querySelector("[close_modal]")
         e = e.target;                   //assign the element clicked to e
     }
 
-    if (e.className && e.className.indexOf('kpi_bubble') != -1) {
+    if (e.className && e.className.indexOf('kpi_bubble') != -1 || e.className && e.className.indexOf('kpi_icon') != -1) {
         //if the element has a class name, and that is 'someclass' then...
         kpi_modal.showModal()
-    } else if (e.className && e.className.indexOf('policies_bubble') != -1) {
+    } else if (e.className && e.className.indexOf('policies_bubble') != -1 || e.className && e.className.indexOf('policies_icon') != -1) {
         policies_modal.showModal()
     }
 
