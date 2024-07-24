@@ -64,10 +64,10 @@
             <table style="height: 60%; text-align: right;">
                 <tr>
                     <th>
-                        <div id="graph_div">
-                            <canvas id="lineChart" width="500" width="400"></canvas>
+                        <div id="graph_div" style="width: 550; height: 300; margin: 0; padding: 0;">
+                            <canvas id="lineChart" width="500" width="400" style="margin: 0; padding: 0;"></canvas>
                             <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-                            <script>
+                            <script>  
                                 var ctx = document.getElementById("lineChart").getContext("2d");
                                 var lineChart = new Chart(ctx,{
                                     type: "line",
@@ -77,9 +77,9 @@
                                             {
                                                 label: "Data",
                                                 data: {{ values | safe }},
-                                                fill: false,
-                                                borderColor: "rgb(75, 192, 192)",
-                                                lineTenstion: 0.1           
+                                                fill: true,
+                                                borderColor: "#4890FD",
+                                                lineTenstion: 1       
                                             }
                                         ]
                                     },
@@ -87,11 +87,10 @@
                                         respnsive: false
                                     }
                                 });
-                                console.log("done")
                             </script>
                         </div>
                     </th>
-                    <th style="width: 20%; float: right; direction: rtl; ">
+                    <th style="width: 80%; float: right; direction: rtl; padding:0;">
                         <p style="direction: rtl; font-size: 1rem; float: right;margin-right: 30px;">מספר הפיגועים בישראל בכל חודש בישראל ויהודה ושומרון. 
                             המספר מציג את כלל הפיגועים עם נפגעים וללא נפגעים.</p>
                     </th>
@@ -129,7 +128,7 @@
                         <div id="graph_div">
                         </div>
                     </th>
-                    <th style="width: 20%; float: right; direction: rtl; ">
+                    <th style="width: 40%; float: right; direction: rtl; ">
                         <p style="direction: rtl; font-size: 1rem; float: right;margin-right: 30px;">מספר הפיגועים בישראל בכל חודש בישראל ויהודה ושומרון. 
                             המספר מציג את כלל הפיגועים עם נפגעים וללא נפגעים.</p>
                     </th>
@@ -143,7 +142,7 @@
 
 <dialog explain-modal class="explain_modal">
     <button close_modal onclick="close_moadal()" style="display: block;" id="close_button" >X</button>
-    <img style="width: 85vw; height: 55vw; margin-left:6rem;" src="/static/images/offices/explain.png">
+    <img style="width: 75vw; height: 45vw; margin-left:6rem;" src="/static/images/offices/explain.png">
 </dialog>
 
 
