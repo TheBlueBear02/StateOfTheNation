@@ -13,7 +13,24 @@ def index():
 
 @app.route('/offices')
 def offices():
-    return render_template('offices.html')
+    data = [
+        ("01--01-2020", 1597),
+        ("02--01-2020", 1457),
+        ("03--01-2020", 1997),
+        ("04--01-2020", 879),
+        ("05--01-2020", 784),
+        ("06--01-2020", 456),
+        ("07--01-2020", 1100),
+        ("08--01-2020", 1235),
+        ("09--01-2020", 1476),
+    ]
+    lables = []
+    values = []
+    for row in data:
+        lables.append(row[0])
+        values.append(row[1])
+    
+    return render_template('offices.html', lables=lables, values=values)
 
 @app.route('/demography')
 def demography():
