@@ -57,34 +57,36 @@
                 <p style="float: right; margin: 0;padding: 0; font-size: 1rem;">מספר פיגועים בחודש</h3>
             </th>
             <th style="width: 5%;"> 
-                <span style="height: 5vw;width: 5vw;background: radial-gradient(#75acff, #2b80ff);border-radius: 50%;float: left;"></span>
+                <span style="height: 5vw;width: 5vw;background: radial-gradient(#75acff, #2b80ff );border-radius: 50%;float: left;"></span>
             </th>
         </tr>
         <tr>
             <table style="height: 60%; text-align: right;">
                 <tr>
                     <th>
-                        <div id="graph_div" style="width: 550; height: 300; margin: 0; padding: 0;">
+                        <div id="graph_div" style="width: 65vw; height: 40vw; margin: 0; padding: 0;">
                             <canvas id="lineChart" width="500" width="400" style="margin: 0; padding: 0;"></canvas>
-                            <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+                            <script src="
+                            https://cdn.jsdelivr.net/npm/chart.js
+                            "></script>                           
                             <script>  
-                                var ctx = document.getElementById("lineChart").getContext("2d");
-                                var lineChart = new Chart(ctx,{
-                                    type: "line",
+                                var ctx = document.getElementById('lineChart').getContext('2d');
+                                var myChart = new Chart(ctx, {
+                                    type: 'line',
                                     data: {
-                                        lables: {{ lables | safe }},
-                                        datasets: [
-                                            {
-                                                label: "Data",
-                                                data: {{ values | safe }},
-                                                fill: true,
-                                                borderColor: "#4890FD",
-                                                lineTenstion: 1       
-                                            }
-                                        ]
+                                        labels: {{ lables | safe }},
+                                        datasets: [{
+                                            label: 'Example Dataset',
+                                            data: {{ values | safe }},
+                                            fill: true, 
+                                            borderColor: '#4890FD',
+                                            borderWidth: 2,
+                                            lineTension: 0.5,
+                                            backgroundColor: 'rgb(208, 226, 252)'
+                                        }]
                                     },
                                     options: {
-                                        respnsive: false
+                                        // Specify options here if needed
                                     }
                                 });
                             </script>
