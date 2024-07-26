@@ -7,7 +7,7 @@
         <td>
             <table class="up-left">
                 <tr><td></td><td><div class="transform_div"><span class="kpi_bubble" style="width: 5vw; height: 5vw;"><img class="kpi_icon" style="width: 3vw;" src="/static/images/offices/white_glass_icon.png"></span></div></td><td><div class="transform_div"><span class="kpi_bubble" style="width: 3vw; height: 3vw;"></span></div></td><td></td></tr>
-                <tr>         <td><div class="transform_div"><span class="kpi_bubble" style="width: 3vw; height: 3vw;"></span></div></td><td><div class="transform_div"><span class="kpi_bubble" style="width: 4vw; height: 4vw;"></span></div></td><td><div class="transform_div"><span class="kpi_bubble" style="width: 5vw; height: 5vw;"></span></td><td><div class="transform_div"><span class="policies_bubble" style="width: 4vw; height: 4vw;"></span></div></td></tr>
+                <tr>         <td><div class="transform_div"><span class="kpi_bubble" style="width: 3vw; height: 3vw;"></span></div></td><td><div class="transform_div"><span class="alert_bubble" style="width: 4vw; height: 4vw;"><img class="kpi_icon" style="width: 2.5vw;" src="/static/images/offices/white_glass_icon.png"></span></div></td><td><div class="transform_div"><span class="kpi_bubble" style="width: 5vw; height: 5vw;"></span></td><td><div class="transform_div"><span class="policies_bubble" style="width: 4vw; height: 4vw;"></span></div></td></tr>
                 <tr>         <td><div class="transform_div"><span class="kpi_bubble" style="width: 4vw; height: 4vw;"></span></div></td><td><div class="transform_div"><span class="kpi_bubble" style="width: 5vw; height: 5vw;"></span></div></td><td><div class="transform_div"><span class="policies_bubble" style="width: 4vw; height: 4vw;"></span></div></td><td><div class="transform_div"><span class="policies_bubble" style="width: 3vw; height: 3vw;"></span></div></td></tr>
                 <tr><td></td><td><div class="transform_div"><span class="policies_bubble" style="width: 3vw; height: 3vw;"><img class="policies_icon" style="width: 2vw;" src="/static/images/offices/grey_glass_icon.png"></span></div></td><td><div class="transform_div"><span class="policies_bubble"  style="width: 3vw; height: 3vw;"></span></div></td><td><span class="main_bubble" style=" background-image: url('/static/images/KMs/galant.jpg'); background-size: cover;"></span></td></tr>
             </table>
@@ -27,7 +27,7 @@
                 <tr><td></td><td><div class="transform_div"><span class="policies_bubble" style="width: 3vw; height: 3vw;"></span></div></td><td><div class="transform_div"><span class="policies_bubble" style="width: 3vw; height: 3vw;"></span></div></td><td><span class="main_bubble"></span></td></tr>
                 <tr>         <td><div class="transform_div"><span class="kpi_bubble" style="width: 3vw; height: 3vw;"></span></div></td><td><div class="transform_div"><span class="kpi_bubble" style="width: 4vw; height: 4vw;"></span></div></td><td><div class="transform_div"><span class="policies_bubble" style="width: 4vw; height: 4vw;"></span></div></td><td><div class="transform_div"><span class="policies_bubble" style="width: 3vw; height: 3vw;"></span></div></td></tr>
                 <tr>         <td><div class="transform_div"><span class="kpi_bubble" style="width: 5vw; height: 5vw;"></span></div></td><td><div class="transform_div"><span class="kpi_bubble" style="width: 4vw; height: 4vw;"></span></div></td><td><div class="transform_div"><span class="kpi_bubble" style="width: 3vw; height: 3vw;"></span></div></td><td><div class="transform_div"><span class="policies_bubble" style="width: 4vw; height: 4vw;"></span></div></td></tr>
-                <tr><td></td><td><div class="transform_div"><span class="kpi_bubble" style="width: 3vw; height: 3vw;"></span></div></td><td><div class="transform_div"><span class="kpi_bubble" style="width: 5vw; height: 5vw;"></span></div></td><td></td></tr>
+                <tr><td></td><td><div class="transform_div"><span class="kpi_bubble" style="width: 3vw; height: 3vw;"></span></div></td><td><div class="transform_div"><span class="alert_bubble" style="width: 5vw; height: 5vw;"></span></div></td><td></td></tr>
             </table>
         </td>
         <td>
@@ -64,13 +64,11 @@
             <table style="height: 60%; text-align: right;">
                 <tr>
                     <th>
-                        <div id="graph_div" style="width: 65vw; height: 40vw; margin: 0; padding: 0;">
+                        <div id="graph_div" style="width: 70vw; height: 40vw; margin: 0; padding: 0;">
                             <canvas id="lineChart" width="500" width="400" style="margin: 0; padding: 0;"></canvas>
-                            <script src="
-                            https://cdn.jsdelivr.net/npm/chart.js
-                            "></script>                           
-                            <script>  
-                                var ctx = document.getElementById('lineChart').getContext('2d');
+                            <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>                           
+                            <script type="text/javascript">
+                               var ctx = document.getElementById('lineChart').getContext('2d');
                                 var myChart = new Chart(ctx, {
                                     type: 'line',
                                     data: {
@@ -82,19 +80,41 @@
                                             borderColor: '#4890FD',
                                             borderWidth: 2,
                                             lineTension: 0.5,
-                                            backgroundColor: 'rgb(208, 226, 252)'
+                                            backgroundColor: 'rgb(208, 226, 252)',
+                                            pointRadius: 0,
                                         }]
                                     },
                                     options: {
-                                        // Specify options here if needed
+                                        responsive: true,
+                                        plugins: {
+                                        legend: {
+                                            display: false
+                                        }  
+                                        },
+                                    
+                                        animations: {
+                                            tension: {
+                                                duration: 1000,
+                                                easing: 'linear',
+                                                from: 1,
+                                                to: 0.3,
+                                                loop: true
+                                                }
+                                        },
+                                        scales: {
+                                            x: {
+                                            grid: {
+                                                display: false,
+                                                }
+                                            }
+                                        }
                                     }
                                 });
                             </script>
                         </div>
                     </th>
                     <th style="width: 80%; float: right; direction: rtl; padding:0;">
-                        <p style="direction: rtl; font-size: 1rem; float: right;margin-right: 30px;">מספר הפיגועים בישראל בכל חודש בישראל ויהודה ושומרון. 
-                            המספר מציג את כלל הפיגועים עם נפגעים וללא נפגעים.</p>
+                        <p style="direction: rtl; font-size: 1rem; float: right;margin-right: 30px;">מספר הפיגועים בכל חודש בישראל וביהודה ושומרון.</p>
                     </th>
                 </tr>
             </table>
@@ -127,12 +147,46 @@
             <table style="height: 60%; text-align: right;">
                 <tr>
                     <th>
-                        <div id="graph_div">
+                        <div id="graph_div" style="width: 70vw; height: 40vw; margin: 0; padding: 0;">
+                            <canvas id="policies_chart" width="500" width="400" style="margin: 0; padding: 0;"></canvas>
+                            <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>                           
+                            <script>
+                                var ctx = document.getElementById('policies_chart').getContext('2d');
+                                var myChart = new Chart(ctx, {
+                                    type: 'bar',
+                                    data: {
+                                        labels: {{ lables | safe }},
+                                        datasets: [{
+                                            label: 'Example Dataset',
+                                            data: {{ values | safe }},
+                                            fill: true, 
+                                            borderColor: '#4890FD',
+                                            backgroundColor: 'rgb(208, 226, 252)',
+                                            borderWidth: 2,
+                                            lineTension: 0.5
+                                        }]
+                                    },
+                                    options: {
+                                        responsive: true,
+                                        plugins: {
+                                          legend: {
+                                            display: false
+                                          }  
+                                        },
+                                        scales: {
+                                            x: {
+                                            grid: {
+                                                display: false,
+                                                }
+                                            }
+                                        }
+                                    }
+                                });
+                            </script>
                         </div>
                     </th>
-                    <th style="width: 40%; float: right; direction: rtl; ">
-                        <p style="direction: rtl; font-size: 1rem; float: right;margin-right: 30px;">מספר הפיגועים בישראל בכל חודש בישראל ויהודה ושומרון. 
-                            המספר מציג את כלל הפיגועים עם נפגעים וללא נפגעים.</p>
+                    <th style="width: 80%; float: right; direction: rtl; ">
+                        <p style="direction: rtl; font-size: 1rem; float: right;margin-right: 30px;">מספר הפיגועים בכל חודש בישראל וביהודה ושומרון.</p>
                     </th>
                 </tr>
             </table>
@@ -170,7 +224,7 @@
         e = e.target;                   //assign the element clicked to e
     }
 
-    if (e.className && e.className.indexOf('kpi_bubble') != -1 || e.className && e.className.indexOf('kpi_icon') != -1) {
+    if (e.className && e.className.indexOf('kpi_bubble') != -1 || e.className && e.className.indexOf('kpi_icon') != -1 || e.className && e.className.indexOf('alert_bubble') != -1) {
         //if the element has a class name, and that is 'someclass' then...
         kpi_modal.showModal()
     } else if (e.className && e.className.indexOf('policies_bubble') != -1 || e.className && e.className.indexOf('policies_icon') != -1) {

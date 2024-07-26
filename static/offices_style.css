@@ -101,7 +101,7 @@ tr, td{
     margin-left: 25%;
     height: 6vw;
     width: 6vw;
-    background: radial-gradient(#4890FD, #4485e7);
+    background: radial-gradient(#4890FD,#4180df);
     border-radius: 50%;
     display: inline-block;
     cursor: pointer;
@@ -245,4 +245,16 @@ p{
     height: 100%;
     border: 2px solid #4890FD;
     border-radius: 25px;
+}
+
+.alert_bubble{
+    margin-left: 25%;
+    height: 6vw;
+    width: 6vw;
+    background: radial-gradient(#ff5a5a,#fa3939);
+    border-radius: 50%;
+    display: inline-block;
+    cursor: pointer;
+    box-shadow: 0px 0.2vw 0.2vw .1em rgb(230, 230, 230);
+    animation: myAnim 1.6s ease 0s 1 normal forwards;
 }

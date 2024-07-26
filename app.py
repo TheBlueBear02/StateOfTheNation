@@ -1,8 +1,16 @@
 from flask import Flask, render_template, request
 from datetime import datetime
+import os
 
 
 app = Flask(__name__)
+
+@app.template_global()
+def static_include(filename):
+    fullpath = os.path.join(app.static_folder, filename)
+    with open(fullpath, 'r') as f:
+        return f.read()
+ 
 
 def get_date(): # return today's date
     return datetime.today().strftime('%d.%m.%Y')
