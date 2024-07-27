@@ -3,7 +3,7 @@
 
 <table class="header_table">
     <tr>
-        <td style="width: 27vw;">
+        <td style="width: 17vw;">
             <table id="date_table">
                 <tr>
                     <td class="header_info"><p>ממשלת ישראל ה37 | הכנסת ה25</p></td>
@@ -13,12 +13,17 @@
                 </tr>
             </table>
         </td>
-        <td style="width: 50vw;">
-            <table style="float: right; width: 30%;margin-right: 5px;" id="nav_table">
+        <td style="width: 20vw;">
+            <table>
+                <th><img style="width: 1.5vw; padding-top: 23px;" src="/static/images/header/clock.png"></th>
+                <th><div class="progress-bar" style="--width: 20" data-label=""></div></th>
+            </table>            
+        </td>
+        <td style="width: 30vw;">
+            <table style="float: right; width: 30%;margin-right: 5px; " id="nav_table">
                 <th><a href="#"><img class="nav_icon" src="/static/images/header/elections_icon.png" ></a></th>
                 <th><div class="line"><a href="#"><img class="nav_icon" src="/static/images/header/shekel_icon.png" ></a></div></th>
                 <th><a onclick="change_view(1)" href="#"><img class="nav_icon" src="/static/images/header/people_icon.png" ></a></th>
-
             </table>
         </td>
         <td id="logo" style="width: 18vw;"><a href="#" ><img onclick="change_view(0)" style=" float: right;" src="/static/images/header/logo3.png" width="100%"></a></td>
@@ -26,8 +31,33 @@
 </table>    
 
 <script>
-    function change_view(id){
+    const progressBar = document.getElementsByClassName('progress-bar')[0]
 
+
+    window.onload = function() {
+        const startDate = "2022-12-29";
+        const endDate = "2026-10-1";
+        const now = new Date(); // Get the current date and time
+        const start = new Date(startDate);
+        const end = new Date(endDate);
+        
+        var percentage = 0
+        if (now < start) {
+            percentage = 0; // If the current date is before the start date, 0% has passed
+        } else if (now > end) {
+            percentage = 100; // If the current date is after the end date, 100% has passed
+        } else {
+            const totalDuration = end - start; // Total time span between the two dates
+            const elapsed = now - start; // Time span from the start date to now
+            percentage = (elapsed / totalDuration) * 100; // Calculate the percentage
+        }
+
+        progressBar.style.setProperty('--width', percentage.toFixed(2))
+        progressBar.setAttribute('data-label', percentage.toFixed() + "%");
+
+    };
+
+    function change_view(id){
         for(var i = 0; i <= 1; i++){
             if(!document.getElementById(i).classList.contains('hidden'))
                 document.getElementById(i).classList.toggle('hidden');
