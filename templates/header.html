@@ -9,14 +9,14 @@
                     <td class="header_info"><p>ממשלת ישראל ה37 | הכנסת ה25</p></td>
                 </tr>
                 <tr>
-                    <td class="header_info"><p> ט' בניסן התשפ"ג  </p><p> | {{today_date}}</p></td>
+                    <td class="header_info"><p> ט' בתשרי התשפ"ג  </p><p> | {{today_date}}</p></td>
                 </tr>
             </table>
         </td>
         <td style="width: 20vw;">
             <table>
-                <th><img style="width: 1.5vw; padding-top: 23px;" src="/static/images/header/clock.png"></th>
-                <th><div class="progress-bar" style="--width: 20" data-label=""></div></th>
+                <th><img style="width: 1.5vw; padding-top: 2.3vh;" src="/static/images/header/clock.png"></th>
+                <th><div class="progress-bar" style="--width: 12" data-label="&#x200b;"></div></th>
             </table>            
         </td>
         <td style="width: 30vw;">
@@ -51,11 +51,19 @@
             const elapsed = now - start; // Time span from the start date to now
             percentage = (elapsed / totalDuration) * 100; // Calculate the percentage
         }
-
-        progressBar.style.setProperty('--width', percentage.toFixed(2))
         progressBar.setAttribute('data-label', percentage.toFixed() + "%");
 
+        setInterval(() => {
+            const computedStyle = getComputedStyle(progressBar)
+            const width = parseFloat(computedStyle.getPropertyValue('--width')) || 0
+            if (width >= percentage - 5){
+                return
+            }
+            progressBar.style.setProperty('--width', width + .1)
+        }, 5)
+
     };
+
 
     function change_view(id){
         for(var i = 0; i <= 1; i++){
