@@ -1,7 +1,92 @@
 
 <link rel="stylesheet" href="{{ url_for('static', filename='demography_style.css') }}">
 <div class="main">
-    <p style="margin:0px;padding:0px; font-size: 5vh; float: right; color: #4890FD;font-weight: bold;">הדמוגרפיה של ישראל</p>
+    <div class="block_right">
+        <p style="margin:0px;padding:0px; font-size: 5vh; float: right; color: #4890FD;font-weight: bold;">הדמוגרפיה של ישראל</p>
+        <p style="margin:0px;padding:0px; font-size: 5vh; color: #999999;font-weight: bold;">9,900,000</p>
+        <p style="margin:0px;padding:0px; font-size: 3vh; color: #999999;font-weight: bold;">תושבים</p>
+
+        <div id="graph_div" style="width: 100%; height: 40vw; margin: 0; padding: 0;margin-top: 4vh;"> <!-- Chart -->
+            <canvas id="lineChart" width="500" width="400" style="margin: 0; padding: 0;"></canvas>
+            <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>                           
+            <script type="text/javascript"> // Chart
+               var ctx = document.getElementById('lineChart').getContext('2d');
+                var myChart = new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: {{ lables | safe }},
+                        datasets: [{
+                            label: 'Example Dataset',
+                            data: {{ values | safe }},
+                            fill: true, 
+                            borderColor: '#4890FD',
+                            borderWidth: 2,
+                            lineTension: 0.5,
+                            backgroundColor: 'rgb(208, 226, 252)',
+                            pointRadius: 0,
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        plugins: {
+                        legend: {
+                            display: false
+                        }  
+                        },
+                        scales: {
+                            x: {
+                            grid: {
+                                display: false,
+                                }
+                            }
+                        }
+                    }
+                }); 
+            </script>
+        </div>
+    </div>
+    <div class="block_left">
+        <p style="margin:0px;padding:0px; font-size: 5vh; color: #4890FD;font-weight: bold;">הדמוגרפיה של ישראל</p> 
+
+        <div id="graph_div" style="width: 100%; height: 40vw; margin: 0; padding: 0;margin-top: 4vh;"> <!-- Chart -->
+            <canvas id="barChart" width="500" width="400" style="margin: 0; padding: 0;"></canvas>
+            <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>                           
+            <script type="text/javascript"> // Chart
+               var ctx = document.getElementById('barChart').getContext('2d');
+                var myChart = new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: {{ lables | safe }},
+                        datasets: [{
+                            label: 'Example Dataset',
+                            data: {{ values | safe }},
+                            fill: true, 
+                            borderColor: '#4890FD',
+                            borderWidth: 2,
+                            lineTension: 0.5,
+                            backgroundColor: 'rgb(208, 226, 252)',
+                            pointRadius: 0,
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        plugins: {
+                        legend: {
+                            display: false
+                        }  
+                        },
+                        scales: {
+                            x: {
+                            grid: {
+                                display: false,
+                                }
+                            }
+                        }
+                    }
+                }); 
+            </script>
+        </div>
+    </div>
 </div>
 
 
