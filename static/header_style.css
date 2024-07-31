@@ -81,7 +81,7 @@ th{
     align-items: center;
     position: absolute;
     left: .2vw;
-    top: .2vw;
+    top: .15vw;
     width: calc(var(--width, 0) * 1%);
     min-width: .1rem;
     max-width: calc(100% - 1.1em);
