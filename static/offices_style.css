@@ -123,7 +123,7 @@ td {
     width: 4vw;
     display: block;
     margin: auto;
-    margin-top: 30%;
+    margin-top: 15%;
 
 }
 
@@ -152,7 +152,7 @@ td {
     width: 3vw;
     display: block;
     margin: auto;
-    margin-top: 30%;
+    margin-top: 15%;
 }
 
 .main_bubble {
@@ -181,7 +181,7 @@ td {
     margin-left: 25%;
     height: 6vw;
     width: 6vw;
-    background: radial-gradient(#ff5a5a, #fa3939);
+    background: radial-gradient(#ff5d5d, #ee3333);
     border-radius: 50%;
     display: inline-block;
     cursor: pointer;
@@ -282,12 +282,10 @@ p {
     z-index: 1; 
     position: absolute;
     top: 0px;
-    left: 4vh;
+    left: 50%;
     color:white;
     border-radius: 1.5vh;
     font-weight: bold;
-    font-size: 3vh;
+    font-size: 2vh;
     font-family: Arial, Helvetica, sans-serif;
-
-
   }

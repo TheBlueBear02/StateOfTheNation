@@ -37,5 +37,15 @@ background-color: #4d7fff;
 .block_right{
     margin: 0;
     padding: 0;
+    height: 90vh;
+    border-bottom: 2px solid #b1b1b1;
+    padding-top: 3vh;
+
+}
+
+.block_left{
+    margin: 0;
+    padding: 0;
     height: 100vh;
+    padding-top: 3vh;
 }

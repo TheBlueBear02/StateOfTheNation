@@ -9,7 +9,7 @@
                     <td class="header_info"><p>ממשלת ישראל ה37 | הכנסת ה25</p></td>
                 </tr>
                 <tr>
-                    <td class="header_info"><p> ט' בתשרי התשפ"ג  </p><p> | {{today_date}}</p></td>
+                    <td class="header_info"><p> {{hebrew_date}} &#x200b;</p><p> | {{today_date}}</p></td>
                 </tr>
             </table>
         </td>
@@ -22,7 +22,7 @@
         <td style="width: 30vw;">
             <table style="float: right; width: 30%;margin-right: 5px; " id="nav_table">
                 <th><a href="#"><img class="nav_icon" src="/static/images/header/elections_icon.png" ></a></th>
-                <th><div class="line"><a href="#"><img class="nav_icon" src="/static/images/header/shekel_icon.png" ></a></div></th>
+                <th><div class="line"><a onclick="change_view(2)" href="#"><img class="nav_icon" src="/static/images/header/shekel_icon.png" ></a></div></th>
                 <th><a onclick="change_view(1)" href="#"><img class="nav_icon" src="/static/images/header/people_icon.png" ></a></th>
             </table>
         </td>
@@ -66,7 +66,7 @@
 
 
     function change_view(id){
-        for(var i = 0; i <= 1; i++){
+        for(var i = 0; i <= 2; i++){
             if(!document.getElementById(i).classList.contains('hidden'))
                 document.getElementById(i).classList.toggle('hidden');
         }

@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request
 from datetime import datetime
 import os
-
+from pyluach import dates
 
 app = Flask(__name__)
 
@@ -14,10 +14,13 @@ def static_include(filename):
 
 def get_date(): # return today's date
     return datetime.today().strftime('%d.%m.%Y')
+def get_hebrew_date():
+    today = dates.HebrewDate.today()
+    return today.hebrew_date_string()
 
 @app.route('/')
 def index():
-    return render_template('index.html', today_date=get_date())
+    return render_template('index.html', today_date=get_date(), hebrew_date=get_hebrew_date())
 
 @app.route('/offices')
 def offices():
@@ -76,6 +79,35 @@ def demography():
         values.append(row[1])
     
     return render_template('demography.html', lables=lables, values=values)
+
+
+@app.route('/economy')
+def economy():
+    data = [
+        ("1948", 100000),
+        ("1950", 300000),
+        ("1954", 500000),
+        ("1960", 800000),
+        ("1966", 1000000),
+        ("1970", 1500000),
+        ("1976", 2000000),
+        ("1982", 2500000),
+        ("1988", 3200000),
+        ("1994", 4000000),
+        ("2000", 4800000),
+        ("2006", 5700000),
+        ("2012", 6700000),
+        ("2018", 8000000),
+        ("2023", 8600000),
+        ("2024", 9900000),
+    ]
+    lables = []
+    values = []
+    for row in data:
+        lables.append(row[0])
+        values.append(row[1])
+    
+    return render_template('economy.html', lables=lables, values=values)
 
 if __name__ == '__main__':
     app.run(debug=True)
