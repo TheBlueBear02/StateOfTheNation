@@ -6,10 +6,10 @@
 
         <div class="chart-div">
             <div id="0" class="graph hidden">
-                <canvas id="income-graph" width="100%" style="max-height: 80vh; margin: 0; padding: 0;"></canvas>
+                <canvas id="expenses-graph" width="100%" style="max-height: 80vh; margin: 0; padding: 0;"></canvas>
                 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>                           
                 <script type="text/javascript"> // Chart
-                   var ctx = document.getElementById('income-graph').getContext('2d');
+                   var ctx = document.getElementById('expenses-graph').getContext('2d');
                     var myChart = new Chart(ctx, {
                         type: 'pie',
                         data: {
@@ -82,17 +82,17 @@
                 </script>
             </div>
             <div id="2" class="graph hidden">
-                <canvas id="expenses-graph" width="100%" style="max-height: 80vh; margin: 0; padding: 0;"></canvas>
+                <canvas id="income-graph" width="100%" style="max-height: 80vh; margin: 0; padding: 0;"></canvas>
                 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>                           
                 <script type="text/javascript"> // Chart
-                   var ctx = document.getElementById('expenses-graph').getContext('2d');
+                   var ctx = document.getElementById('income-graph').getContext('2d');
                     var myChart = new Chart(ctx, {
-                        type: 'pie',
+                        type: 'polarArea',
                         data: {
                             labels: {{ lables | safe }},
                             datasets: [{
                                 label: 'Example Dataset',
-                                data: {{ values | safe }},
+                                data: {{ [11, 16, 7, 3, 14] }},
                                 fill: false, 
                                 borderColor: '#4890FD',
                                 borderWidth: 2,
@@ -122,9 +122,9 @@
         </div>
         <table class="header-table">
             <tr style="width: 100%;height: 100%;">
-                <th><span id="10" class="nav-button" onclick="change_graph(0,10)">הכנסות</span></th>
+                <th><span id="10" class="nav-button" onclick="change_graph(0,10)">הוצאות</span></th>
                 <th><span id="11" class="nav-button chossen-button" onclick="change_graph(1,11)" >מדדים</span></th>
-                <th><span id="12" class="nav-button" onclick="change_graph(2,12)">הוצאות</span> </th>
+                <th><span id="12" class="nav-button" onclick="change_graph(2,12)">הכנסות</span> </th>
             </tr>
         </table>
     </div>
