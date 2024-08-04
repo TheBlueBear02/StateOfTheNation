@@ -110,4 +110,4 @@ def economy():
     return render_template('economy.html', lables=lables, values=values)
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run("0.0.0.0", debug=True)

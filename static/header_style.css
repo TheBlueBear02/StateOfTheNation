@@ -91,3 +91,19 @@ th{
 .progress-bar:hover{
     background-color:#68a3fc;
 }
+/*
+[demography-tooltip]:hover::after {
+    content: attr(demography-tooltip);
+    background: none;
+    padding: .3em;
+    z-index: 1; 
+    position: absolute;
+    top: 1%;
+    left: 75%;
+    color:rgba(161, 161, 161, 0.712);
+    border-radius: 1.5vh;
+    font-size: 2vh;
+    font-family: Arial, Helvetica, sans-serif;
+    float: right;
+    direction: rtl;
+  }*/
