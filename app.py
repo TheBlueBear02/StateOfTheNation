@@ -5,6 +5,7 @@ from pyluach import dates
 
 app = Flask(__name__)
 
+
 @app.template_global()
 def static_include(filename):
     fullpath = os.path.join(app.static_folder, filename)
@@ -94,13 +95,14 @@ def economy():
         ("מיסי נדלן",11.4),
         ("כלי רכב",9.7),
         ("אחר",26.4),
+
     ]
     lables = []
     values = []
     for row in data:
         lables.append(row[0])
         values.append(row[1])
-    
+
     return render_template('economy.html', lables=lables, values=values)
 
 if __name__ == '__main__':

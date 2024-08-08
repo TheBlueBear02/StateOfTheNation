@@ -16,8 +16,9 @@
                 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>                           
                 <script type="text/javascript"> // Chart
                    var ctx = document.getElementById('expenses-graph').getContext('2d');
-                    var myChart = new Chart(ctx, {
-                        type: 'pie',
+
+                   var myChart = new Chart(ctx, {
+                        type: 'doughnut',
                         data: {
                             labels: {{ lables | safe }},
                             datasets: [{
@@ -30,7 +31,7 @@
                                 backgroundColor: 'rgb(208, 226, 252)',
                                 pointRadius: 0,
                             }]
-                        },
+                        },  
                         options: {
                             responsive: true,
                             plugins: {
@@ -47,6 +48,8 @@
                             }
                         }
                     }); 
+                    ctx.font = "50px Arial";
+                    ctx.fillText("Hello World",10,80);
                 </script>
             </div>
             <div id="1" class="graph">
@@ -98,7 +101,7 @@
                             labels: {{ lables | safe }},
                             datasets: [{
                                 label: 'Example Dataset',
-                                data: {{ [11, 16, 7, 3, 14] }},
+                                data: {{ values | safe }},
                                 fill: false, 
                                 borderColor: '#4890FD',
                                 borderWidth: 2,
