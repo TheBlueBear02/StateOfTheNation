@@ -1,8 +1,9 @@
 from flask import Flask, render_template, request
 from datetime import datetime
-import os
+import json
 from pyluach import dates
 from flask_sqlalchemy import SQLAlchemy
+import pandas as pd
 
 app = Flask(__name__)
 
@@ -21,6 +22,14 @@ class KnessetMembers(db.Model):
     additional_role = db.Column(db.String, nullable=False) 
     name = db.Column(db.String(80), unique=False, nullable=False)
 
+class Tweets(db.Model):
+    id = db.Column(db.Integer, nullable=False,primary_key=True)
+    text = db.Column(db.String, nullable=False)
+    date = db.Column(db.String, nullable=False,)
+    time = db.Column(db.String, nullable=False,)
+    topic = db.Column(db.String, nullable=False,)
+    km_id = db.Column(db.Integer, nullable=False,)
+
 
 def get_date(): # return today's date
     return datetime.today().strftime('%d.%m.%Y')
@@ -28,15 +37,65 @@ def get_hebrew_date(): # return hebrew date
     today = dates.HebrewDate.today()
     return today.hebrew_date_string()
 
+@app.route('/add_data', methods=['POST'])
+def add_data():
+    # Read the JSON data
+    with open(r'C:\Users\Amir\development\projects\StateOFTheNation\KnessChat\KnessetMembers.json', 'r', encoding='utf-8') as file:
+        data = json.load(file)
+
+    # Iterate through each entry in the JSON and add it to the database
+    for entry in data['Members']:
+        new_message = KnessetMembers(
+            km_id=entry['Id'],
+            party=entry['party'],
+            is_coalition=entry['is_coalition'],
+            image=entry['image'],
+            additional_role=entry['additional_role'],
+            name=entry['name']
+        )
+        db.session.add(new_message)
+    
+    # Commit the changes to the database
+    db.session.commit()
+    return 'Data added successfully'
+
 @app.route('/')
 def index():
     # Query the database for all users
-    first_row = db.session.query(KnessetMembers).first()
-    
-    # Check if data is retrieved
-    #if first_row:
-        #return f'Database Connected! Found {first_row.name, first_row.km_id, first_row.party, first_row.additional_role} users.'
-    return render_template('index.html', today_date=get_date(), hebrew_date=get_hebrew_date())
+    all_tweets = db.session.query(Tweets).all()
+    all_kms = db.session.query(KnessetMembers).all()
+    tweets = []
+    for tweet in all_tweets:
+      
+        name = ""
+        party = ""
+        is_coalition = False
+        image = ""
+        additional_role = ""
+
+        for member in all_kms:
+            if member.km_id == tweet.km_id:
+                name = member.name
+                party = member.party
+                is_coalition = member.is_coalition
+                image = member.image
+                additional_role = member.additional_role
+                break
+        tweet_data = {
+            'id':tweet.id,
+            'text': tweet.text,
+            'date': tweet.date,
+            'time': tweet.time,
+            'topic': tweet.topic,  
+            'name': name,
+            'party': party,
+            'is_coalition': is_coalition,
+            'image': image,
+            'additional_role': additional_role
+        }
+        tweets.append(tweet_data)
+
+    return render_template('index.html', today_date=get_date(), hebrew_date=get_hebrew_date(), tweets=reversed(tweets))
 
 @app.route('/offices')
 def offices():

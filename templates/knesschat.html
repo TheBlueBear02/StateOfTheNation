@@ -13,7 +13,8 @@
         <button class="filter_button" id="all_button" type="button">כל הציוצים</button>
     </div>
         <div id="chat_div">
-            {% for tweet in range(5): %}
+            {% for tweet in tweets %}
+            {% if tweet['is_coalition'] == False %}
             <div id="oposition_bubble">
                 <table id="oposition_table">
                     <tr style="direction: rtl; padding: 0px; margin: 0;">
@@ -23,39 +24,35 @@
                                     <th style="width: 20%; padding: 0; margin: 0;">
                                         <div
                                             style="text-align: center; box-shadow: 0 .1vw .3vw rgb(0 0 0 / 0.2); border-radius: 25px; display:flex; margin:0px; background-color:#C3FBC2; width:3.5vw;">
-                                            <p style="font-size: .8vw; font-weight: 700; margin: auto; padding:0px;">חטופים</p>
+                                            <p style="font-size: .8vw; font-weight: 700; margin: auto; padding:0px;">{{tweet['topic']}}</p>
                                         </div>
                                     </th>
                                     <th style="width: 50%;padding: 0; margin: 0; padding-left:.2vh;">
-                                        <h3 style=" margin: 0; padding: 0; font-size: 1.2vw;">מירב כהן</h3>
+                                        <h3 style=" margin: 0; padding: 0; font-size: 1vw;">{{tweet['name']}}</h3>
                                     </th>
                                 </tr>
                             </table>
-                            <i style="float: left; margin:0px; padding:0px; font-size: 1vw; padding-left: .2vh;">יש עתיד</i>
+                            <i style="float: left; margin:0px; padding:0px; font-size: 0.8vw; padding-left: .2vh;">{{tweet['party']}}</i>
                         </th>
                         <th style="float: left;margin:0; padding: 0; ">
                             <span class="img_span"
-                                style="background-image: url('/static/images/KMs/meirav_cohen.jpeg');"></span>
+                                style="background-image: url({{tweet['image']}})"></span>
                         </th>
                     </tr>
                     <tr>
                         <table style="margin: 0; padding: 0;">
-                                <p dir="rtl" style="margin-top:.3vw; width: 100%; line-height:120%;font-size:0.9vw;color: black; padding:0px; margin-right: 10px;">
-                                    שרים וחברי כנסת שפורצים לבסיס בשדה תימן ומתעמתים עם כוחות הביטחון במקום - לא "דואגים ללוחמים ולא למילואימניקים". 
-                                    לא אכפת להם מחיילי צה"ל.
-                                    מדובר בחבורה מופקרת של ליצנים ועבריינים, שלאחר שהביאו ל-1600 נרצחים והרס מוחלט בדרום ובצפון, באו כעת לפרק את צבא העם ולמחוק את מדינת ישראל כמדינת חוק. </p>
+                                <p dir="rtl" style="margin-top:.3vw; width: 100%; line-height:120%;font-size:0.9vw;color: black; padding:0px; margin-right: 10px;">{{tweet['text']}}</p>
                         </table>
                     </tr>
                     <tr style="float: right;display: block;">
                         <td>
                             <img style="margin-bottom:5px;border-radius:25px; width:100%;" src="" />
-                            <p style="margin: auto; color: black;  font-size: .8vw; margin-right:.2vw; padding:0px;"> 13:42 | היום</p>
+                            <p style="margin: auto; color: black;  font-size: .8vw; margin-right:.2vw; padding:0px;"> {{tweet['time']}} | {{tweet['date']}}</p>
                         </td>
                     </tr>
                 </table>
             </div>
-
-
+            {% else %}
             <div id="coalition_bubble">
                 <table id="coalition_table" >
                     <tr style="direction: rtl; padding: 0px; margin: 0;">
@@ -65,29 +62,28 @@
                                     <th>
                                         <div
                                             style="text-align: center; box-shadow: 0 .1vw .3vw rgb(0 0 0 / 0.2); border-radius: 25px; display:flex; margin:0px; background-color:#C3FBC2; width:3.5vw;">
-                                            <p style="font-size: .8vw; font-weight: 700; margin: auto; padding:0px;">מלחמה</p>
+                                            <p style="font-size: .8vw; font-weight: 700; margin: auto; padding:0px;">{{tweet['topic']}}</p>
                                         </div>
                                     </th>
                                     <th>
-                                        <h3 style="margin:0; margin-left: 0px; padding: 0;font-size: 1.2vw; padding-right: .2vw;">יואב גלנט</h3>
+                                        <h3 style="margin:0; margin-left: 0px; padding: 0;font-size: 1vw; padding-right: .2vw;">{{tweet['name']}}</h3>
                                     </th>
                                 </tr>
                             </table>
-                            <i style="float: right; margin-right: .5vh;padding:0px; font-size: 1vw; padding-right: .2vw;">שר הביטחון | הליכוד</i>
+                            {% if tweet['additional_role'] != "" %}
+                            <i style="float: right; margin-right: .5vh;padding:0px; font-size: 0.8vw; padding-right: .2vw;">{{tweet['additional_role']}} | {{tweet['party']}}</i>
+                            {% else %}
+                            <i style="float: right; margin-right: .5vh;padding:0px; font-size: 0.8vw; padding-right: .2vw;">{{tweet['party']}}</i>
+                            {% endif %}
                         </th>
                         <th style="float: right;margin:0; padding: 0;">
                             <span class="img_span"
-                                style="background-image: url('/static/images/KMs/galant.jpg');"></span>
+                                style="background-image: url('{{tweet['image']}}')"></span>
                         </th>
                     </tr>
                     <tr>
                             <table style="margin: 0; padding: 0;">
-                                <p dir="rtl" style="margin-top:.3vw; width: 100%; line-height:120%;font-size:.9vw;color: black; padding:0px; margin-right: 20px;">
-                                    הבוקר בזירת האירוע במג׳דל שמס יחד עם ראש המועצה דולאן אבו סאלח ומפקד אוגדת הבשן תא״ל יאיר פלאי, 
-                                    הלב נקרע לראות את הטרגדיה הנוראית הזו, 12 ילדים וילדות נרצחו בעודם משחקים בכדור. 
-                                    
-                                    עם ישראל כולו מתייחד יחד עם אזרחי מג׳דל שמס ועם משפחות הנרצחים המובאים למנוחות בשעה זו.
-                                </p>
+                                <p dir="rtl" style="margin-top:.3vw; width: 100%; line-height:120%;font-size:.9vw;color: black; padding:0px; margin-right: 20px;">{{tweet['text']}}</p>
                         </table>
                     </tr>
                     <tr>
@@ -95,11 +91,12 @@
                             <img style="margin-bottom:5px;border-radius:25px; width:100%;" src="" />
                             <p
                                 style="color: black; text-align:left; font-size: .8vw;margin:0; margin-right:10px; padding:0px;">
-                                09:32 | היום</p>
+                                {{tweet['time']}} | {{tweet['date']}}</p>
                         </td>
                     </tr>
                 </table>
             </div>
+            {% endif %}
             {% endfor %}
         </div>
 </body>
