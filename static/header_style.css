@@ -47,9 +47,10 @@ p {
 
 }
 
-.line{
-    border-left: .3vh solid grey;
-    border-right: .3vh solid grey;
+.line{  
+
+    border-left: .3vh solid rgb(151, 151, 151);
+    border-right: .3vh solid rgb(151, 151, 151);
 }
 th{
     margin-left: auto;

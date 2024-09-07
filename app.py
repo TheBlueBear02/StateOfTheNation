@@ -2,25 +2,40 @@ from flask import Flask, render_template, request
 from datetime import datetime
 import os
 from pyluach import dates
+from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
 
+# Configuration for the PostgreSQL database
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql+psycopg2://postgres:2311@localhost/State of the Nation'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
-@app.template_global()
-def static_include(filename):
-    fullpath = os.path.join(app.static_folder, filename)
-    with open(fullpath, 'r') as f:
-        return f.read()
- 
+# Initialize the database connection
+db = SQLAlchemy(app)
+
+class KnessetMembers(db.Model):
+    km_id = db.Column(db.Integer, nullable=False,primary_key=True)
+    party = db.Column(db.String, nullable=False)
+    is_coalition = db.Column(db.Boolean, nullable=False) 
+    image = db.Column(db.String)
+    additional_role = db.Column(db.String, nullable=False) 
+    name = db.Column(db.String(80), unique=False, nullable=False)
+
 
 def get_date(): # return today's date
     return datetime.today().strftime('%d.%m.%Y')
-def get_hebrew_date():
+def get_hebrew_date(): # return hebrew date
     today = dates.HebrewDate.today()
     return today.hebrew_date_string()
 
 @app.route('/')
 def index():
+    # Query the database for all users
+    first_row = db.session.query(KnessetMembers).first()
+    
+    # Check if data is retrieved
+    #if first_row:
+        #return f'Database Connected! Found {first_row.name, first_row.km_id, first_row.party, first_row.additional_role} users.'
     return render_template('index.html', today_date=get_date(), hebrew_date=get_hebrew_date())
 
 @app.route('/offices')
