@@ -3,13 +3,13 @@ from datetime import datetime
 import json
 from pyluach import dates
 from flask_sqlalchemy import SQLAlchemy
-import pandas as pd
 
 app = Flask(__name__)
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///sn.db'
 
 # Configuration for the PostgreSQL database
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql+psycopg2://postgres:2311@localhost/State of the Nation'
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+#app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql+psycopg2://postgres:2311@localhost/State of the Nation'
+#app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 # Initialize the database connection
 db = SQLAlchemy(app)
@@ -30,6 +30,12 @@ class Tweets(db.Model):
     topic = db.Column(db.String, nullable=False,)
     km_id = db.Column(db.Integer, nullable=False,)
 
+class Offices(db.Model):
+    id = db.Column(db.Integer, nullable=False,primary_key=True)
+    name = db.Column(db.String, nullable=False)
+    info = db.Column(db.String)
+    minister_id = db.Column(db.Integer, nullable=False)
+    deputy_minister_id = db.Column(db.Integer)
 
 def get_date(): # return today's date
     return datetime.today().strftime('%d.%m.%Y')
@@ -38,9 +44,9 @@ def get_hebrew_date(): # return hebrew date
     return today.hebrew_date_string()
 
 @app.route('/add_data', methods=['POST'])
-def add_data():
+def add_km():
     # Read the JSON data
-    with open(r'C:\Users\Amir\development\projects\StateOFTheNation\KnessChat\KnessetMembers.json', 'r', encoding='utf-8') as file:
+    with open(r'E:\Development Projects\SN\DB\KnessetMembers.json', 'r', encoding='utf-8') as file:
         data = json.load(file)
 
     # Iterate through each entry in the JSON and add it to the database
@@ -52,6 +58,27 @@ def add_data():
             image=entry['image'],
             additional_role=entry['additional_role'],
             name=entry['name']
+        )
+        db.session.add(new_message)
+    
+    # Commit the changes to the database
+    db.session.commit()
+    return 'Data added successfully'
+@app.route('/add_data', methods=['POST'])
+def add_tweet():
+    # Read the JSON data
+    with open(r"E:\Development Projects\SN\DB\Tweets.json", 'r', encoding='utf-8') as file:
+        data = json.load(file)
+
+    # Iterate through each entry in the JSON and add it to the database
+    for entry in data:
+        new_message = Tweets(
+            id=entry['Id'],
+            km_id=entry['UserId'],
+            text=entry['Text'],
+            date=entry['Date'],
+            time=entry['Time'],
+            topic=entry['Topic']
         )
         db.session.add(new_message)
     
@@ -99,6 +126,8 @@ def index():
 
 @app.route('/offices')
 def offices():
+    all_offices = db.session.query(Offices).all()
+
     data = [
         ("ינואר 2020", 1597),
         ("פברואר 2020", 1457),
@@ -125,7 +154,7 @@ def offices():
         lables.append(row[0])
         values.append(row[1])
     
-    return render_template('offices.html', lables=lables, values=values)
+    return render_template('offices.html', lables=lables, values=values, offices=all_offices)
 
 @app.route('/demography')
 def demography():
