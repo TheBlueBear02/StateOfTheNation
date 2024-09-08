@@ -91,15 +91,14 @@ def index():
     # Query the database for all users
     all_tweets = db.session.query(Tweets).all()
     all_kms = db.session.query(KnessetMembers).all()
+    
+    name = ""
+    party = ""
+    is_coalition = False
+    image = ""
+    additional_role = ""
     tweets = []
     for tweet in all_tweets:
-      
-        name = ""
-        party = ""
-        is_coalition = False
-        image = ""
-        additional_role = ""
-
         for member in all_kms:
             if member.km_id == tweet.km_id:
                 name = member.name
@@ -127,6 +126,36 @@ def index():
 @app.route('/offices')
 def offices():
     all_offices = db.session.query(Offices).all()
+    all_kms = db.session.query(KnessetMembers).all()
+
+    offices_list = []
+    name=""
+    party=""
+    image=""
+    additional_role=""
+    number_of_offices = 4
+    i=0
+
+    for office in all_offices:
+        if i == 4:
+            break
+        for member in all_kms:
+            if member.km_id == office.minister_id:
+                name = member.name
+                party = member.party
+                image = member.image
+                additional_role = member.additional_role
+                break
+        office_data = {
+            'name':office.name,
+            'info': office.info,
+            'minister_name': name,
+            'minister_image': image,  
+            'minister_party': party,
+            'minister_role': additional_role,
+        }
+        offices_list.append(office_data)
+        i += 1
 
     data = [
         ("ינואר 2020", 1597),
@@ -154,7 +183,7 @@ def offices():
         lables.append(row[0])
         values.append(row[1])
     
-    return render_template('offices.html', lables=lables, values=values, offices=all_offices)
+    return render_template('offices.html', lables=lables, values=values, offices=offices_list)
 
 @app.route('/demography')
 def demography():
