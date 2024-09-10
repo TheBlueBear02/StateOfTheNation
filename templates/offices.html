@@ -230,6 +230,28 @@
 
     }
     
-
+    // Add click event listener to all buttons with the class "send-btn"
+    document.querySelectorAll('.kpi_bubble').forEach(button => {
+            button.addEventListener('click', function() {
+                // Get the ID of the clicked button
+                const clickedId = this.id;
+                
+                // Send the clicked ID to Flask using fetch
+                fetch('/handle_click', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ id: clickedId }),
+                })
+                .then(response => response.json())
+                .then(data => {
+                    console.log('Success:', data);
+                })
+                .catch((error) => {
+                    console.error('Error:', error);
+                });
+            });
+        });
 }
 </script>
