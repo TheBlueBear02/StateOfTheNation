@@ -3,6 +3,7 @@ from datetime import datetime
 import json
 from pyluach import dates
 from flask_sqlalchemy import SQLAlchemy
+from flask_migrate import Migrate
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///sn.db'
@@ -11,8 +12,16 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///sn.db'
 #app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql+psycopg2://postgres:2311@localhost/State of the Nation'
 #app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
+def get_date(): # return today's date
+    return datetime.today().strftime('%d.%m.%Y')
+def get_hebrew_date(): # return hebrew date
+    today = dates.HebrewDate.today()
+    return today.hebrew_date_string()
+
 # Initialize the database connection
 db = SQLAlchemy(app)
+
+migrate = Migrate(app, db)  # This line initializes Flask-Migrate
 
 class KnessetMembers(db.Model):
     km_id = db.Column(db.Integer, nullable=False,primary_key=True)
@@ -37,61 +46,31 @@ class Offices(db.Model):
     minister_id = db.Column(db.Integer, nullable=False)
     deputy_minister_id = db.Column(db.Integer)
 
-def get_date(): # return today's date
-    return datetime.today().strftime('%d.%m.%Y')
-def get_hebrew_date(): # return hebrew date
-    today = dates.HebrewDate.today()
-    return today.hebrew_date_string()
+class Indexes(db.Model):
+    id = db.Column(db.Integer, nullable=False,primary_key=True)
+    name = db.Column(db.String, nullable=False)
+    info = db.Column(db.String)
+    office_id = db.Column(db.Integer, nullable=False)
+    is_kpi = db.Column(db.Boolean, nullable=False)
+    icon = db.Column(db.String)
+    alert = db.Column(db.Boolean)
+    chart_type = db.Column(db.String)
 
-@app.route('/add_data', methods=['POST'])
-def add_km():
-    # Read the JSON data
-    with open(r'E:\Development Projects\SN\DB\KnessetMembers.json', 'r', encoding='utf-8') as file:
-        data = json.load(file)
+class Indexes_Data(db.Model):
+    id = db.Column(db.Integer, nullable=False,primary_key=True)
+    index_id = db.Column(db.String, nullable=False)
+    date = db.Column(db.String)
+    value = db.Column(db.Integer, nullable=False)
 
-    # Iterate through each entry in the JSON and add it to the database
-    for entry in data['Members']:
-        new_message = KnessetMembers(
-            km_id=entry['Id'],
-            party=entry['party'],
-            is_coalition=entry['is_coalition'],
-            image=entry['image'],
-            additional_role=entry['additional_role'],
-            name=entry['name']
-        )
-        db.session.add(new_message)
-    
-    # Commit the changes to the database
-    db.session.commit()
-    return 'Data added successfully'
-@app.route('/add_data', methods=['POST'])
-def add_tweet():
-    # Read the JSON data
-    with open(r"E:\Development Projects\SN\DB\Tweets.json", 'r', encoding='utf-8') as file:
-        data = json.load(file)
 
-    # Iterate through each entry in the JSON and add it to the database
-    for entry in data:
-        new_message = Tweets(
-            id=entry['Id'],
-            km_id=entry['UserId'],
-            text=entry['Text'],
-            date=entry['Date'],
-            time=entry['Time'],
-            topic=entry['Topic']
-        )
-        db.session.add(new_message)
-    
-    # Commit the changes to the database
-    db.session.commit()
-    return 'Data added successfully'
 
 @app.route('/')
 def index():
-    # Query the database for all users
+    # Query the database for all tweets and kms
     all_tweets = db.session.query(Tweets).all()
     all_kms = db.session.query(KnessetMembers).all()
     
+    # create list of dicts that contains the feed's tweets
     name = ""
     party = ""
     is_coalition = False
@@ -128,62 +107,55 @@ def offices():
     all_offices = db.session.query(Offices).all()
     all_kms = db.session.query(KnessetMembers).all()
 
+    # save the first 4 offices from the database and their ministers data in a list
     offices_list = []
-    name=""
-    party=""
-    image=""
-    additional_role=""
     number_of_offices = 4
     i=0
 
     for office in all_offices:
-        if i == 4:
+        if i == number_of_offices:
             break
-        for member in all_kms:
-            if member.km_id == office.minister_id:
-                name = member.name
-                party = member.party
-                image = member.image
-                additional_role = member.additional_role
-                break
+        minister = db.session.query(KnessetMembers).filter_by(km_id=office.minister_id).first()
+            
         office_data = {
             'name':office.name,
             'info': office.info,
-            'minister_name': name,
-            'minister_image': image,  
-            'minister_party': party,
-            'minister_role': additional_role,
+            'minister_name': minister.name,
+            'minister_image': minister.image,  
+            'minister_party': minister.party,
+            'minister_role': minister.additional_role,
         }
         offices_list.append(office_data)
         i += 1
 
-    data = [
-        ("ינואר 2020", 1597),
-        ("פברואר 2020", 1457),
-        ("מרץ 2020", 1997),
-        ("אפריל 2020", 879),
-        ("מאי 2020", 784),
-        ("יוני 2020", 456),
-        ("יולי 2020", 1100),
-        ("2020 אוגוסט", 1235),
-        ("ספטמבר 2020", 1476),
-        ("אוקטובר 2020", 1597),
-        ("נובמבר 2020", 1457),
-        ("דצמבר 2020", 1997),
-        ("ינואר 2021", 879),
-        ("פברואר 2021", 784),
-        ("מרץ 2021", 456),
-        ("אפריל 2021", 1100),
-        ("מאי 2021", 1235),
-        ("יוני 2021", 1476),
-    ]
-    lables = []
-    values = []
-    for row in data:
-        lables.append(row[0])
-        values.append(row[1])
+    first_office_indexes = db.session.query(Indexes).filter_by(office_id='3').all()
+    second_office_indexes = db.session.query(Indexes).filter_by(office_id='2').all()
+    third_office_indexes = db.session.query(Indexes).filter_by(office_id='3').all()
+    forth_office_indexes = db.session.query(Indexes).filter_by(office_id='4').all()
     
-    return render_template('offices.html', lables=lables, values=values, offices=offices_list)
+    first_office_indexes_info = []
+    for index in first_office_indexes:
+        index_data = db.session.query(Indexes_Data).filter_by(index_id=index.id).all()
+        
+        lables = []
+        values = []
+        for row in index_data:
+            lables.append(row.date)
+            values.append(row.value)
+        
+        index_info = {
+            'name':index.name,
+            'info':index.info,
+            'icon':index.icon,
+            'is_kpi':index.is_kpi,
+            'alert':index.alert,
+            'chart_type':index.chart_type,
+            'lables': lables,
+            'values': values
+        }
+        first_office_indexes_info.append(index_info)
+    print(first_office_indexes_info[0]['lables'])
+    return render_template('offices.html', values=values,lables=lables,offices=offices_list, first_office_indexes=first_office_indexes_info)
 
 @app.route('/demography')
 def demography():
