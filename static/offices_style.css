@@ -156,8 +156,8 @@ td {
 }
 
 .main_bubble {
-    height: 5vw;
-    width: 5vw;
+    height: 5.3vw;
+    width: 5.3vw;
     background-color: grey;
     border-radius: 50%;
     display: inline-block;
@@ -169,8 +169,8 @@ td {
 }
 
 .main_bubble:hover {
-    width: 5.1vw;
-    height: 5.1vw;
+    width: 5.4vw;
+    height: 5.4vw;
     display: block;
     margin: auto;
     background-color: rgb(155, 155, 155);
@@ -291,3 +291,20 @@ p {
     float: right;
     direction: rtl;
   }
+
+#main_upper_left{
+    float: right;
+    margin-right: .5vw;
+}
+#main_upper_right{
+    float: left;
+    margin-left: .5vw;
+}
+#main_down_left{
+    float: right;
+    margin-right: .5vw;
+}
+#main_down_right{
+    float: left;
+    margin-left: .5vw;
+}
