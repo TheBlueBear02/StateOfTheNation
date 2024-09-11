@@ -48,7 +48,7 @@ body{
 #knesschat_header{
     width: 100%;
     height: 10vh;
-    margin-top: 1vh;
+    margin-top: 0vh;
 }
 #knesschat_logo{
     width: 80%;
@@ -58,9 +58,9 @@ body{
 #buttons_div{
     width: 100%;
     height: 5vh;
-    margin-top: 2vh;
-    margin-left: .5vh;
-    margin-bottom: .5vh;
+    margin-top: 3.5vh;
+    margin-left: .8vh;
+    margin-bottom: 0vh;
 }
 .filter_button{
     width: 23%;
@@ -94,7 +94,7 @@ body{
 
 
 #chat_div{
-    width: 95%;
+    width: 96%;
     height: 80%;
     background-image: url(/static/images/knesschat_background1.png);
     padding-left: 2vh;
@@ -161,7 +161,7 @@ background-color: #999999;
     border-radius: 2vw .3vw 2vw 2vw; 
     color: black; 
     text-align: right;
-    margin-left: 2.5vh;
+    margin-left: 5vh;
     animation: myAnim 2s linear 0s 1 normal none;
 }
 
@@ -184,4 +184,10 @@ background-color: #999999;
     border-radius: 50%;
     display: block;
 
+}
+.tweet_image{
+    background-size: cover;
+    width: 100%;
+    height: 30vh;
+    border-radius: 5%;
 }

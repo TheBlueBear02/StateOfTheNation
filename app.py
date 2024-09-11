@@ -38,6 +38,7 @@ class Tweets(db.Model):
     time = db.Column(db.String, nullable=False,)
     topic = db.Column(db.String, nullable=False,)
     km_id = db.Column(db.Integer, nullable=False,)
+    image = db.Column(db.String)
 
 class Offices(db.Model):
     id = db.Column(db.Integer, nullable=False,primary_key=True)
@@ -95,11 +96,11 @@ def index():
             'name': name,
             'party': party,
             'is_coalition': is_coalition,
-            'image': image,
-            'additional_role': additional_role
+            'minister_image': image,
+            'additional_role': additional_role,
+            'image': tweet.image
         }
         tweets.append(tweet_data)
-
     return render_template('index.html', today_date=get_date(), hebrew_date=get_hebrew_date(), tweets=reversed(tweets))
 
 @app.route('/offices')
@@ -128,11 +129,11 @@ def offices():
         offices_list.append(office_data)
         i += 1
 
-    first_office_indexes = db.session.query(Indexes).filter_by(office_id='3').all()
+    first_office_indexes = db.session.query(Indexes).filter_by(office_id='3').order_by(Indexes.is_kpi.desc()).all()
     second_office_indexes = db.session.query(Indexes).filter_by(office_id='2').all()
     third_office_indexes = db.session.query(Indexes).filter_by(office_id='3').all()
     forth_office_indexes = db.session.query(Indexes).filter_by(office_id='4').all()
-    
+
     first_office_indexes_info = []
     for index in first_office_indexes:
         index_data = db.session.query(Indexes_Data).filter_by(index_id=index.id).all()
@@ -154,7 +155,6 @@ def offices():
             'values': values
         }
         first_office_indexes_info.append(index_info)
-    print(first_office_indexes_info[0]['lables'])
     return render_template('offices.html', values=values,lables=lables,offices=offices_list, first_office_indexes=first_office_indexes_info)
 
 @app.route('/demography')

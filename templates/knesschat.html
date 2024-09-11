@@ -24,25 +24,30 @@
                                     <th style="width: 20%; padding: 0; margin: 0;">
                                         <div
                                             style="text-align: center; box-shadow: 0 .1vw .3vw rgb(0 0 0 / 0.2); border-radius: 25px; display:flex; margin:0px; background-color:#C3FBC2; width:3.5vw;">
-                                            <p style="font-size: .8vw; font-weight: 700; margin: auto; padding:0px;">{{tweet['topic']}}</p>
+                                            <p style="font-size: .9vw; font-weight: 700; margin: auto; padding:0px;">{{tweet['topic']}}</p>
                                         </div>
                                     </th>
                                     <th style="width: 50%;padding: 0; margin: 0; padding-left:.2vh;">
-                                        <h3 style=" margin: 0; padding: 0; font-size: 1vw;">{{tweet['name']}}</h3>
+                                        <h3 style=" margin: 0; padding: 0; font-size: 1.2vw;">{{tweet['name']}}</h3>
                                     </th>
                                 </tr>
                             </table>
-                            <i style="float: left; margin:0px; padding:0px; font-size: 0.8vw; padding-left: .2vh;">{{tweet['party']}}</i>
+                            <i style="float: left; margin:0px; padding:0px; font-size: 1vw; padding-left: .2vh;">{{tweet['party']}}</i>
                         </th>
                         <th style="float: left;margin:0; padding: 0; ">
-                            <span class="img_span" style="background-image: url({{tweet['image']}})"></span>
+                            <span class="img_span" style="background-image: url({{tweet['minister_image']}})"></span>
                         </th>
                     </tr>
                     <tr>
                         <table style="margin: 0; padding: 0;">
-                                <p dir="rtl" style="margin-top:.3vw; width: 100%; line-height:120%;font-size:0.9vw;color: black; padding:0px; margin-right: 10px;">{{tweet['text']}}</p>
+                                <p dir="rtl" style="margin-top:.3vw; width: 100%; line-height:120%;font-size:1vw;color: black; padding:0px; margin-right: 10px;">{{tweet['text']}}</p>
                         </table>
                     </tr>
+                    {% if tweet['image'] != None %}
+                    <tr>
+                        <span class="tweet_image" style="background-image: url({{tweet['image']}})"></span>
+                    </tr>
+                    {% endif %}
                     <tr style="float: right;display: block;">
                         <td>
                             <img style="margin-bottom:5px;border-radius:25px; width:100%;" src="" />
@@ -61,30 +66,35 @@
                                     <th>
                                         <div
                                             style="text-align: center; box-shadow: 0 .1vw .3vw rgb(0 0 0 / 0.2); border-radius: 25px; display:flex; margin:0px; background-color:#C3FBC2; width:3.5vw;">
-                                            <p style="font-size: .8vw; font-weight: 700; margin: auto; padding:0px;">{{tweet['topic']}}</p>
+                                            <p style="font-size: .9vw; font-weight: 700; margin: auto; padding:0px;">{{tweet['topic']}}</p>
                                         </div>
                                     </th>
                                     <th>
-                                        <h3 style="margin:0; margin-left: 0px; padding: 0;font-size: 1vw; padding-right: .2vw;">{{tweet['name']}}</h3>
+                                        <h3 style="margin:0; margin-left: 0px; padding: 0;font-size: 1.2vw; padding-right: .2vw;">{{tweet['name']}}</h3>
                                     </th>
                                 </tr>
                             </table>
                             {% if tweet['additional_role'] != "" %}
-                            <i style="float: right; margin-right: .5vh;padding:0px; font-size: 0.8vw; padding-right: .2vw;">{{tweet['additional_role']}} | {{tweet['party']}}</i>
+                            <i style="float: right; margin-right: .5vh;padding:0px; font-size: 1vw; padding-right: .2vw;">{{tweet['additional_role']}} | {{tweet['party']}}</i>
                             {% else %}
-                            <i style="float: right; margin-right: .5vh;padding:0px; font-size: 0.8vw; padding-right: .2vw;">{{tweet['party']}}</i>
+                            <i style="float: right; margin-right: .5vh;padding:0px; font-size: 1vw; padding-right: .2vw;">{{tweet['party']}}</i>
                             {% endif %}
                         </th>
                         <th style="float: right;margin:0; padding: 0;">
                             <span class="img_span"
-                                style="background-image: url('{{tweet['image']}}')"></span>
+                                style="background-image: url('{{tweet['minister_image']}}')"></span>
                         </th>
                     </tr>
                     <tr>
                             <table style="margin: 0; padding: 0;">
-                                <p dir="rtl" style="margin-top:.3vw; width: 100%; line-height:120%;font-size:.9vw;color: black; padding:0px; margin-right: 20px;">{{tweet['text']}}</p>
+                                <p dir="rtl" style="margin-top:.3vw; width: 100%; line-height:120%;font-size:1vw;color: black; padding:0px; margin-right: 20px;">{{tweet['text']}}</p>
                         </table>
                     </tr>
+                    {% if tweet['image'] != None %}
+                    <tr>
+                        <span class="tweet_image" style="background-image: url({{tweet['image']}})"></span>
+                    </tr>
+                    {% endif %}
                     <tr>
                         <td>
                             <img style="margin-bottom:5px;border-radius:25px; width:100%;" src="" />
