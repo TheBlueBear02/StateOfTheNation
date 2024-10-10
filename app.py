@@ -204,9 +204,33 @@ def economy():
         ("כלי רכב",9.7),
         ("אחר",26.4),
     ]
+    # Main Graph data
+    main_labels = []
+    main_values = []
+    temp_values = []
     
+    debt_per_year = db.session.query(Indexes_Data).filter_by(index_id=5).all()
     income_per_year = db.session.query(Indexes_Data).filter_by(index_id=6).all()
-    print(income_per_year)
+    expenses_per_year = db.session.query(Indexes_Data).filter_by(index_id=7).all()
+    interest_per_year = db.session.query(Indexes_Data).filter_by(index_id=8).all()
+    gdp_per_year = db.session.query(Indexes_Data).filter_by(index_id=9).all()
+
+    indexes = []
+    indexes.append(debt_per_year)
+    indexes.append(income_per_year)
+    indexes.append(expenses_per_year)
+    indexes.append(interest_per_year)
+    indexes.append(gdp_per_year)
+
+
+    for row in income_per_year:
+        main_labels.append(row.date)
+
+    for index in indexes:
+        for row in index:
+            temp_values.append(row.value)
+        main_values.append(temp_values)
+        temp_values = []
 
     lables = []
     values = []
@@ -214,7 +238,7 @@ def economy():
         lables.append(row[0])
         values.append(row[1])
 
-    return render_template('economy.html', lables=lables, values=values)
+    return render_template('economy.html', main_lables=main_labels, main_values=main_values)
 
 if __name__ == '__main__':
     app.run("0.0.0.0", debug=True)

@@ -60,23 +60,65 @@
                     var myChart = new Chart(ctx, {
                         type: 'line',
                         data: {
-                            labels: {{ lables | safe }},
+                            labels: {{ main_lables | safe }},
                             datasets: [{
-                                label: 'Example Dataset',
-                                data: {{ values | safe }},
+                                label: 'חוב',
+                                data: {{ main_values[0] | safe }},
                                 fill: false, 
-                                borderColor: '#4890FD',
-                                borderWidth: 2,
+                                borderColor: 'orange',
+                                borderWidth: 3,
                                 lineTension: 0.5,
-                                backgroundColor: 'rgb(208, 226, 252)',
-                                pointRadius: 0,
-                            }]
+                                backgroundColor: 'orange',
+                                pointRadius: 4,
+                            },
+                            {
+                                label: 'הכנסות',
+                                data: {{ main_values[1] | safe }},
+                                fill: false, 
+                                borderColor: 'green',
+                                borderWidth: 3,
+                                lineTension: 0.5,
+                                backgroundColor: 'green',
+                                pointRadius: 4,
+                            },
+                            {
+                                label: 'הוצאות',
+                                data: {{ main_values[2] | safe }},
+                                fill: false, 
+                                borderColor: 'red',
+                                borderWidth: 3,
+                                lineTension: 0.5,
+                                backgroundColor: 'red',
+                                pointRadius: 4,
+                            },
+                            {
+                                label: 'ריבית',
+                                data: {{ main_values[3] | safe }},
+                                fill: false, 
+                                borderColor: 'purple',
+                                borderWidth: 3,
+                                lineTension: 0.5,
+                                backgroundColor: 'purple',
+                                pointRadius: 4,
+                            },
+                            {
+                                label: 'תמ"ג',
+                                data: {{ main_values[4] | safe }},
+                                fill: false, 
+                                borderColor: 'blue',
+                                borderWidth: 3,
+                                lineTension: 0.5,
+                                backgroundColor: 'blue',
+                                pointRadius: 4,
+                            }
+                        ]
+                            
                         },
                         options: {
                             responsive: true,
                             plugins: {
                             legend: {
-                                display: false
+                                display: true
                             }  
                             },
                             scales: {

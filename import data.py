@@ -4,9 +4,9 @@ import json
 
 # add data from csv file to index_data table
 def save_csv_to_db():
-    with open("E:\Development Projects\SN - DATA\כלכלת ישראל\ריבית משוקלל.csv", newline='') as csvfile:
+    with open("E:\Development Projects\SN - DATA\כלכלת ישראל\gdp.csv", newline='') as csvfile:
         csv_reader = csv.DictReader(csvfile)
-        index_id = "8"
+        index_id = "9"
         date = ""
         value = None
         for row in csv_reader:
