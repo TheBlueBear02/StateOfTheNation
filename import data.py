@@ -4,9 +4,11 @@ import json
 
 # add data from csv file to index_data table
 def save_csv_to_db():
-    with open("E:\Development Projects\SN - DATA\המשרד לביטחון לאומי\מקרי רצח בחברה הערבית.csv", newline='') as csvfile:
+    with open("E:\Development Projects\SN - DATA\כלכלת ישראל\ריבית משוקלל.csv", newline='') as csvfile:
         csv_reader = csv.DictReader(csvfile)
-        index_id = "2"
+        index_id = "8"
+        date = ""
+        value = None
         for row in csv_reader:
             # Create an instance of YourModel
             new_record = Indexes_Data(
@@ -16,8 +18,7 @@ def save_csv_to_db():
 
             )
             # Add the record to the session if not saved yet
-            if db.session.query(Indexes_Data).filter_by(date=new_record.date).first() == None:
-                db.session.add(new_record)
+            db.session.add(new_record)
             
         # Commit all changes to the database
         db.session.commit()

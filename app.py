@@ -1,3 +1,4 @@
+from collections import namedtuple
 from flask import Flask, render_template, request
 from datetime import datetime
 import json
@@ -103,15 +104,18 @@ def index():
         tweets.append(tweet_data)
     return render_template('index.html', today_date=get_date(), hebrew_date=get_hebrew_date(), tweets=reversed(tweets))
 
+Cell = namedtuple("cell", ["css_class", "size", "is_placeholder", "alert", "name"])
+
 @app.route('/offices')
 def offices():
     all_offices = db.session.query(Offices).all()
     all_kms = db.session.query(KnessetMembers).all()
-
     # save the first 4 offices from the database and their ministers data in a list
     offices_list = []
     number_of_offices = 4
     i=0
+
+    cells = [[Cell("kpi_bubble", 3.5, False, False, 'name'), Cell("kpi_bubble", 4.5, False,False, 'name')]]
 
     for office in all_offices:
         if i == number_of_offices:
@@ -155,7 +159,7 @@ def offices():
             'values': values
         }
         first_office_indexes_info.append(index_info)
-    return render_template('offices.html', values=values,lables=lables,offices=offices_list, first_office_indexes=first_office_indexes_info)
+    return render_template('offices.html', values=values,lables=lables,offices=offices_list, first_office_indexes=first_office_indexes_info, cells=cells)
 
 @app.route('/demography')
 def demography():
@@ -199,8 +203,11 @@ def economy():
         ("מיסי נדלן",11.4),
         ("כלי רכב",9.7),
         ("אחר",26.4),
-
     ]
+    
+    income_per_year = db.session.query(Indexes_Data).filter_by(index_id=6).all()
+    print(income_per_year)
+
     lables = []
     values = []
     for row in data:
