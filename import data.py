@@ -4,16 +4,16 @@ import json
 
 # add data from csv file to index_data table
 def save_csv_to_db():
-    with open("E:\Development Projects\SN - DATA\כלכלת ישראל\gdp.csv", newline='') as csvfile:
+    with open("E:\Development Projects\SN - DATA\כלכלת ישראל\הכנסות 2023.csv", newline='',encoding='utf-8') as csvfile:
         csv_reader = csv.DictReader(csvfile)
-        index_id = "9"
+        index_id = "11"
         date = ""
         value = None
         for row in csv_reader:
             # Create an instance of YourModel
             new_record = Indexes_Data(
                 index_id = index_id,
-                date=row['year'],  # Map CSV fields to your model's columns
+                label=row['label'],  # Map CSV fields to your model's columns
                 value=row['value']
 
             )

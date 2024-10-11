@@ -61,7 +61,7 @@ class Indexes(db.Model):
 class Indexes_Data(db.Model):
     id = db.Column(db.Integer, nullable=False,primary_key=True)
     index_id = db.Column(db.String, nullable=False)
-    date = db.Column(db.String)
+    label = db.Column(db.String)
     value = db.Column(db.Integer, nullable=False)
 
 
@@ -145,7 +145,7 @@ def offices():
         lables = []
         values = []
         for row in index_data:
-            lables.append(row.date)
+            lables.append(row.label)
             values.append(row.value)
         
         index_info = {
@@ -192,18 +192,7 @@ def demography():
 
 @app.route('/economy')
 def economy():
-    data = [
-        ("מע'מ",98.8),
-        ("מס הכנסה  על יחידים",92.6),
-        ("ביטוח לאומי",70.8),
-        ("מס חברות",38.8),
-        ("רשויות מקומיות",35.2),
-        ("דלקים",17.2),
-        ("מע'מ על שכר",15.7),
-        ("מיסי נדלן",11.4),
-        ("כלי רכב",9.7),
-        ("אחר",26.4),
-    ]
+   
     # Main Graph data
     main_labels = []
     main_values = []
@@ -224,21 +213,32 @@ def economy():
 
 
     for row in income_per_year:
-        main_labels.append(row.date)
+        main_labels.append(row.label)
 
-    for index in indexes:
-        for row in index:
+    for index in indexes: 
+        for row in index:  
             temp_values.append(row.value)
         main_values.append(temp_values)
         temp_values = []
+    
 
-    lables = []
-    values = []
-    for row in data:
-        lables.append(row[0])
-        values.append(row[1])
+    last_year_expenses = db.session.query(Indexes_Data).filter_by(index_id=10).all()
+    expenses_lables = []
+    expenses_values = []
+  
+    for row in last_year_expenses:
+        expenses_lables.append(row.label)
+        expenses_values.append(row.value)
+    
+    last_year_income = db.session.query(Indexes_Data).filter_by(index_id=11).all()
+    income_lables = []
+    income_values = []
 
-    return render_template('economy.html', main_lables=main_labels, main_values=main_values)
+    for row in last_year_income:
+        income_lables.append(row.label)
+        income_values.append(row.value)
+
+    return render_template('economy.html', main_lables=main_labels, main_values=main_values, expenses_lables=expenses_lables, expenses_values=expenses_values,income_lables=income_lables,income_values=income_values)
 
 if __name__ == '__main__':
     app.run("0.0.0.0", debug=True)

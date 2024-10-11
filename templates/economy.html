@@ -11,7 +11,11 @@
         </table>
 
         <div class="chart-div">
+           
             <div id="0" class="graph hidden">
+                <div id="center-text" style="position: absolute; top: 50%; left: 60%; transform: translate(-50%, -50%); font-size: 1rem; font-weight: bold;">
+
+                </div>
                 <canvas id="expenses-graph" width="100%" style="max-height: 80vh; margin: 0; padding: 0;"></canvas>
                 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>                           
                 <script type="text/javascript"> // Chart
@@ -20,36 +24,39 @@
                    var myChart = new Chart(ctx, {
                         type: 'doughnut',
                         data: {
-                            labels: {{ lables | safe }},
+                            labels: {{ expenses_lables | safe }},
                             datasets: [{
                                 label: 'Example Dataset',
-                                data: {{ values | safe }},
+                                data: {{ expenses_values | safe }},
                                 fill: false, 
-                                borderColor: '#4890FD',
-                                borderWidth: 2,
-                                lineTension: 0.5,
-                                backgroundColor: 'rgb(208, 226, 252)',
-                                pointRadius: 0,
+                                borderColor: 'white',
+                                borderWidth: 1,
+                                backgroundColor: [
+                                    'rgb(255, 99, 132)',  // Red
+                                    'rgb(54, 162, 235)',  // Blue
+                                    'rgb(255, 206, 86)',  // Yellow
+                                    'rgb(75, 192, 192)',  // Green
+                                    'rgb(153, 102, 255)', // Purple
+                                    'rgb(255, 159, 64)',  // Orange
+                                    'rgb(201, 203, 207)',  // Grey
+                                    'rgb(0, 128, 128)'
+                                ],
                             }]
-                        },  
+                        },
                         options: {
                             responsive: true,
                             plugins: {
-                            legend: {
-                                display: false
-                            }  
-                            },
-                            scales: {
-                                x: {
-                                grid: {
+                                legend: {
+                                    display: true,
+                                    position: 'left',
+                                },
+                                title: {
                                     display: false,
-                                    }
-                                }
+                                    text: 'הוצאות הממשלה 2023'
+                                },
                             }
                         }
-                    }); 
-                    ctx.font = "50px Arial";
-                    ctx.fillText("Hello World",10,80);
+                    });
                 </script>
             </div>
             <div id="1" class="graph">
@@ -65,50 +72,50 @@
                                 label: 'חוב',
                                 data: {{ main_values[0] | safe }},
                                 fill: false, 
-                                borderColor: 'orange',
+                                borderColor: 'rgb(255, 206, 86)',
                                 borderWidth: 3,
                                 lineTension: 0.5,
-                                backgroundColor: 'orange',
+                                backgroundColor: 'rgb(255, 206, 86)',
                                 pointRadius: 4,
                             },
                             {
                                 label: 'הכנסות',
                                 data: {{ main_values[1] | safe }},
                                 fill: false, 
-                                borderColor: 'green',
+                                borderColor: 'rgb(75, 192, 192)',
                                 borderWidth: 3,
                                 lineTension: 0.5,
-                                backgroundColor: 'green',
+                                backgroundColor: 'rgb(75, 192, 192)',
                                 pointRadius: 4,
                             },
                             {
                                 label: 'הוצאות',
                                 data: {{ main_values[2] | safe }},
                                 fill: false, 
-                                borderColor: 'red',
+                                borderColor: 'rgb(255, 99, 132)',
                                 borderWidth: 3,
                                 lineTension: 0.5,
-                                backgroundColor: 'red',
+                                backgroundColor: 'rgb(255, 99, 132)',
                                 pointRadius: 4,
                             },
                             {
                                 label: 'ריבית',
                                 data: {{ main_values[3] | safe }},
                                 fill: false, 
-                                borderColor: 'purple',
+                                borderColor: 'rgb(153, 102, 255)',
                                 borderWidth: 3,
                                 lineTension: 0.5,
-                                backgroundColor: 'purple',
+                                backgroundColor: 'rgb(153, 102, 255)',
                                 pointRadius: 4,
                             },
                             {
                                 label: 'תמ"ג',
                                 data: {{ main_values[4] | safe }},
                                 fill: false, 
-                                borderColor: 'blue',
+                                borderColor: 'rgb(54, 162, 235)',
                                 borderWidth: 3,
                                 lineTension: 0.5,
-                                backgroundColor: 'blue',
+                                backgroundColor: 'rgb(54, 162, 235)',
                                 pointRadius: 4,
                             }
                         ]
@@ -137,37 +144,42 @@
                 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>                           
                 <script type="text/javascript"> // Chart
                    var ctx = document.getElementById('income-graph').getContext('2d');
-                    var myChart = new Chart(ctx, {
-                        type: 'polarArea',
+                   var myChart = new Chart(ctx, {
+                        type: 'doughnut',
                         data: {
-                            labels: {{ lables | safe }},
+                            labels: {{ income_lables | safe }},
                             datasets: [{
                                 label: 'Example Dataset',
-                                data: {{ values | safe }},
+                                data: {{ income_values | safe }},
                                 fill: false, 
-                                borderColor: '#4890FD',
-                                borderWidth: 2,
-                                lineTension: 0.5,
-                                backgroundColor: 'rgb(208, 226, 252)',
-                                pointRadius: 0,
+                                borderColor: 'white',
+                                borderWidth: 1,
+                                backgroundColor: [
+                                    'rgb(255, 99, 132)',  // Red
+                                    'rgb(54, 162, 235)',  // Blue
+                                    'rgb(255, 206, 86)',  // Yellow
+                                    'rgb(75, 192, 192)',  // Green
+                                    'rgb(153, 102, 255)', // Purple
+                                    'rgb(255, 159, 64)',  // Orange
+                                    'rgb(201, 203, 207)',  // Grey
+                                    'rgb(0, 128, 128)'
+                                ],
                             }]
                         },
                         options: {
                             responsive: true,
                             plugins: {
-                            legend: {
-                                display: false
-                            }  
-                            },
-                            scales: {
-                                x: {
-                                grid: {
+                                legend: {
+                                    display: true,
+                                    position: 'left',
+                                },
+                                title: {
                                     display: false,
-                                    }
-                                }
+                                    text: 'הוצאות הממשלה 2023'
+                                },
                             }
                         }
-                    }); 
+                    });
                 </script>
             </div>
         </div>
