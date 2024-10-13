@@ -5,64 +5,22 @@ import json
 from pyluach import dates
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
+from models import db, KnessetMembers, Tweets, Offices, Indexes, Indexes_Data  # Import the models
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///sn.db'
 
-# Configuration for the PostgreSQL database
-#app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql+psycopg2://postgres:2311@localhost/State of the Nation'
-#app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+# Initialize db with the Flask app
+db.init_app(app)
+migrate = Migrate(app, db)  # This line initializes Flask-Migrate
+
+
 
 def get_date(): # return today's date
     return datetime.today().strftime('%d.%m.%Y')
 def get_hebrew_date(): # return hebrew date
     today = dates.HebrewDate.today()
     return today.hebrew_date_string()
-
-# Initialize the database connection
-db = SQLAlchemy(app)
-
-migrate = Migrate(app, db)  # This line initializes Flask-Migrate
-
-class KnessetMembers(db.Model):
-    km_id = db.Column(db.Integer, nullable=False,primary_key=True)
-    party = db.Column(db.String, nullable=False)
-    is_coalition = db.Column(db.Boolean, nullable=False) 
-    image = db.Column(db.String)
-    additional_role = db.Column(db.String, nullable=False) 
-    name = db.Column(db.String(80), unique=False, nullable=False)
-
-class Tweets(db.Model):
-    id = db.Column(db.Integer, nullable=False,primary_key=True)
-    text = db.Column(db.String, nullable=False)
-    date = db.Column(db.String, nullable=False,)
-    time = db.Column(db.String, nullable=False,)
-    topic = db.Column(db.String, nullable=False,)
-    km_id = db.Column(db.Integer, nullable=False,)
-    image = db.Column(db.String)
-
-class Offices(db.Model):
-    id = db.Column(db.Integer, nullable=False,primary_key=True)
-    name = db.Column(db.String, nullable=False)
-    info = db.Column(db.String)
-    minister_id = db.Column(db.Integer, nullable=False)
-    deputy_minister_id = db.Column(db.Integer)
-
-class Indexes(db.Model):
-    id = db.Column(db.Integer, nullable=False,primary_key=True)
-    name = db.Column(db.String, nullable=False)
-    info = db.Column(db.String)
-    office_id = db.Column(db.Integer, nullable=False)
-    is_kpi = db.Column(db.Boolean, nullable=False)
-    icon = db.Column(db.String)
-    alert = db.Column(db.Boolean)
-    chart_type = db.Column(db.String)
-
-class Indexes_Data(db.Model):
-    id = db.Column(db.Integer, nullable=False,primary_key=True)
-    index_id = db.Column(db.String, nullable=False)
-    label = db.Column(db.String)
-    value = db.Column(db.Integer, nullable=False)
 
 
 
@@ -163,31 +121,15 @@ def offices():
 
 @app.route('/demography')
 def demography():
-    data = [
-        ("1948", 100000),
-        ("1950", 300000),
-        ("1954", 500000),
-        ("1960", 800000),
-        ("1966", 1000000),
-        ("1970", 1500000),
-        ("1976", 2000000),
-        ("1982", 2500000),
-        ("1988", 3200000),
-        ("1994", 4000000),
-        ("2000", 4800000),
-        ("2006", 5700000),
-        ("2012", 6700000),
-        ("2018", 8000000),
-        ("2023", 8600000),
-        ("2024", 9900000),
-    ]
-    lables = []
-    values = []
-    for row in data:
-        lables.append(row[0])
-        values.append(row[1])
-    
-    return render_template('demography.html', lables=lables, values=values)
+    size_data = db.session.query(Indexes_Data).filter_by(index_id=12).all()
+
+    size_labels = []
+    size_values = []
+    for row in size_data:
+        size_labels.append(row.label)
+        size_values.append(row.value)
+    size_values = [int(str(val).replace(",", "")) for val in size_values]
+    return render_template('demography.html', size_labels=size_labels, size_values=size_values)
 
 
 @app.route('/economy')

@@ -16,7 +16,7 @@
                 <div id="center-text" style="position: absolute; top: 50%; left: 60%; transform: translate(-50%, -50%); font-size: 1rem; font-weight: bold;">
 
                 </div>
-                <canvas id="expenses-graph" width="100%" style="max-height: 80vh; margin: 0; padding: 0;"></canvas>
+                <canvas id="expenses-graph" width="100%" style="max-height: 85vh; margin: 0; padding: 0;"></canvas>
                 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>                           
                 <script type="text/javascript"> // Chart
                    var ctx = document.getElementById('expenses-graph').getContext('2d');
@@ -124,8 +124,12 @@
                         options: {
                             responsive: true,
                             plugins: {
+                            title:{
+                                display: true,
+                                text: 'נתוני הכלכלה (במילארדי שקלים)',
+                            },
                             legend: {
-                                display: true
+                                display: true,
                             }  
                             },
                             scales: {
@@ -171,7 +175,7 @@
                             plugins: {
                                 legend: {
                                     display: true,
-                                    position: 'left',
+                                    position: 'right',
                                 },
                                 title: {
                                     display: false,
