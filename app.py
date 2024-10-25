@@ -6,12 +6,15 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from models import db, KnessetMembers, Tweets, Offices, Indexes, Indexes_Data  # Import the models
 from routes import routes  # Import the routes Blueprint
+import os
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///sn.db'
 
+basedir = os.path.abspath(os.path.dirname(__file__))
+app.config['SQLALCHEMY_DATABASE_URI'] = f"sqlite:///{os.path.join(basedir, 'instance', 'sn.db')}"
 # Initialize dSb with the Flask app
 db.init_app(app)
+
 migrate = Migrate(app, db)  # This line initializes Flask-Migrate
 
 # Register the Blueprint with the app
