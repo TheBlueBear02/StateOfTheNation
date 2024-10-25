@@ -8,7 +8,11 @@
 
         <div id="graph_div" style="width: 100%; height: 40vw; margin: 0; padding: 0;margin-top: 4vh;"> <!-- Chart -->
             <canvas id="lineChart" width="500" width="400" style="margin: 0; padding: 0;"></canvas>
-            <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>                           
+            <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>  
+            <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>    
+            <script>                    
+                Chart.register(ChartDataLabels);
+            </script>                          
             <script type="text/javascript"> // Chart
             
                var ctx = document.getElementById('lineChart').getContext('2d');
@@ -60,37 +64,55 @@
             <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>                           
             <script type="text/javascript"> // Chart
                var ctx = document.getElementById('barChart').getContext('2d');
-                var myChart = new Chart(ctx, {
-                    type: 'pie',
-                    data: {
-                        labels: {{ lables | safe }},
-                        datasets: [{
-                            label: 'Example Dataset',
-                            data: {{ values | safe }},
-                            fill: true, 
-                            borderColor: '#4890FD',
-                            borderWidth: 2,
-                            lineTension: 0.5,
-                            backgroundColor: 'rgb(208, 226, 252)',
-                            pointRadius: 0,
-                        }]
-                    },
-                    options: {
-                        responsive: true,
-                        plugins: {
-                        legend: {
-                            display: false
-                        }  
+               var myChart = new Chart(ctx, {
+                        type: 'doughnut',
+                        data: {
+                            labels: {{ religion_labels | safe }},
+                            datasets: [{
+                                label: 'Example Dataset',
+                                data: {{ religion_values | safe }},
+                                fill: false, 
+                                borderColor: 'white',
+                                borderWidth: 1,
+                                backgroundColor: [
+                                    'rgb(54, 162, 235)',  // Blue
+                                    'rgb(255, 99, 132)',  // Red
+                                    'rgb(255, 206, 86)',  // Yellow
+                                    'rgb(75, 192, 192)',  // Green
+                                    'rgb(153, 102, 255)', // Purple
+                                    'rgb(255, 159, 64)',  // Orange
+                                    'rgb(201, 203, 207)',  // Grey
+                                    'rgb(0, 128, 128)'
+                                ],
+                            }]
                         },
-                        scales: {
-                            x: {
-                            grid: {
-                                display: false,
+                        options: {
+                            responsive: true,
+                            plugins: {
+                                legend: {
+                                    display: true,
+                                    position: 'right',
+                                },
+                                title: {
+                                    display: false,
+                                    text: 'הכנסות הממשלה ב2023 (מילארדים)'
+                                },
+                                datalabels: {
+                                    color: 'white', // Label color
+                                    formatter: (value, context) => {
+                                        let label = context.chart.data.labels[context.dataIndex];
+                                        return `${value}`;  // Display label and value
+                                    },
+                                    font: {
+                                        size: 12,  // Font size for labels
+                                        weight: 'bold'
+                                    },
+                                    align: 'center',  // Align labels toward the end of the slice
+                                    anchor: 'center'  // Anchor the labels to the chart slices
                                 }
                             }
                         }
-                    }
-                }); 
+                    });
             </script>
         </div>
     </div>

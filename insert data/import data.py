@@ -1,12 +1,15 @@
 import csv
-from app import app, db, KnessetMembers,Tweets,Offices,Indexes,Indexes_Data
+import sys
+sys.path.append('E:\Development Projects\SN')
+from models import KnessetMembers,Tweets,Offices,Indexes,Indexes_Data
 import json
+from app import app, db
 
 # add data from csv file to index_data table
 def save_csv_to_db():
-    with open("E:\Development Projects\SN - DATA\דמוגרפיה\גודל אוכלוסייה.csv", newline='',encoding='utf-8') as csvfile:
+    with open("E:\Development Projects\SN - DATA\דמוגרפיה\פילוג לדתות.csv", newline='',encoding='utf-8') as csvfile:
         csv_reader = csv.DictReader(csvfile)
-        index_id = "12"
+        index_id = "13"
         date = ""
         value = None
         for row in csv_reader:

@@ -17,8 +17,13 @@
 
                 </div>
                 <canvas id="expenses-graph" width="100%" style="max-height: 85vh; margin: 0; padding: 0;"></canvas>
-                <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>                           
+                <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>   
+                <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>    
+                <script>                    
+                    Chart.register(ChartDataLabels);
+                </script>                    
                 <script type="text/javascript"> // Chart
+
                    var ctx = document.getElementById('expenses-graph').getContext('2d');
 
                    var myChart = new Chart(ctx, {
@@ -51,9 +56,22 @@
                                     position: 'left',
                                 },
                                 title: {
-                                    display: false,
-                                    text: 'הוצאות הממשלה 2023'
+                                    display: true,
+                                    text: 'הוצאות הממשלה ב2023 (מילארדים)'
                                 },
+                                datalabels: {
+                                    color: 'white', // Label color
+                                    formatter: (value, context) => {
+                                        let label = context.chart.data.labels[context.dataIndex];
+                                        return `${value}`;  // Display label and value
+                                    },
+                                    font: {
+                                        size: 12,  // Font size for labels
+                                        weight: 'bold'
+                                    },
+                                    align: 'center',  // Align labels toward the end of the slice
+                                    anchor: 'center'  // Anchor the labels to the chart slices
+                                }
                             }
                         }
                     });
@@ -126,7 +144,7 @@
                             plugins: {
                             title:{
                                 display: true,
-                                text: 'נתוני הכלכלה (במילארדי שקלים)',
+                                text: 'מדדי כלכלת ישראל (במילארדי שקלים)',
                             },
                             legend: {
                                 display: true,
@@ -147,6 +165,7 @@
                 <canvas id="income-graph" width="100%" style="max-height: 80vh; margin: 0; padding: 0;"></canvas>
                 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>                           
                 <script type="text/javascript"> // Chart
+
                    var ctx = document.getElementById('income-graph').getContext('2d');
                    var myChart = new Chart(ctx, {
                         type: 'doughnut',
@@ -178,9 +197,22 @@
                                     position: 'right',
                                 },
                                 title: {
-                                    display: false,
-                                    text: 'הוצאות הממשלה 2023'
+                                    display: true,
+                                    text: 'הכנסות הממשלה ב2023 (מילארדים)'
                                 },
+                                datalabels: {
+                                    color: 'white', // Label color
+                                    formatter: (value, context) => {
+                                        let label = context.chart.data.labels[context.dataIndex];
+                                        return `${value}`;  // Display label and value
+                                    },
+                                    font: {
+                                        size: 12,  // Font size for labels
+                                        weight: 'bold'
+                                    },
+                                    align: 'center',  // Align labels toward the end of the slice
+                                    anchor: 'center'  // Anchor the labels to the chart slices
+                                }
                             }
                         }
                     });

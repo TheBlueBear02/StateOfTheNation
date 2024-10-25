@@ -113,6 +113,8 @@ def offices():
 
 @routes.route('/demography')
 def demography():
+    graphs_data = {}
+    # population size
     size_data = db.session.query(Indexes_Data).filter_by(index_id=12).all()
 
     size_labels = []
@@ -121,7 +123,17 @@ def demography():
         size_labels.append(row.label)
         size_values.append(row.value)
     size_values = [int(str(val).replace(",", "")) for val in size_values]
-    return render_template('demography.html', size_labels=size_labels, size_values=size_values)
+
+    # religion chart
+    religion_data = db.session.query(Indexes_Data).filter_by(index_id=13).all()
+    religion_labels = []
+    religion_values = []
+    for row in religion_data:
+        religion_labels.append(row.label)
+        religion_values.append(row.value)
+    religion_values = [int(str(val).replace(",", "")) for val in religion_values]
+
+    return render_template('demography.html', size_labels=size_labels, size_values=size_values, religion_labels=religion_labels, religion_values=religion_values)
 
 
 @routes.route('/economy')
