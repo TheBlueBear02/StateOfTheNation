@@ -24,7 +24,7 @@
                     {% elif cell.alert %}
                         <td><div class="transform_div"><span class=" {{cell.size}} , alert_bubble" , data-tooltip="{{cell.name}}"><img class="bubble_icon {{cell.size}}_icon" src="/static/images/offices/white_bag.png"></span></div></td>
                     {% else %}
-                        <td><div class="transform_div"><span class="{{cell.css_class}} , {{cell.size}}", data-tooltip="{{cell.name}}"><img class="bubble_icon {{cell.size}}_icon" src="/static/images/offices/grey_bag.png"></span></div></td>
+                        <td><div class="transform_div"><span class="{{cell.css_class}} , {{cell.size}}", data-tooltip="{{cell.name}}"><img class="bubble_icon {{cell.size}}_icon" src="/static/images/offices/white_bag.png"></span></div></td>
                     {% endif %}
                     {%endfor%}
                     </tr>
