@@ -65,7 +65,28 @@ def offices():
     number_of_offices = 4
     i=0
 
-    cells = [[Cell("kpi_bubble", 3.5, False, False, 'name'), Cell("kpi_bubble", 4.5, False,False, 'name')]]
+    first_office_cells = [   
+                [
+                Cell("kpi", 'small', True, False, 'name'), 
+                Cell("kpi", 'medium', False, True, 'name'),
+                Cell("kpi", 'large', False, False, 'name'),
+                Cell("kpi", 'small', True, False, 'name'), ],
+                [
+                Cell("policy", 'small', False, False, 'name'), 
+                Cell("kpi", 'large', False, False, 'name'),
+                Cell("kpi", 'medium', False, True, 'name'),
+                Cell("kpi", 'small', False, False, 'name'), ],
+                [
+                Cell("policy", 'small', False, False, 'name'), 
+                Cell("policy", 'large', False, False, 'name'),
+                Cell("kpi", 'large', False, False, 'name'),
+                Cell("kpi", 'medium', False, False, 'name'), ],
+                [
+                Cell("main_bubble", '', False, False, 'name'), 
+                Cell("policy", 'medium', False, False, 'name'),
+                Cell("policy", 'large', False, False, 'name'),
+                Cell("kpi", 'small', True, False, 'name'), ]
+            ]
 
     for office in all_offices:
         if i == number_of_offices:
@@ -109,7 +130,7 @@ def offices():
             'values': values
         }
         first_office_indexes_info.append(index_info)
-    return render_template('offices.html', values=values,lables=lables,offices=offices_list, first_office_indexes=first_office_indexes_info, cells=cells)
+    return render_template('offices.html', offices=offices_list, first_office_indexes=first_office_indexes_info, first_office_cells=first_office_cells)
 
 @routes.route('/demography')
 def demography():
