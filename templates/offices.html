@@ -16,17 +16,37 @@
         <td>
             {% set second_office = offices[1] %}
             <table class="up-right" style="border-bottom: 6px solid; border-image-slice: 1; border-width: 0.8vh;  border-image-source: linear-gradient(to right, #838383, #ffffff);">
-                {% for row in first_office_cells %}
+                {% for row in second_office_cells %}
                 <tr>
                     {% for cell in row %}
-                    {% if cell.is_placeholder %}
-                        <td></td>
-                    {% elif cell.alert %}
-                        <td><div class="transform_div"><span class=" {{cell.size}} , alert_bubble" , data-tooltip="{{cell.name}}"><img class="bubble_icon {{cell.size}}_icon" src="/static/images/offices/white_bag.png"></span></div></td>
-                    {% else %}
-                        <td><div class="transform_div"><span class="{{cell.css_class}} , {{cell.size}}", data-tooltip="{{cell.name}}"><img class="bubble_icon {{cell.size}}_icon" src="/static/images/offices/white_bag.png"></span></div></td>
-                    {% endif %}
-                    {%endfor%}
+                        {% if cell.cell_type == "space" %}
+                            <td></td>
+                        {% elif cell.cell_type == "main_bubble" %}
+                            <td>
+                                <span class="main_bubble" id="main_upper_right" data-tooltip="{{second_office['name']}}" style="background-image: url({{second_office['minister_image']}});"></span>
+                            </td>
+                        {% else %}
+                            <td>
+                                <div class="transform_div">
+                                    <span 
+                                        class="{{ cell.size }} {% if cell.alert %} alert_bubble {% else %} {{ cell.cell_type }} {% endif %}"
+                                        data-tooltip="{{ cell.name }}"
+                                        data-name="{{ cell.name }}"
+                                        data-info="{{ cell.info }}"
+                                        data-chart="{{ cell.chart_type }}"
+                                        data-labels="{{ cell.labels}}"
+                                        data-values="{{ cell.values | tojson }}"
+                                        onclick="openModal(this)">
+                                        <img class="bubble_icon {{ cell.size }}_icon" src="/static/images/offices/white_bag.png" alt="{{ cell.name }}">
+                                    </span>
+                                </div>
+                            </td>
+                            <script>
+                                console.log("Labels:", "{{ cell.labels}}");
+                                console.log("Values:", "{{ cell.labels}}");
+                            </script>
+                        {% endif %}
+                    {% endfor %}
                     </tr>
                 {%endfor%}
                 <!--<tr><td></td><td><div class="transform_div"><span  class="kpi" style="width: 3.5vw; height: 3.5vw;"></span></div></td><td><div class="transform_div"><span class="kpi" style="width: 5.5vw; height: 5.5vw;"></span></div></td></tr>
@@ -59,212 +79,130 @@
 </table>
 
 
-<dialog kpi-modal class="kpi_modal">
-    <button close_modal onclick="close_moadal()" id="close_button" >X</button>
 
-    <table style="width: 100%; margin: 0px; padding: 0px;height: 10%;">
-        <tr style="height: 30px;">
+<dialog kpi-modal class="kpi-modal">
+    <button onclick="closeModal()" id="close_button">X</button>
+    <table>
+        <tr>
+            <th colspan="2">
+                <div>
+                    <p id="modal-name-kpi" style="font-size: 1.3rem;"></p>
+                </div>
+                <p id="modal-info-kpi" style="font-size: 1rem;"></p>
+            </th>
+        </tr>
+        <tr>
             <th>
+                <div id="graph_div_kpi" class="chart-div">
+                    <canvas id="kpi_chart"></canvas>
+                </div>
             </th>
-            <th style="width: 43%;">
-               
-            </th>
-            <th style="float: right;padding-top: 5px;">
-                <div style="border-bottom: 2px solid #4890FD;"><p style="font-size: 1.3rem; padding: 0; margin: 0;">{{third_office['name']}}</h1></div>
-                <p style="float: right; margin: 0;padding: 0; font-size: 1rem;">{{first_office_indexes[0]['name']}}</h3>
-            </th>
-            <th style="width: 5%;"> 
-                <span style="height: 5.5vw;width: 5.5vw;background: radial-gradient(#75acff, #2b80ff );border-radius: 50%;float: left;"></span>
-            </th>
-        </tr>
-        <tr>
-            <table style="height: 60%; text-align: right;">
-                <tr>
-                    <th>
-                        <div id="graph_div" style="width: 70vw; height: 35.5vw; margin: 0; padding: 0;">
-                            <canvas id="lineChart" width="500" width="400" style="margin: 0; padding: 0;"></canvas>
-                            <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>                           
-                            <script type="text/javascript">
-                               var ctx = document.getElementById('lineChart').getContext('2d');
-                                var myChart = new Chart(ctx, {
-                                    type: 'line',
-                                    data: {
-                                        labels: {{ first_office_indexes[0]['lables'] | safe }},
-                                        datasets: [{
-                                            label: 'Example Dataset',
-                                            data: {{ first_office_indexes[0]['values'] }},
-                                            fill: true, 
-                                            borderColor: '#4890FD',
-                                            borderWidth: 2,
-                                            lineTension: 0.5,
-                                            backgroundColor: 'rgb(208, 226, 252)',
-                                            pointRadius: 0,
-                                        }]
-                                    },
-                                    options: {
-                                        responsive: true,
-                                        plugins: {
-                                        legend: {
-                                            display: false
-                                        }  
-                                        },
-                                        scales: {
-                                            x: {
-                                            grid: {
-                                                display: false,
-                                                }
-                                            }
-                                        }
-                                    }
-                                });
-                            </script>
-                        </div>
-                    </th>
-                    <th style="width: 80%; float: right; direction: rtl; padding:0;">
-                        <p style="direction: rtl; font-size: 1rem; float: right;margin-right: 30px;">{{first_office_indexes[0]['info']}}</p>
-                    </th>
-                </tr>
-            </table>
-        </tr>
-        <tr>
-
         </tr>
     </table>
 </dialog>
 
-<dialog policies-modal class="policies_modal">
-    <button close_modal onclick="close_moadal()" id="close_button" >X</button>
-
-    <table style="width: 100%; margin: 0px; padding: 0px;height: 10%;">
-        <tr style="height: 30px;">
+<dialog policies-modal class="policies-modal">
+    <button onclick="closeModal()" id="close_button">X</button>
+    <table>
+        <tr>
+            <th colspan="2">
+                <div>
+                    <p id="modal-name-policy" style="font-size: 1.3rem;"></p>
+                </div>
+                <p id="modal-info-policy" style="font-size: 1rem;"></p>
+            </th>
+        </tr>
+        <tr>
             <th>
+                <div id="graph_div_policy" class="chart-div">
+                    <canvas id="policies_chart"></canvas>
+                </div>
             </th>
-            <th style="width: 43%;">
-               
-            </th>
-            <th style="float: right;padding-top: 5px;">
-                <div style="border-bottom: 2px solid #cfcfcf;"><p style="font-size: 1.3rem; padding: 0; margin: 0;">{{third_office['name']}}</h1></div>
-                <p style="float: right; margin: 0;padding: 0; font-size: 1rem;">{{first_office_indexes[1]['name']}}</h3>
-            </th>
-            <th style="width: 5%;">
-                <span style="height: 5.5vw;width: 5.5vw;background: radial-gradient(#e3e3e3, #c3c3c3);border-radius: 50%;float: left;"></span>
-            </th>
-        </tr>
-        <tr>
-            <table style="height: 60%; text-align: right;">
-                <tr>
-                    <th>
-                        <div id="graph_div" style="width: 70vw; height: 35.5vw; margin: 0; padding: 0;">
-                            <canvas id="policies_chart" width="500" width="400" style="margin: 0; padding: 0;"></canvas>
-                            <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>                           
-                            <script>
-                                var ctx = document.getElementById('policies_chart').getContext('2d');
-                                var myChart = new Chart(ctx, {
-                                    type: '{{first_office_indexes[1]['chart_type']}}',
-                                    data: {
-                                        labels: {{ first_office_indexes[1]['lables'] | safe }},
-                                        datasets: [{
-                                            label: 'Example Dataset',
-                                            data: {{ first_office_indexes[1]['values'] | safe }},
-                                            fill: true, 
-                                            borderColor: '#4890FD',
-                                            backgroundColor: 'rgb(208, 226, 252)',
-                                            borderWidth: 2,
-                                            lineTension: 0.5
-                                        }]
-                                    },
-                                    options: {
-                                        responsive: true,
-                                        plugins: {
-                                          legend: {
-                                            display: false
-                                          }  
-                                        },
-                                        scales: {
-                                            x: {
-                                            grid: {
-                                                display: false,
-                                                }
-                                            }
-                                        }
-                                    }
-                                });
-                            </script>
-                        </div>
-                    </th>
-                    <th style="width: 80%; float: right; direction: rtl; ">
-                        <p style="direction: rtl; font-size: 1rem; float: right;margin-right: 30px;">{{first_office_indexes[1]['info']}}</p>
-                    </th>
-                </tr>
-            </table>
-        </tr>
-        <tr>
         </tr>
     </table>
 </dialog>
 
-<dialog explain-modal class="explain_modal">
-    <button close_modal onclick="close_moadal()" style="display: block;" id="close_button" >X</button>
+<dialog explain-modal class="explain-modal">
+    <button close_modal onclick="closeModal()" style="display: block;" id="close_button" >X</button>
     <img style="width: 145vh; height: 90vh; margin-left:6rem;" src="/static/images/offices/explain.png">
 </dialog>
 
-
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
-    const kpi_modal = document.querySelector("[kpi-modal]")
-    const policies_modal = document.querySelector("[policies-modal]")
-    const explain_modal = document.querySelector("[explain-modal]")
-    const closeB = document.querySelector("[close_modal]")
+    const kpiModal = document.querySelector("[kpi-modal]");
+    const policiesModal = document.querySelector("[policies-modal]");
+    const explainModal = document.querySelector("[explain-modal]");
 
-    
+    // Store charts in a global object to manage them easily
+    const charts = {};
 
-    function close_moadal(){
-        kpi_modal.close()
-        policies_modal.close()
-        explain_modal.close()
+    function closeModal() {
+        kpiModal.close();
+        policiesModal.close();
+        explainModal.close();
+
+        // Destroy all active charts to clear data
+        if (charts["kpi_chart"]) {
+            charts["kpi_chart"].destroy();
+            delete charts["kpi_chart"];
+        }
+        if (charts["policies_chart"]) {
+            charts["policies_chart"].destroy();
+            delete charts["policies_chart"];
+        }
     }
 
-    document.body.onclick = function(e) {   //when the document body is clicked
-    if (window.event) {
-        e = event.srcElement;           //assign the element clicked to e (IE 6-8)
-    }
-    else {
-        e = e.target;                   //assign the element clicked to e
+    function openModal(cellElement) {
+        const name = cellElement.getAttribute("data-name");
+        const info = cellElement.getAttribute("data-info");
+        const chart = cellElement.getAttribute("data-chart");
+        const labels = JSON.parse(cellElement.getAttribute("data-labels"));
+        const values = JSON.parse(cellElement.getAttribute("data-values"));
+        
+        console.log("values:", values);
+        console.log("Labels:", labels); // Should be an array like ["Label1", "Label2", ...]
+        console.log("chart type:", chart); // Should be an array like ["Label1", "Label2", ...]
+
+        if (cellElement.classList.contains('kpi') || cellElement.classList.contains('alert_bubble')) {
+            document.getElementById("modal-name-kpi").textContent = name;
+            document.getElementById("modal-info-kpi").textContent = info;
+            updateChart("kpi_chart", labels, values, chart);
+            kpiModal.showModal();
+        } else if (cellElement.classList.contains('policy')) {
+            document.getElementById("modal-name-policy").textContent = name;
+            document.getElementById("modal-info-policy").textContent = info;
+            updateChart("policies_chart", labels, values, chart);
+            policiesModal.showModal();
+        }
     }
 
-    if (e.className && e.className.indexOf('kpi') != -1 || e.className && e.className.indexOf('bubble_icon') != -1 || e.className && e.className.indexOf('alert_bubble') != -1) {
-        //if the element has a class name, and that is 'someclass' then...
-        kpi_modal.showModal()
-    } else if (e.className && e.className.indexOf('policy') != -1 || e.className && e.className.indexOf('bubble_icon') != -1) {
-        policies_modal.showModal()
-    } else if (e.className && e.className.indexOf('explain_span') != -1 || e.className && e.className.indexOf('explain_icon') != -1) {
-        explain_modal.showModal()
-    }
-    else{
+    function updateChart(chartId, labels, values, chart) {
+        // Destroy existing chart if it exists
+        if (charts[chartId]) {
+            charts[chartId].destroy();
+        }
 
-    }
-    
-    // Add click event listener to all buttons with the class "send-btn"
-    document.querySelectorAll('.kpi').forEach(button => {
-            button.addEventListener('click', function() {
-                // Get the ID of the clicked button
-                const clickedId = this.id;
-                
-                // Send the clicked ID to Flask using fetch
-                fetch('/handle_click', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({ id: clickedId }),
-                })
-                .then(response => response.json())
-                .then(data => {
-                    console.log('Success:', data);
-                })
-                .catch((error) => {
-                    console.error('Error:', error);
-                });
-            });
+        const ctx = document.getElementById(chartId).getContext("2d");
+        charts[chartId] = new Chart(ctx, {
+            type: chart,
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: "Example Dataset",
+                    data: values,
+                    fill: true,
+                    borderColor: "#4890FD",
+                    backgroundColor: "rgb(208, 226, 252)",
+                    borderWidth: 2,
+                    lineTension: 0.5
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: { legend: { display: false } },
+                scales: { x: { 
+                    grid: { display: false } } }
+            }
         });
-}
+    }
 </script>

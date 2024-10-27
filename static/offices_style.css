@@ -153,6 +153,8 @@ td {
     display: block;
     margin: auto;
     animation: entrence 1s ease 0s 1 normal forwards;
+    background-size: cover;
+    border: 1px solid grey;
 
 }
 
@@ -177,25 +179,25 @@ td {
     animation: entrence 1.3s ease 0s 1 normal forwards, attention 15s linear 1.4s 30;
 }
 
-.kpi_modal {
+.kpi-modal {
     width: 100%;
     height: 100%;
     border: 2px solid #4890FD;
     border-radius: 25px;
 }
 
-.kpi_modal::backdrop {
+.kpi-modal::backdrop {
     background-color: white;
 }
 
-.policies_modal {
+.policies-modal {
     width: 100%;
     height: 100%;
     border: 2px solid rgb(188, 188, 188);
     border-radius: 25px;
 }
 
-.policies_modal::backdrop {
+.policies-modal::backdrop {
     background-color: white;
 }
 
@@ -244,7 +246,6 @@ p {
     background: radial-gradient(#cecece, #ababab);
     border-radius: 50%;
     cursor: pointer;
-
 }
 
 .explain_span:hover {

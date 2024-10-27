@@ -3,6 +3,7 @@ from datetime import datetime
 from pyluach import dates
 from models import db, KnessetMembers, Tweets, Offices, Indexes, Indexes_Data  # Import models
 from collections import namedtuple
+import json
 
 # Create a Blueprint for the routes
 routes = Blueprint('routes', __name__)
@@ -54,7 +55,56 @@ def index():
         tweets.append(tweet_data)
     return render_template('index.html', today_date=get_date(), hebrew_date=get_hebrew_date(), tweets=reversed(tweets))
 
-Cell = namedtuple("cell", ["css_class", "size", "is_placeholder", "alert", "name"])
+Cell = namedtuple("cell", ["cell_type", "size", "alert", "name","info","icon","chart_type","labels","values"]) # SET the Cell coloumns 
+
+# Helper function to create a Cell with default values
+def create_cell(cell_type, info=None):
+    default_data = {
+        'alert': False,
+        'name': 'name',
+        'info': 'info',
+        'icon': 'icon',
+        'chart_type': 'line',
+        'labels': [],
+        'values': []
+    }
+    
+    data = info if info else default_data
+    return Cell(
+        cell_type=cell_type,
+        size='medium' if cell_type in ["kpi", "policy"] else 'small',
+        alert=data['alert'],
+        name=data['name'],
+        info=data['info'],
+        icon=data['icon'],
+        chart_type=data['chart_type'],
+        labels=data['labels'],
+        values=data['values']
+    )
+
+# setting the labels dates to json for the graphs
+def parse_dates(labels):
+    # Parse dates based on format
+    parsed_labels = []
+    for date in labels:
+        try:
+            # Try to parse as "DD.MM.YYYY"
+            parsed_date = datetime.strptime(date, "%d.%m.%Y").strftime("%Y-%m-%d")
+        except ValueError:
+            try:
+                # If it fails, try to parse as "YYYY"
+                parsed_date = datetime.strptime(date, "%Y").strftime("%Y")
+            except ValueError:
+                # Handle any other unexpected format here if needed
+                parsed_date = None
+        parsed_labels.append(parsed_date)
+
+    # Filter out None values if any parsing failed
+    parsed_labels = [date for date in parsed_labels if date is not None]
+    result = json.dumps(parsed_labels)  # Convert list to JSON string
+
+
+    return result
 
 @routes.route('/offices')
 def offices():
@@ -65,29 +115,68 @@ def offices():
     number_of_offices = 4
     i=0
 
-    first_office_cells = [   
-                [
-                Cell("kpi", 'small', True, False, 'name'), 
-                Cell("kpi", 'medium', False, True, 'name'),
-                Cell("kpi", 'large', False, False, 'name'),
-                Cell("kpi", 'small', True, False, 'name'), ],
-                [
-                Cell("policy", 'small', False, False, 'name'), 
-                Cell("kpi", 'large', False, False, 'name'),
-                Cell("kpi", 'medium', False, True, 'name'),
-                Cell("kpi", 'small', False, False, 'name'), ],
-                [
-                Cell("policy", 'small', False, False, 'name'), 
-                Cell("policy", 'large', False, False, 'name'),
-                Cell("kpi", 'large', False, False, 'name'),
-                Cell("kpi", 'medium', False, False, 'name'), ],
-                [
-                Cell("main_bubble", '', False, False, 'name'), 
-                Cell("policy", 'medium', False, False, 'name'),
-                Cell("policy", 'large', False, False, 'name'),
-                Cell("kpi", 'small', True, False, 'name'), ]
-            ]
+    first_office_indexes = db.session.query(Indexes).filter_by(office_id='3').order_by(Indexes.is_kpi.desc()).all()
+    second_office_indexes = db.session.query(Indexes).filter_by(office_id='2').all()
+    third_office_indexes = db.session.query(Indexes).filter_by(office_id='3').all()
+    forth_office_indexes = db.session.query(Indexes).filter_by(office_id='4').all()
 
+    first_office_indexes_info = []
+    for index in first_office_indexes:
+        index_data = db.session.query(Indexes_Data).filter_by(index_id=index.id).all()
+        
+        labels = []
+        values = []
+        for row in index_data:
+            labels.append(row.label)
+            values.append(row.value)
+        
+        # Convert each date to "YYYY-MM-DD" format
+        labels = parse_dates(labels)
+        
+        index_info = {
+            'name':index.name,
+            'info':index.info,
+            'icon':index.icon,
+            'is_kpi':index.is_kpi,
+            'alert':index.alert,
+            'chart_type':index.chart_type,
+            'labels': labels,
+            'values': values
+        }
+        first_office_indexes_info.append(index_info)
+
+    # Separate KPI and policy indexes from first_office_indexes_info
+    kpi_indexes = [info for info in first_office_indexes_info if info['is_kpi']]
+    policy_indexes = [info for info in first_office_indexes_info if not info['is_kpi']]
+
+    # Create the cells list with assigned KPI and policy information
+    second_office_cells = []
+    kpi_idx, policy_idx = 0, 0
+
+    # Define row structures and fill cells
+    for row_structure in [
+        ["space", "kpi", "kpi", "space"],
+        ["policy", "kpi", "kpi", "kpi"],
+        ["policy", "policy", "kpi", "kpi"],
+        ["main_bubble", "policy", "policy", "space"]
+    ]:
+        row = []
+        for cell_type in row_structure:
+            if cell_type == "kpi" and kpi_idx < len(kpi_indexes):
+                # Create a KPI cell with specific info
+                row.append(create_cell(cell_type, kpi_indexes[kpi_idx]))
+                kpi_idx += 1
+            elif cell_type == "policy" and policy_idx < len(policy_indexes):
+                # Create a policy cell with specific info
+                row.append(create_cell(cell_type, policy_indexes[policy_idx]))
+                policy_idx += 1
+            else:
+                # Create a default or placeholder cell
+                row.append(create_cell(cell_type))
+        
+        second_office_cells.append(row)
+
+    # 4 office data
     for office in all_offices:
         if i == number_of_offices:
             break
@@ -104,33 +193,8 @@ def offices():
         offices_list.append(office_data)
         i += 1
 
-    first_office_indexes = db.session.query(Indexes).filter_by(office_id='3').order_by(Indexes.is_kpi.desc()).all()
-    second_office_indexes = db.session.query(Indexes).filter_by(office_id='2').all()
-    third_office_indexes = db.session.query(Indexes).filter_by(office_id='3').all()
-    forth_office_indexes = db.session.query(Indexes).filter_by(office_id='4').all()
-
-    first_office_indexes_info = []
-    for index in first_office_indexes:
-        index_data = db.session.query(Indexes_Data).filter_by(index_id=index.id).all()
-        
-        lables = []
-        values = []
-        for row in index_data:
-            lables.append(row.label)
-            values.append(row.value)
-        
-        index_info = {
-            'name':index.name,
-            'info':index.info,
-            'icon':index.icon,
-            'is_kpi':index.is_kpi,
-            'alert':index.alert,
-            'chart_type':index.chart_type,
-            'lables': lables,
-            'values': values
-        }
-        first_office_indexes_info.append(index_info)
-    return render_template('offices.html', offices=offices_list, first_office_indexes=first_office_indexes_info, first_office_cells=first_office_cells)
+    
+    return render_template('offices.html', offices=offices_list, first_office_indexes=first_office_indexes_info, second_office_cells=second_office_cells)
 
 @routes.route('/demography')
 def demography():

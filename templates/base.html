@@ -11,6 +11,8 @@
         {% include 'KnessChat.html' %}
     </div>
     <div class="site">
+       <!-- <button class="openbtn" onclick="openNav()">☰ Open Sidebar</button>  -->
+
         <div class="header">
             {% include 'header.html' %}
         </div>
@@ -20,4 +22,16 @@
     </div>
 </body>
 
+<script>
+    function openNav() {
+      document.getElementById("sidebar").style.width = "23vw";
+      document.getElementById("site").style.marginLeft = "20%";
+    }
+    
+    function closeNav() {
+      document.getElementById("sidebar").style.width = "0";
+      document.getElementById("site").style.marginLeft= "0";
+    }
+</script>
 </html>
+
