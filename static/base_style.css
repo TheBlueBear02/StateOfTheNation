@@ -81,8 +81,10 @@ p{
   border-radius: 50%;
   position: absolute; /* or relative or fixed based on your layout needs */
   z-index: 3;
-  background-color: #4890fd;
+  background: radial-gradient(#6ba4fa, #447dd3);
   margin-top:48vh;
   margin-left: 7vh;
   cursor: pointer;
+  border: 0;
+  color: white;
 }
