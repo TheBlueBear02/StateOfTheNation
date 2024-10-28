@@ -1,0 +1,28 @@
+<head>
+    <link rel="stylesheet" href="{{ url_for('static', filename='knesschat-close.css') }}">
+</head>
+
+<body>
+    <div class="sidebar">
+        <div class="header">
+            <div class="logo">
+                <img id="logo" src="/static/images/knesschat_logo1.png">
+            </div>
+        </div>
+       
+        <div class="tweets_div">
+            {% if tweets %}
+                {% for tweet in tweets %}
+                    {% if tweet['is_coalition'] == False %}
+                        <span class="img_span" id="oposition_img" style="background-image: url({{ tweet['minister_image'] }})"></span>
+                    {% else %}
+                        <span class="img_span" id="coalition_img" style="background-image: url({{ tweet['minister_image'] }})"></span>
+                    {% endif %}
+                    {% endfor %}
+            {% else %}
+                <p>No tweets data available in knesschat-close.html.</p>
+            {% endif %}
+        </div>
+    </div>
+    
+</body>

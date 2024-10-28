@@ -1,0 +1,56 @@
+.sidebar{
+    width: 5vw;
+    height: 100%;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: #F6F6F6;
+    padding: 0;
+    margin: 0;
+    overflow: auto;
+    cursor: pointer;
+}
+
+/* Define the scrollbar style */
+.sidebar::-webkit-scrollbar {
+width: 0;
+height: 0;
+}
+
+.header{
+    height: 9vh;
+    width: 100%;
+}
+#logo{
+    width: 5vw;
+}
+.tweets_div{
+    padding: 0;
+    margin:0;
+    margin-left: .3vw;
+}
+.img_span{
+    background-size: cover;
+    box-shadow: 0 .5vh .5vh rgb(0 0 0 / 0.3);
+    padding:0;
+    margin:0;
+    width:4vw; 
+    height: 4vw; 
+    border-radius: 50%;
+    display: block;
+    border: 1px solid grey;
+    margin-bottom: 1vh;
+}
+.img_span:hover{
+    transform: scale(1.1);
+
+}
+#coalition_img{
+    border: 2px solid #a3d3ff;
+
+}
+#oposition_img{
+    border: 2px solid #f8caa2;
+
+}

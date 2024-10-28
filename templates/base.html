@@ -7,11 +7,14 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='base_style.css') }}">
 </head>
 <body>
-    <div class="sidebar">
+    <div class="sidebar-open" id="sidebar-open">
         {% include 'KnessChat.html' %}
     </div>
-    <div class="site">
-       <!-- <button class="openbtn" onclick="openNav()">☰ Open Sidebar</button>  -->
+    <div class="sidebar-close" id="sidebar-close" onclick="openNav()">
+        {% include 'knesschat-close.html' with context %}
+    </div>
+    <div class="site" id="site">
+        <button id="toggleButton" class="sidebarBtn" onclick="toggleNav()"><<</button>
 
         <div class="header">
             {% include 'header.html' %}
@@ -23,14 +26,45 @@
 </body>
 
 <script>
+    const sidebar = document.getElementById("sidebar-open").style.display = "block";
+
     function openNav() {
-      document.getElementById("sidebar").style.width = "23vw";
-      document.getElementById("site").style.marginLeft = "20%";
+        // display change
+        document.getElementById("sidebar-open").style.display = "block";
+        document.getElementById("sidebar-close").style.display = "none";
+        // width and margin change
+        document.getElementById("sidebar-open").style.width = "23vw";
+        document.getElementById("site").style.marginLeft = "20%";
+        // close btn margin
+        document.getElementById("toggleButton").style.marginLeft = "7vh";
+
     }
     
     function closeNav() {
-      document.getElementById("sidebar").style.width = "0";
-      document.getElementById("site").style.marginLeft= "0";
+        // width and margin change
+        document.getElementById("sidebar-open").style.width = "5vw";
+        document.getElementById("site").style.marginLeft= "5%";
+        // display change
+        document.getElementById("sidebar-close").style.display = "block";
+        document.getElementById("sidebar-open").style.display = "none";
+        // close btn margin
+        document.getElementById("toggleButton").style.marginLeft = "0";
+
+    }
+
+    function toggleNav() {
+        const sidebar = document.getElementById("sidebar-open");
+        const toggleButton = document.getElementById("toggleButton");
+    
+        const isSidebarOpen = sidebar.style.display === "block";        
+        if (isSidebarOpen) {
+            console.log('close')
+            closeNav();
+            toggleButton.innerHTML = ">>";
+        } else {
+            openNav();
+            toggleButton.innerHTML = "<<";
+        }
     }
 </script>
 </html>

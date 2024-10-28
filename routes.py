@@ -54,7 +54,7 @@ def index():
             'image': tweet.image
         }
         tweets.append(tweet_data)
-    return render_template('index.html', today_date=get_date(), hebrew_date=get_hebrew_date(), tweets=reversed(tweets))
+    return render_template('index.html', today_date=get_date(), hebrew_date=get_hebrew_date(), tweets=list(reversed(tweets)))
 
 Cell = namedtuple("cell", ["cell_type", "size", "alert", "name","info","icon","chart_type","labels","values"]) # SET the Cell coloumns 
 

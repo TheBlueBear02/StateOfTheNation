@@ -18,7 +18,7 @@ body {
 
 }
 
-.sidebar {
+.sidebar-open {
     height: 100%;
     width: 23vw;
     position: fixed;
@@ -27,11 +27,20 @@ body {
     left: 0;
     background-color: #F6F6F6;
     padding-top: 1vh;
+    transition: 0.3s;
+
   }
+#sidebar-open{
+  display: block;
+}
 .site {
   padding: 0;
   margin: 0;
   margin-left: 20%;
+
+}
+#site{
+  transition: margin-left .5s; /* If you want a transition effect */
 
 }
 .main{
@@ -60,4 +69,20 @@ p{
   margin: 0px auto;
   height: 100%;
   border: none;
+}
+.sidebar-close{
+  display: none;
+
+}
+
+.sidebarBtn{
+  width: 3vw;
+  height: 3vw;
+  border-radius: 50%;
+  position: absolute; /* or relative or fixed based on your layout needs */
+  z-index: 3;
+  background-color: #4890fd;
+  margin-top:48vh;
+  margin-left: 7vh;
+  cursor: pointer;
 }
