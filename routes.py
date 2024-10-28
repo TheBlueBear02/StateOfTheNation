@@ -4,6 +4,7 @@ from pyluach import dates
 from models import db, KnessetMembers, Tweets, Offices, Indexes, Indexes_Data  # Import models
 from collections import namedtuple
 import json
+import random
 
 # Create a Blueprint for the routes
 routes = Blueprint('routes', __name__)
@@ -70,9 +71,14 @@ def create_cell(cell_type, info=None):
     }
     
     data = info if info else default_data
+    size = (
+        random.choice(['large', 'medium']) if cell_type == "kpi" 
+        else random.choice(['medium', 'small']) if cell_type == "policy" 
+        else 'small'
+    )
     return Cell(
         cell_type=cell_type,
-        size='medium' if cell_type in ["kpi", "policy"] else 'small',
+        size=size,
         alert=data['alert'],
         name=data['name'],
         info=data['info'],
@@ -176,7 +182,7 @@ def offices():
         
         second_office_cells.append(row)
 
-    # 4 office data
+    # 4 office's data
     for office in all_offices:
         if i == number_of_offices:
             break

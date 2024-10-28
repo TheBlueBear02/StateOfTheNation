@@ -33,18 +33,22 @@
                                         data-tooltip="{{ cell.name }}"
                                         data-name="{{ cell.name }}"
                                         data-info="{{ cell.info }}"
+                                        data-icon="{{ cell.icon }}"
                                         data-chart="{{ cell.chart_type }}"
                                         data-labels="{{ cell.labels}}"
                                         data-values="{{ cell.values | tojson }}"
+                                        
+                                        office-name="{{ second_office['name'] }}" 
+                                        office-minister="{{ second_office['minister_name'] }}"
+                                        office-minister-image="{{ second_office['minister_image'] }}"
+                                        office-minister-party="{{ second_office['minister_party'] }}"
+                                        office-minister-role="{{ second_office['minister_role'] }}"
                                         onclick="openModal(this)">
+
                                         <img class="bubble_icon {{ cell.size }}_icon" src="/static/images/offices/white_bag.png" alt="{{ cell.name }}">
                                     </span>
                                 </div>
                             </td>
-                            <script>
-                                console.log("Labels:", "{{ cell.labels}}");
-                                console.log("Values:", "{{ cell.labels}}");
-                            </script>
                         {% endif %}
                     {% endfor %}
                     </tr>
@@ -79,8 +83,9 @@
 </table>
 
 
-
+<!-- KPI Modal -->
 <dialog kpi-modal class="kpi-modal">
+    <div class="modal-content">
     <button onclick="closeModal()" id="close_button">X</button>
     <table>
         <tr>
@@ -94,13 +99,15 @@
         <tr>
             <th>
                 <div id="graph_div_kpi" class="chart-div">
-                    <canvas id="kpi_chart"></canvas>
+                    <canvas class="chart" id="kpi_chart"></canvas>
                 </div>
             </th>
         </tr>
     </table>
+    </div>
 </dialog>
 
+<!-- Policies Modal -->
 <dialog policies-modal class="policies-modal">
     <button onclick="closeModal()" id="close_button">X</button>
     <table>
@@ -115,13 +122,14 @@
         <tr>
             <th>
                 <div id="graph_div_policy" class="chart-div">
-                    <canvas id="policies_chart"></canvas>
+                    <canvas class="chart" id="policies_chart"></canvas>
                 </div>
             </th>
         </tr>
     </table>
 </dialog>
 
+<!-- Info Modal -->
 <dialog explain-modal class="explain-modal">
     <button close_modal onclick="closeModal()" style="display: block;" id="close_button" >X</button>
     <img style="width: 145vh; height: 90vh; margin-left:6rem;" src="/static/images/offices/explain.png">
@@ -153,15 +161,20 @@
     }
 
     function openModal(cellElement) {
+        // index info
         const name = cellElement.getAttribute("data-name");
         const info = cellElement.getAttribute("data-info");
         const chart = cellElement.getAttribute("data-chart");
         const labels = JSON.parse(cellElement.getAttribute("data-labels"));
         const values = JSON.parse(cellElement.getAttribute("data-values"));
         
-        console.log("values:", values);
-        console.log("Labels:", labels); // Should be an array like ["Label1", "Label2", ...]
-        console.log("chart type:", chart); // Should be an array like ["Label1", "Label2", ...]
+        // office info
+        const office_name = cellElement.getAttribute("office-name");
+        const minister_name = cellElement.getAttribute("office-minister");
+        const minister_image = cellElement.getAttribute("office-minister-image");
+        const minister_party = cellElement.getAttribute("office-minister-party");
+        const office_minister_role = cellElement.getAttribute("office-minister-role");
+
 
         if (cellElement.classList.contains('kpi') || cellElement.classList.contains('alert_bubble')) {
             document.getElementById("modal-name-kpi").textContent = name;
