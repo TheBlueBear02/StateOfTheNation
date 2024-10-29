@@ -184,6 +184,9 @@ td {
     height: 100%;
     border: 2px solid #4890FD;
     border-radius: 25px;
+    padding: 3vh;
+    margin: 0;
+    padding-top: 0;
 }
 
 .kpi-modal::backdrop {
@@ -212,18 +215,15 @@ td {
     cursor: pointer;
     font-size: 24px;
     padding: 0;
-
+    position: fixed;
+    top: 2vh;
+    left: 2vh;
 }
 
 #close_button:hover {
     background-color: #257cff;
 }
 
-#graph_div {
-    padding: 0;
-    margin: 0;
-    width: 50%;
-}
 
 p {
     font-family: Arial, Helvetica, sans-serif;
@@ -347,16 +347,57 @@ p {
 }
 
 .modal-content{
-    width: 95%;
-    height: 95%;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+}
+
+.modal-info-table{
+    width: 100%;
+    height: 3vh;
 }
 
 .chart-div{
     width: 100%;
     height: 100%;
-
 }
 
-.chart{
+/* Define the scrollbar style */
+.kpi-modal::-webkit-scrollbar {
+    width: 0vh;
+    height: 0vh;
+}
+/* Define the thumb style */
+.kpi-modal::-webkit-scrollbar-thumb {
+background: rgb(207, 207, 207);
+border-radius: 10px;
+}
+/* Define the track style */
+
+/* Define the button style */
+
+/* Define the button style when being hovered over */
+.kpi-modal:-webkit-scrollbar-button:hover {
+background-color: #999999;
+}
+    
+#share_button {
+    border: none;
+    font-weight: 700;
+    background-color: #25cd70;
+    border-radius: 1rem;
+    color: white;
+    width: 6rem;
+    height: 2rem;
+    cursor: pointer;
+    font-size: 24px;
+    padding: 0;
+    position: fixed;
+    top: 85%;
+    left: 85%;
+}
+#share_button:hover{
+    transform: scale(1.1);
+    background-color: #20b362;
 
 }

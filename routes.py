@@ -64,7 +64,7 @@ def create_cell(cell_type, info=None):
         'alert': False,
         'name': 'name',
         'info': 'info',
-        'icon': 'icon',
+        'icon': '',
         'chart_type': 'line',
         'labels': [],
         'values': []
@@ -76,6 +76,7 @@ def create_cell(cell_type, info=None):
         else random.choice(['medium', 'small']) if cell_type == "policy" 
         else 'small'
     )
+    print(data['icon'])
     return Cell(
         cell_type=cell_type,
         size=size,
