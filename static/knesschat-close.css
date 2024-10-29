@@ -18,19 +18,27 @@ width: 0;
 height: 0;
 }
 
-.header{
-    height: 9vh;
+.sidebar_header{
+    height:11.5vh;
     width: 100%;
+    border-bottom: 0.3vh solid rgb(177, 177, 177);
+
 }
 #logo{
-    width: 5vw;
+    width: 4.5vw;
+    margin: 0, auto;
+    margin-top: 1vh;
+    margin-left: .25vw;
 }
 .tweets_div{
     padding: 0;
     margin:0;
     margin-left: .3vw;
+    padding-top: 1vh;
+    background-image: url(/static/images/knesschat_background1.png);
+
 }
-.img_span{
+.img_span_close{
     background-size: cover;
     box-shadow: 0 .5vh .5vh rgb(0 0 0 / 0.3);
     padding:0;
@@ -42,7 +50,7 @@ height: 0;
     border: 1px solid grey;
     margin-bottom: 1vh;
 }
-.img_span:hover{
+.img_span_close:hover{
     transform: scale(1.1);
 
 }
