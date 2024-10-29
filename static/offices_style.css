@@ -204,7 +204,7 @@ td {
     background-color: white;
 }
 
-#close_button {
+.close_button {
     border: none;
     font-weight: 700;
     background-color: #4890FD;
@@ -367,19 +367,11 @@ p {
     width: 0vh;
     height: 0vh;
 }
-/* Define the thumb style */
-.kpi-modal::-webkit-scrollbar-thumb {
-background: rgb(207, 207, 207);
-border-radius: 10px;
+.policies-modal::-webkit-scrollbar{
+    width: 0;
+    height: 0;
 }
-/* Define the track style */
 
-/* Define the button style */
-
-/* Define the button style when being hovered over */
-.kpi-modal:-webkit-scrollbar-button:hover {
-background-color: #999999;
-}
     
 #share_button {
     border: none;
