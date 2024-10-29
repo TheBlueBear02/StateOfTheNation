@@ -107,7 +107,7 @@
                 </th>
                 <th  style="width: 5%; ">
                     <span style="height: 6vw;width: 6vw; background: radial-gradient(#6ba4fa, #447dd3); border-radius: 50%;float: left;margin: 0;">
-                        <img class="bubble_icon large_icon" src="/static/images/offices/kpi/white_bag.png">
+                        <img class="bubble_icon large_icon" id="modal-icon-kpi" src="/static/images/offices/kpi/white_bag.png">
                     </span>
                 </th>   
             </tr>
@@ -115,7 +115,7 @@
         <div id="graph_div_kpi" class="chart-div">
             <canvas class="chart" id="kpi_chart"></canvas>
         </div>
-        <button onclick="" id="share_button">Share</button>
+        <button onclick="" class="share_button">Share</button>
     </div>
 </dialog>
 
@@ -136,7 +136,7 @@
                 </th>
                 <th  style="width: 5%; ">
                     <span style="height: 6vw;width: 6vw; background: radial-gradient(#e3e3e3, #c3c3c3); border-radius: 50%;float: left;margin: 0;">
-                        <img class="bubble_icon large_icon" src="/static/images/offices/policy/grey_bag.png">
+                        <img class="bubble_icon large_icon" id="modal-icon-policy" src="/static/images/offices/policy/grey_bag.png">
                     </span>
                 </th>   
             </tr>
@@ -144,7 +144,7 @@
         <div id="graph_div_kpi" class="chart-div">
             <canvas class="chart" id="policies_chart"></canvas>
         </div>
-        <button onclick="" id="share_button">Share</button>
+        <button onclick="" class="share_button">Share</button>
     </div>
 </dialog>
 
@@ -201,7 +201,7 @@
             document.getElementById("modal-name-kpi").textContent = name;
             document.getElementById("modal-info-kpi").textContent = info;
             document.getElementById("modal-office-kpi").textContent = office_name;
-            //document.getElementById("modal-icon-kpi").textContent = icon;
+            document.getElementById("modal-icon-kpi").src = icon;
 
             updateChart("kpi_chart", labels, values, chart, name);
             kpiModal.showModal();
@@ -209,6 +209,7 @@
             document.getElementById("modal-name-policy").textContent = name;
             document.getElementById("modal-info-policy").textContent = info;
             document.getElementById("modal-office-policy").textContent = office_name;
+            document.getElementById("modal-icon-policy").src = icon;
 
             updateChart("policies_chart", labels, values, chart, name);
             policiesModal.showModal();
