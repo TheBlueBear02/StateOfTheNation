@@ -107,7 +107,7 @@ def create_cell(cell_type, info=None):
         'icon': '',
         'chart_type': 'line',
         'labels': [],
-        'values': []
+        'values': ""
     }
     
     # insert data if info exists
@@ -121,7 +121,10 @@ def create_cell(cell_type, info=None):
     # set the icon to "" if index doesn't have icon in db
     icon = ("" if data['icon'] == None
     else data['icon'])
-
+    
+    values = ("" if data['values'] == None
+        else data['values'])
+    
     return Cell(
         cell_type=cell_type,
         size=size,
@@ -131,7 +134,7 @@ def create_cell(cell_type, info=None):
         icon=icon,
         chart_type=data['chart_type'],
         labels=data['labels'],
-        values=data['values']
+        values=values
     )
 
 # setting the labels dates to json for the graphs
@@ -160,7 +163,7 @@ def offices():
     all_offices = db.session.query(Offices).limit(4).all()
 
     # Fetch index info for each office
-    first_office_indexes_info = fetch_indexes(3)
+    first_office_indexes_info = fetch_indexes(1)
     second_office_indexes_info = fetch_indexes(2)
     third_office_indexes_info = fetch_indexes(3)
     forth_office_indexes_info = fetch_indexes(4)
@@ -182,7 +185,7 @@ def offices():
         ["space", "policy", "policy", "main_bubble"],
         ["kpi", "kpi", "policy", "policy"],
         ["kpi", "kpi", "kpi", "policy"],
-        ["main_bubble", "kpi", "kpi", "space"]
+        ["space", "kpi", "kpi", "space"]
     ]
     bottom_right_structure = [
         ["main_bubble", "policy", "policy", "space"],
@@ -193,7 +196,7 @@ def offices():
     
     # Create the office's cells
     first_office_cells = create_cells(first_office_indexes_info, upper_left_structure)
-    second_office_cells = create_cells(first_office_indexes_info, upper_right_structure)
+    second_office_cells = create_cells(second_office_indexes_info, upper_right_structure)
     third_office_cells = create_cells(third_office_indexes_info, bottom_left_structure)
     forth_office_cells = create_cells(forth_office_indexes_info, bottom_right_structure)
 
@@ -214,7 +217,7 @@ def offices():
 
     
     # send the page offices and indexes data
-    return render_template('offices.html', offices=offices_list, first_office_indexes=first_office_indexes_info, first_office_cells=first_office_cells, second_office_cells=second_office_cells, third_office_cells=third_office_cells, forth_office_cells=forth_office_cells)
+    return render_template('offices.html',  offices=offices_list,first_office_cells=first_office_cells, second_office_cells=second_office_cells, third_office_cells=third_office_cells, forth_office_cells=forth_office_cells)
 
 @routes.route('/demography')
 def demography():
