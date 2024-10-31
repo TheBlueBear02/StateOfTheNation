@@ -79,8 +79,8 @@ table {
 }
 
 #main_table {
-    margin-left: 10%;
-    width: 80%;
+    margin-left: 5%;
+    width: 90%;
     height: 98%;
     border-collapse: collapse;
     padding: 0;
@@ -244,11 +244,13 @@ p {
     margin-right: 6vw;
     display: block;
     float: right;
-    height: 2.5vw;
-    width: 2.5vw;
+    height: 3vw;
+    width: 3vw;
     background: radial-gradient(#cecece, #ababab);
     border-radius: 50%;
     cursor: pointer;
+    position: absolute;
+    left: 90%;
 }
 
 .explain_span:hover {
@@ -292,11 +294,11 @@ p {
     float: left;
     margin-left: 1vw;
 }
-#main_down_left{
+#main_bottom_left{
     float: right;
     margin-right: 1vw;
 }
-#main_down_right{
+#main_bottom_right{
     float: left;
     margin-left: 1vw;
 }

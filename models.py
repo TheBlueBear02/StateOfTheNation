@@ -48,3 +48,4 @@ class Ministers_History(db.Model):
     start_date = db.Column(db.Date, nullable=False)
     image = db.Column(db.String)
     office_id = db.Column(db.Integer, nullable=False)
+    party = db.Column(db.String, nullable=False)

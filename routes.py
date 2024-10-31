@@ -144,7 +144,7 @@ def parse_dates(labels):
     for date in labels:
         try:
             # Try to parse as "DD.MM.YYYY"
-            parsed_date = datetime.strptime(date, "%d.%m.%Y").strftime("%Y-%m-%d")
+            parsed_date = datetime.strptime(date, "%d.%m.%Y").strftime("%Y-%m")
         except ValueError:
             try:
                 # If it fails, try to parse as "YYYY"
