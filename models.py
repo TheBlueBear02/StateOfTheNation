@@ -42,3 +42,9 @@ class Indexes_Data(db.Model):
     label = db.Column(db.String)
     value = db.Column(db.Integer, nullable=False)
 
+class Ministers_History(db.Model):
+    id = db.Column(db.Integer, nullable=False,primary_key=True)
+    name = db.Column(db.String(80), unique=False, nullable=False)
+    start_date = db.Column(db.Date, nullable=False)
+    image = db.Column(db.String)
+    office_id = db.Column(db.Integer, nullable=False)

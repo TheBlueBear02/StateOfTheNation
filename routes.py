@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template
 from datetime import datetime
 from pyluach import dates
-from models import db, KnessetMembers, Tweets, Offices, Indexes, Indexes_Data  # Import models
+from models import db, KnessetMembers, Tweets, Offices, Indexes, Indexes_Data, Ministers_History # Import models
 from collections import namedtuple
 import json
 import random
