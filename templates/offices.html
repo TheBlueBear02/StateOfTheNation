@@ -2,210 +2,60 @@
 <link rel="stylesheet" href="{{ url_for('static', filename='offices_style.css') }}">
 <span class="explain_span"><img class="explain_icon" style="width: 2vw;display: block;margin: auto;margin-top: 2px;" src="/static/images/offices/question_mark.png"></span>
 
+{% macro render_office(office, office_cells, position, main_bubble_id, border_style) %}
+<table class="{{ position }}" style="{{ border_style }}">
+    {% for row in office_cells %}
+    <tr>
+        {% for cell in row %}
+            {% if cell.cell_type == "space" %}
+                <td></td>
+            {% elif cell.cell_type == "main_bubble" %}
+                <td>
+                    <span class="main_bubble" id="{{ main_bubble_id }}" 
+                          data-tooltip="{{ office['name'] }}" 
+                          style="background-image: url({{ office['minister_image'] }});"></span>
+                </td>
+            {% else %}
+                <td>
+                    <div class="transform_div">
+                        <span class="{{ cell.size }} {% if cell.alert %} alert_bubble {% else %} {{ cell.cell_type }} {% endif %}"
+                              data-tooltip="{{ cell.name }}"
+                              data-name="{{ cell.name }}"
+                              data-info="{{ cell.info }}"
+                              data-icon="{{ cell.icon }}"
+                              data-chart="{{ cell.chart_type }}"
+                              data-labels="{{ cell.labels }}"
+                              data-values="{{ cell.values | tojson }}"
+                              
+                              office-name="{{ office['name'] }}"
+                              office-minister="{{ office['minister_name'] }}"
+                              office-minister-image="{{ office['minister_image'] }}"
+                              office-minister-party="{{ office['minister_party'] }}"
+                              office-minister-role="{{ office['minister_role'] }}"
+                              onclick="openModal(this)">
+                            {% if cell.icon %}
+                                <img class="bubble_icon {{ cell.size }}_icon" src="{{ cell.icon }}" alt="{{ cell.name }}">
+                            {% else %}
+                                <img class="bubble_icon {{ cell.size }}_icon" src="/static/images/offices/{% if cell.cell_type == 'kpi' %}kpi/white_bag.png{% else %}policy/grey_bag.png{% endif %}" alt="{{ cell.name }}">
+                            {% endif %}
+                        </span>
+                    </div>
+                </td>
+            {% endif %}
+        {% endfor %}
+    </tr>
+    {% endfor %}
+</table>
+{% endmacro %}
+
 <table id="main_table">
     <tr>
-        <td>
-            <!-- First Office -->
-            {% set first_office = offices[0] %}
-            <table class="up-left">              
-                {% for row in first_office_cells %}
-                <tr>
-                    {% for cell in row %}
-                        {% if cell.cell_type == "space" %}
-                            <td></td>
-                        {% elif cell.cell_type == "main_bubble" %}
-                            <td>
-                                <span class="main_bubble" id="main_upper_left" data-tooltip="{{first_office['name']}}" style="background-image: url({{first_office['minister_image']}});"></span>
-                            </td>
-                        {% else %}
-                            <td>
-                                <div class="transform_div">
-                                    <span 
-                                        class="{{ cell.size }} {% if cell.alert %} alert_bubble {% else %} {{ cell.cell_type }} {% endif %}"
-                                        data-tooltip="{{ cell.name }}"
-                                        data-name="{{ cell.name }}"
-                                        data-info="{{ cell.info }}"
-                                        data-icon="{{ cell.icon }}"
-                                        data-chart="{{ cell.chart_type }}"
-                                        data-labels="{{ cell.labels}}"
-                                        data-values="{{ cell.values | tojson }}"
-                                        
-                                        office-name="{{ first_office['name'] }}" 
-                                        office-minister="{{ first_office['minister_name'] }}"
-                                        office-minister-image="{{ first_office['minister_image'] }}"
-                                        office-minister-party="{{ first_office['minister_party'] }}"
-                                        office-minister-role="{{ first_office['minister_role'] }}"
-                                        onclick="openModal(this)">
-                                        {% if cell.icon != "" %}
-                                            <img class="bubble_icon {{ cell.size }}_icon" src="{{cell.icon}}" alt="{{ cell.name }}">
-                                        {% else %}
-                                            {% if cell.cell_type == "kpi" %}
-                                                <img class="bubble_icon {{ cell.size }}_icon" src="/static/images/offices/kpi/white_bag.png" alt="{{ cell.name }}">
-                                            {% else %}
-                                                <img class="bubble_icon {{ cell.size }}_icon" src="/static/images/offices/policy/grey_bag.png" alt="{{ cell.name }}">
-                                            {% endif %}
-                                        {% endif %}
-                                    </span>
-                                </div>
-                            </td>
-                        {% endif %}
-                    {% endfor %}
-                    </tr>
-                {%endfor%}
-            </table>
-        </td>
-        <td>
-            <!-- Second Office -->
-            {% set second_office = offices[1] %}
-            <table class="up-right" style="border-bottom: 6px solid; border-image-slice: 1; border-width: 0.8vh;  border-image-source: linear-gradient(to right, #838383, #ffffff);">
-                {% for row in second_office_cells %}
-                <tr>
-                    {% for cell in row %}
-                        {% if cell.cell_type == "space" %}
-                            <td></td>
-                        {% elif cell.cell_type == "main_bubble" %}
-                            <td>
-                                <span class="main_bubble" id="main_upper_right" data-tooltip="{{second_office['name']}}" style="background-image: url({{second_office['minister_image']}});"></span>
-                            </td>
-                        {% else %}
-                            <td>
-                                <div class="transform_div">
-                                    <span 
-                                        class="{{ cell.size }} {% if cell.alert %} alert_bubble {% else %} {{ cell.cell_type }} {% endif %}"
-                                        data-tooltip="{{ cell.name }}"
-                                        data-name="{{ cell.name }}"
-                                        data-info="{{ cell.info }}"
-                                        data-icon="{{ cell.icon }}"
-                                        data-chart="{{ cell.chart_type }}"
-                                        data-labels="{{ cell.labels}}"
-                                        data-values="{{ cell.values | tojson }}"
-                                        
-                                        office-name="{{ second_office['name'] }}" 
-                                        office-minister="{{ second_office['minister_name'] }}"
-                                        office-minister-image="{{ second_office['minister_image'] }}"
-                                        office-minister-party="{{ second_office['minister_party'] }}"
-                                        office-minister-role="{{ second_office['minister_role'] }}"
-                                        onclick="openModal(this)">
-                                        {% if cell.icon != "" %}
-                                            <img class="bubble_icon {{ cell.size }}_icon" src="{{cell.icon}}" alt="{{ cell.name }}">
-                                        {% else %}
-                                            {% if cell.cell_type == "kpi" %}
-                                                <img class="bubble_icon {{ cell.size }}_icon" src="/static/images/offices/kpi/white_bag.png" alt="{{ cell.name }}">
-                                            {% else %}
-                                                <img class="bubble_icon {{ cell.size }}_icon" src="/static/images/offices/policy/grey_bag.png" alt="{{ cell.name }}">
-                                            {% endif %}
-                                        {% endif %}
-                                    </span>
-                                </div>
-                            </td>
-                        {% endif %}
-                    {% endfor %}
-                    </tr>
-                {%endfor%}
-            </table>
-        </td>
+        <td>{{ render_office(offices[0], first_office_cells, "up-left", "main_upper_left", "border-right: 6px solid; border-image-slice: 1; border-width: 0.8vh; border-image-source: linear-gradient(to bottom, #ffffff,  #838383);") }}</td>
+        <td>{{ render_office(offices[1], second_office_cells, "up-right", "main_upper_right", "border-bottom: 6px solid; border-image-slice: 1; border-width: 0.8vh; border-image-source: linear-gradient(to right, #838383, #ffffff);") }}</td>
     </tr>
     <tr>
-        <td>
-            <!-- Third Office -->
-            {% set third_office = offices[2] %}
-            <table class="down-left" style="border-top: 6px solid; border-image-slice: 1; border-width: 0.8vh;  border-image-source: linear-gradient(to left, #838383, #ffffff);">
-                {% for row in third_office_cells %}
-                <tr>
-                    {% for cell in row %}
-                        {% if cell.cell_type == "space" %}
-                            <td></td>
-                        {% elif cell.cell_type == "main_bubble" %}
-                            <td>
-                                <span class="main_bubble" id="main_bottom_left" data-tooltip="{{third_office['name']}}" style="background-image: url({{third_office['minister_image']}});"></span>
-                            </td>
-                        {% else %}
-                            <td>
-                                <div class="transform_div">
-                                    <span 
-                                        class="{{ cell.size }} {% if cell.alert %} alert_bubble {% else %} {{ cell.cell_type }} {% endif %}"
-                                        data-tooltip="{{ cell.name }}"
-                                        data-name="{{ cell.name }}"
-                                        data-info="{{ cell.info }}"
-                                        data-icon="{{ cell.icon }}"
-                                        data-chart="{{ cell.chart_type }}"
-                                        data-labels="{{ cell.labels}}"
-                                        data-values="{{ cell.values | tojson }}"
-                                        
-                                        office-name="{{ third_office['name'] }}" 
-                                        office-minister="{{ third_office['minister_name'] }}"
-                                        office-minister-image="{{ third_office['minister_image'] }}"
-                                        office-minister-party="{{ third_office['minister_party'] }}"
-                                        office-minister-role="{{ third_office['minister_role'] }}"
-                                        onclick="openModal(this)">
-                                        {% if cell.icon != "" %}
-                                            <img class="bubble_icon {{ cell.size }}_icon" src="{{cell.icon}}" alt="{{ cell.name }}">
-                                        {% else %}
-                                            {% if cell.cell_type == "kpi" %}
-                                                <img class="bubble_icon {{ cell.size }}_icon" src="/static/images/offices/kpi/white_bag.png" alt="{{ cell.name }}">
-                                            {% else %}
-                                                <img class="bubble_icon {{ cell.size }}_icon" src="/static/images/offices/policy/grey_bag.png" alt="{{ cell.name }}">
-                                            {% endif %}
-                                        {% endif %}
-                                    </span>
-                                </div>
-                            </td>
-                        {% endif %}
-                    {% endfor %}
-                    </tr>
-                {%endfor%}
-            </table>
-        </td>
-        <td>
-            <!-- Forth Office -->
-            {% set forth_office = offices[3] %}
-            <table class="down-right" style="border-left: 6px solid; border-image-slice: 1; border-width: 0.8vh;  border-image-source: linear-gradient( #838383, #ffffff);">
-                {% for row in forth_office_cells %}
-                <tr>
-                    {% for cell in row %}
-                        {% if cell.cell_type == "space" %}
-                            <td></td>
-                        {% elif cell.cell_type == "main_bubble" %}
-                            <td>
-                                <span class="main_bubble" id="main_bottom_right" data-tooltip="{{forth_office['name']}}" style="background-image: url({{forth_office['minister_image']}});"></span>
-                            </td>
-                        {% else %}
-                            <td>
-                                <div class="transform_div">
-                                    <span 
-                                        class="{{ cell.size }} {% if cell.alert %} alert_bubble {% else %} {{ cell.cell_type }} {% endif %}"
-                                        data-tooltip="{{ cell.name }}"
-                                        data-name="{{ cell.name }}"
-                                        data-info="{{ cell.info }}"
-                                        data-icon="{{ cell.icon }}"
-                                        data-chart="{{ cell.chart_type }}"
-                                        data-labels="{{ cell.labels}}"
-                                        data-values="{{ cell.values | tojson }}"
-                                        
-                                        office-name="{{ forth_office['name'] }}" 
-                                        office-minister="{{ forth_office['minister_name'] }}"
-                                        office-minister-image="{{ forth_office['minister_image'] }}"
-                                        office-minister-party="{{ forth_office['minister_party'] }}"
-                                        office-minister-role="{{ forth_office['minister_role'] }}"
-                                        onclick="openModal(this)">
-                                        {% if cell.icon != "" %}
-                                            <img class="bubble_icon {{ cell.size }}_icon" src="{{cell.icon}}" alt="{{ cell.name }}">
-                                        {% else %}
-                                            {% if cell.cell_type == "kpi" %}
-                                                <img class="bubble_icon {{ cell.size }}_icon" src="/static/images/offices/kpi/white_bag.png" alt="{{ cell.name }}">
-                                            {% else %}
-                                                <img class="bubble_icon {{ cell.size }}_icon" src="/static/images/offices/policy/grey_bag.png" alt="{{ cell.name }}">
-                                            {% endif %}
-                                        {% endif %}
-                                    </span>
-                                </div>
-                            </td>
-                        {% endif %}
-                    {% endfor %}
-                    </tr>
-                {%endfor%}
-            </table>
-        </td>
+        <td>{{ render_office(offices[2], third_office_cells, "down-left", "main_bottom_left", "border-top: 6px solid; border-image-slice: 1; border-width: 0.8vh; border-image-source: linear-gradient(to left, #838383, #ffffff);") }}</td>
+        <td>{{ render_office(offices[3], forth_office_cells, "down-right", "main_bottom_right", "border-left: 6px solid; border-image-slice: 1; border-width: 0.8vh; border-image-source: linear-gradient(#838383, #ffffff);") }}</td>
     </tr>
 </table>
 
@@ -217,15 +67,15 @@
             <tr>
                 <button onclick="closeModal()" class="close_button">X</button>
                 <th style="width: 60%; ">
-                    <p id="modal-info-kpi" style="font-size: 1rem;"></p>
+                    <p id="modal-info-kpi" style="font-size: 2.5vh; float: right;"></p>
                 </th>
-                <th style="margin-bottom: 5vh; min-width: 50%; height: 100%; float: right;">
-                    <div style="width: 100%;height: 5vh; border-bottom: 2px solid #4890FD;">
-                        <p id="modal-office-kpi" style="font-size: 1.3rem; padding: 0; "><p>
+                <th style="margin:0;padding: 0; margin-bottom: 5vh; min-width: 50%; height: 100%; float: right;">
+                    <div style="width: 100%;height: 5vh; border-bottom: .4vh solid #4890FD;position: relative;">
+                        <span style=" bottom: 0;right: 0;"><p id="modal-office-kpi" style="font-size: 4vh; padding: 0;"><p></span>
                     </div>
-                    <p id="modal-name-kpi" style="float: right; margin: 0;padding: 0; font-size: 1rem; "></h3>
+                    <p id="modal-name-kpi" style="float: right; margin: 0;padding: 0; font-size: 3.4vh;"></h3>
                 </th>
-                <th  style="width: 5%; ">
+                <th  style="width: 5%; margin:0;padding: 0; ">
                     <span style="height: 6vw;width: 6vw; background: radial-gradient(#6ba4fa, #447dd3); border-radius: 50%;float: left;margin: 0;">
                         <img class="bubble_icon large_icon" id="modal-icon-kpi" src="/static/images/offices/kpi/white_bag.png">
                     </span>
