@@ -78,8 +78,8 @@ def create_cells(indexes_info, structure):
         cells.append(row)
     return cells
 
+# Fetch indexes and data for a specific office
 def fetch_indexes(office_id):
-    """Fetch indexes and data for a specific office."""
     indexes = db.session.query(Indexes).filter_by(office_id=office_id).order_by(Indexes.is_kpi.desc()).all()
     indexes_info = []
     for index in indexes:
@@ -157,6 +157,7 @@ def parse_dates(labels):
     # Filter out None values if any parsing failed
     parsed_labels = [date for date in parsed_labels if date is not None]
     return parsed_labels
+    
 
 @routes.route('/offices')
 def offices():
