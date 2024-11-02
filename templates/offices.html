@@ -224,8 +224,7 @@
         }
 
         // Adding today's date to the end of the dates array
-        dates.push(currentDate)
-
+        dates.push(lables[labels_length - 1]+"-12")
 
         
         if (dates[0] < first_graph_date){
@@ -255,7 +254,6 @@
                 // Calculate width as a percentage of total duration
                 widthPercent = (periodDuration / totalDuration1) * 100;
             }
-            
            
             // Create div for this era
             const eraDiv = document.createElement("div");
@@ -265,40 +263,48 @@
             
             // Set the era div info for the minister
             const ministerData = ministers_history[i];
-            if (widthPercent > 5){
-                // Create and append minister image
-                const ministerImage = document.createElement("img");
-                ministerImage.src = ministerData["image"]; // Replace with actual image property
-                ministerImage.alt = `${ministerData.name} image`; // Alt text for accessibility
-                ministerImage.style.width = "7vh"; // Adjust size as needed
-                ministerImage.style.height = "auto"; // Maintain aspect ratio
-                ministerImage.style.border = ".3vh solid "+colors[i % colors.length]; // Maintain aspect ratio
+
+            // Create and append minister image
+            const ministerImage = document.createElement("img");
+            ministerImage.src = ministerData["image"]; // Replace with actual image property
+            ministerImage.alt = `${ministerData.name} image`; // Alt text for accessibility
+            ministerImage.style.width = "7vh"; // Adjust size as needed
+            ministerImage.style.height = "auto"; // Maintain aspect ratio
+            ministerImage.style.border = ".3vh solid "+colors[i % colors.length]; // Maintain aspect ratio
+        
+        
+            // Create a container for the minister's name and party
+            const ministerInfoContainer = document.createElement("div");
+            ministerInfoContainer.style.textAlign = "right"; // Aligns content to the right
+            ministerInfoContainer.style.direction = "rtl"; // RTL for Hebrew or Arabic
+            ministerInfoContainer.style.margin = 0;
+
+            // Create and append minister name
+            const ministerName = document.createElement("p");
+            ministerName.textContent = ministerData["name"];
+            ministerName.style.fontWeight = "bold";
+            ministerName.style.margin = 0;
+
+            // Create and append minister party
+            const ministerParty = document.createElement("p");
+            ministerParty.textContent = ministerData["party"];
+            ministerParty.style.margin = 0;
+
+
+            // Append the info container to the eraDiv
+            console.log(widthPercent)
+            if (widthPercent < 5) {
+
+            } else if (widthPercent >= 5 && widthPercent < 10) {
                 eraDiv.appendChild(ministerImage);
-            
-            
-            
-                // Create a container for the minister's name and party
-                const ministerInfoContainer = document.createElement("div");
-                ministerInfoContainer.style.textAlign = "right"; // Aligns content to the right
-                ministerInfoContainer.style.direction = "rtl"; // RTL for Hebrew or Arabic
-                ministerInfoContainer.style.margin = "0"; // Remove default margin
-
-                // Create and append minister name
-                const ministerName = document.createElement("p");
-                ministerName.textContent = ministerData["name"];
-                ministerName.style.margin = "0"; // Remove margin to align with party text
-                ministerName.style.fontWeight = "bold";
+            } else {
+                eraDiv.appendChild(ministerImage);
                 ministerInfoContainer.appendChild(ministerName);
-
-                // Create and append minister party
-                const ministerParty = document.createElement("p");
-                ministerParty.textContent = ministerData["party"];
-                ministerParty.style.margin = "0"; // Remove margin to align with name text
                 ministerInfoContainer.appendChild(ministerParty);
-
-                // Append the info container to the eraDiv
                 eraDiv.appendChild(ministerInfoContainer);
+
             }
+            
             // Create and append start and end dates
             /*const dateInfo = document.createElement("p");
             dateInfo.textContent = `From ${ministerData.start_date} to ${dates[i + 1]}`; // Adjust as necessary
