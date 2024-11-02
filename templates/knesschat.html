@@ -7,7 +7,9 @@
 </head>
 
 <body>
-    <div id="knesschat_header"><img id="knesschat_logo" src="/static/images/knesschat_logo1.png"></div>
+    <div id="knesschat_header"><img id="knesschat_logo" src="/static/images/knesschat_logo1.png">
+        <button id="scrollTopButton" onclick="scrollToTop()">^</button>
+    </div>
     <div id="buttons_div">
         <button class="filter_button" type="button">מלחמה</button>
         <button class="filter_button" type="button">חוק הגיוס</button>
@@ -109,7 +111,31 @@
             </div>
             {% endif %}
             {% endfor %}
+
         </div>
+
 </body>
 
 </html>
+
+<script>
+    const myDiv = document.getElementById("chat_div");
+    const scrollTopButton = document.getElementById("scrollTopButton");
+
+    // Show/hide button based on scroll position
+    myDiv.addEventListener("scroll", () => {
+        if (myDiv.scrollTop > 0) {
+            scrollTopButton.style.display = "block";
+        } else {
+            scrollTopButton.style.display = "none";
+        }
+    });
+        // Function to scroll to top of the div
+    function scrollToTop() {
+        myDiv.scrollTo({
+            top: 0,
+            behavior: "smooth"
+        });
+    }
+    
+</script>
