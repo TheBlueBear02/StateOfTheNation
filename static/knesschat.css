@@ -43,7 +43,7 @@
 	}
 }
 body{
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: 'Assistant', sans-serif;
 
 }
 #knesschat_header{
@@ -59,7 +59,7 @@ body{
 #buttons_div{
     width: 100%;
     height: 5vh;
-    margin-top: 3.5vh;
+    margin-top: 2.5vh;
     margin-left: .8vh;
     margin-bottom: 0vh;
 }
@@ -100,6 +100,8 @@ body{
     background-image: url(/static/images/knesschat_background1.png);
     padding-left: 2vh;
     overflow: auto;
+    font-family: 'Assistant', sans-serif;
+
 }
 /* Define the scrollbar style */
 #chat_div::-webkit-scrollbar {
@@ -184,13 +186,13 @@ background-color: #999999;
     height: 2.5vw; 
     border-radius: 50%;
     display: block;
-
 }
 .tweet_image{
     background-size: cover;
     width: 100%;
     height: 30vh;
     border-radius: 5%;
+    margin-top: 1vh;
 }
 
 #scrollTopButton{

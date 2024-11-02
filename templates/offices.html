@@ -329,8 +329,8 @@
     }
 
     function updateChart(chartId, labels, values, chart, name,dates) {
-        // Destroy existing chart if it exists
-        if (charts[chartId]) {
+         // Destroy existing chart if it exists
+         if (charts[chartId]) {
             charts[chartId].destroy();
         }
 
@@ -352,25 +352,15 @@
             options: {
                 responsive: true,
                 plugins: { legend: { display: false } },
-                scales: { 
-                    x: { 
-                        ticks: {
-                            autoSkip: true,  // Skip ticks to avoid overcrowding on the x-axis
-                            maxTicksLimit: 50 // Limit the number of x-axis labels shown
-                        },
-                        grid: { 
-                            display: (context) => {
-                                // Show grid line if the label is in the 'dates' array
-                                if (context.tick && context.tick.label) {
-                                    return dates.includes(context.tick.label);
-                                }
-                                return false;
-                            },
-                            color: 'rgba(0, 0, 0, 0.2)'  // Customize grid line color
-                        }
-                    }
-                }
+                scales: { x: { 
+                    ticks: {
+                    stepSize: 5, // Show grid lines every 5 units
+                    },
+                    grid: { 
+                        display: false 
+                    
+                    } } }
             }
-        }); 
+        });
     }
 </script>
