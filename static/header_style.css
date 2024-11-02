@@ -50,7 +50,6 @@ p {
 
 .line{  
 
-    border-left: .3vh solid rgb(151, 151, 151);
     border-right: .3vh solid rgb(151, 151, 151);
 }
 th{
