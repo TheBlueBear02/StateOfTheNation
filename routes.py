@@ -5,6 +5,7 @@ from models import db, KnessetMembers, Tweets, Offices, Indexes, Indexes_Data, M
 from collections import namedtuple
 import json
 import random
+from operator import attrgetter
 
 # Create a Blueprint for the routes
 routes = Blueprint('routes', __name__)
@@ -57,6 +58,7 @@ def index():
     return render_template('index.html', today_date=get_date(), hebrew_date=get_hebrew_date(), tweets=list(reversed(tweets)))
 
 Cell = namedtuple("cell", ["cell_type", "size", "alert", "name","info","icon","chart_type","labels","values"]) # SET the Cell coloumns 
+Minister_term = namedtuple("Minister_term", ["name", "start_date", "image", "party"])  
 
 # Helper to create KPI and policy cells
 def create_cells(indexes_info, structure):
@@ -102,7 +104,7 @@ def fetch_indexes(office_id):
 def create_cell(cell_type, info=None):
     default_data = { # default cell data for empty cells
         'alert': False,
-        'name': 'name',
+        'name': '',
         'info': 'info',
         'icon': '',
         'chart_type': 'line',
@@ -139,25 +141,46 @@ def create_cell(cell_type, info=None):
 
 # setting the labels dates to json for the graphs
 def parse_dates(labels):
+    
     # Parse dates based on format
     parsed_labels = []
     for date in labels:
-        try:
-            # Try to parse as "DD.MM.YYYY"
-            parsed_date = datetime.strptime(date, "%d.%m.%Y").strftime("%Y-%m")
-        except ValueError:
-            try:
-                # If it fails, try to parse as "YYYY"
-                parsed_date = datetime.strptime(date, "%Y").strftime("%Y")
-            except ValueError:
-                # Handle any other unexpected format here if needed
-                parsed_date = None
-        parsed_labels.append(parsed_date)
+        parsed_labels.append(parse_date(date))
 
     # Filter out None values if any parsing failed
     parsed_labels = [date for date in parsed_labels if date is not None]
     return parsed_labels
     
+def parse_date(date):
+    try:
+        # Try to parse as "DD.MM.YYYY"
+        parsed_date = datetime.strptime(date, "%d.%m.%Y").strftime("%Y-%m")
+    except ValueError:
+        try:
+            # If it fails, try to parse as "YYYY"
+            parsed_date = datetime.strptime(date, "%Y").strftime("%Y")
+        except ValueError:
+            # Handle any other unexpected format here if needed
+            parsed_date = None
+    return parsed_date
+
+# Create list of ministers_history for specific office
+def ministers_history_timeline(ministers_list):
+    terms_list = []
+    
+    for minister in ministers_list:
+        term = Minister_term(name=minister.name,
+                      start_date=parse_date(minister.start_date),
+                      image=minister.image,
+                      party=minister.party)
+        terms_list.append(term)
+    
+    # Convert namedtuples to dictionaries
+    dict_data = [t._asdict() for t in terms_list]
+
+    # Convert to JSON and pass to the template
+    json_data = json.dumps(dict_data)  
+    return json_data
 
 @routes.route('/offices')
 def offices():
@@ -205,7 +228,11 @@ def offices():
     offices_list = []
 
     for office in all_offices:
-        minister = db.session.query(KnessetMembers).filter_by(km_id=office.minister_id).first()
+        minister = db.session.query(KnessetMembers).filter_by(km_id=office.minister_id).first() 
+        
+        ministers_history = db.session.query(Ministers_History).filter_by(office_id=office.id).all() 
+        term_history = ministers_history_timeline(ministers_history)
+        
         office_data = {
             'name':office.name,
             'info': office.info,
@@ -213,6 +240,7 @@ def offices():
             'minister_image': minister.image,  
             'minister_party': minister.party,
             'minister_role': minister.additional_role,
+            'ministers_history' : term_history,
         }
         offices_list.append(office_data)
 

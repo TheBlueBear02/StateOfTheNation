@@ -19,20 +19,24 @@
                 <td>
                     <div class="transform_div">
                         <span class="{{ cell.size }} {% if cell.alert %} alert_bubble {% else %} {{ cell.cell_type }} {% endif %}"
-                              data-tooltip="{{ cell.name }}"
-                              data-name="{{ cell.name }}"
-                              data-info="{{ cell.info }}"
-                              data-icon="{{ cell.icon }}"
-                              data-chart="{{ cell.chart_type }}"
-                              data-labels="{{ cell.labels }}"
-                              data-values="{{ cell.values | tojson }}"
-                              
-                              office-name="{{ office['name'] }}"
-                              office-minister="{{ office['minister_name'] }}"
-                              office-minister-image="{{ office['minister_image'] }}"
-                              office-minister-party="{{ office['minister_party'] }}"
-                              office-minister-role="{{ office['minister_role'] }}"
-                              onclick="openModal(this)">
+                                {% if cell.name !="" %}
+                                    data-tooltip="{{ cell.name }}"
+                                {% endif %}
+                                data-name="{{ cell.name }}"
+                                data-info="{{ cell.info }}"
+                                data-icon="{{ cell.icon }}"
+                                data-chart="{{ cell.chart_type }}"
+                                data-labels="{{ cell.labels }}"
+                                data-values="{{ cell.values | tojson }}"
+                                
+                                office-name="{{ office['name'] }}"
+                                office-minister="{{ office['minister_name'] }}"
+                                office-minister-image="{{ office['minister_image'] }}"
+                                office-minister-party="{{ office['minister_party'] }}"
+                                office-minister-role="{{ office['minister_role'] }}"
+                                office-minister-history="{{ office['ministers_history'] }}"
+
+                                onclick="openModal(this)">
                             {% if cell.icon %}
                                 <img class="bubble_icon {{ cell.size }}_icon" src="{{ cell.icon }}" alt="{{ cell.name }}">
                             {% else %}
@@ -66,17 +70,17 @@
         <table class="modal-info-table">
             <tr>
                 <button onclick="closeModal()" class="close_button">X</button>
-                <th style="width: 60%; ">
+                <th style="width: 65%;">
                     <p id="modal-info-kpi" style="font-size: 2.5vh; float: right;"></p>
                 </th>
-                <th style="margin:0;padding: 0; margin-bottom: 5vh; min-width: 50%; height: 100%; float: right;">
-                    <div style="width: 100%;height: 5vh; border-bottom: .4vh solid #4890FD;position: relative;">
-                        <span style=" bottom: 0;right: 0;"><p id="modal-office-kpi" style="font-size: 4vh; padding: 0;"><p></span>
+                <th style="padding: 0; height: 100%; float: right;margin:0;">
+                    <div style="width: 100%;height: 4vh; border-bottom: .4vh solid #4890FD;position: relative;">
+                        <span style=" bottom: 0;right: 0;"><p id="modal-office-kpi" style="font-size: 4vh; padding: 0;line-height: .9;"><p></span>
                     </div>
-                    <p id="modal-name-kpi" style="float: right; margin: 0;padding: 0; font-size: 3.4vh;"></h3>
+                    <p id="modal-name-kpi" style="float: right; margin: 0;padding: 0; font-size: 3.4vh;line-height: 1;"></h3>
                 </th>
                 <th  style="width: 5%; margin:0;padding: 0; ">
-                    <span style="height: 6vw;width: 6vw; background: radial-gradient(#6ba4fa, #447dd3); border-radius: 50%;float: left;margin: 0;">
+                    <span style="margin: 0;height: 6vw;width: 6vw; background: radial-gradient(#6ba4fa, #447dd3); border-radius: 50%;float: left;margin-top: 3vh;">
                         <img class="bubble_icon large_icon" id="modal-icon-kpi" src="/static/images/offices/kpi/white_bag.png">
                     </span>
                 </th>   
@@ -84,7 +88,11 @@
         </table>
         <div id="graph_div_kpi" class="chart-div">
             <canvas class="chart" id="kpi_chart"></canvas>
+            <div id="timeline" class="timeline"></div>
+
         </div>
+        <!-- Timeline container -->
+        
         <button onclick="" class="share_button">Share</button>
     </div>
 </dialog>
@@ -167,8 +175,17 @@
         const minister_party = cellElement.getAttribute("office-minister-party");
         const office_minister_role = cellElement.getAttribute("office-minister-role");
 
-        // modals objects
+        // timeline info
 
+        const ministers_history = JSON.parse(cellElement.getAttribute("office-minister-history"));
+        const totalDuration = Date.parse(labels[labels.length - 1]) - Date.parse(labels[0]);
+        const totalDuration1 = Date.parse(ministers_history[ministers_history.length - 1]["start_date"]) - Date.parse(ministers_history[0]["start_date"]);
+
+        let first_graph_date = labels[0];
+        createTimeline(ministers_history, totalDuration,first_graph_date);
+        
+        
+        // modals objects
         if (cellElement.classList.contains('kpi') || cellElement.classList.contains('alert_bubble')) {
             document.getElementById("modal-name-kpi").textContent = name;
             document.getElementById("modal-info-kpi").textContent = info;
@@ -185,6 +202,92 @@
 
             updateChart("policies_chart", labels, values, chart, name);
             policiesModal.showModal();
+        }
+    }
+    
+    function createTimeline(ministers_history, totalDuration1,first_graph_date) {
+        
+        let currentDate = new Date().toJSON().slice(0, 7);
+
+        const colors = ["#FF6B6B", "#6EC1E4", "#90EE90", "#FFD56B", "#C9A0DC"];
+        const dates = [];
+
+
+        // Clear previous timeline content
+        const timeline = document.getElementById("timeline");
+        timeline.innerHTML = "";  // This removes all child elements
+
+
+        for (let i = 0; i < ministers_history.length; i++) {
+            dates[i] = ministers_history[i]["start_date"];  
+        }
+
+        dates.push(currentDate)
+        console.log("first date: " + dates[0] + " first graph date: " + first_graph_date)
+        
+        if (dates[0] < first_graph_date){
+            dates[0] = first_graph_date
+        }
+        
+        console.log(dates)
+        // Generate each era div
+        for (let i = 0; i < dates.length - 1; i++) {
+            // Calculate the duration of this period
+            const periodDuration = Date.parse(dates[i + 1]) - Date.parse(dates[i]);
+
+            // Calculate width as a percentage of total duration
+            const widthPercent = (periodDuration / totalDuration1) * 100;
+            console.log(widthPercent)
+
+            // Create div for this era
+            const eraDiv = document.createElement("div");
+            eraDiv.className = "era";
+            eraDiv.style.width = widthPercent + "%";
+            eraDiv.style.backgroundColor = colors[i % colors.length];  // Cycle through colors
+            
+            // Set the era div info for the minister
+            const ministerData = ministers_history[i];
+            if (widthPercent > 5){
+                // Create and append minister image
+                const ministerImage = document.createElement("img");
+                ministerImage.src = ministerData["image"]; // Replace with actual image property
+                ministerImage.alt = `${ministerData.name} image`; // Alt text for accessibility
+                ministerImage.style.width = "7vh"; // Adjust size as needed
+                ministerImage.style.height = "auto"; // Maintain aspect ratio
+                ministerImage.style.border = ".3vh solid "+colors[i % colors.length]; // Maintain aspect ratio
+                eraDiv.appendChild(ministerImage);
+            
+            
+            
+                // Create a container for the minister's name and party
+                const ministerInfoContainer = document.createElement("div");
+                ministerInfoContainer.style.textAlign = "right"; // Aligns content to the right
+                ministerInfoContainer.style.direction = "rtl"; // RTL for Hebrew or Arabic
+                ministerInfoContainer.style.margin = "0"; // Remove default margin
+
+                // Create and append minister name
+                const ministerName = document.createElement("p");
+                ministerName.textContent = ministerData["name"];
+                ministerName.style.margin = "0"; // Remove margin to align with party text
+                ministerName.style.fontWeight = "bold";
+                ministerInfoContainer.appendChild(ministerName);
+
+                // Create and append minister party
+                const ministerParty = document.createElement("p");
+                ministerParty.textContent = ministerData["party"];
+                ministerParty.style.margin = "0"; // Remove margin to align with name text
+                ministerInfoContainer.appendChild(ministerParty);
+
+                // Append the info container to the eraDiv
+                eraDiv.appendChild(ministerInfoContainer);
+            }
+            // Create and append start and end dates
+            /*const dateInfo = document.createElement("p");
+            dateInfo.textContent = `From ${ministerData.start_date} to ${dates[i + 1]}`; // Adjust as necessary
+            eraDiv.appendChild(dateInfo);*/
+
+            // Append to timeline container
+            timeline.appendChild(eraDiv);
         }
     }
 
