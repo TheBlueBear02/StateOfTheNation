@@ -176,13 +176,13 @@
         const office_minister_role = cellElement.getAttribute("office-minister-role");
 
         // timeline info
-
         const ministers_history = JSON.parse(cellElement.getAttribute("office-minister-history"));
         const totalDuration = Date.parse(labels[labels.length - 1]) - Date.parse(labels[0]);
         const totalDuration1 = Date.parse(ministers_history[ministers_history.length - 1]["start_date"]) - Date.parse(ministers_history[0]["start_date"]);
 
+        // call the function to create the timeline
         let first_graph_date = labels[0];
-        createTimeline(ministers_history, totalDuration,first_graph_date);
+        createTimeline(ministers_history, totalDuration,first_graph_date,labels);
         
         
         // modals objects
@@ -205,40 +205,58 @@
         }
     }
     
-    function createTimeline(ministers_history, totalDuration1,first_graph_date) {
+    function createTimeline(ministers_history, totalDuration1,first_graph_date,lables) {
         
         let currentDate = new Date().toJSON().slice(0, 7);
 
         const colors = ["#FF6B6B", "#6EC1E4", "#90EE90", "#FFD56B", "#C9A0DC"];
         const dates = [];
 
+        const labels_length = lables.length;
 
         // Clear previous timeline content
         const timeline = document.getElementById("timeline");
         timeline.innerHTML = "";  // This removes all child elements
 
-
+        // Instert all the ministers first dates into array
         for (let i = 0; i < ministers_history.length; i++) {
             dates[i] = ministers_history[i]["start_date"];  
         }
 
+        // Adding today's date to the end of the dates array
         dates.push(currentDate)
-        console.log("first date: " + dates[0] + " first graph date: " + first_graph_date)
+
+
         
         if (dates[0] < first_graph_date){
             dates[0] = first_graph_date
         }
         
-        console.log(dates)
+        let widthPercent;
+        let previous_date = 0;
+
+       
         // Generate each era div
         for (let i = 0; i < dates.length - 1; i++) {
-            // Calculate the duration of this period
-            const periodDuration = Date.parse(dates[i + 1]) - Date.parse(dates[i]);
+            
+            // if the labales are years and months calculate the widths like this
+            if (lables[0].length == 7){
+                for(let j = 0; j < labels_length; j++){
+                if (lables[j] == dates[i + 1]){ // check if the current label queal to the end of the era date
+                    widthPercent = (j - previous_date) / labels_length * 100; // calculate the precentage of the number of labales in the era from the overall labales 
+                    previous_date = j; // set the previous date parameter to the this label
+                    }
+                }
+            }
+            else{ // if the labales are only years
+                // Calculate the duration of this period
+                const periodDuration = Date.parse(dates[i + 1]) - Date.parse(dates[i]);
 
-            // Calculate width as a percentage of total duration
-            const widthPercent = (periodDuration / totalDuration1) * 100;
-            console.log(widthPercent)
-
+                // Calculate width as a percentage of total duration
+                widthPercent = (periodDuration / totalDuration1) * 100;
+            }
+            
+           
             // Create div for this era
             const eraDiv = document.createElement("div");
             eraDiv.className = "era";
