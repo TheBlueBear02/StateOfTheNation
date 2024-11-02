@@ -54,7 +54,7 @@
 
 <table id="main_table">
     <tr>
-        <td>{{ render_office(offices[0], first_office_cells, "up-left", "main_upper_left", "border-right: 6px solid; border-image-slice: 1; border-width: 0.8vh; border-image-source: linear-gradient(to bottom, #f2f2f2,  #838383);") }}</td>
+        <td>{{ render_office(offices[0], first_office_cells, "up-left", "main_upper_left", "border-right: 6px solid; border-image-slice: 1; border-width: 0.8vh; border-image-source: linear-gradient(to bottom, #fff,  #838383);") }}</td>
         <td>{{ render_office(offices[1], second_office_cells, "up-right", "main_upper_right", "border-bottom: 6px solid; border-image-slice: 1; border-width: 0.8vh; border-image-source: linear-gradient(to right, #838383, #f2f2f2);") }}</td>
     </tr>
     <tr>
@@ -180,9 +180,16 @@
         const totalDuration = Date.parse(labels[labels.length - 1]) - Date.parse(labels[0]);
         const totalDuration1 = Date.parse(ministers_history[ministers_history.length - 1]["start_date"]) - Date.parse(ministers_history[0]["start_date"]);
 
+        const dates = [];
+        // Instert all the ministers first dates into array
+        for (let i = 0; i < ministers_history.length; i++) {
+                    dates[i] = ministers_history[i]["start_date"];  
+                }
+
+
         // call the function to create the timeline
         let first_graph_date = labels[0];
-        createTimeline(ministers_history, totalDuration,first_graph_date,labels);
+        createTimeline(ministers_history, totalDuration,first_graph_date,labels,dates);
         
         
         // modals objects
@@ -205,12 +212,11 @@
         }
     }
     
-    function createTimeline(ministers_history, totalDuration1,first_graph_date,lables) {
+    function createTimeline(ministers_history, totalDuration1,first_graph_date,lables,dates) {
         
         let currentDate = new Date().toJSON().slice(0, 7);
 
         const colors = ["#FF6B6B", "#6EC1E4", "#90EE90", "#FFD56B", "#C9A0DC"];
-        const dates = [];
 
         const labels_length = lables.length;
 
@@ -218,11 +224,7 @@
         const timeline = document.getElementById("timeline");
         timeline.innerHTML = "";  // This removes all child elements
 
-        // Instert all the ministers first dates into array
-        for (let i = 0; i < ministers_history.length; i++) {
-            dates[i] = ministers_history[i]["start_date"];  
-        }
-
+       
         // Adding today's date to the end of the dates array
         dates.push(lables[labels_length - 1]+"-12")
 
@@ -298,7 +300,7 @@
             dateInfo.textContent = ` ${ministerData.start_date} `; // Adjust as necessary
             dateInfo.style.position = "absolute";
             dateInfo.style.marginTop = "15vh";
-            dateInfo.style.fontSize = "1.7vh";
+            dateInfo.style.fontSize = "1.8vh";
             dateInfo.style.color = "grey";
             dateInfo.style.fontWeight = "bold";
 
@@ -326,7 +328,7 @@
         }
     }
 
-    function updateChart(chartId, labels, values, chart, name) {
+    function updateChart(chartId, labels, values, chart, name,dates) {
         // Destroy existing chart if it exists
         if (charts[chartId]) {
             charts[chartId].destroy();
@@ -350,9 +352,25 @@
             options: {
                 responsive: true,
                 plugins: { legend: { display: false } },
-                scales: { x: { 
-                    grid: { display: false } } }
+                scales: { 
+                    x: { 
+                        ticks: {
+                            autoSkip: true,  // Skip ticks to avoid overcrowding on the x-axis
+                            maxTicksLimit: 50 // Limit the number of x-axis labels shown
+                        },
+                        grid: { 
+                            display: (context) => {
+                                // Show grid line if the label is in the 'dates' array
+                                if (context.tick && context.tick.label) {
+                                    return dates.includes(context.tick.label);
+                                }
+                                return false;
+                            },
+                            color: 'rgba(0, 0, 0, 0.2)'  // Customize grid line color
+                        }
+                    }
+                }
             }
-        });
+        }); 
     }
 </script>

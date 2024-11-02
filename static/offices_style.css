@@ -68,6 +68,7 @@
 	}
 }
 
+/* offices table */
 
 table {
     width: 90%;
@@ -98,7 +99,7 @@ td {
     transform: scale(1.1);
 }
 
-
+/* bubbles */
 .kpi {
     margin-left: 25%;
     background: radial-gradient(#6ba4fa, #447dd3);
@@ -115,13 +116,7 @@ td {
     margin-left: 25%;
 }
 
-.bubble_icon {
-    width: 4vw;
-    display: block;
-    margin: auto;
-    margin-top: 15%;
 
-}
 
 .policy{
     margin-left: 25%;
@@ -141,7 +136,6 @@ td {
     margin-left: 25%;
 
 }
-
 
 .main_bubble {
     height: 10.3vh;
@@ -180,71 +174,6 @@ td {
 
 }
 
-.kpi-modal {
-    width: 94%;
-    height: 100%;
-    border: .5vh solid #4890FD;
-    border-radius: 3vh;
-    padding: 3vh;
-    margin: 0;
-    padding-top: 0;
-    margin-left: 1%;
-    background-color: #f2f2f2;
-
-}
-
-.kpi-modal::backdrop {
-    background-color: #f2f2f2;
-;
-}
-
-.policies-modal {
-    width: 100%;
-    height: 100%;
-    border: 2px solid rgb(188, 188, 188);
-    border-radius: 25px;
-    padding: 3vh;
-    margin: 0;
-    padding-top: 0;
-}
-
-.policies-modal::backdrop {
-    background-color: white;
-}
-
-.close_button {
-    border: none;
-    font-weight: 700;
-    background-color: #4890FD;
-    border-radius: 3vh;
-    color: white;
-    width: 5vh;
-    height: 5vh;
-    cursor: pointer;
-    font-size: 3vh;
-    padding: 0;
-    position: fixed;
-    top: 2vh;
-    left: 3vh;
-}
-
-.close_button:hover {
-    background-color: #257cff;
-}
-
-
-p {
-    font-family: Arial, Helvetica, sans-serif;
-    font-weight: 300;
-}
-
-.up-left {
-    border-right: 1vh solid;
-    border-image-slice: 1;
-    border-width: 0.8vh;
-    border-image-source: linear-gradient(#ffffff, #858585);
-}
-
 .explain_span {
     margin-right: 6vw;
     display: block;
@@ -263,16 +192,6 @@ p {
 
 }
 
-.explain_modal::backdrop {
-    background-color: white;
-}
-
-.explain_modal {
-    width: 100%;
-    height: 100%;
-    border: 2px solid #4890FD;
-    border-radius: 25px;
-}
 
 [data-tooltip]:hover::after {
     content: attr(data-tooltip);
@@ -321,6 +240,118 @@ p {
     float: right;
 }
 
+
+
+/* modals */
+.kpi-modal {
+    width: 94%;
+    height: 100%;
+    border: .3vh solid #4890FD;
+    border-radius: 3vh;
+    padding: 3vh;
+    margin: 0;
+    padding-top: 0;
+    margin-left: 1%;
+    background-image: linear-gradient(#fff, #f2f2f2);
+    margin-top: 1vh;
+}
+
+.kpi-modal::backdrop {
+    background-image: linear-gradient(#fff, #f2f2f2);
+;
+}
+
+.policies-modal {
+    width: 100%;
+    height: 100%;
+    border: .3vh solid rgb(188, 188, 188);
+    border-radius: 25px;
+    padding: 3vh;
+    margin: 0;
+    padding-top: 0;
+}
+
+.policies-modal::backdrop {
+    background-color: white;
+}
+
+.close_button {
+    border: none;
+    font-weight: 700;
+    background-color: #4890FD;
+    border-radius: 3vh;
+    color: white;
+    width: 5vh;
+    height: 5vh;
+    cursor: pointer;
+    font-size: 3vh;
+    padding: 0;
+    position: fixed;
+    top: 2.5vh;
+    left: 3vh;
+}
+
+.close_button:hover {
+    background-color: #257cff;
+}
+
+.share_button {
+    border: none;
+    font-weight: 700;
+    background-color: #25cd70;
+    border-radius: 3vh;
+    color: white;
+    width: 10vh;
+    height: 5vh;
+    cursor: pointer;
+    font-size: 3vh;
+    padding: 0;
+    position: fixed;
+    top: 2.7vh;
+    left: 9vh;
+}
+
+p {
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: 300;
+}
+
+.up-left {
+    border-right: 1vh solid;
+    border-image-slice: 1;
+    border-width: 0.8vh;
+    border-image-source: linear-gradient(#ffffff, #858585);
+}
+
+.explain_modal {
+    width: 100%;
+    height: 100%;
+    border: 2px solid #4890FD;
+    border-radius: 25px;
+}
+
+.explain_modal::backdrop {
+    background-color: white;
+}
+
+/* Define the scrollbar style */
+.kpi-modal::-webkit-scrollbar {
+    width: 0vh;
+    height: 0vh;
+}
+.policies-modal::-webkit-scrollbar{
+    width: 0;
+    height: 0;
+}
+
+/* icons */
+.bubble_icon {
+    width: 4vw;
+    display: block;
+    margin: auto;
+    margin-top: 15%;
+}
+
 .large{
     width: 10vh;
     height: 10vh;
@@ -356,6 +387,7 @@ p {
     height: 7vh;
 }
 
+/* modal content */
 .modal-content{
     width: 100%;
     height: 100%;
@@ -375,32 +407,7 @@ p {
     height: 75vh;   
 }
 
-/* Define the scrollbar style */
-.kpi-modal::-webkit-scrollbar {
-    width: 0vh;
-    height: 0vh;
-}
-.policies-modal::-webkit-scrollbar{
-    width: 0;
-    height: 0;
-}
 
-    
-.share_button {
-    border: none;
-    font-weight: 700;
-    background-color: #25cd70;
-    border-radius: 3vh;
-    color: white;
-    width: 10vh;
-    height: 5vh;
-    cursor: pointer;
-    font-size: 3vh;
-    padding: 0;
-    position: fixed;
-    top: 2.2%;
-    left: 6%;
-}
 .share_button:hover{
     transform: scale(1.1);
     background-color: #20b362;

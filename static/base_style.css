@@ -1,21 +1,22 @@
 html {
   touch-action: manipulation;
   zoom: 100%;
+  background-color: #f2f2f2;
+  padding: 0;
 }
 body {
-
     font-family: Arial, sans-serif;
-    background-color: #f2f2f2;
+    background-image: linear-gradient(#fff, #f2f2f2);
     margin: 0;
     padding: 0;
+    padding-top: 1vh;
+    margin-bottom: 1vh;
 }
 .header {
     width: 55vw;
-    margin: 1vh auto;
+    margin: 0vh auto;
     padding: .5vh;
-    background-color: #f2f2f2;
     border-bottom: 0.3vh solid rgb(177, 177, 177);
-
 }
 
 .sidebar-open {
@@ -37,7 +38,6 @@ body {
   padding: 0;
   margin: 0;
   margin-left: 20%;
-
 }
 #site{
   transition: margin-left .5s; /* If you want a transition effect */
@@ -48,6 +48,7 @@ body {
   margin: 0 auto;
   height: 82vh;
   padding: 0;
+  
 }
 .hidden{
   display: none;
@@ -58,13 +59,7 @@ p{
   margin: 0;
 }
 
-#menu_icon{ 
-  width: 60px;
-  height: 80px;
-  margin-left: 2vh;
-  position: fixed;
-  z-index: 0;
-}
+
 .iframe_main{
   width: 100%;
   margin: 0px auto;
@@ -77,14 +72,14 @@ p{
 }
 
 .sidebarBtn{
-  width: 3vw;
-  height: 3vw;
+  width: 2vw;
+  height: 2vw;
   border-radius: 50%;
   position: absolute; /* or relative or fixed based on your layout needs */
   z-index: 3;
   background: radial-gradient(#6ba4fa, #447dd3);
-  margin-top:48vh;
-  margin-left: 7vh;
+  top:50%;
+  margin-left: 3.5%;
   cursor: pointer;
   border: 0;
   color: white;
