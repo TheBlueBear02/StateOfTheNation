@@ -68,7 +68,7 @@
                                         return `${value}`;  // Display label and value
                                     },
                                     font: {
-                                        size: 12,  // Font size for labels
+                                        size: 22,  // Font size for labels
                                         weight: 'bold'
                                     },
                                     align: 'center',  // Align labels toward the end of the slice
@@ -200,7 +200,7 @@
                                 },
                                 title: {
                                     display: true,
-                                    text: 'הכנסות הממשלה ב2023 (מילארדים)'
+                                    text: 'הכנסות הממשלה ב2023 (מילארדים)',
                                 },
                                 datalabels: {
                                     color: 'white', // Label color
@@ -209,7 +209,7 @@
                                         return `${value}`;  // Display label and value
                                     },
                                     font: {
-                                        size: 12,  // Font size for labels
+                                        size: 22,  // Font size for labels
                                         weight: 'bold'
                                     },
                                     align: 'center',  // Align labels toward the end of the slice
@@ -229,7 +229,6 @@
     function change_graph(id,button){
         change_buttons(button)
         for(var i = 0; i <= 2; i++){
-            console.log(document.getElementById(i))
             if(!document.getElementById(i).classList.contains('hidden'))
                 document.getElementById(i).classList.toggle('hidden');
         }
@@ -238,7 +237,6 @@
     }
     function change_buttons(button){
         for(var i = 10; i <= 12; i++){
-            console.log(document.getElementById(i))
             if(document.getElementById(i).classList.contains('chossen-button'))
                 document.getElementById(i).classList.toggle('chossen-button');
         }

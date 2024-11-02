@@ -10,6 +10,7 @@
     margin: 0;
     overflow: auto;
     cursor: pointer;
+    border-right: .2vh solid #c0c0c0;
 }
 
 /* Define the scrollbar style */
