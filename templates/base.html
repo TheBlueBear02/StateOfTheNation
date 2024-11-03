@@ -15,7 +15,9 @@
     </div>
     <div class="site" id="site">
         <div class="shape-container">
-            <button id="toggleButton" class="sidebarBtn" onclick="toggleNav()"><<</button>
+            <button id="toggleButton" class="sidebarBtn" onclick="toggleNav()">
+                <img id="toggleImg" style=" width: 3vh;" src="/static/images/buttons/close-icon-white.png">
+            </button>
         </div>
 
         <div class="header">
@@ -57,15 +59,16 @@
     function toggleNav() {
         const sidebar = document.getElementById("sidebar-open");
         const toggleButton = document.getElementById("toggleButton");
-    
+        const toggleImg = document.getElementById("toggleImg");
+
         const isSidebarOpen = sidebar.style.display === "block";        
         if (isSidebarOpen) {
             console.log('close')
             closeNav();
-            toggleButton.innerHTML = ">>";
+            toggleImg.src = "/static/images/buttons/message-icon-white.png"; // Set this to the image for closed state
         } else {
             openNav();
-            toggleButton.innerHTML = "<<";
+            toggleImg.src = "/static/images/buttons/close-icon-white.png";
         }
     }
 </script>

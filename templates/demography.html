@@ -4,7 +4,7 @@
 <div class="main">
     <div class="block_right">
         <p style="margin:0px;padding:0px; font-size: 5vh; float: right; color: #4890FD;font-weight: bold;">הדמוגרפיה של ישראל</p>
-        <p style="margin:0px;padding:0px; font-size: 5vh; color: #999999;font-weight: bold;">9,900,000</p>
+        <p id="counter" style="margin:0px;padding:0px; font-size: 5vh; color: #999999;font-weight: bold;">9,900,000</p>
         <p style="margin:0px;padding:0px; font-size: 3vh; color: #999999;font-weight: bold;">תושבים</p>
 
         <div id="graph_div" style="width: 100%; height: 40vw; margin: 0; padding: 0;margin-top: 4vh;"> <!-- Chart -->
@@ -13,7 +13,8 @@
             <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>    
             <script>                    
                /* Chart.register(ChartDataLabels); # for adding chart's labels
-            </script>                          
+            </script>         
+                   
             <script type="text/javascript"> // Chart
             
                var ctx = document.getElementById('lineChart').getContext('2d');
@@ -120,4 +121,25 @@
 </div>
 
 
+<script>
+    function animateCounter(id, start, end, duration) {
+    const counter = document.getElementById(id);
+    const range = end - start;
+    const stepTime = Math.abs(Math.floor(duration / range));
+    
+    let current = start;
+    const increment = end > start ? 1 : -1;
+    
+    const timer = setInterval(() => {
+        current += increment;
+        counter.textContent = current.toLocaleString(); // Format number with commas
+        if ((increment > 0 && current >= end) || (increment < 0 && current <= end)) {
+            clearInterval(timer);
+        }
+    }, stepTime);
+}
 
+// Example usage:
+animateCounter("counter", 9899300, 9900000, 2000); // Counts from 0 to 9,900,000 over 2 seconds
+
+</script>

@@ -63,7 +63,6 @@
     </tr>
 </table>
 
-
 <!-- KPI Modal -->
 <dialog kpi-modal class="kpi-modal">
     <div class="modal-content">
@@ -93,7 +92,7 @@
         </div>
         <!-- Timeline container -->
         
-        <span class="share_button" onclick="closeModal()"><img class="close_icon" style="width: 3vh;display: block;margin-left: 5%;margin-top: 2%;" src="/static/images/buttons/share-icon-white.png"><p>Share</p></span>
+        <span class="share_button" onclick="closeModal()"><img class="close_icon" style="width: 4vh;display: block;margin-top: 2%;" src="/static/images/buttons/share-icon-white.png"><p>Share</p></span>
     </div>
 </dialog>
 
@@ -134,7 +133,7 @@
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-
+<!-- Script -->
 <script>
     const kpiModal = document.querySelector("[kpi-modal]");
     const policiesModal = document.querySelector("[policies-modal]");
@@ -353,9 +352,6 @@
                 responsive: true,
                 plugins: { legend: { display: false } },
                 scales: { x: { 
-                    ticks: {
-                    stepSize: 5, // Show grid lines every 5 units
-                    },
                     grid: { 
                         display: false 
                     
@@ -367,4 +363,5 @@
     function openExplainModal(){
         explainModal.showModal();
     }
+    
 </script>

@@ -72,8 +72,8 @@ p{
 }
 
 .sidebarBtn{
-  width: 2vw;
-  height: 2vw;
+  width: 2.5vw;
+  height: 2.5vw;
   border-radius: 50%;
   position: absolute; /* or relative or fixed based on your layout needs */
   z-index: 3;
@@ -84,4 +84,14 @@ p{
   border: 0;
   color: white;
 }
+.sidebarBtn:hover{
+  background: radial-gradient(#418dfe, #3a70c1);
 
+}
+
+#toggleButton{
+  display: flex; 
+  align-items: center; 
+  justify-content: center; 
+  padding: 0;
+}

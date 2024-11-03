@@ -301,7 +301,7 @@ td {
     background-color: #25cd70;
     border-radius: 3vh;
     color: white;
-    width: 10vh;
+    width: 12vh;
     height: 5vh;
     cursor: pointer;
     font-size: 2vh;
@@ -310,8 +310,12 @@ td {
     top: 2.7vh;
     left: 9vh;
     display: flex;
+     align-items: center; 
+     justify-content: center;
 }
-
+.share_button p{
+    font-weight: bold;
+}
 p {
     font-family: Arial, Helvetica, sans-serif;
     font-weight: 300;

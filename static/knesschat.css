@@ -196,9 +196,9 @@ background-color: #999999;
 }
 
 #scrollTopButton{
-    width: 4vh;
-    height: 4vh;
-    background: radial-gradient(#d1d1d1, #c3c3c3);
+    width: 5vh;
+    height: 5vh;
+    background: radial-gradient(#b3b3b3, #a0a0a0);
     position: absolute;
     border-radius: 25vh;
     border: none;
