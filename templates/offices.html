@@ -1,6 +1,6 @@
 
 <link rel="stylesheet" href="{{ url_for('static', filename='offices_style.css') }}">
-<span class="explain_span"><img class="explain_icon" style="width: 2vw;display: block;margin: auto;margin-top: 2px;" src="/static/images/offices/question_mark.png"></span>
+<span class="explain_span" onclick="openExplainModal()"><img class="explain_icon" style="width: 2vw;display: block;margin: auto;margin-top: 15%;" src="/static/images/offices/question_mark.png"></span>
 
 {% macro render_office(office, office_cells, position, main_bubble_id, border_style) %}
 <table class="{{ position }}" style="{{ border_style }}">
@@ -128,8 +128,8 @@
 
 <!-- Info Modal -->
 <dialog explain-modal class="explain-modal">
-    <button close_modal onclick="closeModal()" style="display: block;" id="close_button" >X</button>
-    <img style="width: 145vh; height: 90vh; margin-left:6rem;" src="/static/images/offices/explain.png">
+    <button class="close_button" onclick="closeModal()" style="display: block;" id="close_button" >X</button>
+    <img style="width: 100%; height: 90vh;" src="/static/images/offices/explain.png">
 </dialog>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -362,5 +362,9 @@
                     } } }
             }
         });
+    }
+
+    function openExplainModal(){
+        explainModal.showModal();
     }
 </script>
