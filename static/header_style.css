@@ -16,6 +16,7 @@ html {
     display: flex;
     color: rgb(151, 151, 151);
     line-height:1.5;
+    white-space: nowrap;
 
 }
 #date_table{
