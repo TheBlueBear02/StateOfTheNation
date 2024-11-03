@@ -39,8 +39,7 @@ p {
     cursor: pointer;
     margin-top: 2vh;
     display: flex;
-    margin-left: auto;
-    margin-right: auto;
+
     padding: .5vh;
 }
 .nav_icon:hover{
@@ -49,7 +48,6 @@ p {
 }
 
 .line{  
-
     border-right: .3vh solid rgb(151, 151, 151);
 }
 th{
@@ -92,19 +90,21 @@ th{
 .progress-bar:hover{
     background-color:#68a3fc;
 }
-/*
-[demography-tooltip]:hover::after {
-    content: attr(demography-tooltip);
-    background: none;
+[data-tooltip] {
+    position: relative; /* Set the tooltip relative to the <th> element */
+}
+[data-tooltip]:hover::after {
+    content: attr(data-tooltip);
     padding: .3em;
     z-index: 1; 
     position: absolute;
-    top: 1%;
-    left: 75%;
-    color:rgba(161, 161, 161, 0.712);
+    top: 0px;
+    left: 0%;
+    color:rgb(173, 173, 173);
     border-radius: 1.5vh;
-    font-size: 2vh;
+    font-weight: bold;
+    font-size: 1.5vh;
     font-family: Arial, Helvetica, sans-serif;
-    float: right;
     direction: rtl;
-  }*/
+    float: left;
+  }
