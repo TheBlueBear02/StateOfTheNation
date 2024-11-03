@@ -304,11 +304,12 @@ td {
     width: 10vh;
     height: 5vh;
     cursor: pointer;
-    font-size: 3vh;
+    font-size: 2vh;
     padding: 0;
     position: fixed;
     top: 2.7vh;
     left: 9vh;
+    display: flex;
 }
 
 p {
