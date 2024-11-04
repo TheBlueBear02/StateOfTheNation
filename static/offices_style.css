@@ -423,7 +423,7 @@ p {
  /* Timeline container */
  .timeline {
     display: flex;
-    width: 96.7%;
+    width: 90vw;
     height: 6vh;
     background-color: #eee;
     margin: 0;
