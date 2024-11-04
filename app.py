@@ -1,10 +1,6 @@
-from flask import Flask, render_template, request
-from datetime import datetime
-import json
-from pyluach import dates
-from flask_sqlalchemy import SQLAlchemy
+from flask import Flask
 from flask_migrate import Migrate
-from models import db, KnessetMembers, Tweets, Offices, Indexes, Indexes_Data  # Import the models
+from models import db
 from routes import routes  # Import the routes Blueprint
 import os
 
