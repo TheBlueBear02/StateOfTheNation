@@ -223,7 +223,7 @@ def offices():
     second_office_cells = create_cells(second_office_indexes_info, upper_right_structure)
     third_office_cells = create_cells(third_office_indexes_info, bottom_left_structure)
     forth_office_cells = create_cells(forth_office_indexes_info, bottom_right_structure)
-
+    print(third_office_cells)
    # save the first 4 offices from the database and their ministers data in a list
     offices_list = []
 
