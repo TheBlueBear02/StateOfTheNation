@@ -5,7 +5,6 @@ from models import db, KnessetMembers, Tweets, Offices, Indexes, Indexes_Data, M
 from collections import namedtuple
 import json
 import random
-from operator import attrgetter
 
 # Create a Blueprint for the routes
 routes = Blueprint('routes', __name__)
@@ -322,3 +321,7 @@ def economy():
         income_values.append(row.value)
 
     return render_template('economy.html', main_lables=main_labels, main_values=main_values, expenses_lables=expenses_lables, expenses_values=expenses_values,income_lables=income_lables,income_values=income_values)
+
+@routes.route('/parlament')
+def parlament():
+    return render_template('parlament.html')
