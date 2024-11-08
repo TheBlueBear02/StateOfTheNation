@@ -408,9 +408,14 @@ p {
     padding: 0;
 }
 
-.chart-div{
+#graph_div_kpi{
     /*width:100%; if you want that the timeline will be shown at start and not animate*/
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
 }
+
 
 
 .share_button:hover{
