@@ -123,23 +123,46 @@
 
 <script>
     function animateCounter(id, start, end, duration) {
-    const counter = document.getElementById(id);
-    const range = end - start;
-    const stepTime = Math.abs(Math.floor(duration / range));
-    
-    let current = start;
-    const increment = end > start ? 1 : -1;
-    
-    const timer = setInterval(() => {
-        current += increment;
-        counter.textContent = current.toLocaleString(); // Format number with commas
-        if ((increment > 0 && current >= end) || (increment < 0 && current <= end)) {
-            clearInterval(timer);
-        }
-    }, stepTime);
-}
+        const counter = document.getElementById(id);
+        const range = end - start;
+        const stepTime = Math.abs(Math.floor(duration / range));
+        
+        let current = start;
+        const increment = end > start ? 1 : -1;
+        
+        const timer = setInterval(() => {
+            current += increment;
+            counter.textContent = current.toLocaleString(); // Format number with commas
+            if ((increment > 0 && current >= end) || (increment < 0 && current <= end)) {
+                clearInterval(timer);
+            }
+        }, stepTime);
+    }
 
-// Example usage:
-animateCounter("counter", 9899300, 9900000, 2000); // Counts from 0 to 9,900,000 over 2 seconds
+    // Example usage:
+    // Select the target element
+    const targetParagraph = document.querySelector('#counter');
 
+    // Define the function to run when the div is in view
+    function onDivInView(entries, observer) {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                console.log("now");
+                animateCounter("counter", 9899960, 9900000, 5000); // Counts from 9,899,300 to 9,900,000 over 2 seconds
+
+                // Stop observing if you only want to run it once
+                observer.unobserve(entry.target);
+            }
+        });
+    }
+
+    // Set up the Intersection Observer
+    const observer = new IntersectionObserver(onDivInView, {
+        root: null,          // Use the viewport as the root
+        rootMargin: '0px',   // No margin around the root
+        threshold: 0.5       // Run when 50% of the div is visible
+    });
+
+    // Start observing the target element
+    observer.observe(targetParagraph);
 </script>
