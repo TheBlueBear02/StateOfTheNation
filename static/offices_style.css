@@ -417,7 +417,6 @@ p {
 }
 
 
-
 .share_button:hover{
     transform: scale(1.1);
     background-color: #20b362;
@@ -427,11 +426,11 @@ p {
  /* Timeline container */
  .timeline {
     display: flex;
-    width: 90vw;
+    width: 93vw;
     height: 6vh;
     background-color: #eee;
     margin: 0;
-    margin-left: 4.5vh;
+    margin-left: 2.5vh;
     margin-top: 2vh;
 }
 /* Style for each era */
