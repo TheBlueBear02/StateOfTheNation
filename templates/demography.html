@@ -3,12 +3,12 @@
 <link rel="stylesheet" href="{{ url_for('static', filename='demography_style.css') }}">
 <div class="main">
     <div class="block_right">
-        <p style="margin:0px;padding:0px; font-size: 5vh; float: right; color: #4890FD;font-weight: bold;">הדמוגרפיה של ישראל</p>
+        <p class="header" style="float: right;">הדמוגרפיה של ישראל</p>
         <p id="counter" style="margin:0px;padding:0px; font-size: 5vh; color: #999999;font-weight: bold;">9,900,000</p>
         <p style="margin:0px;padding:0px; font-size: 3vh; color: #999999;font-weight: bold;">תושבים</p>
 
         <div id="graph_div" style="width: 100%; height: 40vw; margin: 0; padding: 0;margin-top: 4vh;"> <!-- Chart -->
-            <canvas id="lineChart" width="500" width="400" style="margin: 0; padding: 0;"></canvas>
+            <canvas id="lineChart" width="400" style="margin: 0; padding: 0;"></canvas>
             <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>  
             <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>    
             <script>                    
@@ -21,10 +21,10 @@
                 var myChart = new Chart(ctx, {
                     type: 'line',
                     data: {
-                        labels: {{ size_labels | safe }},
+                        labels: {{ indexes_data[0]['labels'] | safe }},
                         datasets: [{
                             label: 'Example Dataset',
-                            data: {{ size_values | safe }},
+                            data: {{ indexes_data[0]['values'] | safe }},
                             fill: true, 
                             borderColor: 'rgb(208, 226, 255)',
                             borderWidth: 2,
@@ -59,20 +59,80 @@
         </div>
     </div>
     <div class="block_left">
-        <p style="margin:0px;padding:0px; font-size: 5vh; color: #4890FD;font-weight: bold;">דת</p> 
+        <p class="header">דתות</p> 
 
         <div id="graph_div" style="width: 100%; height: 40vw; margin: 0; padding: 0;margin-top: 4vh;float: right;"> <!-- Chart -->
-            <canvas id="barChart" width="400" width="600" style="margin: 0; padding: 0;"></canvas>
+            <canvas id="chart" width="400" style="float: right; margin: 0; padding: 0;"></canvas>
             <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>                           
             <script type="text/javascript"> // Chart
-               var ctx = document.getElementById('barChart').getContext('2d');
+               var ctx = document.getElementById('chart').getContext('2d');
                var myChart = new Chart(ctx, {
-                        type: 'doughnut',
+                        type: 'pie',
                         data: {
-                            labels: {{ religion_labels | safe }},
+                            labels: {{ indexes_data[1]['labels'] | safe }},
                             datasets: [{
                                 label: 'Example Dataset',
-                                data: {{ religion_values | safe }},
+                                data: {{ indexes_data[1]['values'] | safe }},
+                                fill: false, 
+                                borderColor: 'white',
+                                borderWidth: 1,
+                                backgroundColor: [
+                                    'rgb(54, 162, 235)',  // Blue
+                                    'rgb(255, 99, 132)',  // Red
+                                    'rgb(255, 206, 86)',  // Yellow
+                                    'rgb(75, 192, 192)',  // Green
+                                    'rgb(153, 102, 255)', // Purple
+                                    'rgb(255, 159, 64)',  // Orange
+                                    'rgb(201, 203, 207)',  // Grey
+                                    'rgb(0, 128, 128)'
+                                ],
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            plugins: {
+                                legend: {
+                                    display: true,
+                                    position: 'right',
+                                },
+                                title: {
+                                    display: false,
+                                    text: 'הכנסות הממשלה ב2023 (מילארדים)'
+                                },
+                                datalabels: {
+                                    color: 'white', // Label color
+                                    formatter: (value, context) => {
+                                        let label = context.chart.data.labels[context.dataIndex];
+                                        return `${value}`;  // Display label and value
+                                    },
+                                    font: {
+                                        size: 12,  // Font size for labels
+                                        weight: 'bold'
+                                    },
+                                    align: 'center',  // Align labels toward the end of the slice
+                                    anchor: 'center'  // Anchor the labels to the chart slices
+                                }
+                            }
+                        }
+                    });
+            </script>
+        </div>
+    </div>
+    <div class="block_right">
+        <p class="header" style="float: right;">יהודים</p> 
+
+        <div id="graph_div" style="width: 100%; height: 40vw; margin: 0; padding: 0;margin-top: 4vh;"> <!-- Chart -->
+            <canvas id="chart2" width="400" style=" margin: 0; padding: 0;"></canvas>
+            <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>                           
+            <script type="text/javascript"> // Chart
+               var ctx = document.getElementById('chart2').getContext('2d');
+               var myChart = new Chart(ctx, {
+                        type: 'pie',
+                        data: {
+                            labels: {{ indexes_data[2]['labels'] | safe }},
+                            datasets: [{
+                                label: 'Example Dataset',
+                                data: {{ indexes_data[2]['values'] | safe }},
                                 fill: false, 
                                 borderColor: 'white',
                                 borderWidth: 1,

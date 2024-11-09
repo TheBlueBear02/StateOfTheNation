@@ -5,30 +5,31 @@ html {
   padding: 0;
 }
 body {
-    font-family: Arial, sans-serif;
-    background-image: linear-gradient(#fff, #f2f2f2);
-    margin: 0;
-    padding: 0;
-    padding-top: 1vh;
-    margin-bottom: 1vh;
+  font-family: Arial, sans-serif;
+  background-image: linear-gradient(#fff, #f2f2f2);
+  margin: 0;
+  padding: 0;
+  padding-top: 1vh;
+  margin-bottom: 1vh;
 }
 .header {
-    width: 55vw;
-    margin: 0vh auto;
-    padding: .5vh;
-    border-bottom: 0.3vh solid rgb(177, 177, 177);
+  width: 55vw;
+  margin: 0vh auto;
+  padding: .5vh;
+  border-bottom: 0.3vh solid rgb(177, 177, 177);
 }
 
 .sidebar-open {
-    height: 100%;
-    width: 23vw;
-    position: fixed;
-    z-index: 1;
-    top: 0;
-    left: 0;
-    background-color: #F6F6F6;
-    padding-top: 1vh;
-    transition: 0.3s;
+  height: 100%;
+  width: 23vw;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background-color: #F6F6F6;
+  padding-top: 1vh;
+  transition: 0.3s;
+  box-shadow: 1px 0 20px rgba(99, 99, 99, 0.3); /* Shadow on the right side */
 
   }
 #sidebar-open{

@@ -46,6 +46,16 @@ background-color: #4d7fff;
 .block_left{
     margin: 0;
     padding: 0;
-    height: 100vh;
+    height: 90vh;
     padding-top: 3vh;
+    border-bottom: 1px solid #b1b1b1;
+
+}
+
+.header{
+    margin:0px;
+    padding:0px;
+    font-size: 5vh; 
+    color: #4890FD;
+    font-weight: bold;
 }
