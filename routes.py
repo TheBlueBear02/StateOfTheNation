@@ -249,27 +249,26 @@ def offices():
 
 @routes.route('/demography')
 def demography():
-    graphs_data = {}
-    # population size
-    size_data = db.session.query(Indexes_Data).filter_by(index_id=12).all()
+    # Get all the indexes with office_id = 100
+    demography_indexes = db.session.query(Indexes).filter_by(office_id=100).all()
 
-    size_labels = []
-    size_values = []
-    for row in size_data:
-        size_labels.append(row.label)
-        size_values.append(row.value)
-    size_values = [int(str(val).replace(",", "")) for val in size_values]
+    indexes_data = []
 
-    # religion chart
-    religion_data = db.session.query(Indexes_Data).filter_by(index_id=13).all()
-    religion_labels = []
-    religion_values = []
-    for row in religion_data:
-        religion_labels.append(row.label)
-        religion_values.append(row.value)
-    religion_values = [int(str(val).replace(",", "")) for val in religion_values]
+    for index in demography_indexes:
+        # Get all related Indexes_Data entries for the current index
+        index_data_entries = db.session.query(Indexes_Data).filter_by(index_id=index.id).all()
+        labels = []
+        values = []
+        # Collect labels and values from each entry
+        for entry in index_data_entries:
+            labels.append(entry.label)  # Assuming 'label' is the field name
+            values.append(float(str(entry.value).replace(',', '').replace('%', '')))  # Assuming 'value' is the field name
 
-    return render_template('demography.html', size_labels=size_labels, size_values=size_values, religion_labels=religion_labels, religion_values=religion_values)
+        indexes_data.append({"index_id": index.id, "labels": labels, "values": values})
+
+    print(indexes_data[0]["values"])
+
+    return render_template('demography.html', indexes_data = indexes_data)
 
 
 @routes.route('/economy')

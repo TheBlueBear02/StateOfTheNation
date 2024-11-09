@@ -1,23 +1,23 @@
 import csv
 import sys
-sys.path.append('E:\Development Projects\SN')
-from models import KnessetMembers,Tweets,Offices,Indexes,Indexes_Data
+sys.path.append('D:\Projects\stateofthenation')
 import json
 from app import app, db
+from models import KnessetMembers,Tweets,Indexes_Data
 
 # add data from csv file to index_data table
 def save_csv_to_db():
-    with open("E:\Development Projects\SN - DATA\המשרד לביטחון לאומי\נרצחים בפיגועים (2).csv", newline='',encoding='utf-8') as csvfile:
+    with open("D:\Projects\SN - DATA\נתוני דמוגרפיה - גיל.csv", newline='',encoding='utf-8') as csvfile:
         csv_reader = csv.DictReader(csvfile)
-        index_id = "14"
+        index_id = "17"
         date = ""
         value = None
         for row in csv_reader:
             # Create an instance of YourModel
             new_record = Indexes_Data(
                 index_id = index_id,
-                label=row['label'],  # Map CSV fields to your model's columns
-                value=row['value']
+                label=row['labels'],  # Map CSV fields to your model's columns
+                value=row['values']
 
             )
             # Add the record to the session if not saved yet
