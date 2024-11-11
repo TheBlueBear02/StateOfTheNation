@@ -266,8 +266,6 @@ def demography():
 
         indexes_data.append({"index_id": index.id, "labels": labels, "values": values})
 
-    print(indexes_data[0]["values"])
-
     return render_template('demography.html', indexes_data = indexes_data)
 
 

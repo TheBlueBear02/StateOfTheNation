@@ -2,7 +2,7 @@
 
 <link rel="stylesheet" href="{{ url_for('static', filename='demography_style.css') }}">
 <div class="main">
-    <div class="block_right">
+    <div class="block">
         <p class="header" style="float: right;">הדמוגרפיה של ישראל</p>
         <p id="counter" style="margin:0px;padding:0px; font-size: 5vh; color: #999999;font-weight: bold;">9,900,000</p>
         <p style="margin:0px;padding:0px; font-size: 3vh; color: #999999;font-weight: bold;">תושבים</p>
@@ -44,12 +44,12 @@
                             x: {
                             grid: {
                                 display: true,
-                                z:1,
+                                z:0,
                                 }
                             },
                             y:{
                             grid:{
-                                z:1
+                                z:0
                             }
                             }
                         }
@@ -58,13 +58,18 @@
             </script>
         </div>
     </div>
-    <div class="block_left">
-        <p class="header">פריסה גיאוגרפית</p> 
+    <div class="block">
+        <p class="header rigth">פריסה גיאוגרפית</p> 
+        <div class="block-content">
+            <img style="width: 50vh;" src="static\images\demography-map.png">
+            <div class="legend-div">
+                
+            </div>
+            
+        </div>
 
-  
-        <img width="400" height="700" src="static\images\demography-map.png">
     </div>
-    <div class="block_left">
+    <div class="block">
         <p class="header">דתות</p> 
 
         <div id="graph_div" style="width: 100%; height: 40vw; margin: 0; padding: 0;margin-top: 4vh;float: right;"> <!-- Chart -->
@@ -99,7 +104,7 @@
                             plugins: {
                                 legend: {
                                     display: true,
-                                    position: 'right',
+                                    position: 'left',
                                 },
                                 title: {
                                     display: false,
@@ -124,7 +129,7 @@
             </script>
         </div>
     </div>
-    <div class="block_right">
+    <div class="block">
         <p class="header" style="float: right;">יהודים</p> 
 
         <div id="graph_div" style="width: 100%; height: 40vw; margin: 0; padding: 0;margin-top: 4vh;"> <!-- Chart -->
@@ -188,7 +193,7 @@
 
 
 <script>
-    function animateCounter(id, start, end, duration) {
+      function animateCounter(id, start, end, duration) {
         const counter = document.getElementById(id);
         const range = end - start;
         const stepTime = Math.abs(Math.floor(duration / range));
@@ -231,4 +236,36 @@
 
     // Start observing the target element
     observer.observe(targetParagraph);
+
+    // Select all section elements
+    const sections = document.querySelectorAll('.block');
+    let currentSectionIndex = 0;
+    let isScrolling = false;  // Flag to control scroll timing
+
+    // Function to scroll to a specific section by index
+    function scrollToSection(index) {
+        sections[index].scrollIntoView({ behavior: 'smooth' });
+    }
+    
+    // Event listener for the wheel event
+    window.addEventListener('wheel', (event) => {
+        if (isScrolling) return;  // Prevent scrolling if still in cooldown
+
+        // Determine the scroll direction
+        if (event.deltaY > 0 && currentSectionIndex < sections.length - 1) {
+            // Scroll down
+            currentSectionIndex++;
+            scrollToSection(currentSectionIndex);
+        } else if (event.deltaY < 0 && currentSectionIndex > 0) {
+            // Scroll up
+            currentSectionIndex--;
+            scrollToSection(currentSectionIndex);
+        }
+
+        // Set scrolling flag to true and add a cooldown delay
+        isScrolling = true;
+        setTimeout(() => {
+            isScrolling = false;  // Reset flag after delay
+        }, 800);  // Adjust delay time as needed
+    });
 </script>

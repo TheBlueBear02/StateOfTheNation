@@ -99,6 +99,7 @@ th{
     padding: .3em;
     z-index: 1; 
     position: absolute;
+    margin: auto;
     top: 0px;
     left: 0%;
     color:rgb(173, 173, 173);
