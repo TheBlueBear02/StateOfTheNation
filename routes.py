@@ -319,6 +319,66 @@ def economy():
 
     return render_template('economy.html', main_lables=main_labels, main_values=main_values, expenses_lables=expenses_lables, expenses_values=expenses_values,income_lables=income_lables,income_values=income_values)
 
+
+Knesset_member = namedtuple("Knesset_member", ["name", "additional_role", "party", "is_coalition", "image"])  
+
+# set a knesset_member namedtuple to each sit in strutcture
+def create_parlament(knesset_members, structure):
+    
+    cells = []
+    i = 0
+    for row_structure in structure:
+        row = []
+        for cell_type in row_structure:
+            if cell_type == "sit":
+                try:
+                    row.append(knesset_members[i])
+                    i += 1
+                except:
+                    row.append({'name':''})
+            else:
+                row.append("space")
+        cells.append(row)
+    return cells
+
+    
 @routes.route('/parlament')
 def parlament():
+    # get all knesset members from the DB ordered by coalition and party
+    km_info = db.session.query(KnessetMembers).order_by(KnessetMembers.is_coalition.desc(),KnessetMembers.party).all()
+   
+    # create array of dicts for the knesset members info
+    knesset_members = []
+    for member in km_info:
+        data = {
+            'name': member.name,
+            'additional_role': member.additional_role,
+            'party':member.party,
+            'is_coalition':member.is_coalition,
+            'image':member.image
+        }
+        knesset_members.append(data)
+
+    # set the parlament structure
+    parlament_structure = [
+        ["space", "space", "space", "sit", "sit", "sit", "sit", "sit", "sit", "sit", "sit", "sit", "sit", "sit", "sit", "sit", "space", "space", "space"],
+        ["sit", "space", "space", "space", "sit", "sit", "sit", "sit", "sit", "sit", "sit", "sit", "sit", "sit", "sit", "space", "space", "space", "sit"],
+        ["sit", "sit", "space", "space", "space", "sit", "sit", "sit", "sit", "sit", "sit", "sit", "sit", "sit", "space", "space", "space", "sit", "sit"],
+        ["sit", "sit", "sit", "space", "space", "space", "sit", "sit", "sit", "sit", "sit", "sit", "sit", "space", "space", "space", "sit", "sit", "sit"],
+        ["sit", "sit", "sit", "sit", "space", "space", "space", "space", "space", "space", "space", "space", "space", "space", "space", "sit", "sit", "sit", "sit"],
+        ["sit", "sit", "sit", "sit", "space", "space", "space", "space", "space", "space", "space", "space", "space", "space", "space", "sit", "sit", "sit", "sit"],
+        ["sit", "sit", "sit", "sit", "space", "space", "space", "space", "space", "space", "space", "space", "space", "space", "space", "sit", "sit", "sit", "sit"],
+        ["sit", "sit", "sit", "sit", "space", "space", "space", "space", "space", "space", "space", "space", "space", "space", "space", "sit", "sit", "sit", "sit"],
+        ["sit", "sit", "sit", "sit", "space", "space", "space", "space", "space", "space", "space", "space", "space", "space", "space", "sit", "sit", "sit", "sit"],
+        ["sit", "sit", "sit", "sit", "space", "space", "space", "space", "space", "space", "space", "space", "space", "space", "space", "sit", "sit", "sit", "sit"],
+        ["sit", "sit", "sit", "sit", "space", "space", "space", "space", "space", "space", "space", "space", "space", "space", "space", "sit", "sit", "sit", "sit"],
+        ["sit", "sit", "sit", "space", "space", "space", "space", "space", "space", "space", "space", "space", "space", "space", "space", "space", "sit", "sit", "sit"],
+        ["sit", "sit", "space", "space", "space", "space", "space", "space", "space", "space", "space", "space", "space", "space", "space", "space", "space", "sit", "sit"],
+        ["sit", "space", "space", "space", "space", "space", "space", "space", "space", "space", "space", "space", "space", "space", "space", "space", "space", "space", "sit"],
+    ]
+
+    # set a knesset member namedtuple to each sit in structure 
+    parlament = create_parlament(knesset_members,parlament_structure)
+    
+
     return render_template('parlament.html')
