@@ -1,10 +1,9 @@
 .knesset-table{
         width: 80%;
         height: 80%;
-        border: 1px solid black;
         margin: 0 auto;
     }
-    .sit-span{
+    .seat-span{
         width: 3.3vw;
         height: 3.3vw;
         background-color: rgb(63, 63, 209);
@@ -13,11 +12,11 @@
         padding: 0;
         margin-left: 0vw;
         margin: auto;
-
+        background-size: cover;
+        border: 1px solid grey;
     }
     td{
         width: 2vw;
-        border: 1px solid black;
         padding: 2px;
         margin: 0;
     }

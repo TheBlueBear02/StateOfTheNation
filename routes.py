@@ -322,7 +322,7 @@ def economy():
 
 Knesset_member = namedtuple("Knesset_member", ["name", "additional_role", "party", "is_coalition", "image"])  
 
-# set a knesset_member namedtuple to each sit in strutcture
+# set a knesset_member namedtuple to each seat in strutcture
 def create_parlament(knesset_members, structure):
     
     cells = []
@@ -330,7 +330,7 @@ def create_parlament(knesset_members, structure):
     for row_structure in structure:
         row = []
         for cell_type in row_structure:
-            if cell_type == "sit":
+            if cell_type == "seat":
                 try:
                     row.append(knesset_members[i])
                     i += 1
@@ -361,24 +361,23 @@ def parlament():
 
     # set the parlament structure
     parlament_structure = [
-        ["space", "space", "space", "sit", "sit", "sit", "sit", "sit", "sit", "sit", "sit", "sit", "sit", "sit", "sit", "sit", "space", "space", "space"],
-        ["sit", "space", "space", "space", "sit", "sit", "sit", "sit", "sit", "sit", "sit", "sit", "sit", "sit", "sit", "space", "space", "space", "sit"],
-        ["sit", "sit", "space", "space", "space", "sit", "sit", "sit", "sit", "sit", "sit", "sit", "sit", "sit", "space", "space", "space", "sit", "sit"],
-        ["sit", "sit", "sit", "space", "space", "space", "sit", "sit", "sit", "sit", "sit", "sit", "sit", "space", "space", "space", "sit", "sit", "sit"],
-        ["sit", "sit", "sit", "sit", "space", "space", "space", "space", "space", "space", "space", "space", "space", "space", "space", "sit", "sit", "sit", "sit"],
-        ["sit", "sit", "sit", "sit", "space", "space", "space", "space", "space", "space", "space", "space", "space", "space", "space", "sit", "sit", "sit", "sit"],
-        ["sit", "sit", "sit", "sit", "space", "space", "space", "space", "space", "space", "space", "space", "space", "space", "space", "sit", "sit", "sit", "sit"],
-        ["sit", "sit", "sit", "sit", "space", "space", "space", "space", "space", "space", "space", "space", "space", "space", "space", "sit", "sit", "sit", "sit"],
-        ["sit", "sit", "sit", "sit", "space", "space", "space", "space", "space", "space", "space", "space", "space", "space", "space", "sit", "sit", "sit", "sit"],
-        ["sit", "sit", "sit", "sit", "space", "space", "space", "space", "space", "space", "space", "space", "space", "space", "space", "sit", "sit", "sit", "sit"],
-        ["sit", "sit", "sit", "sit", "space", "space", "space", "space", "space", "space", "space", "space", "space", "space", "space", "sit", "sit", "sit", "sit"],
-        ["sit", "sit", "sit", "space", "space", "space", "space", "space", "space", "space", "space", "space", "space", "space", "space", "space", "sit", "sit", "sit"],
-        ["sit", "sit", "space", "space", "space", "space", "space", "space", "space", "space", "space", "space", "space", "space", "space", "space", "space", "sit", "sit"],
-        ["sit", "space", "space", "space", "space", "space", "space", "space", "space", "space", "space", "space", "space", "space", "space", "space", "space", "space", "sit"],
+        ["space", "space", "space", "seat", "seat", "seat", "seat", "seat", "seat", "seat", "seat", "seat", "seat", "seat", "seat", "seat", "space", "space", "space"],
+        ["seat", "space", "space", "space", "seat", "seat", "seat", "seat", "seat", "seat", "seat", "seat", "seat", "seat", "seat", "space", "space", "space", "seat"],
+        ["seat", "seat", "space", "space", "space", "seat", "seat", "seat", "seat", "seat", "seat", "seat", "seat", "seat", "space", "space", "space", "seat", "seat"],
+        ["seat", "seat", "seat", "space", "space", "space", "seat", "seat", "seat", "seat", "seat", "seat", "seat", "space", "space", "space", "seat", "seat", "seat"],
+        ["seat", "seat", "seat", "seat", "space", "space", "space", "space", "space", "space", "space", "space", "space", "space", "space", "seat", "seat", "seat", "seat"],
+        ["seat", "seat", "seat", "seat", "space", "space", "space", "space", "space", "space", "space", "space", "space", "space", "space", "seat", "seat", "seat", "seat"],
+        ["seat", "seat", "seat", "seat", "space", "space", "space", "space", "space", "space", "space", "space", "space", "space", "space", "seat", "seat", "seat", "seat"],
+        ["seat", "seat", "seat", "seat", "space", "space", "space", "space", "space", "space", "space", "space", "space", "space", "space", "seat", "seat", "seat", "seat"],
+        ["seat", "seat", "seat", "seat", "space", "space", "space", "space", "space", "space", "space", "space", "space", "space", "space", "seat", "seat", "seat", "seat"],
+        ["seat", "seat", "seat", "seat", "space", "space", "space", "space", "space", "space", "space", "space", "space", "space", "space", "seat", "seat", "seat", "seat"],
+        ["seat", "seat", "seat", "seat", "space", "space", "space", "space", "space", "space", "space", "space", "space", "space", "space", "seat", "seat", "seat", "seat"],
+        ["seat", "seat", "seat", "space", "space", "space", "space", "space", "space", "space", "space", "space", "space", "space", "space", "space", "seat", "seat", "seat"],
+        ["seat", "seat", "space", "space", "space", "space", "space", "space", "space", "space", "space", "space", "space", "space", "space", "space", "space", "seat", "seat"],
+        ["seat", "space", "space", "space", "space", "space", "space", "space", "space", "space", "space", "space", "space", "space", "space", "space", "space", "space", "seat"],
     ]
 
-    # set a knesset member namedtuple to each sit in structure 
+    # set a knesset member namedtuple to each seat in structure 
     parlament = create_parlament(knesset_members,parlament_structure)
-    
 
-    return render_template('parlament.html')
+    return render_template('parlament.html', parlament = parlament)
