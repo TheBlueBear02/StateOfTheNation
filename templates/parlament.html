@@ -2,31 +2,35 @@
 
 <div>
     <table class="knesset-table">
-        {% for row in parlament %}
+        {% for i in range(left_section|length) %}
             <tr>
-                {% for seat in row %}
-                    <td>
+                <!-- Left Section Cells for Row i -->
+                {% for seat in left_section[i] %}
+                    <td class="left-section">
                         {% if seat != "space" %}
-                            <span class="seat-span" 
-                                  style="
-                                        background-color:
-                                        {% if seat.party == 'הליכוד' %} blue
-                                        {% elif seat.party == 'יש עתיד' %} orange
-                                        {% elif seat.party == 'המחנה הממלכתי' %} lightblue
-                                        {% elif seat.party == 'העבודה' %} purple
-                                        {% elif seat.party == 'עוצמה יהודית' %} yellow
-                                        {% elif seat.party == 'הציונות הדתית' %} green
-                                        {% elif seat.party == 'תקווה חדשה' %} darkblue
-                                        {% elif seat.party == 'שס' %} black
-                                        {% elif seat.party == 'יהדות התורה' %} pink
-
-                                        {% else %} gray
-                                        {% endif %};"></span>
-                            
+                            <span class="seat-span" style="background-color: {% include 'party_color.html' %};"></span>
+                        {% endif %}
+                    </td>
+                {% endfor %}
+    
+                <!-- Center Section Cells for Row i -->
+                {% for seat in center_section[i] %}
+                    <td class="center-section">
+                        {% if seat != "space" %}
+                            <span class="seat-span" style="background-color: {% include 'party_color.html' %};"></span>
+                        {% endif %}
+                    </td>
+                {% endfor %}
+    
+                <!-- Right Section Cells for Row i -->
+                {% for seat in right_section[i] %}
+                    <td class="right-section">
+                        {% if seat != "space" %}
+                            <span class="seat-span" style="background-color: {% include 'party_color.html' %};"></span>
                         {% endif %}
                     </td>
                 {% endfor %}
             </tr>
         {% endfor %}
-    </table>    
+    </table>
 </div>

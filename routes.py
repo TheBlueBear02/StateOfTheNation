@@ -324,8 +324,8 @@ Knesset_member = namedtuple("Knesset_member", ["name", "additional_role", "party
 
 # set a knesset_member namedtuple to each seat in strutcture
 def create_parlament(knesset_members, structure):
-    
-    cells = []
+    seats = []
+
     i = 0
     for row_structure in structure:
         row = []
@@ -338,9 +338,16 @@ def create_parlament(knesset_members, structure):
                     row.append({'name':''})
             else:
                 row.append("space")
-        cells.append(row)
-    return cells
+        seats.append(row)
+    
+    return seats
 
+def divide_array(arr):
+    n = len(arr)
+    part1 = arr[:n // 3]
+    part2 = arr[n // 3: 2 * n // 3]
+    part3 = arr[2 * n // 3:]
+    return part1, part2, part3
     
 @routes.route('/parlament')
 def parlament():
@@ -359,6 +366,7 @@ def parlament():
         }
         knesset_members.append(data)
 
+    first_section, second_section, third_section = divide_array(knesset_members)
     # set the parlament structure
     parlament_structure = [
         ["space", "space", "space", "seat", "seat", "seat", "seat", "seat", "seat", "seat", "seat", "seat", "seat", "seat", "seat", "seat", "space", "space", "space"],
@@ -377,7 +385,20 @@ def parlament():
         ["seat", "space", "space", "space", "space", "space", "space", "space", "space", "space", "space", "space", "space", "space", "space", "space", "space", "space", "seat"],
     ]
 
+    # Split the parliament structure into left, center, and right sections
+    left_section = []
+    center_section = []
+    right_section = []
+    for row in parlament_structure:
+        # Using slicing to divide each row into left, center, and right parts
+        left_section.append(row[:4])     # First 4 columns
+        center_section.append(row[4:15]) # Columns 4 to 15 (center)
+        right_section.append(row[15:])   # Last 4 columns
+        
     # set a knesset member namedtuple to each seat in structure 
-    parlament = create_parlament(knesset_members,parlament_structure)
+    left_seats = create_parlament(list(reversed(first_section)),left_section)
+    center_seats = create_parlament(second_section,center_section)
+    right_seats = create_parlament(third_section,right_section)
 
-    return render_template('parlament.html', parlament = parlament)
+    
+    return render_template('parlament.html', left_section = left_seats, center_section = center_seats, right_section= right_seats )
