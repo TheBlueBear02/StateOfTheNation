@@ -9,7 +9,6 @@ class KnessetMembers(db.Model):
     image = db.Column(db.String)
     additional_role = db.Column(db.String) 
     name = db.Column(db.String(80), unique=False, nullable=False)
-    is_km = db.Column(db.Boolean, nullable=False)
 
 
 class Tweets(db.Model):

@@ -1,36 +1,82 @@
 <link rel="stylesheet" href="{{ url_for('static', filename='parlament.css') }}">
 
 <div>
+    {% macro render_seat(seat, party_dict) %}
+        {% if seat != "space" %}
+            <span class="seat-span" 
+                data-tooltip="{{ seat.party }} {{ party_dict[seat.party] }} מנדטים"
+                data-party="{{ seat.party }}" 
+                style="background-color: {% include 'party_color.html' %};
+                    box-shadow: 0 0 3vw {% if seat.is_coalition %} rgba(0, 64, 255, 0.6) {% else %} rgba(255, 179, 0, 0.6) {% endif %};
+                ">
+            </span>
+    {% endif %}
+    {% endmacro %}
+
     <table class="knesset-table">
         {% for i in range(left_section|length) %}
             <tr>
-                <!-- Left Section Cells for Row i -->
-                {% for seat in left_section[i] %}
-                    <td class="left-section">
-                        {% if seat != "space" %}
-                            <span class="seat-span" style="background-color: {% include 'party_color.html' %};"></span>
-                        {% endif %}
-                    </td>
-                {% endfor %}
-    
-                <!-- Center Section Cells for Row i -->
-                {% for seat in center_section[i] %}
-                    <td class="center-section">
-                        {% if seat != "space" %}
-                            <span class="seat-span" style="background-color: {% include 'party_color.html' %};"></span>
-                        {% endif %}
-                    </td>
-                {% endfor %}
-    
-                <!-- Right Section Cells for Row i -->
-                {% for seat in right_section[i] %}
-                    <td class="right-section">
-                        {% if seat != "space" %}
-                            <span class="seat-span" style="background-color: {% include 'party_color.html' %};"></span>
-                        {% endif %}
-                    </td>
+                {% for section, section_name in [(left_section, 'left'), (center_section, 'center'), (right_section, 'right')] %}
+                    {% for seat in section[i] %}
+                        <td class="{{ section_name }}-section">
+                            {{ render_seat(seat, party_dict) }}
+                        </td>
+                    {% endfor %}
                 {% endfor %}
             </tr>
         {% endfor %}
     </table>
 </div>
+<div class="coin">
+    <div class="coin-inner">
+      <div class="coin-front">
+        <!-- Content for the front side of the coin -->
+        <img style="width: 15vw; height: 15vw; margin-bottom: 10%;" src="/static/images/logo.png" >
+      </div>
+      <div class="coin-back">
+        <!-- Content for the back side of the coin -->
+        <table style="width: 100%;">
+            <tr>
+                <td style="text-align: center;">
+                    <h2 style="color: white; margin: 0; font-size: 5vw;">68/52</h2>
+                </td>
+            </tr>
+            <tr>
+                <td style="text-align: center; border-top: .2vw solid white;">
+                    <h2 style="color: white; margin: 0; font-size: 5vw;">120</h2>
+                </td>
+            </tr>
+        </table>
+      </div>
+    </div>
+  </div>
+  
+
+<script>
+    
+    document.addEventListener("DOMContentLoaded", function() {
+    const spans = document.querySelectorAll('.seat-span');
+
+    spans.forEach(span => {
+        const party = span.getAttribute('data-party');
+        
+        // Mouseover event
+        span.addEventListener('mouseover', () => {
+            spans.forEach(s => {
+                if (s.getAttribute('data-party') === party) {
+                    s.style.transform = "scale(1.15)";
+                }
+            });
+        });
+
+        // Mouseout event to reset the size
+        span.addEventListener('mouseout', () => {
+            spans.forEach(s => {
+                if (s.getAttribute('data-party') === party) {
+                    s.style.transform = "scale(1)";
+                }
+            });
+        });
+    });
+});
+</script>

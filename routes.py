@@ -5,6 +5,7 @@ from models import db, KnessetMembers, Tweets, Offices, Indexes, Indexes_Data, M
 from collections import namedtuple
 import json
 import random
+from sqlalchemy import func
 
 # Create a Blueprint for the routes
 routes = Blueprint('routes', __name__)
@@ -352,7 +353,7 @@ def divide_array(arr):
 @routes.route('/parlament')
 def parlament():
     # get all knesset members from the DB ordered by coalition and party
-    km_info = db.session.query(KnessetMembers).order_by(KnessetMembers.is_coalition.desc(),KnessetMembers.party).all()
+    km_info = db.session.query(KnessetMembers).order_by(KnessetMembers.is_coalition.desc(),KnessetMembers.party).limit(123).all()
    
     # create array of dicts for the knesset members info
     knesset_members = []
@@ -367,6 +368,21 @@ def parlament():
         knesset_members.append(data)
 
     first_section, second_section, third_section = divide_array(knesset_members)
+    
+    # Query to get the count of members in each party
+    party_counts = db.session.query(
+        KnessetMembers.party,
+        func.count(KnessetMembers.km_id)  # Assuming 'id' is the primary key of each member
+    ).group_by(KnessetMembers.party).order_by(KnessetMembers.is_coalition.desc()).all()
+
+    party_dict = {}
+
+    # Print the counts
+    for party, count in party_counts:
+        party_dict[party] = count
+    
+
+    
     # set the parlament structure
     parlament_structure = [
         ["space", "space", "space", "seat", "seat", "seat", "seat", "seat", "seat", "seat", "seat", "seat", "seat", "seat", "seat", "seat", "space", "space", "space"],
@@ -401,4 +417,4 @@ def parlament():
     right_seats = create_parlament(third_section,right_section)
 
     
-    return render_template('parlament.html', left_section = left_seats, center_section = center_seats, right_section= right_seats )
+    return render_template('parlament.html', party_dict = party_dict, left_section = left_seats, center_section = center_seats, right_section= right_seats )
