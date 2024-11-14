@@ -148,7 +148,7 @@ td {
     margin: auto;
     animation: entrence 1s ease 0s 1 normal forwards;
     background-size: cover;
-    border: 1px solid grey;
+    border: .1vw solid grey;
 
 }
 

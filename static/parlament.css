@@ -141,9 +141,10 @@
         -webkit-animation: slide-in-right 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
         animation: slide-in-right 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
     }
-    td{
+    .td{
         padding: .2vw;
         margin: 0;
+        border: .1vw solid blue;
     }
     [data-tooltip] {
         position: relative; /* Set the tooltip relative to the <th> element */
@@ -200,7 +201,6 @@
   position: absolute;
   inset: 0; /* Fill the circle */
   border-radius: 50%;
-  background: conic-gradient(transparent 0% 70%, blue 70% 100%); /* Overlay color split */
   mask: radial-gradient(farthest-side, black calc(100% - 10px), transparent); /* Border width */
 }
   .coin-inner {
@@ -229,7 +229,7 @@
     font-family: Arial, sans-serif;
     font-size: 18px;
     color: white;
-    padding: 20px;
+    padding: 1.5vw;
     box-sizing: border-box;
     border-radius: 50%;      /* Make both sides circular */
     border: .2vw solid black;
@@ -238,12 +238,21 @@
   
   /* Styling the front and back sides */
   .coin-front {
-    background-color: #e4e4e4;
-  }
+    background: conic-gradient(
+      from 180deg,              /* Start the gradient from the bottom */
+      rgb(101, 101, 232) 0% 57%,   /* Blue from 0 to 144 degrees (40% of 360 degrees) */
+      #ffc354 57% 100% /* Orange for the remaining part */
+
+    );
+    cursor:default;
+     }
   
   .coin-back {
-    background-color: #2196F3;
     transform: rotateY(180deg);
-
   }
   
+  /* Define the scrollbar style */
+body::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+}
