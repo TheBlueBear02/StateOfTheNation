@@ -8,7 +8,8 @@
                 data-name="{{ seat.name }}"
                 data-party="{{ seat.party }}" 
                 data-image="{{ seat.image }}"
-                style="background-color: {% include 'party_color.html' %}; ">
+                data-role="{{ seat.additional_role}}"
+                style="background-color: {% include 'party_color.html' %};">
             </span>
             <!-- for coalition shadow around spans box-shadow: 0 0 3vw {% if seat.is_coalition %} rgba(0, 64, 255, 0.6) {% else %} rgba(255, 179, 0, 0.6) {% endif %};-->
     {% endif %}
@@ -49,11 +50,14 @@
         </div>
         <div class="coin-back">
             <img class="seat-image" src="">
-            <div class="info-section">
-                <h1 class="name"></h1>
-            </div>
+                <div class="info-section">
+                    <div style="width: 60%; margin: auto;">
+                        <h3 class="span-info" id="name">name</h3>
+                        <h6 class="span-info" id="role">role</h5>
+                    </div>
+                </div>
         </div>
-  </div>
+    </div>
 
 
 <script>
@@ -61,13 +65,22 @@
         const seatSpans = document.querySelectorAll('.seat-span');
         const coin = document.querySelector('.coin');
         const seatImage = document.querySelector('.seat-image');
+        const nameElement = document.getElementById("name");
+        const roleElement = document.getElementById("role");
+
 
         seatSpans.forEach(span => {
             span.addEventListener('mouseenter', () => {
                 const imageSrc = span.getAttribute('data-image');
+                const name = span.getAttribute('data-name');
+                const role = span.getAttribute('data-role');
+
+
                 if (imageSrc) {
                     seatImage.src = imageSrc;
                 }
+                nameElement.textContent = name;
+                roleElement.textContent = role;
                 // Add the 'flip' class to the coin
                 coin.classList.add('flip');
             });
@@ -91,7 +104,7 @@
         span.addEventListener('mouseover', () => {
             spans.forEach(s => {
                 if (s.getAttribute('data-party') === party) {
-                    s.style.transform = "scale(1.15)";
+                    s.style.transform = "scale(1.1)";
                 }
             });
         });
