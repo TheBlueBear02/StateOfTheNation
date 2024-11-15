@@ -5,7 +5,9 @@
         {% if seat != "space" %}
             <span class="seat-span" 
                 data-tooltip="{{ seat.party }} {{ party_dict[seat.party] }} מנדטים"
+                data-name="{{ seat.name }}"
                 data-party="{{ seat.party }}" 
+                data-image="{{ seat.image }}"
                 style="background-color: {% include 'party_color.html' %}; ">
             </span>
             <!-- for coalition shadow around spans box-shadow: 0 0 3vw {% if seat.is_coalition %} rgba(0, 64, 255, 0.6) {% else %} rgba(255, 179, 0, 0.6) {% endif %};-->
@@ -46,11 +48,38 @@
             </div>    
         </div>
         <div class="coin-back">
+            <img class="seat-image" src="">
+            <div class="info-section">
+                <h1 class="name"></h1>
+            </div>
         </div>
   </div>
 
 
 <script>
+        document.addEventListener('DOMContentLoaded', function() {
+        const seatSpans = document.querySelectorAll('.seat-span');
+        const coin = document.querySelector('.coin');
+        const seatImage = document.querySelector('.seat-image');
+
+        seatSpans.forEach(span => {
+            span.addEventListener('mouseenter', () => {
+                const imageSrc = span.getAttribute('data-image');
+                if (imageSrc) {
+                    seatImage.src = imageSrc;
+                }
+                // Add the 'flip' class to the coin
+                coin.classList.add('flip');
+            });
+
+            span.addEventListener('mouseleave', () => {
+                // Optionally reset the image when the mouse leaves
+                seatImage.src = '';
+                // Remove the 'flip' class from the coin
+                coin.classList.remove('flip');
+            });
+        });
+    });
     
     document.addEventListener("DOMContentLoaded", function() {
     const spans = document.querySelectorAll('.seat-span');
