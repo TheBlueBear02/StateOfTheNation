@@ -192,7 +192,7 @@
     height: 20vw;           
     border-radius: 50%; /* Make the container circular */
     position: fixed;
-    top: 40%;
+    top: 32%;
     left: 40%;
 }
   
@@ -224,13 +224,11 @@
     height: 100%;
     backface-visibility: hidden;
     display: flex;
-    align-items: center;
-    justify-content: center;
     font-family: Arial, sans-serif;
     font-size: 18px;
     color: white;
     box-sizing: border-box;
-    border-radius: 50%;      /* Make both sides circular */
+    border-radius: 50%;      
     border: .2vw solid black;
 
   }
@@ -243,12 +241,13 @@
       #ffc354 57% 100% /* Orange for the remaining part */
     );
     padding: 1.5vw;
-
     cursor:default;
      }
   
   .coin-back {
     transform: rotateY(180deg);
+    overflow: hidden;
+
   }
   
   /* Define the scrollbar style */
@@ -264,15 +263,32 @@ body::-webkit-scrollbar {
 }
 
 .info-section{
-  width: 92%;
+  width: 100%;
   height: 30%;
   z-index: 2;
   background-color: white;
   position:absolute;
   bottom: 0;
   left: 0;
-  border-bottom-left-radius: 80vh; /* Match the circle's radius */
-  border-bottom-right-radius: 80vh; /* Match the circle's radius */
-  margin-left: 4%;
-  border: 1px solid black;
+  border-bottom-left-radius: 100vh; /* Match the circle's radius */
+  border-bottom-right-radius: 100vh; /* Match the circle's radius */
+  border-top: .2vw solid black;
+  padding-top: .1vw; /* Adds some space from the top */
+  background-color: rgb(226, 239, 255);
+  display: flex;
+  justify-content: center; /* Center horizontally */
+  flex-direction: column; /* Stack elements vertically */
+
 }
+
+.span-info{
+  position: relative;
+  top: -1vw; /* Adjust this value as needed */
+  z-index: 3;
+  color: black;
+  margin: 0;
+  justify-content: center; /* Center horizontally */
+  text-align: center; /* Center text within each element */
+
+}
+

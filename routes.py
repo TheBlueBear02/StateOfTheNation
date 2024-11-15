@@ -416,5 +416,4 @@ def parlament():
     center_seats = create_parlament(second_section,center_section)
     right_seats = create_parlament(third_section,right_section)
 
-    
     return render_template('parlament.html', party_dict = party_dict, left_section = left_seats, center_section = center_seats, right_section= right_seats )
