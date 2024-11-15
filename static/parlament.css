@@ -211,11 +211,11 @@
     transition: transform 0.6s;
     border-radius: 50%;     
   }
-  
-  /* Flip the coin on hover */
-  .coin:hover .coin-inner {
+
+.coin.flip .coin-inner {
     transform: rotateY(180deg);
-  }
+}
+
   
   /* Front and Back sides of the coin */
   .coin-front, .coin-back {
@@ -229,7 +229,6 @@
     font-family: Arial, sans-serif;
     font-size: 18px;
     color: white;
-    padding: 1.5vw;
     box-sizing: border-box;
     border-radius: 50%;      /* Make both sides circular */
     border: .2vw solid black;
@@ -242,8 +241,9 @@
       from 180deg,              /* Start the gradient from the bottom */
       rgb(101, 101, 232) 0% 57%,   /* Blue from 0 to 144 degrees (40% of 360 degrees) */
       #ffc354 57% 100% /* Orange for the remaining part */
-
     );
+    padding: 1.5vw;
+
     cursor:default;
      }
   
@@ -255,4 +255,24 @@
 body::-webkit-scrollbar {
     width: 0;
     height: 0;
+}
+
+.seat-image{
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+}
+
+.info-section{
+  width: 92%;
+  height: 30%;
+  z-index: 2;
+  background-color: white;
+  position:absolute;
+  bottom: 0;
+  left: 0;
+  border-bottom-left-radius: 80vh; /* Match the circle's radius */
+  border-bottom-right-radius: 80vh; /* Match the circle's radius */
+  margin-left: 4%;
+  border: 1px solid black;
 }
