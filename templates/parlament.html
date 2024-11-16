@@ -3,12 +3,14 @@
 <div>
     {% macro render_seat(seat, party_dict) %}
         {% if seat != "space" %}
+        {% set party = seat.party %}
             <span class="seat-span" 
                 data-tooltip="{{ seat.party }} {{ party_dict[seat.party] }} מנדטים"
                 data-name="{{ seat.name }}"
                 data-party="{{ seat.party }}" 
                 data-image="{{ seat.image }}"
-                data-role="{{ seat.additional_role}}"
+                data-role="{{ seat.additional_role }}"
+                data-coalition="{{ seat.is_coalition }}"
                 style="background-color: {% include 'party_color.html' %};">
             </span>
             <!-- for coalition shadow around spans box-shadow: 0 0 3vw {% if seat.is_coalition %} rgba(0, 64, 255, 0.6) {% else %} rgba(255, 179, 0, 0.6) {% endif %};-->
@@ -37,25 +39,27 @@
                 <table style="width: 50%; margin: auto; margin-top: 12%;">
                     <tr>
                         <td style="text-align: center;">
-                            <h2 style="color: black; margin: 0; font-size: 5vw;">68/52</h2>
+                            <h2 style="color: rgb(101, 101, 232); font-size: 6vw;display: inline;">68</h2><h2 style="color: black; display: inline;font-size: 4vw;">/</h2><h2 style="color: ffc354; display: inline;font-size: 4vw;">52</h2>
                         </td>
                     </tr>
                     <tr>
                         <td style="text-align: center; border-top: .2vw solid ;">
-                            <h2 style="color: black; margin: 0; font-size: 5vw;">120</h2>
+                            <h2 style="color: black; margin: 0; font-size: 6vw;">120</h2>
                         </td>
                     </tr>
                 </table>
             </div>    
         </div>
-        <div class="coin-back">
-            <img class="seat-image" src="">
-                <div class="info-section">
+        <div id="coin-back" class="coin-back">
+            <div class="shadow">
+                <img class="seat-image" src="">
+                <div id="info_section" class="info-section">
                     <div style="width: 60%; margin: auto;">
-                        <h3 class="span-info" id="name">name</h3>
-                        <h6 class="span-info" id="role">role</h5>
+                        <h2 class="span-info" id="name">name</h3>
+                        <h5 class="span-info" id="role">role</h5>
                     </div>
                 </div>
+            </div>
         </div>
     </div>
 
@@ -67,27 +71,86 @@
         const seatImage = document.querySelector('.seat-image');
         const nameElement = document.getElementById("name");
         const roleElement = document.getElementById("role");
-
+        const infoSection = document.getElementById("info_section");
+        const coinBack = document.getElementById("coin-back");
 
         seatSpans.forEach(span => {
             span.addEventListener('mouseenter', () => {
                 const imageSrc = span.getAttribute('data-image');
                 const name = span.getAttribute('data-name');
                 const role = span.getAttribute('data-role');
-
+                const is_coalition = span.getAttribute('data-coalition');
+                const party = span.getAttribute('data-party')
 
                 if (imageSrc) {
                     seatImage.src = imageSrc;
                 }
                 nameElement.textContent = name;
                 roleElement.textContent = role;
+                
+                if (is_coalition == "True"){
+                    infoSection.style.backgroundColor = "rgb(226, 239, 255)";
+                    console.log(is_coalition)
+                }
+                else{
+                    infoSection.style.backgroundColor = "#FFEEDF";
+                }
+                
+                
+                let borderColor;
+                switch (party) {
+                    case 'הליכוד':
+                        borderColor = '#4169E1';
+                        break;
+                    case 'יש עתיד':
+                        borderColor = '#ffb326';
+                        break;
+                    case 'המחנה הממלכתי':
+                        borderColor = 'lightblue';
+                        break;
+                    case 'העבודה':
+                        borderColor = '#6A0DAD';
+                        break;
+                    case 'עוצמה יהודית':
+                        borderColor = '#ff702e';
+                        break;
+                    case 'הציונות הדתית':
+                        borderColor = '#8dc035';
+                        break;
+                    case 'תקווה חדשה':
+                        borderColor = '#00008B';
+                        break;
+                    case 'שס':
+                        borderColor = '#363636';
+                        break;
+                    case 'יהדות התורה':
+                        borderColor = '#1a4082';
+                        break;
+                    case 'רעמ':
+                        borderColor = 'green';
+                        break;
+                    case 'חדש-תעל':
+                        borderColor = '#db2121';
+                        break;
+                    case 'ישראל ביתנו':
+                        borderColor = '#251aa1';
+                        break;
+                    case 'נעם':
+                        borderColor = '#80caff';
+                        break;
+                    default:
+                        borderColor = '#808080';
+                }
+
+                // Apply the border color
+                coinBack.style.border = `.4vw solid ${borderColor}`;
                 // Add the 'flip' class to the coin
                 coin.classList.add('flip');
             });
 
             span.addEventListener('mouseleave', () => {
                 // Optionally reset the image when the mouse leaves
-                seatImage.src = '';
+                // seatImage.src = '';
                 // Remove the 'flip' class from the coin
                 coin.classList.remove('flip');
             });
