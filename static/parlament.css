@@ -290,7 +290,6 @@
   .coin-back {
     transform: rotateY(180deg);
     overflow: hidden;
-
   }
   
   /* Define the scrollbar style */
@@ -321,18 +320,24 @@ body::-webkit-scrollbar {
   display: flex;
   justify-content: center; /* Center horizontally */
   flex-direction: column; /* Stack elements vertically */
-  padding-top: 1vw;
+  padding-top: 2vw;
 }
 
 .span-info{
   position: relative;
-  top: -1vw; /* Adjust this value as needed */
+  top: -2vw; /* Adjust this value as needed */
   z-index: 3;
   color: black;
   margin: 0;
   justify-content: center; /* Center horizontally */
   text-align: center; /* Center text within each element */
+}
 
+h2{
+  font-size: 2vw;
+}
+h5{
+  font-size: 1.5vw;
 }
 
 .shadow{
