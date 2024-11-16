@@ -8,6 +8,8 @@ app = Flask(__name__)
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 app.config['SQLALCHEMY_DATABASE_URI'] = f"sqlite:///{os.path.join(basedir, 'instance', 'sn.db')}"
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False  # Disable track modifications
+
 # Initialize dSb with the Flask app
 db.init_app(app)
 
