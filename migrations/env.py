@@ -8,13 +8,17 @@ from alembic import context
 # Add the directory containing app.py to the system path
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from app import create_app  # Import your app factory
+from app import db
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
 config = context.config
 
-# Interpret the config file for Python logging.
-fileConfig(config.config_file_name)
+if config.config_file_name is not None:
+    try:
+        fileConfig(config.config_file_name)
+    except KeyError as e:
+        print(f"Logging configuration error: {e}. Skipping logging setup.")
 logger = logging.getLogger('alembic.env')
 
 
