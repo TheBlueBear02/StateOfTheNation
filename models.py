@@ -7,15 +7,16 @@ class KnessetMembers(db.Model):
     party = db.Column(db.String, nullable=False)
     is_coalition = db.Column(db.Boolean, nullable=False) 
     image = db.Column(db.String)
-    additional_role = db.Column(db.String, nullable=False) 
+    additional_role = db.Column(db.String) 
     name = db.Column(db.String(80), unique=False, nullable=False)
+
 
 class Tweets(db.Model):
     id = db.Column(db.Integer, nullable=False,primary_key=True)
     text = db.Column(db.String, nullable=False)
     date = db.Column(db.String, nullable=False,)
     time = db.Column(db.String, nullable=False,)
-    topic = db.Column(db.String, nullable=False,)
+    topic = db.Column(db.String)
     km_id = db.Column(db.Integer, nullable=False,)
     image = db.Column(db.String)
 
@@ -48,4 +49,4 @@ class Ministers_History(db.Model):
     start_date = db.Column(db.String, nullable=False)
     image = db.Column(db.String)
     office_id = db.Column(db.Integer, nullable=False)
-    party = db.Column(db.String, nullable=False)
+    party = db.Column(db.String)

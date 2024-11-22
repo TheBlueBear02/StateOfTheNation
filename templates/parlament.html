@@ -1,327 +1,184 @@
-
-<style>
-    .knesset-table{
-        width: 80%;
-        height: 80%;
-        border: 1px solid black;
-        margin-left: 5%;
-
-    }
-    .sit-span{
-        width: 4vw;
-        height: 4vw;
-        background-color: rgb(63, 63, 209);
-        border-radius: 50%;
-        display:block;
-        padding: 0;
-        margin-left: 0vw;
-        margin: auto;
-
-    }
-    td{
-        width: 2vw;
-        border: 1px solid black;
-        padding: 2px;
-        margin: 0;
-    }
-</style>
+<link rel="stylesheet" href="{{ url_for('static', filename='parlament.css') }}">
 
 <div>
+    {% macro render_seat(seat, party_dict) %}
+        {% if seat != "space" %}
+        {% set party = seat.party %}
+            <span class="seat-span" 
+                data-tooltip="{{ seat.party }} {{ party_dict[seat.party] }} מנדטים"
+                data-name="{{ seat.name }}"
+                data-party="{{ seat.party }}" 
+                data-image="{{ seat.image }}"
+                data-role="{{ seat.additional_role }}"
+                data-coalition="{{ seat.is_coalition }}"
+                style="background-color: {% include 'party_color.html' %};">
+            </span>
+            <!-- for coalition shadow around spans box-shadow: 0 0 3vw {% if seat.is_coalition %} rgba(0, 64, 255, 0.6) {% else %} rgba(255, 179, 0, 0.6) {% endif %};-->
+    {% endif %}
+    {% endmacro %}
+
     <table class="knesset-table">
-        <tr style="width: 100%; border: 1px solid black;">
-            <td></td>
-            <td></td>
-            <td></td>
-            <td><span class="sit-span"></span></td>
-            <td><span class="sit-span"></span></td>
-            <td><span class="sit-span"></span></td>
-            <td><span class="sit-span"></span></td>
-            <td><span class="sit-span"></span></td>
-            <td><span class="sit-span"></span></td>
-            <td><span class="sit-span"></span></td>
-            <td><span class="sit-span"></span></td>
-            <td><span class="sit-span"></span></td>
-            <td><span class="sit-span"></span></td>
-            <td><span class="sit-span"></span></td>
-            <td><span class="sit-span"></span></td>
-            <td><span class="sit-span"></span></td>
-            <td></td>
-            <td></td>
-            <td></td>
-        </tr>
-        <tr style="width: 100%; border: 1px solid black;">
-            <td><span class="sit-span"></span></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td><span class="sit-span"></span></td>
-            <td><span class="sit-span"></span></td>
-            <td><span class="sit-span"></span></td>
-            <td><span class="sit-span"></span></td>
-            <td><span class="sit-span"></span></td>
-            <td><span class="sit-span"></span></td>
-            <td><span class="sit-span"></span></td>
-            <td><span class="sit-span"></span></td>
-            <td><span class="sit-span"></span></td>
-            <td><span class="sit-span"></span></td>
-            <td><span class="sit-span"></span></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td><span class="sit-span"></span></td>
-        </tr>
-        <tr style="width: 100%; border: 1px solid black;">
-            <td><span class="sit-span"></span></td>
-            <td><span class="sit-span"></span></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td><span class="sit-span"></span></td>
-            <td><span class="sit-span"></span></td>
-            <td><span class="sit-span"></span></td>
-            <td><span class="sit-span"></span></td>
-            <td><span class="sit-span"></span></td>
-            <td><span class="sit-span"></span></td>
-            <td><span class="sit-span"></span></td>
-            <td><span class="sit-span"></span></td>
-            <td><span class="sit-span"></span></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td><span class="sit-span"></span></td>
-            <td><span class="sit-span"></span></td>
-        </tr>
-        <tr style="width: 100%; border: 1px solid black;">
-            <td><span class="sit-span"></span></td>
-            <td><span class="sit-span"></span></td>
-            <td><span class="sit-span"></span></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td><span class="sit-span"></span></td>
-            <td><span class="sit-span"></span></td>
-            <td><span class="sit-span"></span></td>
-            <td><span class="sit-span"></span></td>
-            <td><span class="sit-span"></span></td>
-            <td><span class="sit-span"></span></td>
-            <td><span class="sit-span"></span></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td><span class="sit-span"></span></td>
-            <td><span class="sit-span"></span></td>
-            <td><span class="sit-span"></span></td>
-        </tr>
-        <tr style="width: 100%; border: 1px solid black;">
-            <td><span class="sit-span"></span></td>
-            <td><span class="sit-span"></span></td>
-            <td><span class="sit-span"></span></td>
-            <td><span class="sit-span"></span></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td> 
-            <td></td>
-            <td></td>
-            <td><span class="sit-span"></span></td>
-            <td><span class="sit-span"></span></td>
-            <td><span class="sit-span"></span></td>
-            <td><span class="sit-span"></span></td>
-        </tr>
-        <tr style="width: 100%; border: 1px solid black;">
-            <td><span class="sit-span"></span></td>
-            <td><span class="sit-span"></span></td>
-            <td><span class="sit-span"></span></td>
-            <td><span class="sit-span"></span></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td> 
-            <td></td>
-            <td></td>
-            <td><span class="sit-span"></span></td>
-            <td><span class="sit-span"></span></td>
-            <td><span class="sit-span"></span></td>
-            <td><span class="sit-span"></span></td>
-        </tr>
-        <tr style="width: 100%; border: 1px solid black;">
-            <td><span class="sit-span"></span></td>
-            <td><span class="sit-span"></span></td>
-            <td><span class="sit-span"></span></td>
-            <td><span class="sit-span"></span></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td> 
-            <td></td>
-            <td></td>
-            <td><span class="sit-span"></span></td>
-            <td><span class="sit-span"></span></td>
-            <td><span class="sit-span"></span></td>
-            <td><span class="sit-span"></span></td>
-        </tr>
-        <tr style="width: 100%; border: 1px solid black;">
-            <td><span class="sit-span"></span></td>
-            <td><span class="sit-span"></span></td>
-            <td><span class="sit-span"></span></td>
-            <td><span class="sit-span"></span></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td> 
-            <td></td>
-            <td></td>
-            <td><span class="sit-span"></span></td>
-            <td><span class="sit-span"></span></td>
-            <td><span class="sit-span"></span></td>
-            <td><span class="sit-span"></span></td>
-        </tr>
-        <tr style="width: 100%; border: 1px solid black;">
-            <td><span class="sit-span"></span></td>
-            <td><span class="sit-span"></span></td>
-            <td><span class="sit-span"></span></td>
-            <td><span class="sit-span"></span></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td> 
-            <td></td>
-            <td></td>
-            <td><span class="sit-span"></span></td>
-            <td><span class="sit-span"></span></td>
-            <td><span class="sit-span"></span></td>
-            <td><span class="sit-span"></span></td>
-        </tr>
-        <tr style="width: 100%; border: 1px solid black;">
-            <td><span class="sit-span"></span></td>
-            <td><span class="sit-span"></span></td>
-            <td><span class="sit-span"></span></td>
-            <td><span class="sit-span"></span></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td> 
-            <td></td>
-            <td></td>
-            <td><span class="sit-span"></span></td>
-            <td><span class="sit-span"></span></td>
-            <td><span class="sit-span"></span></td>
-            <td><span class="sit-span"></span></td>
-        </tr>
-        <tr style="width: 100%; border: 1px solid black;">
-            <td><span class="sit-span"></span></td>
-            <td><span class="sit-span"></span></td>
-            <td><span class="sit-span"></span></td>
-            <td><span class="sit-span"></span></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td> 
-            <td></td>
-            <td></td>
-            <td><span class="sit-span"></span></td>
-            <td><span class="sit-span"></span></td>
-            <td><span class="sit-span"></span></td>
-            <td><span class="sit-span"></span></td>
-        </tr>
-        <tr style="width: 100%; border: 1px solid black;">
-            <td><span class="sit-span"></span></td>
-            <td><span class="sit-span"></span></td>
-            <td><span class="sit-span"></span></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td> 
-            <td></td>
-            <td></td>
-            <td></td>
-            <td><span class="sit-span"></span></td>
-            <td><span class="sit-span"></span></td>
-            <td><span class="sit-span"></span></td>
-        </tr>
-        <tr style="width: 100%; border: 1px solid black;">
-            <td><span class="sit-span"></span></td>
-            <td><span class="sit-span"></span></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td> 
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td><span class="sit-span"></span></td>
-            <td><span class="sit-span"></span></td>
-        </tr>
-        <tr style="width: 100%; border: 1px solid black;">
-            <td><span class="sit-span"></span></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td> 
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td><span class="sit-span"></span></td>
-        </tr>
-            
+        {% for i in range(left_section|length) %}
+            <tr>
+                {% for section, section_name in [(left_section, 'left'), (center_section, 'center'), (right_section, 'right')] %}
+                    {% for seat in section[i] %}
+                        <td class="{{ section_name }}-section">
+                            {{ render_seat(seat, party_dict) }}
+                        </td>
+                    {% endfor %}
+                {% endfor %}
+            </tr>
+        {% endfor %}
     </table>
 </div>
+<div class="coin">
+    <div class="coin-inner">
+        <div class="coin-front">
+            <div style="width: 100%; height: 100%; border-radius: 50%; background-color: rgb(255, 255, 255);">
+                <!-- Content for the back side of the coin -->
+                <table style="width: 50%; margin: auto; margin-top: 12%;">
+                    <tr>
+                        <td style="text-align: center;">
+                            <h2 style="color: rgb(101, 101, 232); font-size: 6vw;display: inline;">68</h2><h2 style="color: black; display: inline;font-size: 4vw;">/</h2><h2 style="color: ffc354; display: inline;font-size: 4vw;">52</h2>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="text-align: center; border-top: .3vw solid ;">
+                            <h2 style="color: black; margin: 0; font-size: 6vw;">120</h2>
+                        </td>
+                    </tr>
+                </table>
+            </div>    
+        </div>
+        <div id="coin-back" class="coin-back">
+            <div class="shadow"></div>
+                <img class="seat-image" src="">
+                <div id="info_section" class="info-section">
+                    <div style="width: 60%; margin: auto;">
+                        <h2 class="span-info" id="name">name</h3>
+                        <h5 class="span-info" id="role">role</h5>
+                    </div>
+                </div>
+        </div>
+    </div>
+
+
+<script>
+        document.addEventListener('DOMContentLoaded', function() {
+        const seatSpans = document.querySelectorAll('.seat-span');
+        const coin = document.querySelector('.coin');
+        const seatImage = document.querySelector('.seat-image');
+        const nameElement = document.getElementById("name");
+        const roleElement = document.getElementById("role");
+        const infoSection = document.getElementById("info_section");
+        const coinBack = document.getElementById("coin-back");
+
+        seatSpans.forEach(span => {
+            span.addEventListener('mouseenter', () => {
+                const imageSrc = span.getAttribute('data-image');
+                const name = span.getAttribute('data-name');
+                const role = span.getAttribute('data-role');
+                const is_coalition = span.getAttribute('data-coalition');
+                const party = span.getAttribute('data-party')
+
+                if (imageSrc) {
+                    seatImage.src = imageSrc;
+                }
+                nameElement.textContent = name;
+                roleElement.textContent = role;
+                
+                if (is_coalition == "True"){
+                    //infoSection.style.background = "linear-gradient(315deg, rgba(72,144,253,1) 0%, rgba(163,204,255,1) 40%, rgba(163,204,255,1) 60%, rgba(72,144,253,1) 100%)";
+                    infoSection.style.backgroundColor = "#e0e0f6"
+                }
+                else{
+                    //infoSection.style.background = "linear-gradient(315deg, rgba(255,151,59,1) 0%, rgba(255,193,138,1) 40%, rgba(255,193,138,1) 60%, rgba(255,151,59,1) 100%)";
+                    infoSection.style.backgroundColor = "#fff1d6"
+                }
+
+                let borderColor;
+                switch (party) {
+                    case 'הליכוד':
+                        borderColor = '#4169E1';
+                        break;
+                    case 'יש עתיד':
+                        borderColor = '#ffb326';
+                        break;
+                    case 'המחנה הממלכתי':
+                        borderColor = 'lightblue';
+                        break;
+                    case 'העבודה':
+                        borderColor = '#6A0DAD';
+                        break;
+                    case 'עוצמה יהודית':
+                        borderColor = '#ff702e';
+                        break;
+                    case 'הציונות הדתית':
+                        borderColor = '#8dc035';
+                        break;
+                    case 'תקווה חדשה':
+                        borderColor = '#00008B';
+                        break;
+                    case 'שס':
+                        borderColor = '#363636';
+                        break;
+                    case 'יהדות התורה':
+                        borderColor = '#1a4082';
+                        break;
+                    case 'רעמ':
+                        borderColor = 'green';
+                        break;
+                    case 'חדש-תעל':
+                        borderColor = '#db2121';
+                        break;
+                    case 'ישראל ביתנו':
+                        borderColor = '#251aa1';
+                        break;
+                    case 'נעם':
+                        borderColor = '#80caff';
+                        break;
+                    default:
+                        borderColor = '#808080';
+                }
+
+                // Apply the border color
+                coinBack.style.border = `.4vw solid ${borderColor}`;
+                // Add the 'flip' class to the coin
+                coin.classList.add('flip');
+            });
+
+            span.addEventListener('mouseleave', () => {
+                // Optionally reset the image when the mouse leaves
+                // seatImage.src = '';
+                // Remove the 'flip' class from the coin
+                coin.classList.remove('flip');
+            });
+        });
+    });
+    
+    document.addEventListener("DOMContentLoaded", function() {
+    const spans = document.querySelectorAll('.seat-span');
+
+    spans.forEach(span => {
+        const party = span.getAttribute('data-party');
+        
+        // Mouseover event
+        span.addEventListener('mouseover', () => {
+            spans.forEach(s => {
+                if (s.getAttribute('data-party') === party) {
+                    s.style.transform = "scale(1.1)";
+                }
+            });
+        });
+
+        // Mouseout event to reset the size
+        span.addEventListener('mouseout', () => {
+            spans.forEach(s => {
+                if (s.getAttribute('data-party') === party) {
+                    s.style.transform = "scale(1)";
+                }
+            });
+        });
+    });
+});
+</script>
