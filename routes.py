@@ -5,6 +5,7 @@ from models import db, KnessetMembers, Tweets, Offices, Indexes, Indexes_Data, M
 from collections import namedtuple
 import json
 import random
+from sqlalchemy import func
 
 # Create a Blueprint for the routes
 routes = Blueprint('routes', __name__)
@@ -319,6 +320,100 @@ def economy():
 
     return render_template('economy.html', main_lables=main_labels, main_values=main_values, expenses_lables=expenses_lables, expenses_values=expenses_values,income_lables=income_lables,income_values=income_values)
 
+
+Knesset_member = namedtuple("Knesset_member", ["name", "additional_role", "party", "is_coalition", "image"])  
+
+# set a knesset_member namedtuple to each seat in strutcture
+def create_parlament(knesset_members, structure):
+    seats = []
+
+    i = 0
+    for row_structure in structure:
+        row = []
+        for cell_type in row_structure:
+            if cell_type == "seat":
+                try:
+                    row.append(knesset_members[i])
+                    i += 1
+                except:
+                    row.append({'name':''})
+            else:
+                row.append("space")
+        seats.append(row)
+    
+    return seats
+
+def divide_array(arr):
+    n = len(arr)
+    part1 = arr[:n // 3]
+    part2 = arr[n // 3: 2 * n // 3]
+    part3 = arr[2 * n // 3:]
+    return part1, part2, part3
+    
 @routes.route('/parlament')
 def parlament():
-    return render_template('parlament.html')
+    # get all knesset members from the DB ordered by coalition and party
+    km_info = db.session.query(KnessetMembers).order_by(KnessetMembers.is_coalition.desc(),KnessetMembers.party).limit(123).all()
+   
+    # create array of dicts for the knesset members info
+    knesset_members = []
+    for member in km_info:
+        data = {
+            'name': member.name,
+            'additional_role': member.additional_role,
+            'party':member.party,
+            'is_coalition':member.is_coalition,
+            'image':member.image
+        }
+        knesset_members.append(data)
+
+    first_section, second_section, third_section = divide_array(knesset_members)
+    
+    # Query to get the count of members in each party
+    party_counts = db.session.query(
+        KnessetMembers.party,
+        func.count(KnessetMembers.km_id)  # Assuming 'id' is the primary key of each member
+    ).group_by(KnessetMembers.party).order_by(KnessetMembers.is_coalition.desc()).all()
+
+    party_dict = {}
+
+    # Print the counts
+    for party, count in party_counts:
+        party_dict[party] = count
+    
+
+    
+    # set the parlament structure
+    parlament_structure = [
+        ["space", "space", "space", "seat", "seat", "seat", "seat", "seat", "seat", "seat", "seat", "seat", "seat", "seat", "seat", "seat", "space", "space", "space"],
+        ["seat", "space", "space", "space", "seat", "seat", "seat", "seat", "seat", "seat", "seat", "seat", "seat", "seat", "seat", "space", "space", "space", "seat"],
+        ["seat", "seat", "space", "space", "space", "seat", "seat", "seat", "seat", "seat", "seat", "seat", "seat", "seat", "space", "space", "space", "seat", "seat"],
+        ["seat", "seat", "seat", "space", "space", "space", "seat", "seat", "seat", "seat", "seat", "seat", "seat", "space", "space", "space", "seat", "seat", "seat"],
+        ["seat", "seat", "seat", "seat", "space", "space", "space", "space", "space", "space", "space", "space", "space", "space", "space", "seat", "seat", "seat", "seat"],
+        ["seat", "seat", "seat", "seat", "space", "space", "space", "space", "space", "space", "space", "space", "space", "space", "space", "seat", "seat", "seat", "seat"],
+        ["seat", "seat", "seat", "seat", "space", "space", "space", "space", "space", "space", "space", "space", "space", "space", "space", "seat", "seat", "seat", "seat"],
+        ["seat", "seat", "seat", "seat", "space", "space", "space", "space", "space", "space", "space", "space", "space", "space", "space", "seat", "seat", "seat", "seat"],
+        ["seat", "seat", "seat", "seat", "space", "space", "space", "space", "space", "space", "space", "space", "space", "space", "space", "seat", "seat", "seat", "seat"],
+        ["seat", "seat", "seat", "seat", "space", "space", "space", "space", "space", "space", "space", "space", "space", "space", "space", "seat", "seat", "seat", "seat"],
+        ["seat", "seat", "seat", "seat", "space", "space", "space", "space", "space", "space", "space", "space", "space", "space", "space", "seat", "seat", "seat", "seat"],
+        ["seat", "seat", "seat", "space", "space", "space", "space", "space", "space", "space", "space", "space", "space", "space", "space", "space", "seat", "seat", "seat"],
+        ["seat", "seat", "space", "space", "space", "space", "space", "space", "space", "space", "space", "space", "space", "space", "space", "space", "space", "seat", "seat"],
+        ["seat", "space", "space", "space", "space", "space", "space", "space", "space", "space", "space", "space", "space", "space", "space", "space", "space", "space", "seat"],
+    ]
+
+    # Split the parliament structure into left, center, and right sections
+    left_section = []
+    center_section = []
+    right_section = []
+    for row in parlament_structure:
+        # Using slicing to divide each row into left, center, and right parts
+        left_section.append(row[:4])     # First 4 columns
+        center_section.append(row[4:15]) # Columns 4 to 15 (center)
+        right_section.append(row[15:])   # Last 4 columns
+        
+    # set a knesset member namedtuple to each seat in structure 
+    left_seats = create_parlament(list(reversed(first_section)),left_section)
+    center_seats = create_parlament(second_section,center_section)
+    right_seats = create_parlament(third_section,right_section)
+
+    return render_template('parlament.html', party_dict = party_dict, left_section = left_seats, center_section = center_seats, right_section= right_seats )

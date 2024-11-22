@@ -164,7 +164,7 @@ background-color: #999999;
     border-radius: 2vw .3vw 2vw 2vw; 
     color: black; 
     text-align: right;
-    margin-left: 5vh;
+    margin-left: 4.5vh;
     animation: myAnim 2s linear 0s 1 normal none;
 }
 
@@ -212,3 +212,6 @@ background-color: #999999;
     display: none;
     
 }
+
+
+  
