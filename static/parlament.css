@@ -193,12 +193,12 @@
     }
     [data-tooltip] {
         position: relative; /* Set the tooltip relative to the <th> element */
+
     }
     [data-tooltip]:hover::after {
         content: attr(data-tooltip);
         background: #433f3ff1;
         padding: .3em;
-        z-index: 5; 
         position:static;
         top: 0px;
         left: 0%;
@@ -209,8 +209,8 @@
         font-family: Arial, Helvetica, sans-serif;
         float: right;
         direction: rtl;
-        max-height: 3vw;
-        width: 7vw;
+        max-height: 3.3vw;
+        width: 5vw;
 
       }
 
