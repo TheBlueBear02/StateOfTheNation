@@ -65,10 +65,12 @@
 
 <!-- KPI Modal -->
 <dialog kpi-modal class="kpi-modal">
+    <span class="close_button" onclick="closeModal()"><img class="close_icon" style="width: 3vh;display: block;margin-left: 18%;margin-top: 20%;" src="/static/images/buttons/close-icon-white.png"></span>
+    <span class="share_button" onclick="closeModal()"><img class="close_icon" style="width: 4vh;display: block;margin-top: 2%;" src="/static/images/buttons/share-icon-white.png"><p>Share</p></span>
+
     <div class="modal-content">
         <table class="modal-info-table">
             <tr>
-                <span class="close_button" onclick="closeModal()"><img class="close_icon" style="width: 3vh;display: block;margin-left: 18%;margin-top: 20%;" src="/static/images/buttons/close-icon-white.png"></span>
                 <th style="width: 65%;">
                     <p id="modal-info-kpi" style="font-size: 2.5vh; float: right;"></p>
                 </th>
@@ -91,7 +93,6 @@
         </div>
         <!-- Timeline container -->
         
-        <span class="share_button" onclick="closeModal()"><img class="close_icon" style="width: 4vh;display: block;margin-top: 2%;" src="/static/images/buttons/share-icon-white.png"><p>Share</p></span>
     </div>
 </dialog>
 
@@ -310,6 +311,7 @@
             } else if (widthPercent >= 5 && widthPercent < 10) {
                 eraDiv.appendChild(dateInfo);
                 eraDiv.appendChild(ministerImage);
+                
             } else {
                 eraDiv.appendChild(dateInfo);
                 eraDiv.appendChild(ministerImage);
