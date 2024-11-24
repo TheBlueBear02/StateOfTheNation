@@ -1,6 +1,5 @@
 {
     "Members": [
-            {"Id": "1", "name": "a", "party": "", "is_coalition" : true, "image": "", "additional_role": ""},
 
 
             {"Id": "35472673", "name": "אבי דיכטר", "party": "הליכוד", "is_coalition" : true, "image": "https://pbs.twimg.com/profile_images/1341737784940392455/qiqmSnQ__400x400.jpg", "additional_role": "שר החקלאות"},

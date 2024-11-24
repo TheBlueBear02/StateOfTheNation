@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template
 from datetime import datetime
 from pyluach import dates
-from models import db, KnessetMembers, Tweets, Offices, Indexes, Indexes_Data, Ministers_History # Import models
+from models import db, ParliamentMember, Tweet, Office, Index, IndexData, MinisterHistory # Import models
 from collections import namedtuple
 import json
 import random
@@ -22,19 +22,18 @@ def get_hebrew_date(): # return hebrew date
 @routes.route('/')
 def index():
     # Query the database for all tweets and kms
-    all_tweets = db.session.query(Tweets).all()
-    all_kms = db.session.query(KnessetMembers).all()
-    
+    all_tweets = db.session.query(Tweet).all()
+    all_kms = db.session.query(ParliamentMember).all()
     # create list of dicts that contains the feed's tweets
     name = ""
     party = ""
     is_coalition = False
     image = ""
     additional_role = ""
-    tweets = []
+    tweets_list = []
     for tweet in all_tweets:
         for member in all_kms:
-            if member.km_id == tweet.km_id:
+            if int(member.twitter_id) == int(tweet.twitter_id):
                 name = member.name
                 party = member.party
                 is_coalition = member.is_coalition
@@ -54,8 +53,8 @@ def index():
             'additional_role': additional_role,
             'image': tweet.image
         }
-        tweets.append(tweet_data)
-    return render_template('index.html', today_date=get_date(), hebrew_date=get_hebrew_date(), tweets=list(reversed(tweets)))
+        tweets_list.append(tweet_data)
+    return render_template('index.html', today_date=get_date(), hebrew_date=get_hebrew_date(), tweets=list(reversed(tweets_list)))
 
 Cell = namedtuple("cell", ["cell_type", "size", "alert", "name","info","icon","chart_type","labels","values"]) # SET the Cell coloumns 
 Minister_term = namedtuple("Minister_term", ["name", "start_date", "image", "party"])  
@@ -82,10 +81,10 @@ def create_cells(indexes_info, structure):
 
 # Fetch indexes and data for a specific office
 def fetch_indexes(office_id):
-    indexes = db.session.query(Indexes).filter_by(office_id=office_id).order_by(Indexes.is_kpi.desc()).all()
+    indexes = db.session.query(Index).filter_by(office_id=office_id).order_by(Index.is_kpi.desc()).all()
     indexes_info = []
     for index in indexes:
-        index_data = db.session.query(Indexes_Data).filter_by(index_id=index.id).all()
+        index_data = db.session.query(IndexData).filter_by(index_id=index.id).all()
         labels = parse_dates([row.label for row in index_data])  # Convert dates once
         values = [row.value for row in index_data]
         indexes_info.append({
@@ -184,12 +183,12 @@ def ministers_history_timeline(ministers_list):
 
 @routes.route('/offices')
 def offices():
-    all_offices = db.session.query(Offices).limit(4).all()
+    all_offices = db.session.query(Office).limit(4).all()
 
     # Fetch index info for each office
     first_office_indexes_info = fetch_indexes(1)
-    second_office_indexes_info = fetch_indexes(2)
-    third_office_indexes_info = fetch_indexes(3)
+    second_office_indexes_info = fetch_indexes(3)
+    third_office_indexes_info = fetch_indexes(2)
     forth_office_indexes_info = fetch_indexes(4)
     
     # Cell structures
@@ -228,9 +227,9 @@ def offices():
     offices_list = []
 
     for office in all_offices:
-        minister = db.session.query(KnessetMembers).filter_by(km_id=office.minister_id).first() 
+        minister = db.session.query(ParliamentMember).filter_by(id=office.minister_id).first() 
         
-        ministers_history = db.session.query(Ministers_History).filter_by(office_id=office.id).all() 
+        ministers_history = db.session.query(MinisterHistory).filter_by(office_id=office.id).all() 
         term_history = ministers_history_timeline(ministers_history)
         
         office_data = {
@@ -251,13 +250,13 @@ def offices():
 @routes.route('/demography')
 def demography():
     # Get all the indexes with office_id = 100
-    demography_indexes = db.session.query(Indexes).filter_by(office_id=100).all()
+    demography_indexes = db.session.query(Index).filter_by(office_id=100).all()
 
     indexes_data = []
 
     for index in demography_indexes:
         # Get all related Indexes_Data entries for the current index
-        index_data_entries = db.session.query(Indexes_Data).filter_by(index_id=index.id).all()
+        index_data_entries = db.session.query(IndexData).filter_by(index_id=index.id).all()
         labels = []
         values = []
         # Collect labels and values from each entry
@@ -278,11 +277,11 @@ def economy():
     main_values = []
     temp_values = []
     
-    debt_per_year = db.session.query(Indexes_Data).filter_by(index_id=5).all()
-    income_per_year = db.session.query(Indexes_Data).filter_by(index_id=6).all()
-    expenses_per_year = db.session.query(Indexes_Data).filter_by(index_id=7).all()
-    interest_per_year = db.session.query(Indexes_Data).filter_by(index_id=8).all()
-    gdp_per_year = db.session.query(Indexes_Data).filter_by(index_id=9).all()
+    debt_per_year = db.session.query(IndexData).filter_by(index_id=5).all()
+    income_per_year = db.session.query(IndexData).filter_by(index_id=6).all()
+    expenses_per_year = db.session.query(IndexData).filter_by(index_id=7).all()
+    interest_per_year = db.session.query(IndexData).filter_by(index_id=8).all()
+    gdp_per_year = db.session.query(IndexData).filter_by(index_id=9).all()
 
     indexes = []
     indexes.append(debt_per_year)
@@ -302,7 +301,7 @@ def economy():
         temp_values = []
     
 
-    last_year_expenses = db.session.query(Indexes_Data).filter_by(index_id=10).all()
+    last_year_expenses = db.session.query(IndexData).filter_by(index_id=10).all()
     expenses_lables = []
     expenses_values = []
   
@@ -310,7 +309,7 @@ def economy():
         expenses_lables.append(row.label)
         expenses_values.append(row.value)
     
-    last_year_income = db.session.query(Indexes_Data).filter_by(index_id=11).all()
+    last_year_income = db.session.query(IndexData).filter_by(index_id=11).all()
     income_lables = []
     income_values = []
 
@@ -353,7 +352,7 @@ def divide_array(arr):
 @routes.route('/parlament')
 def parlament():
     # get all knesset members from the DB ordered by coalition and party
-    km_info = db.session.query(KnessetMembers).order_by(KnessetMembers.is_coalition.desc(),KnessetMembers.party).limit(123).all()
+    km_info = db.session.query(ParliamentMember).order_by(ParliamentMember.is_coalition.desc(),ParliamentMember.party).limit(123).all()
    
     # create array of dicts for the knesset members info
     knesset_members = []
@@ -371,9 +370,9 @@ def parlament():
     
     # Query to get the count of members in each party
     party_counts = db.session.query(
-        KnessetMembers.party,
-        func.count(KnessetMembers.km_id)  # Assuming 'id' is the primary key of each member
-    ).group_by(KnessetMembers.party).order_by(KnessetMembers.is_coalition.desc()).all()
+        ParliamentMember.party,
+        func.count(ParliamentMember.id)  # Assuming 'id' is the primary key of each member
+    ).group_by(ParliamentMember.party).order_by(ParliamentMember.is_coalition.desc()).all()
 
     party_dict = {}
 
