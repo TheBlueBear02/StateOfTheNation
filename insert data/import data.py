@@ -2,8 +2,10 @@ import csv
 import sys
 sys.path.append('D:\Projects\stateofthenation')
 import json
-from app import app, db
-from models import KnessetMembers,Tweets,Indexes_Data
+from app import db, create_app
+from models import ParliamentMember,Tweet,IndexData,Index
+
+app = create_app()
 
 # add data from csv file to index_data table
 def save_csv_to_db():
@@ -14,7 +16,7 @@ def save_csv_to_db():
         value = None
         for row in csv_reader:
             # Create an instance of YourModel
-            new_record = Indexes_Data(
+            new_record = IndexData(
                 index_id = index_id,
                 label=row['labels'],  # Map CSV fields to your model's columns
                 value=row['values']
@@ -29,20 +31,47 @@ def save_csv_to_db():
 # add knesset members from json file to the kms table
 def add_km():
     # Read the JSON data
-    with open(r'E:\Development Projects\SN\DB\KnessetMembers.json', 'r', encoding='utf-8') as file:
+    with open(r'D:\Projects\StateOfTheNation\DB\KnessetMembers.json', 'r', encoding='utf-8') as file:
         data = json.load(file)
-
+    i=0
     # Iterate through each entry in the JSON and add it to the database
     for entry in data['Members']:
-        new_message = KnessetMembers(
-            km_id=entry['Id'],
+        new_message = ParliamentMember(
+            id=i,
+            name=entry['name'],
             party=entry['party'],
-            is_coalition=entry['is_coalition'],
-            image=entry['image'],
             additional_role=entry['additional_role'],
-            name=entry['name']
+            is_coalition=entry['is_coalition'],
+            is_km=True,
+            image=entry['image'],
+            twitter_id=entry['Id']
         )
         db.session.add(new_message)
+        i += 1
+    # Commit the changes to the database
+    db.session.commit()
+    return 'Data added successfully'
+
+
+def add_index():
+    # Read the JSON data
+    with open(r'D:\Projects\StateOfTheNation\sn - db backup 16.11.24\indexes.json', 'r', encoding='utf-8') as file:
+        data = json.load(file)
+
+    for entry in data:
+        new_index = Index(
+            id=entry['id'],
+            name=entry['name'],
+            info=entry['info'],
+            office_id=entry['office_id'],
+            is_kpi=entry['is_kpi'],
+            alert=False,
+            icon=entry['icon'],
+            chart_type=entry['chart_type']
+            
+           
+        )
+        db.session.add(new_index)
     
     # Commit the changes to the database
     db.session.commit()
@@ -52,14 +81,14 @@ def add_km():
 @app.route('/add_data', methods=['POST'])
 def add_tweet():
     # Read the JSON data
-    with open(r"E:\Development Projects\SN\DB\Tweets.json", 'r', encoding='utf-8') as file:
+    with open(r"D:\Projects\StateOfTheNation\DB\Tweets.json", 'r', encoding='utf-8') as file:
         data = json.load(file)
 
     # Iterate through each entry in the JSON and add it to the database
     for entry in data:
-        new_message = Tweets(
+        new_message = Tweet(
             id=entry['Id'],
-            km_id=entry['UserId'],
+            twitter_id=entry['UserId'],
             text=entry['Text'],
             date=entry['Date'],
             time=entry['Time'],
@@ -75,5 +104,5 @@ def add_tweet():
 if __name__ == "__main__":
     with app.app_context():
         # save_csv_to_db()
-        save_csv_to_db()
+        add_index()
         print("Data Saved")

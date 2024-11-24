@@ -1,0 +1,162 @@
+[
+    {
+        "alert": 1,
+        "chart_type": "bar",
+        "icon": "static\\images\\offices\\kpi\\פיגועים.png",
+        "id": 1,
+        "info": "מספר הפיגועים בחודש בשטחי ישראל ויהודה ושומרון. \nמקור: דוחות השב\"כ",
+        "is_kpi": 1,
+        "name": "פיגועים",
+        "office_id": 3
+    },
+    {
+        "alert": 1,
+        "chart_type": "bar",
+        "icon": "static\\images\\offices\\kpi\\מקרי רצח בחברה הערבית.png",
+        "id": 2,
+        "info": "מספר מקרי הרצח בחברה הערבית בכל שנה",
+        "is_kpi": 1,
+        "name": "רצח בחברה הערבית",
+        "office_id": 3
+    },
+    {
+        "alert": null,
+        "chart_type": "bar",
+        "icon": "static\\images\\offices\\policy\\חלוקת כלי נשק.png",
+        "id": 3,
+        "info": null,
+        "is_kpi": 0,
+        "name": "חלוקת כלי נשק",
+        "office_id": 3
+    },
+    {
+        "alert": null,
+        "chart_type": "line",
+        "icon": null,
+        "id": 5,
+        "info": "החוב של מדינת ישראל בכל שנה",
+        "is_kpi": 1,
+        "name": "חוב",
+        "office_id": 101
+    },
+    {
+        "alert": null,
+        "chart_type": "line",
+        "icon": null,
+        "id": 6,
+        "info": "הכנסות המדינה בכל שנה",
+        "is_kpi": 1,
+        "name": "הכנסות",
+        "office_id": 101
+    },
+    {
+        "alert": null,
+        "chart_type": "line",
+        "icon": null,
+        "id": 7,
+        "info": "הוצאות המדינה בכל שנה",
+        "is_kpi": 1,
+        "name": "הוצאות",
+        "office_id": 101
+    },
+    {
+        "alert": null,
+        "chart_type": "line",
+        "icon": null,
+        "id": 8,
+        "info": "ריבית בנק ישראל בסוף כל שנה",
+        "is_kpi": 1,
+        "name": "ריבית",
+        "office_id": 101
+    },
+    {
+        "alert": null,
+        "chart_type": "line",
+        "icon": null,
+        "id": 9,
+        "info": "תוצר מקומי גולמי של מדינת ישראל בכל שנה",
+        "is_kpi": 1,
+        "name": "תמ\"ג",
+        "office_id": 101
+    },
+    {
+        "alert": null,
+        "chart_type": "pie",
+        "icon": null,
+        "id": 10,
+        "info": "הוצאות הממשלה בשנה האחרונה שדווחה ",
+        "is_kpi": 0,
+        "name": "הוצאות הממשלה",
+        "office_id": 101
+    },
+    {
+        "alert": null,
+        "chart_type": "pie",
+        "icon": null,
+        "id": 11,
+        "info": "הכנסות הממשלה בשנה האחרונה שדווחה",
+        "is_kpi": 0,
+        "name": "הכנסות הממשלה",
+        "office_id": 0
+    },
+    {
+        "alert": null,
+        "chart_type": "line",
+        "icon": null,
+        "id": 12,
+        "info": "גודל האוכלוסייה בישראל לפי שנים מקום המדינה",
+        "is_kpi": 1,
+        "name": "גודל אוכלוסייה",
+        "office_id": 100
+    },
+    {
+        "alert": null,
+        "chart_type": "pie",
+        "icon": null,
+        "id": 13,
+        "info": "פילוג האוכלוסיה לדתות בישראל",
+        "is_kpi": 0,
+        "name": "חלוקה לדתות",
+        "office_id": 100
+    },
+    {
+        "alert": null,
+        "chart_type": "bar",
+        "icon": null,
+        "id": 14,
+        "info": "מספר נרצחים בפיגועים בחודש",
+        "is_kpi": 1,
+        "name": "נרצחים בפיגועים",
+        "office_id": 3
+    },
+    {
+        "alert": null,
+        "chart_type": "pie",
+        "icon": null,
+        "id": 15,
+        "info": "חלוקה של האוכלוסיה היהודית לזרמים",
+        "is_kpi": 1,
+        "name": "חלוקת אוכלוסיה יהודית ",
+        "office_id": 100
+    },
+    {
+        "alert": null,
+        "chart_type": null,
+        "icon": null,
+        "id": 16,
+        "info": "פריסה גיאוגרפית של האוכלוסיה בישראל לפי מחוזות",
+        "is_kpi": 1,
+        "name": "פריסה גאוגרפית",
+        "office_id": 100
+    },
+    {
+        "alert": null,
+        "chart_type": "bar",
+        "icon": null,
+        "id": 17,
+        "info": "פילוג לגילאים בחברה הישראלית ",
+        "is_kpi": 1,
+        "name": "פילוג גילאים ",
+        "office_id": 100
+    }
+]
