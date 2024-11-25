@@ -4,10 +4,10 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='base_style.css') }}">
 </head>
 <body>
-    <iframe src="{{ url_for('routes.offices') }}" class="iframe_main" id="0"></iframe>
-    <iframe src="{{ url_for('routes.demography') }}" class="iframe_main hidden" id="1"></iframe>
-    <iframe src="{{ url_for('routes.economy') }}" class="iframe_main hidden" id="2"></iframe>
-    <iframe src="{{ url_for('routes.parlament') }}" class="iframe_main hidden" id="3"></iframe>
+    <iframe src="{{ url_for('offices.offices') }}" class="iframe_main" id="0"></iframe>
+    <iframe src="{{ url_for('demography.demography') }}" class="iframe_main hidden" id="1"></iframe>
+    <iframe src="{{ url_for('economy.economy') }}" class="iframe_main hidden" id="2"></iframe>
+    <iframe src="{{ url_for('parliament.parlament') }}" class="iframe_main hidden" id="3"></iframe>
 
 </body>
 
