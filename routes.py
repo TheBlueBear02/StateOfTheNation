@@ -187,8 +187,8 @@ def offices():
 
     # Fetch index info for each office
     first_office_indexes_info = fetch_indexes(1)
-    second_office_indexes_info = fetch_indexes(3)
-    third_office_indexes_info = fetch_indexes(2)
+    second_office_indexes_info = fetch_indexes(2)
+    third_office_indexes_info = fetch_indexes(3)
     forth_office_indexes_info = fetch_indexes(4)
     
     # Cell structures
@@ -336,6 +336,7 @@ def create_parlament(knesset_members, structure):
                     i += 1
                 except:
                     row.append({'name':''})
+                    print('ERROR')
             else:
                 row.append("space")
         seats.append(row)
@@ -344,17 +345,37 @@ def create_parlament(knesset_members, structure):
 
 def divide_array(arr):
     n = len(arr)
-    part1 = arr[:n // 3]
-    part2 = arr[n // 3: 2 * n // 3]
-    part3 = arr[2 * n // 3:]
+    
+    # Ensure the array length matches the required distribution
+    if n != 120:
+        raise ValueError("This function is designed to split arrays of length 120.")
+    
+    # Manually define the section sizes
+    sizes = [41, 38, 41]
+    
+    # Calculate indices for slicing
+    start1 = 0
+    start2 = sizes[0]  # 41
+    start3 = sizes[0] + sizes[1]  # 41 + 39 = 80
+    
+    # Split the array
+    part1 = arr[start1:start2]
+    part2 = arr[start2:start3]
+    part3 = arr[start3:]
+    
     return part1, part2, part3
     
 @routes.route('/parlament')
 def parlament():
     # get all knesset members from the DB ordered by coalition and party
-    km_info = db.session.query(ParliamentMember).order_by(ParliamentMember.is_coalition.desc(),ParliamentMember.party).limit(123).all()
-   
-    # create array of dicts for the knesset members info
+    km_info = (
+        db.session.query(ParliamentMember)
+        .filter(ParliamentMember.is_km == True)  # Filter to include only where is_km is True
+        .order_by(ParliamentMember.is_coalition.desc(), ParliamentMember.party)
+        .all()
+    )
+
+    # create arra of dicts for the knesset members info
     knesset_members = []
     for member in km_info:
         data = {
@@ -372,11 +393,10 @@ def parlament():
     party_counts = db.session.query(
         ParliamentMember.party,
         func.count(ParliamentMember.id)  # Assuming 'id' is the primary key of each member
-    ).group_by(ParliamentMember.party).order_by(ParliamentMember.is_coalition.desc()).all()
+    ).filter(ParliamentMember.is_km == True).group_by(ParliamentMember.party).order_by(ParliamentMember.is_coalition.desc()).all()
 
     party_dict = {}
 
-    # Print the counts
     for party, count in party_counts:
         party_dict[party] = count
     
@@ -414,5 +434,11 @@ def parlament():
     left_seats = create_parlament(list(reversed(first_section)),left_section)
     center_seats = create_parlament(second_section,center_section)
     right_seats = create_parlament(third_section,right_section)
-
+    
+    i=0
+    for row in right_seats:
+        for seat in row:
+            if seat != 'space':
+                #print(str(i) + seat['name'])
+                i += 1
     return render_template('parlament.html', party_dict = party_dict, left_section = left_seats, center_section = center_seats, right_section= right_seats )
