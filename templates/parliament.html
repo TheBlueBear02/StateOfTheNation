@@ -1,4 +1,4 @@
-<link rel="stylesheet" href="{{ url_for('static', filename='parlament.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='parliament.css') }}">
 
 <div>
     {% macro render_seat(seat, party_dict) %}
@@ -11,6 +11,7 @@
                 data-image="{{ seat.image }}"
                 data-role="{{ seat.additional_role }}"
                 data-coalition="{{ seat.is_coalition }}"
+                data-party-seats="{{ party_dict[seat.party] }}"
                 style="background-color: {% include 'party_color.html' %};">
             </span>
             <!-- for coalition shadow around spans box-shadow: 0 0 3vw {% if seat.is_coalition %} rgba(0, 64, 255, 0.6) {% else %} rgba(255, 179, 0, 0.6) {% endif %};-->
@@ -61,10 +62,14 @@
                 </div>
         </div>
     </div>
-
+</div>
+<div class="info-div">
+    <p id="party-name" style="font-size: 5vh; font-weight: bold;margin: 0;padding: 0;">מפלגה</p>
+    <p id="party-sum" style="font-size: 4vh; margin: 0;padding: 0;">מספר מנדטים</p>
+</div>
 
 <script>
-        document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded', function() {
         const seatSpans = document.querySelectorAll('.seat-span');
         const coin = document.querySelector('.coin');
         const seatImage = document.querySelector('.seat-image');
@@ -72,6 +77,11 @@
         const roleElement = document.getElementById("role");
         const infoSection = document.getElementById("info_section");
         const coinBack = document.getElementById("coin-back");
+        
+        // info-div elements
+        const partyName = document.getElementById("party-name");
+        const partySeatsP = document.getElementById("party-sum");
+        const infoDiv = document.querySelector(".info-div");
 
         seatSpans.forEach(span => {
             span.addEventListener('mouseenter', () => {
@@ -79,8 +89,12 @@
                 const name = span.getAttribute('data-name');
                 const role = span.getAttribute('data-role');
                 const is_coalition = span.getAttribute('data-coalition');
-                const party = span.getAttribute('data-party')
-
+                const party = span.getAttribute('data-party');
+                const partySeats = span.getAttribute('data-party-seats');
+                
+                partyName.textContent = party;
+                partySeatsP.textContent = partySeats + " מנדטים ";
+                
                 if (imageSrc) {
                     seatImage.src = imageSrc;
                 }
@@ -143,6 +157,8 @@
 
                 // Apply the border color
                 coinBack.style.border = `.4vw solid ${borderColor}`;
+                //change color to the party name 
+                partyName.style.color = borderColor;
                 // Add the 'flip' class to the coin
                 coin.classList.add('flip');
             });
@@ -152,12 +168,15 @@
                 // seatImage.src = '';
                 // Remove the 'flip' class from the coin
                 coin.classList.remove('flip');
+                infoDiv.style.display = "none";
+                
             });
         });
     });
-    
+        
     document.addEventListener("DOMContentLoaded", function() {
     const spans = document.querySelectorAll('.seat-span');
+    const infoDiv = document.querySelector(".info-div");
 
     spans.forEach(span => {
         const party = span.getAttribute('data-party');
@@ -169,6 +188,7 @@
                     s.style.transform = "scale(1.1)";
                 }
             });
+            infoDiv.style.display = "block";
         });
 
         // Mouseout event to reset the size
