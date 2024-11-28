@@ -2,6 +2,8 @@ from flask import Blueprint, render_template
 from models import db, ParliamentMember
 from collections import namedtuple
 from sqlalchemy import func
+from sqlalchemy import or_, not_
+
 
 parliament_bp = Blueprint('parliament', __name__)
 
@@ -9,6 +11,7 @@ Knesset_member = namedtuple("Knesset_member", ["name", "additional_role", "party
 
 # set a knesset_member namedtuple to each seat in strutcture
 def create_parlament(knesset_members, structure):
+    # Knesset data
     seats = []
 
     i = 0
@@ -27,7 +30,7 @@ def create_parlament(knesset_members, structure):
         seats.append(row)
     
     return seats
-
+# devide the knesset memebers array into 3 sections for the structure
 def divide_array(arr):
     n = len(arr)
     
@@ -85,8 +88,6 @@ def parlament():
     for party, count in party_counts:
         party_dict[party] = count
     
-
-    
     # set the parlament structure
     parlament_structure = [
         ["space", "space", "space", "seat", "seat", "seat", "seat", "seat", "seat", "seat", "seat", "seat", "seat", "seat", "seat", "seat", "space", "space", "space"],
@@ -120,10 +121,75 @@ def parlament():
     center_seats = create_parlament(second_section,center_section)
     right_seats = create_parlament(third_section,right_section)
     
-    i=0
-    for row in right_seats:
-        for seat in row:
-            if seat != 'space':
-                #print(str(i) + seat['name'])
-                i += 1
-    return render_template('parliament.html', party_dict = party_dict, left_section = left_seats, center_section = center_seats, right_section= right_seats )
+    # final array for the front end
+    knesset = [(left_seats, 'left'), (center_seats, 'center'), (right_seats, 'right')]
+
+    # Government Data
+    # get all government members data
+    
+    gm_info = (
+    db.session.query(ParliamentMember)
+    .filter(
+        ParliamentMember.is_coalition != "",  # Check that is_coalition is not an empty string
+        not_(ParliamentMember.additional_role.contains("יושב ראש")),  # Exclude rows where additional_role contains "יושב ראש"
+        ParliamentMember.additional_role != ""  # Ensure additional_role is not empty
+    )
+    .order_by(ParliamentMember.party)
+    .all()
+    )
+
+    # create array of dicts for the government members info
+    government_members = []
+    for member in gm_info:
+        data = {
+            'name': member.name,
+            'additional_role': member.additional_role,
+            'party':member.party,
+            'image':member.image
+        }
+        government_members.append(data)
+
+    government_sturcture = [
+        ["space","space","space", "space","space", "space","space","space","space", "space"],
+        ["seat","seat","seat", "seat","seat", "seat","seat","seat","seat", "space"],
+        ["seat","seat","seat", "seat","seat", "seat","seat","seat","seat", "seat"],
+        ["seat","space","space", "space","space", "space","space","space","space", "seat"],
+        ["seat","space","space", "space","space", "space","space","space","space", "seat"],
+        ["seat","space","space", "space","space", "space","space","space","space", "seat"],
+        ["seat","space","space", "space","space", "space","space","space","space", "seat"],
+        ["seat","space","space", "space","space", "space","space","space","space", "seat"],
+        ["seat","space","space", "space","space", "space","space","space","space", "seat"],
+        ["seat","space","space", "space","space", "space","space","space","space", "seat"],
+        ["seat","space","space", "space","space", "space","space","space","space", "seat"],
+        ["seat","space","space", "space","space", "space","space","space","space", "seat"],
+    ]
+    
+    government_seats = create_parlament(government_members, government_sturcture)
+
+
+    # Query to get the count of members in each party
+    party_counts_government = (
+    db.session.query(
+        ParliamentMember.party,
+        func.count(ParliamentMember.id).label("member_count")  # Alias for better readability
+    )
+    .filter(
+        ParliamentMember.is_coalition.isnot(None),  # Ensure is_coalition is not NULL
+        ParliamentMember.is_coalition != "",        # Ensure is_coalition is not an empty string
+        ~ParliamentMember.additional_role.contains("יושב ראש"),  # Exclude rows with "יושב ראש" in additional_role
+        ParliamentMember.additional_role.isnot(None),  # Ensure additional_role is not NULL
+        ParliamentMember.additional_role != ""        # Ensure additional_role is not an empty string
+    )
+    .group_by(ParliamentMember.party)  # Group by party
+    .order_by(ParliamentMember.party)  # Order by party
+    .all()
+)
+
+
+    count_by_party_government = {}
+
+    for party, count in party_counts_government:
+        count_by_party_government[party] = count
+
+    print(count_by_party_government)
+    return render_template('parliament.html', party_dict = party_dict, government_parties = count_by_party_government, parliament = knesset, government = government_seats)

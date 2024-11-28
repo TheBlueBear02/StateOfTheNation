@@ -26,13 +26,17 @@ def index():
     tweets_list = []
     for tweet in all_tweets:
         for member in all_kms:
-            if int(member.twitter_id) == int(tweet.twitter_id):
-                name = member.name
-                party = member.party
-                is_coalition = member.is_coalition
-                image = member.image
-                additional_role = member.additional_role
-                break
+            try:
+                if int(member.twitter_id) == int(tweet.twitter_id):
+                    name = member.name
+                    party = member.party
+                    is_coalition = member.is_coalition
+                    image = member.image
+                    additional_role = member.additional_role
+                    break
+            except:
+                #print("knesset member not found")
+                print()
         tweet_data = {
             'id':tweet.id,
             'text': tweet.text,

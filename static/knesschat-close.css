@@ -63,3 +63,13 @@ height: 0;
     border: .3vh solid #f8caa2;
 
 }
+.badge {
+    width: 1vw;
+    height: 1vw;
+    background-color: red;
+    text-align: center;
+    border-radius: 50%;
+    display: flex;
+    z-index: 10;
+    margin-left: 80%;
+  }

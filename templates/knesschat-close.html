@@ -15,7 +15,7 @@
             {% if tweets %}
                 {% for tweet in tweets %}
                     {% if tweet['is_coalition'] == False %}
-                        <span class="img_span_close" id="oposition_img" style="background-image: url({{ tweet['minister_image'] }})"></span>
+                        <span class="img_span_close" id="oposition_img" style="background-image: url({{ tweet['minister_image'] }})"><span class="badge"></span></span>
                     {% else %}
                         <span class="img_span_close" id="coalition_img" style="background-image: url({{ tweet['minister_image'] }})"></span>
                     {% endif %}
