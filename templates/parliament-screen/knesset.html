@@ -1,6 +1,7 @@
 <link rel="stylesheet" href="{{ url_for('static', filename='parliament/parliament.css') }}">
 
-<div>
+<div class="screen">
+    <div>
     {% macro render_seat(seat, party_dict) %}
         {% if seat != "space" %}
         {% set party = seat.party %}
@@ -64,8 +65,9 @@
     </div>
 </div>
 <div class="info-div">
-    <p id="party-name" style="font-size: 5vh; font-weight: bold;margin: 0;padding: 0;">מפלגה</p>
-    <p id="party-sum" style="font-size: 4vh; margin: 0;padding: 0;">מספר מנדטים</p>
+    <p id="party-name" style="font-size: 5vh; font-weight: bold;margin: 0;padding: 0;">הכנסת</p>
+    <p id="party-sum" style="font-size: 4vh; margin: 0;padding: 0;"></p>
+</div>
 </div>
 
 <script>
@@ -168,8 +170,10 @@
                 // seatImage.src = '';
                 // Remove the 'flip' class from the coin
                 coin.classList.remove('flip');
-                infoDiv.style.display = "none";
-                
+                partyName.textContent = "הכנסת";
+                partyName.style.color = "black";
+                partySeatsP.textContent ="";
+
             });
         });
     });

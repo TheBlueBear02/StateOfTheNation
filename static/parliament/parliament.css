@@ -367,7 +367,6 @@ h5{
   text-align: center;
   justify-content:flex-end;
   direction: rtl;
-  display: none;
 
 }
 
@@ -419,4 +418,8 @@ h5{
 /* Add a background color to the active dot/circle */
 .active, .dot:hover {
   background-color: #717171;
+}
+
+.screen{
+  height: 90vh;
 }
