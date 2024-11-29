@@ -157,14 +157,14 @@ body{
   font-family: 'arial', sans-serif;
 
 }
-.knesset-table{
+.government-table{
         width: 80vw;
-        height: 80vh;
+        height: 100%;
         margin: 0 auto;
     }
     .government-span{
-        width: 4.3vw;
-        height: 4.3vw;
+        width: 4vw;
+        height: 4vw;
         background-color: rgb(63, 63, 209);
         border-radius: 50%;
         display:block;
@@ -278,11 +278,8 @@ body{
   
   /* Styling the front and back sides */
   .coin-front-g {
-    background: conic-gradient(
-      from 180deg,              /* Start the gradient from the bottom */
-      rgb(101, 101, 232) 0% 57%,   /* Blue from 0 to 144 degrees (40% of 360 degrees) */
-      #ffc354 57% 100% /* Orange for the remaining part */
-    );
+    background-color: rgb(101, 101, 232);
+   
     padding: 1.5vw;
     cursor:default;
      }
@@ -363,7 +360,6 @@ h5{
   text-align: center;
   justify-content:flex-end;
   direction: rtl;
-  display: none;
 
 }
 
@@ -417,8 +413,3 @@ h5{
   background-color: #717171;
 }
 
-.space-span{
-  width: 2vw;
-  height: 2vw;
-  display: block;
-}

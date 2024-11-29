@@ -30,7 +30,7 @@ class MinisterHistory(db.Model):
     id = db.Column(db.BigInteger, primary_key=True)
     name = db.Column(db.String, nullable=False)
     party = db.Column(db.String, nullable=True)
-    start_date = db.Column(db.String, nullable=False)  # Consider using DateTime
+    start_date = db.Column(db.String, nullable=False)  
     office_id = db.Column(db.BigInteger, db.ForeignKey('offices.id'), nullable=False)
     image = db.Column(db.String, nullable=True)
 
@@ -70,12 +70,12 @@ class ParliamentMember(db.Model):
     twitter_id = db.Column(db.String, nullable=True)
 
 
-
-
 class NonParliamentMember(db.Model):
     __tablename__ = 'non_parliament_members'
     id = db.Column(db.BigInteger, primary_key=True)
     name = db.Column(db.String, nullable=False)
     role = db.Column(db.String, nullable=True)
+    start_date = db.Column(db.String, nullable=True)
+    finish_date = db.Column(db.String, nullable=True)
     image = db.Column(db.String, nullable=True)
     twitter_id = db.Column(db.String, nullable=True)

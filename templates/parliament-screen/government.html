@@ -1,5 +1,6 @@
 <link rel="stylesheet" href="{{ url_for('static', filename='parliament/parliament-government.css') }}">
 
+<div class="screen">
 <div>
     {% macro render_seat(seat, government_parties) %}
         {% if seat != "space" %}
@@ -18,7 +19,7 @@
         {% endif %}
     {% endmacro %}
 
-    <table class="knesset-table">
+    <table class="government-table">
         {% for i in range(government|length) %}
             <tr>
                 {% for seat in government[i] %}
@@ -59,13 +60,13 @@
                 </div>
         </div>
     </div>
+
 </div>
 <div class="info-div-g">
-    <p id="party-name-g" style="font-size: 5vh; font-weight: bold;margin: 0;padding: 0;">מפלגה</p>
-    <p id="party-sum-g" style="font-size: 4vh; margin: 0;padding: 0;">מספר שרים</p>
-
+    <p id="party-name-g" style="font-size: 5vh; font-weight: bold;margin: 0;padding: 0;">הממשלה</p>
+    <p id="party-sum-g" style="font-size: 4vh; margin: 0;padding: 0;"></p>
 </div>
-
+</div>
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         const seatSpans = document.querySelectorAll('.government-span');
@@ -100,15 +101,8 @@
                 nameElement.textContent = name;
                 roleElement.textContent = role;
                 
-                if (is_coalition == "True"){
-                    //infoSection.style.background = "linear-gradient(315deg, rgba(72,144,253,1) 0%, rgba(163,204,255,1) 40%, rgba(163,204,255,1) 60%, rgba(72,144,253,1) 100%)";
-                    infoSection.style.backgroundColor = "#e0e0f6"
-                }
-                else{
-                    //infoSection.style.background = "linear-gradient(315deg, rgba(255,151,59,1) 0%, rgba(255,193,138,1) 40%, rgba(255,193,138,1) 60%, rgba(255,151,59,1) 100%)";
-                    infoSection.style.backgroundColor = "#fff1d6"
-                }
-
+                infoSection.style.backgroundColor = "#e0e0f6"
+ 
                 let borderColor;
                 switch (party) {
                     case 'הליכוד':
@@ -167,7 +161,10 @@
                 // seatImage.src = '';
                 // Remove the 'flip' class from the coin
                 coin.classList.remove('flip');
-                infoDiv.style.display = "none";
+                partyName.textContent = "הממשלה";
+                partyName.style.color = "black"
+                partySeatsP.textContent = "";
+
                 
             });
         });

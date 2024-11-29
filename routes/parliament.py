@@ -55,6 +55,7 @@ def divide_array(arr):
     
 @parliament_bp.route('/parlament')
 def parlament():
+    # Knesset Data
     # get all knesset members from the DB ordered by coalition and party
     km_info = (
         db.session.query(ParliamentMember)
@@ -125,8 +126,8 @@ def parlament():
     knesset = [(left_seats, 'left'), (center_seats, 'center'), (right_seats, 'right')]
 
     # Government Data
+
     # get all government members data
-    
     gm_info = (
     db.session.query(ParliamentMember)
     .filter(
@@ -150,18 +151,17 @@ def parlament():
         government_members.append(data)
 
     government_sturcture = [
-        ["space","space","space", "space","space", "space","space","space","space", "space"],
-        ["seat","seat","seat", "seat","seat", "seat","seat","seat","seat", "space"],
+        ["space","seat","seat", "seat","seat", "seat","seat","seat","seat", "space"],
         ["seat","seat","seat", "seat","seat", "seat","seat","seat","seat", "seat"],
-        ["seat","space","space", "space","space", "space","space","space","space", "seat"],
-        ["seat","space","space", "space","space", "space","space","space","space", "seat"],
-        ["seat","space","space", "space","space", "space","space","space","space", "seat"],
-        ["seat","space","space", "space","space", "space","space","space","space", "seat"],
-        ["seat","space","space", "space","space", "space","space","space","space", "seat"],
-        ["seat","space","space", "space","space", "space","space","space","space", "seat"],
-        ["seat","space","space", "space","space", "space","space","space","space", "seat"],
-        ["seat","space","space", "space","space", "space","space","space","space", "seat"],
-        ["seat","space","space", "space","space", "space","space","space","space", "seat"],
+        ["seat","seat","space", "space","space", "space","space","space","seat", "seat"],
+        ["seat","seat","space", "space","space", "space","space","space","seat", "seat"],
+        ["seat","seat","space", "space","space", "space","space","space","seat", "seat"],
+        ["seat","seat","space", "space","space", "space","space","space","seat", "seat"],
+        ["seat","seat","space", "space","space", "space","space","space","space", "seat"],
+        ["space","space","space", "space","space", "space","space","space","space", "space"],
+        ["space","space","space", "space","space", "space","space","space","space", "space"],
+        ["space","space","space", "space","space", "space","space","space","space", "space"],
+        ["space","space","space", "space","space", "space","space","space","space", "space"],
     ]
     
     government_seats = create_parlament(government_members, government_sturcture)
@@ -191,5 +191,5 @@ def parlament():
     for party, count in party_counts_government:
         count_by_party_government[party] = count
 
-    print(count_by_party_government)
+
     return render_template('parliament.html', party_dict = party_dict, government_parties = count_by_party_government, parliament = knesset, government = government_seats)
