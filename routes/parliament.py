@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template
-from models import db, ParliamentMember
+from models import db, ParliamentMember, NonParliamentMember
 from collections import namedtuple
 from sqlalchemy import func
 from sqlalchemy import or_, not_
@@ -7,7 +7,6 @@ from sqlalchemy import or_, not_
 
 parliament_bp = Blueprint('parliament', __name__)
 
-Knesset_member = namedtuple("Knesset_member", ["name", "additional_role", "party", "is_coalition", "image"])  
 
 # set a knesset_member namedtuple to each seat in strutcture
 def create_parlament(knesset_members, structure):
@@ -192,4 +191,43 @@ def parlament():
         count_by_party_government[party] = count
 
 
-    return render_template('parliament.html', party_dict = party_dict, government_parties = count_by_party_government, parliament = knesset, government = government_seats)
+    # Supreme Court Data
+
+    # get all Supreme Court members data
+    sc_info = (
+    db.session.query(NonParliamentMember)
+    .filter(
+        NonParliamentMember.role.ilike("%בית המשפט העליון%")  # Case-insensitive match
+    )
+    .all()
+    )
+
+    # create array of dicts for the government members info
+    supreme_court_members = []
+    for member in sc_info:
+        data = {
+            'name': member.name,
+            'role': member.role,
+            'start_date': member.start_date,
+            'finsh_date': member.finish_date,
+            'image':member.image
+        }
+        supreme_court_members.append(data)
+
+    supreme_court_sturcture = [
+        ["space","space","space", "space","space", "space","space","space","space", "space"],
+        ["space","seat","seat", "seat","seat", "seat","seat","seat","seat", "seat"],
+        ["seat","space","space", "space","space", "space","space","space","space", "seat"],
+        ["space","space","space", "space","space", "space","space","space","space", "space"],
+        ["space","space","space", "space","space", "space","space","space","space", "space"],
+        ["space","space","space", "space","space", "space","space","space","seat", "space"],
+        ["space","space","space", "space","space", "space","space","space","space", "seat"],
+        ["space","space","space", "space","space", "space","space","space","space", "space"],
+        ["space","space","space", "space","space", "space","space","space","space", "space"],
+        ["space","space","space", "space","space", "space","space","space","space", "space"],
+        ["space","space","space", "space","space", "space","space","space","space", "space"],
+    ]
+    
+    supreme_Court_seats = create_parlament(supreme_court_members, supreme_court_sturcture)
+    
+    return render_template('parliament.html', party_dict = party_dict, government_parties = count_by_party_government, parliament = knesset, government = government_seats, supreme_court = supreme_Court_seats)
