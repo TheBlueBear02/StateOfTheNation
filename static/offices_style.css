@@ -312,6 +312,10 @@ td {
      align-items: center; 
      justify-content: center;
 }
+.share_button:hover{
+    background-color: #20b362;
+
+}
 .share_button p{
     font-weight: bold;
 }
@@ -417,21 +421,17 @@ p {
 }
 
 
-.share_button:hover{
-    transform: scale(1.1);
-    background-color: #20b362;
 
-}
 
  /* Timeline container */
  .timeline {
     display: flex;
-    width: 98%;
+    width: 94%;
     height: 6vh;
     background-color: #eee;
     margin: 0;
-    margin-left: 3vh;
     margin-top: 2vh;
+    margin-left: 7.5vh;
     padding: 0;
 }
 /* Style for each era */
@@ -461,4 +461,8 @@ p {
     justify-content: space-between;
     font-size: 14px;
     margin-top: 5px;
+}
+.chart-div{
+    margin: 0 auto;
+    max-width: 100%;
 }
