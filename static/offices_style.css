@@ -108,7 +108,6 @@ td {
     cursor: pointer;
     animation: entrence 1.3s ease 0s 1 normal forwards; /* attention 15s linear 1.4s 30; */
     box-shadow: 0px 0.2vw 0.2vw .1em rgb(206, 206, 206);
-
 }
 
 .kpi:hover {
@@ -352,10 +351,11 @@ p {
 
 /* icons */
 .bubble_icon {
-    width: 4vw;
+    width: 3vw;
     display: block;
-    margin: auto;
-    margin-top: 15%;
+    margin: 0 auto;
+    margin-top: 10%;
+    padding: .5vw;
 }
 
 .large{
@@ -381,16 +381,16 @@ p {
 }
 
 .small_icon{
-    width: 4.5vh;
-    height: 4.5vh;
+    width: 4vh;
+    height: 4vh;
 }
 .medium_icon{
-    width: 6vh;
-    height: 6h;
+    width: 5vh;
+    height: 5h;
 }
 .large_icon{
-    width: 7vh;
-    height: 7vh;
+    width: 6vh;
+    height: 6vh;
 }
 
 /* modal content */
