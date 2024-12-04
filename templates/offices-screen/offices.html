@@ -63,38 +63,8 @@
     </tr>
 </table>
 
-<!-- KPI Modal -->
-<dialog kpi-modal class="kpi-modal">
-    <span class="close_button" onclick="closeModal()"><img class="close_icon" style="width: 3vh;display: block;margin-left: 18%;margin-top: 20%;" src="/static/images/buttons/close-icon-white.png"></span>
-    <span class="share_button" onclick="closeModal()"><img class="close_icon" style="width: 4vh;display: block;margin-top: 2%;" src="/static/images/buttons/share-icon-white.png"><p>Share</p></span>
-
-    <div class="modal-content">
-        <table class="modal-info-table">
-            <tr>
-                <th style="width: 65%;">
-                    <p id="modal-info-kpi" style="font-size: 2.5vh; float: right;"></p>
-                </th>
-                <th style="padding: 0; height: 100%; float: right;margin:0;">
-                    <div style="width: 100%;height: 4vh; border-bottom: .4vh solid #4890FD;position: relative;">
-                        <span style=" bottom: 0;right: 0;"><p id="modal-office-kpi" style="font-size: 4vh; padding: 0;line-height: .9;"><p></span>
-                    </div>
-                    <p id="modal-name-kpi" style="float: right; margin: 0;padding: 0; font-size: 3.4vh;line-height: 1;"></h3>
-                </th>
-                <th  style="width: 5%; margin:0;padding: 0; ">
-                    <span style="margin: 0;height: 6vw;width: 6vw; background: radial-gradient(#6ba4fa, #447dd3); border-radius: 50%;float: left;margin-top: 3vh;">
-                        <img class="bubble_icon large_icon" id="modal-icon-kpi" src="/static/images/offices/kpi/white_bag.png">
-                    </span>
-                </th>
-            </tr>
-        </table>
-        <div id="graph_div_kpi" class="chart-div">
-            <canvas class="chart" id="kpi_chart" width="1100" width="400"></canvas>
-            <div id="timeline" class="timeline"></div>
-        </div>
-        <!-- Timeline container -->
-        
-    </div>
-</dialog>
+<!-- Kpi Modal -->
+{% include 'offices-screen/kpi-modal.html' %}
 
 <!-- Policies Modal -->
 <dialog policies-modal class="policies-modal">
