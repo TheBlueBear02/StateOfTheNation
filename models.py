@@ -79,3 +79,4 @@ class NonParliamentMember(db.Model):
     finish_date = db.Column(db.String, nullable=True)
     image = db.Column(db.String, nullable=True)
     twitter_id = db.Column(db.String, nullable=True)
+    appointed_by = db.Column(db.String, nullable=True)
