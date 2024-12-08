@@ -216,12 +216,12 @@ def parlament():
 
     supreme_court_sturcture = [
         ["space","space","space", "space","space", "space","space","space","space", "space"],
-        ["space","seat","seat", "seat","seat", "seat","seat","seat","seat", "seat"],
+        ["space","seat","seat", "seat","seat", "seat","seat","seat","seat", "seat","seat"],
         ["seat","space","space", "space","space", "space","space","space","space", "seat"],
         ["space","space","space", "space","space", "space","space","space","space", "space"],
         ["space","space","space", "space","space", "space","space","space","space", "space"],
-        ["space","space","space", "space","space", "space","space","space","seat", "space"],
-        ["space","space","space", "space","space", "space","space","space","space", "seat"],
+        ["space","space","space", "space","space", "space","space","space","space", "space"],
+        ["space","space","space", "space","space", "space","space","space","space", "space"],
         ["space","space","space", "space","space", "space","space","space","space", "space"],
         ["space","space","space", "space","space", "space","space","space","space", "space"],
         ["space","space","space", "space","space", "space","space","space","space", "space"],

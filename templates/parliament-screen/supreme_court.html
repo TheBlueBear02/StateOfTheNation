@@ -4,26 +4,25 @@
 <div>
     {% macro render_seat(seat) %}
         {% if seat != "space" %}
-            {% set party = seat.party %}
-                <span class="government-span" 
-                    data-name="{{ seat.name }}"
-                    data-image="{{ seat.image }}"
-                    data-role="{{ seat.additional_role }}"
-                    data-party-seats="{{ government_parties[seat.party] }}"
-                    style="background-color: {% include 'party_color.html' %};">
-                </span>
-            <!-- for coalition shadow around spans box-shadow: 0 0 3vw {% if seat.is_coalition %} rgba(0, 64, 255, 0.6) {% else %} rgba(255, 179, 0, 0.6) {% endif %};-->
+            <span class="government-span" 
+                data-name="{{ seat.name }}"
+                data-image="{{ seat.image }}"
+                data-role="{{ seat.additional_role }}"
+                data-party-seats="{{ government_parties[seat.party] }}"
+                style="background-color: {% include 'party_color.html' %};">
+            </span>
+        <!-- for coalition shadow around spans box-shadow: 0 0 3vw {% if seat.is_coalition %} rgba(0, 64, 255, 0.6) {% else %} rgba(255, 179, 0, 0.6) {% endif %};-->
         {% else %}
             <span class="space-span"></span>
         {% endif %}
     {% endmacro %}
 
     <table class="government-table">
-        {% for i in range(government|length) %}
+        {% for i in range(supreme_court|length) %}
             <tr>
-                {% for seat in government[i] %}
+                {% for seat in supreme_court[i] %}
                         <td class="{{ section_name }}-section">
-                            {{ render_seat(seat, government_parties) }}
+                            {{ render_seat(seat) }}
                         </td>
                 {% endfor %}
             </tr>
