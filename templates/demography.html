@@ -102,7 +102,7 @@
                             plugins: {
                                 legend: {
                                     display: true,
-                                    position: 'left',
+                                    position: 'top',
                                 },
                                 title: {
                                     display: false,
@@ -162,7 +162,7 @@
                             plugins: {
                                 legend: {
                                     display: true,
-                                    position: 'right',
+                                    position: 'top',
                                 },
                                 title: {
                                     display: false,
@@ -216,7 +216,6 @@
     function onDivInView(entries, observer) {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
-                console.log("now");
                 animateCounter("counter", 9899960, 9900000, 5000); // Counts from 9,899,300 to 9,900,000 over 2 seconds
 
                 // Stop observing if you only want to run it once
@@ -264,6 +263,6 @@
         isScrolling = true;
         setTimeout(() => {
             isScrolling = false;  // Reset flag after delay
-        }, 800);  // Adjust delay time as needed
+        }, 300);  // Adjust delay time as needed
     });
 </script>
