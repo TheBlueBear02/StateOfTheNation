@@ -215,19 +215,27 @@ def parlament():
         supreme_court_members.append(data)
 
     supreme_court_sturcture = [
-        ["space","space","space", "space","space", "space","space","space","space", "space"],
-        ["space","seat","seat", "seat","seat", "seat","seat","seat","seat", "seat","seat"],
-        ["seat","space","space", "space","space", "space","space","space","space", "seat"],
-        ["space","space","space", "space","space", "space","space","space","space", "space"],
-        ["space","space","space", "space","space", "space","space","space","space", "space"],
-        ["space","space","space", "space","space", "space","space","space","space", "space"],
-        ["space","space","space", "space","space", "space","space","space","space", "space"],
-        ["space","space","space", "space","space", "space","space","space","space", "space"],
-        ["space","space","space", "space","space", "space","space","space","space", "space"],
-        ["space","space","space", "space","space", "space","space","space","space", "space"],
-        ["space","space","space", "space","space", "space","space","space","space", "space"],
+        ["space","space","space", "space","space", "space","space","space","space", "space","space","space"],
+        ["space","space","space", "space","space", "seat","seat","space","space", "space","space","space"],
+        ["space","space","space", "space","seat", "space","space","seat","space", "space","space","space"],
+        ["space","space","space", "seat","space", "space","space","space","seat", "space","space","space"],
+        ["space","space","seat", "space","space", "space","space","space","space", "seat","space","space"],
+        ["space","seat","space", "space","space", "space","space","space","space", "space","seat","space"],
+        ["seat","space","space", "space","space", "space","space","space","space", "space","space","seat"],
+        ["space","space","space", "space","space", "space","space","space","space", "space","space","space"],
+        ["space","space","space", "space","space", "space","space","space","space", "space","space","space" ],
+        ["space","space","space", "space","space", "space","space","space","space", "space","space","space"],
+        ["space","space","space", "space","space", "space","space","space","space", "space","space","space"],
+        ["space","space","space", "space","space", "space","space","space","space", "space","space","space"],
+        ["space","space","space", "space","space", "space","space","space","space", "space","space","space"],
+        ["space","space","space", "space","space", "space","space","space","space", "space","space","space"],
+        ["space","space","space", "space","space", "space","space","space","space", "space","space","space"],
+        ["space","space","space", "space","space", "space","space","space","space", "space","space","space"],
+        ["space","space","space", "space","space", "space","space","space","space", "space","space","space"],
+        ["space","space","space", "space","space", "space","space","space","space", "space","space","space"],
     ]
     
     supreme_Court_seats = create_parlament(supreme_court_members, supreme_court_sturcture)
+
     
     return render_template('parliament.html', party_dict = party_dict, government_parties = count_by_party_government, parliament = knesset, government = government_seats, supreme_court = supreme_Court_seats)

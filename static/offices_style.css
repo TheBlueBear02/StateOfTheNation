@@ -398,6 +398,11 @@ p {
 }
 
 /* modal content */
+ 
+.kpi-modal:focus{
+    outline: none;
+
+}
 .modal-content{
     width: 100%;
     height: 100%;
