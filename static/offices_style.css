@@ -131,7 +131,7 @@ td {
 
 .policy:hover {
 
-    background: rgb(221, 221, 221);
+    background: rgb(211, 211, 211);
     margin-left: 25%;
 
 }
@@ -412,11 +412,14 @@ p {
 
 .modal-info-table{
     width: 100%;
-    height: 1vh;
+    height: auto;
     margin:0;
     padding: 0;
 }
-
+.modal-info-table p{
+    margin-top: 2.5vh;
+    padding: 0;
+}
 #graph_div_kpi{
     /*width:100%; if you want that the timeline will be shown at start and not animate*/
     display: flex;

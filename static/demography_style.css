@@ -4,14 +4,16 @@
     width: 80%;
     height: 200vh;
     margin: 0, auto;
+    padding: 0;
     margin-left: 10%;
     padding-right: 2vh;
     padding-left: 2vh;
-    padding-top: 2vh;
     font-family: Arial, Helvetica, sans-serif;
-
 }
-
+body{
+    padding: 0;
+    margin-top: 0;
+}
 /* Define the scrollbar style */
 body::-webkit-scrollbar {
     width: .8vh;
@@ -35,13 +37,18 @@ body:-webkit-scrollbar-button:hover {
 background-color: #4d7fff;
 }
 
+.section{
+    width: 100%;
+    height: 90vh;
+    border-bottom: 1px solid #b1b1b1;
+
+}
+
 .block{
     margin: 0;
     padding: 0;
     padding-top: 3vh;
-    height: 90vh;
-    border-bottom: 1px solid #b1b1b1;
-
+    height: 80vh;
 }
 
 .rigth{
@@ -68,3 +75,63 @@ background-color: #4d7fff;
     margin-top: 25vh;
     border: 1px solid black;
 }
+.graph_div{
+    margin-top: 2vw;
+}
+
+/* Slides css */
+/* Next & previous buttons */
+.prev, .next {
+    cursor: pointer;
+    position: absolute;
+    top: 40%;
+    width: auto;
+    margin-top: -3vw;
+    padding: 1.6vw;
+    color: #888;
+    font-weight: bold;
+    font-size: 4vw;
+    border-radius: 0 3px 3px 0;
+    user-select: none;
+  }
+  
+  /* Position the "next button" to the right */
+  .next {
+    position: absolute;
+    right: 2vw;
+    border-radius: 3px 0 0 3px;
+  } 
+  .prev {
+    position: absolute;
+    left: 3vw;
+    border-radius: 3px 0 0 3px;
+  } 
+  
+  /* On hover, add a black background color with a little bit see-through */
+  .prev:hover, .next:hover {
+    color: rgb(0, 0, 0);
+  }
+  
+  /* The dot/bullet/indicator container */
+  .dot-container {
+      text-align: center;
+      padding: 0px;
+  }
+  
+  /* The dots/bullets/indicators */
+  .dot {
+    cursor: pointer;
+    height: 1.5vw;
+    width: 1.5vw;
+    margin: 0 2px;
+    background-color: #bbb;
+    border-radius: 50%;
+    display: inline-block;
+    transition: background-color 0.6s ease;
+  }
+  
+  /* Add a background color to the active dot/circle */
+  .active, .dot:hover {
+    background-color: #717171;
+  }
+  
