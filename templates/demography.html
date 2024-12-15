@@ -2,191 +2,285 @@
 
 <link rel="stylesheet" href="{{ url_for('static', filename='demography_style.css') }}">
 <div class="main">
-    <div class="block">
-        <p class="header" style="float: right;">הדמוגרפיה של ישראל</p>
-        <p id="counter" style="margin:0px;padding:0px; font-size: 5vh; color: #999999;font-weight: bold;">9,900,000</p>
-        <p style="margin:0px;padding:0px; font-size: 3vh; color: #999999;font-weight: bold;">תושבים</p>
-
-        <div id="graph_div" style="width: 100%; height: 40vw; margin: 0; padding: 0;margin-top: 4vh;"> <!-- Chart -->
-            <canvas id="lineChart" width="400" style="margin: 0; padding: 0;"></canvas>
-            <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>  
-            <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>    
-            <script>                    
-               /* Chart.register(ChartDataLabels); # for adding chart's labels
-            </script>         
-                   
-            <script type="text/javascript"> // Chart
-            
-               var ctx = document.getElementById('lineChart').getContext('2d');
-                var myChart = new Chart(ctx, {
-                    type: 'line',
-                    data: {
-                        labels: {{ indexes_data[0]['labels'] | safe }},
-                        datasets: [{
-                            label: 'Example Dataset',
-                            data: {{ indexes_data[0]['values'] | safe }},
-                            fill: true, 
-                            borderColor: 'rgb(208, 226, 255)',
-                            borderWidth: 2,
-                            lineTension: 0.5,
-                            backgroundColor: '#4890FD',
-                            pointRadius: 0,
-                        }]
-                    },
-                    options: {
-                        responsive: true,
-                        plugins: {
-                        legend: {
-                            display: false
-                        }  
-                        },
-                        scales: {
-                            x: {
-                            grid: {
-                                display: true,
-                                z:0,
-                                }
-                            },
-                            y:{
-                            grid:{
-                                z:0
-                            }
-                            }
-                        }
-                    }
-                }); 
-            </script>
-        </div>
-    </div>
-    <div class="block">
-        <p class="header rigth">פריסה גיאוגרפית</p> 
-        <div class="block-content">
-            <img style="width: 50vh;" src="static\images\demography-map.png">
-            <div class="legend-div">
-                    
+    <!-- First section -->
+    <div class="section">
+        <div class="slide1"> <!-- population map -->
+            <div class="block">
+                <p class="header rigth">פריסה גיאוגרפית</p> 
+                <div class="block-content">
+                    <img style="width: 50vh;" src="static\images\demography-map.png">
+                    <div class="legend-div">
+                            
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
-    <div class="block">
-        <p class="header">דתות</p> 
-
-        <div id="graph_div" style="width: 100%; height: 40vw; margin: 0; padding: 0;margin-top: 4vh;float: right;"> <!-- Chart -->
-            <canvas id="chart" width="400" style="float: right; margin: 0; padding: 0;"></canvas>
-            <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>                           
-            <script type="text/javascript"> // Chart
-               var ctx = document.getElementById('chart').getContext('2d');
-               var myChart = new Chart(ctx, {
-                        type: 'pie',
-                        data: {
-                            labels: {{ indexes_data[1]['labels'] | safe }},
-                            datasets: [{
-                                label: 'Example Dataset',
-                                data: {{ indexes_data[1]['values'] | safe }},
-                                fill: false, 
-                                borderColor: 'white',
-                                borderWidth: 1,
-                                backgroundColor: [
-                                    'rgb(54, 162, 235)',  // Blue
-                                    'rgb(255, 99, 132)',  // Red
-                                    'rgb(255, 206, 86)',  // Yellow
-                                    'rgb(75, 192, 192)',  // Green
-                                    'rgb(153, 102, 255)', // Purple
-                                    'rgb(255, 159, 64)',  // Orange
-                                    'rgb(201, 203, 207)',  // Grey
-                                    'rgb(0, 128, 128)'
-                                ],
-                            }]
-                        },
-                        options: {
-                            responsive: true,
-                            plugins: {
+        <div class="slide1"> <!-- population graph -->
+            <div class="block">
+                <p class="header" style="float: right;">הדמוגרפיה של ישראל</p>
+                <p id="counter" style="margin:0px;padding:0px; font-size: 5vh; color: #999999;font-weight: bold;">9,900,000</p>
+                <p style="margin:0px;padding:0px; font-size: 3vh; color: #999999;font-weight: bold;">תושבים</p>
+        
+                <div class="graph_div" style="width: 100%; height: 40vw;"> <!-- Chart -->
+                    <canvas id="lineChart" width="400" style="margin: 0; padding: 0;"></canvas>
+                    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>  
+                    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>    
+                    <script>                    
+                       /* Chart.register(ChartDataLabels); # for adding chart's labels
+                    </script>         
+                           
+                    <script type="text/javascript"> // Chart
+                    
+                       var ctx = document.getElementById('lineChart').getContext('2d');
+                        var myChart = new Chart(ctx, {
+                            type: 'line',
+                            data: {
+                                labels: {{ indexes_data[0]['labels'] | safe }},
+                                datasets: [{
+                                    label: 'Example Dataset',
+                                    data: {{ indexes_data[0]['values'] | safe }},
+                                    fill: true, 
+                                    borderColor: 'rgb(208, 226, 255)',
+                                    borderWidth: 2,
+                                    lineTension: 0.5,
+                                    backgroundColor: '#4890FD',
+                                    pointRadius: 0,
+                                }]
+                            },
+                            options: {
+                                responsive: true,
+                                plugins: {
                                 legend: {
-                                    display: true,
-                                    position: 'top',
+                                    display: false
+                                }  
                                 },
-                                title: {
-                                    display: false,
-                                    text: 'הכנסות הממשלה ב2023 (מילארדים)'
-                                },
-                                datalabels: {
-                                    color: 'white', // Label color
-                                    formatter: (value, context) => {
-                                        let label = context.chart.data.labels[context.dataIndex];
-                                        return `${value}`;  // Display label and value
+                                scales: {
+                                    x: {
+                                    grid: {
+                                        display: true,
+                                        z:0,
+                                        }
                                     },
-                                    font: {
-                                        size: 12,  // Font size for labels
-                                        weight: 'bold'
-                                    },
-                                    align: 'center',  // Align labels toward the end of the slice
-                                    anchor: 'center'  // Anchor the labels to the chart slices
+                                    y:{
+                                    grid:{
+                                        z:0
+                                    }
+                                    }
                                 }
                             }
-                        }
-                    });
-            </script>
+                        }); 
+                    </script>
+                </div>
+            </div>
         </div>
-    </div>
-    <div class="block">
-        <p class="header" style="float: right;">יהודים</p> 
-
-        <div id="graph_div" style="width: 100%; height: 40vw; margin: 0; padding: 0;margin-top: 4vh;"> <!-- Chart -->
-            <canvas id="chart2" width="400" style=" margin: 0; padding: 0;"></canvas>
-            <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>                           
-            <script type="text/javascript"> // Chart
-               var ctx = document.getElementById('chart2').getContext('2d');
-               var myChart = new Chart(ctx, {
-                        type: 'pie',
-                        data: {
-                            labels: {{ indexes_data[2]['labels'] | safe }},
-                            datasets: [{
-                                label: 'Example Dataset',
-                                data: {{ indexes_data[2]['values'] | safe }},
-                                fill: false, 
-                                borderColor: 'white',
-                                borderWidth: 1,
-                                backgroundColor: [
-                                    'rgb(54, 162, 235)',  // Blue
-                                    'rgb(255, 99, 132)',  // Red
-                                    'rgb(255, 206, 86)',  // Yellow
-                                    'rgb(75, 192, 192)',  // Green
-                                    'rgb(153, 102, 255)', // Purple
-                                    'rgb(255, 159, 64)',  // Orange
-                                    'rgb(201, 203, 207)',  // Grey
-                                    'rgb(0, 128, 128)'
-                                ],
-                            }]
-                        },
-                        options: {
-                            responsive: true,
-                            plugins: {
-                                legend: {
-                                    display: true,
-                                    position: 'top',
+        <div class="slide1"> <!-- population age -->
+            <div class="block">
+                <p class="header" style="float: right;">פילוג לגילאים</p> 
+        
+                <div class="graph_div" style="width: 100%; height: 40vw; margin-top: 6vw; "> <!-- Chart -->
+                    <canvas id="chart3" width="400" style=" margin: 0; padding: 0;"></canvas>
+                    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>                           
+                    <script type="text/javascript"> // Chart
+                       var ctx = document.getElementById('chart3').getContext('2d');
+                       var myChart = new Chart(ctx, {
+                                type: 'bar',
+                                data: {
+                                    labels: {{ indexes_data[4]['labels'] | safe }},
+                                    datasets: [{
+                                        label: 'Example Dataset',
+                                        data: {{ indexes_data[4]['values'] | safe }},
+                                        fill: false, 
+                                        borderColor: 'white',
+                                        borderWidth: 1,
+                                        backgroundColor: [
+                                            'rgb(54, 162, 235)',  // Blue
+                                            'rgb(255, 99, 132)',  // Red
+                                            'rgb(255, 206, 86)',  // Yellow
+                                            'rgb(75, 192, 192)',  // Green
+                                            'rgb(153, 102, 255)', // Purple
+                                            'rgb(255, 159, 64)',  // Orange
+                                            'rgb(0, 128, 128)'
+                                        ],
+                                    }]
                                 },
-                                title: {
-                                    display: false,
-                                    text: 'הכנסות הממשלה ב2023 (מילארדים)'
-                                },
-                                datalabels: {
-                                    color: 'white', // Label color
-                                    formatter: (value, context) => {
-                                        let label = context.chart.data.labels[context.dataIndex];
-                                        return `${value}`;  // Display label and value
-                                    },
-                                    font: {
-                                        size: 12,  // Font size for labels
-                                        weight: 'bold'
-                                    },
-                                    align: 'center',  // Align labels toward the end of the slice
-                                    anchor: 'center'  // Anchor the labels to the chart slices
+                                options: {
+                                    responsive: true,
+                                    plugins: {
+                                        legend: {
+                                            display: false,
+                                            position: 'top',
+                                        },
+                                        title: {
+                                            display: false,
+                                            text: 'הכנסות הממשלה ב2023 (מילארדים)'
+                                        },
+                                        datalabels: {
+                                            color: 'white', // Label color
+                                            formatter: (value, context) => {
+                                                let label = context.chart.data.labels[context.dataIndex];
+                                                return `${value}`;  // Display label and value
+                                            },
+                                            font: {
+                                                size: 12,  // Font size for labels
+                                                weight: 'bold'
+                                            },
+                                            align: 'center',  // Align labels toward the end of the slice
+                                            anchor: 'center'  // Anchor the labels to the chart slices
+                                        }
+                                    }
                                 }
-                            }
-                        }
-                    });
-            </script>
+                            });
+                    </script>
+                </div>
+            </div>
         </div>
+        <a class="prev" onclick="plusSlides(-1)">❮</a>
+        <a class="next" onclick="plusSlides(1)">❯</a>
+        
+        <div class="dot-container">
+            <span class="dot dot1" onclick="currentSlide(1)"></span> 
+            <span class="dot dot1" onclick="currentSlide(2)"></span> 
+            <span class="dot dot1" onclick="currentSlide(3)"></span> 
+        </div>  
     </div>
+    
+    <!-- Second section -->
+    <div class="section">
+        <div class="slide2">      
+            
+        </div>
+        <div class="slide2">
+            <div class="block">
+                <p class="header">דתות</p> 
+                <div class="graph_div" style="width: 100%; height: 40vw;float: right;"> <!-- Chart -->
+                    <canvas id="chart" width="400" style="float: right; margin: 0; padding: 0;"></canvas>
+                    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>                           
+                    <script type="text/javascript"> // Chart
+                    var ctx = document.getElementById('chart').getContext('2d');
+                    var myChart = new Chart(ctx, {
+                                type: 'pie',
+                                data: {
+                                    labels: {{ indexes_data[1]['labels'] | safe }},
+                                    datasets: [{
+                                        label: 'Example Dataset',
+                                        data: {{ indexes_data[1]['values'] | safe }},
+                                        fill: false, 
+                                        borderColor: 'white',
+                                        borderWidth: 1,
+                                        backgroundColor: [
+                                            'rgb(54, 162, 235)',  // Blue
+                                            'rgb(255, 99, 132)',  // Red
+                                            'rgb(255, 206, 86)',  // Yellow
+                                            'rgb(75, 192, 192)',  // Green
+                                            'rgb(153, 102, 255)', // Purple
+                                            'rgb(255, 159, 64)',  // Orange
+                                            'rgb(201, 203, 207)',  // Grey
+                                            'rgb(0, 128, 128)'
+                                        ],
+                                    }]
+                                },
+                                options: {
+                                    responsive: true,
+                                    plugins: {
+                                        legend: {
+                                            display: true,
+                                            position: 'top',
+                                        },
+                                        title: {
+                                            display: false,
+                                            text: 'הכנסות הממשלה ב2023 (מילארדים)'
+                                        },
+                                        datalabels: {
+                                            color: 'white', // Label color
+                                            formatter: (value, context) => {
+                                                let label = context.chart.data.labels[context.dataIndex];
+                                                return `${value}`;  // Display label and value
+                                            },
+                                            font: {
+                                                size: 12,  // Font size for labels
+                                                weight: 'bold'
+                                            },
+                                            align: 'center',  // Align labels toward the end of the slice
+                                            anchor: 'center'  // Anchor the labels to the chart slices
+                                        }
+                                    }
+                                }
+                            });
+                    </script>
+                </div>
+            </div>
+        </div>
+        <div class="slide2">
+            <div class="block">
+                <p class="header" style="float: right;">יהודים</p> 
+                <div class="graph_div" style="width: 100%; height: 40vw; margin-top: 6vw;"> <!-- Chart -->
+                    <canvas id="chart2" width="400" style=" margin: 0; padding: 0;"></canvas>
+                    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>                           
+                    <script type="text/javascript"> // Chart
+                       var ctx = document.getElementById('chart2').getContext('2d');
+                       var myChart = new Chart(ctx, {
+                                type: 'pie',
+                                data: {
+                                    labels: {{ indexes_data[2]['labels'] | safe }},
+                                    datasets: [{
+                                        label: 'Example Dataset',
+                                        data: {{ indexes_data[2]['values'] | safe }},
+                                        fill: false, 
+                                        borderColor: 'white',
+                                        borderWidth: 1,
+                                        backgroundColor: [
+                                            'rgb(54, 162, 235)',  // Blue
+                                            'rgb(255, 99, 132)',  // Red
+                                            'rgb(255, 206, 86)',  // Yellow
+                                            'rgb(75, 192, 192)',  // Green
+                                            'rgb(153, 102, 255)', // Purple
+                                            'rgb(255, 159, 64)',  // Orange
+                                            'rgb(201, 203, 207)',  // Grey
+                                            'rgb(0, 128, 128)'
+                                        ],
+                                    }]
+                                },
+                                options: {
+                                    responsive: true,
+                                    plugins: {
+                                        legend: {
+                                            display: true,
+                                            position: 'top',
+                                        },
+                                        title: {
+                                            display: false,
+                                            text: 'הכנסות הממשלה ב2023 (מילארדים)'
+                                        },
+                                        datalabels: {
+                                            color: 'white', // Label color
+                                            formatter: (value, context) => {
+                                                let label = context.chart.data.labels[context.dataIndex];
+                                                return `${value}`;  // Display label and value
+                                            },
+                                            font: {
+                                                size: 12,  // Font size for labels
+                                                weight: 'bold'
+                                            },
+                                            align: 'center',  // Align labels toward the end of the slice
+                                            anchor: 'center'  // Anchor the labels to the chart slices
+                                        }
+                                    }
+                                }
+                            });
+                    </script>
+                </div>
+            </div>
+        </div>
+        <a class="prev prev2" onclick="plusSlides(-1)">❮</a>
+        <a class="next next2" onclick="plusSlides(1)">❯</a>
+        
+        <div class="dot-container">
+            <span class="dot dot2" onclick="currentSlide(1)"></span> 
+            <span class="dot dot2" onclick="currentSlide(2)"></span> 
+            <span class="dot dot2" onclick="currentSlide(3)"></span> 
+        </div>  
+    </div>
+    
 </div>
 
 
@@ -235,7 +329,7 @@
     observer.observe(targetParagraph);
 
     // Select all section elements
-    const sections = document.querySelectorAll('.block');
+    const sections = document.querySelectorAll('.section');
     let currentSectionIndex = 0;
     let isScrolling = false;  // Flag to control scroll timing
 
@@ -265,4 +359,36 @@
             isScrolling = false;  // Reset flag after delay
         }, 300);  // Adjust delay time as needed
     });
+</script>
+
+
+<!-- Slides script -->
+<script>
+    // slides script
+    var slideIndex = 2;
+    showSlides(slideIndex);
+    
+    function plusSlides(n) {
+      showSlides(slideIndex += n);
+    }
+    
+    function currentSlide(n) {
+      showSlides(slideIndex = n);
+    }
+    
+    function showSlides(n) {
+      var i;
+      var slides = document.getElementsByClassName("slide1");
+      var dots = document.getElementsByClassName("dot1");
+      if (n > slides.length) {slideIndex = 1}    
+      if (n < 1) {slideIndex = slides.length}
+      for (i = 0; i < slides.length; i++) {
+          slides[i].style.display = "none";  
+      }
+      for (i = 0; i < dots.length; i++) {
+          dots[i].className = dots[i].className.replace(" active", "");
+      }
+      slides[slideIndex-1].style.display = "block";  
+      dots[slideIndex-1].className += " active";
+    }
 </script>
