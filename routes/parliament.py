@@ -150,6 +150,7 @@ def parlament():
         government_members.append(data)
 
     government_sturcture = [
+        ["space","space","space", "space","space", "space","space","space","space", "space"],
         ["space","seat","seat", "seat","seat", "seat","seat","seat","seat", "space"],
         ["seat","seat","seat", "seat","seat", "seat","seat","seat","seat", "seat"],
         ["seat","seat","space", "space","space", "space","space","space","seat", "seat"],
@@ -157,7 +158,6 @@ def parlament():
         ["seat","seat","space", "space","space", "space","space","space","seat", "seat"],
         ["seat","seat","space", "space","space", "space","space","space","seat", "seat"],
         ["seat","seat","space", "space","space", "space","space","space","space", "seat"],
-        ["space","space","space", "space","space", "space","space","space","space", "space"],
         ["space","space","space", "space","space", "space","space","space","space", "space"],
         ["space","space","space", "space","space", "space","space","space","space", "space"],
         ["space","space","space", "space","space", "space","space","space","space", "space"],
@@ -209,7 +209,7 @@ def parlament():
             'name': member.name,
             'role': member.role,
             'start_date': member.start_date,
-            'finsh_date': member.finish_date,
+            'finish_date': member.finish_date,
             'image':member.image
         }
         supreme_court_members.append(data)
