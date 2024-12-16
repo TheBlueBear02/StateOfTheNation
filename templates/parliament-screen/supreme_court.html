@@ -8,7 +8,8 @@
                 data-name="{{ seat.name }}"
                 data-image="{{ seat.image }}"
                 data-role="{{ seat.additional_role }}"
-                data-party-seats="{{ government_parties[seat.party] }}"
+                data-start-date="{{ seat.start_date }}"
+                data-finish-date="{{ seat.finish_date }}"
                 style="background-color: {% include 'party_color.html' %};">
             </span>
         <!-- for coalition shadow around spans box-shadow: 0 0 3vw {% if seat.is_coalition %} rgba(0, 64, 255, 0.6) {% else %} rgba(255, 179, 0, 0.6) {% endif %};-->
@@ -53,7 +54,6 @@
                 <div id="info_section-s" class="info-section-s">
                     <div style="width: 60%; margin: auto;">
                         <h2 class="span-info-s" id="name-s">name</h3>
-                        <h5 class="span-info-s" id="role-s">role</h5>
                     </div>
                 </div>
         </div>
@@ -85,71 +85,23 @@
                 const imageSrc = span.getAttribute('data-image');
                 const name = span.getAttribute('data-name');
                 const role = span.getAttribute('data-role');
-                const is_coalition = span.getAttribute('data-coalition');
-                const party = span.getAttribute('data-party');
-                const partySeats = span.getAttribute('data-party-seats');
+                const start_date = span.getAttribute('data-start-date');
+                const finish_date = span.getAttribute('data-finish-date');
 
-                partyName.textContent = party;
-                partySeatsP.textContent = partySeats + " שרים ";
+                partyName.textContent = finish_date + ' - ' + start_date;
 
                 
                 if (imageSrc) {
                     seatImage.src = imageSrc;
                 }
                 nameElement.textContent = name;
-                roleElement.textContent = role;
                 
                 infoSection.style.backgroundColor = "#e0e0f6"
  
-                let borderColor;
-                switch (party) {
-                    case 'הליכוד':
-                        borderColor = '#4169E1';
-                        break;
-                    case 'יש עתיד':
-                        borderColor = '#ffb326';
-                        break;
-                    case 'המחנה הממלכתי':
-                        borderColor = '#80caff';
-                        break;
-                    case 'העבודה':
-                        borderColor = '#6A0DAD';
-                        break;
-                    case 'עוצמה יהודית':
-                        borderColor = '#ff702e';
-                        break;
-                    case 'הציונות הדתית':
-                        borderColor = '#8dc035';
-                        break;
-                    case 'תקווה חדשה':
-                        borderColor = '#00008B';
-                        break;
-                    case 'שס':
-                        borderColor = '#363636';
-                        break;
-                    case 'יהדות התורה':
-                        borderColor = '#1a4082';
-                        break;
-                    case 'רעמ':
-                        borderColor = 'green';
-                        break;
-                    case 'חדש-תעל':
-                        borderColor = '#db2121';
-                        break;
-                    case 'ישראל ביתנו':
-                        borderColor = '#251aa1';
-                        break;
-                    case 'נעם':
-                        borderColor = 'lightblue';
-                        break;
-                    default:
-                        borderColor = '#808080';
-                }
-
+               
                 // Apply the border color
-                coinBack.style.border = `.4vw solid ${borderColor}`;
-                //change color to the party name 
-                partyName.style.color = borderColor;
+                coinBack.style.border = `.4vw solid purple`;
+             
                 // Add the 'flip' class to the coin
                 coin.classList.add('flip');
             });
@@ -159,7 +111,7 @@
                 // seatImage.src = '';
                 // Remove the 'flip' class from the coin
                 coin.classList.remove('flip');
-                partyName.textContent = "הממשלה";
+                partyName.textContent = "בית המשפט העליון";
                 partyName.style.color = "black"
                 partySeatsP.textContent = "";
 

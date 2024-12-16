@@ -2,7 +2,6 @@
 
 .main{
     width: 80%;
-    height: 200vh;
     margin: 0, auto;
     padding: 0;
     margin-left: 10%;
@@ -36,11 +35,16 @@ width: 20px;
 body:-webkit-scrollbar-button:hover {
 background-color: #4d7fff;
 }
+.header{
+  float: right;
+}
 
 .section{
     width: 100%;
     height: 90vh;
     border-bottom: 1px solid #b1b1b1;
+
+    position: relative;
 
 }
 
@@ -51,9 +55,7 @@ background-color: #4d7fff;
     height: 80vh;
 }
 
-.rigth{
-    float: right;
-}
+
 
 .header{
     margin:0px;
@@ -76,11 +78,15 @@ background-color: #4d7fff;
     border: 1px solid black;
 }
 .graph_div{
+    margin: 0 auto;
+    width: 100%;
     margin-top: 2vw;
+    margin-bottom: 2vw;
 }
 
 /* Slides css */
 /* Next & previous buttons */
+
 .prev, .next {
     cursor: pointer;
     position: absolute;
@@ -94,16 +100,16 @@ background-color: #4d7fff;
     border-radius: 0 3px 3px 0;
     user-select: none;
   }
-  
+ 
   /* Position the "next button" to the right */
   .next {
     position: absolute;
-    right: 2vw;
+    right: -6vw;
     border-radius: 3px 0 0 3px;
   } 
   .prev {
     position: absolute;
-    left: 3vw;
+    left: -6vw;
     border-radius: 3px 0 0 3px;
   } 
   

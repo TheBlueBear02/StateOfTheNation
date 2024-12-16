@@ -3,10 +3,10 @@
 <link rel="stylesheet" href="{{ url_for('static', filename='demography_style.css') }}">
 <div class="main">
     <!-- First section -->
-    <div class="section">
-        <div class="slide1"> <!-- population map -->
+    <div class="section section1">
+        <div class="slide slide1"> <!-- population map -->
             <div class="block">
-                <p class="header rigth">פריסה גיאוגרפית</p> 
+                <p class="header">פריסה גיאוגרפית</p> 
                 <div class="block-content">
                     <img style="width: 50vh;" src="static\images\demography-map.png">
                     <div class="legend-div">
@@ -15,7 +15,7 @@
                 </div>
             </div>
         </div>
-        <div class="slide1"> <!-- population graph -->
+        <div class="slide slide1"> <!-- population graph -->
             <div class="block">
                 <p class="header" style="float: right;">הדמוגרפיה של ישראל</p>
                 <p id="counter" style="margin:0px;padding:0px; font-size: 5vh; color: #999999;font-weight: bold;">9,900,000</p>
@@ -73,7 +73,7 @@
                 </div>
             </div>
         </div>
-        <div class="slide1"> <!-- population age -->
+        <div class="slide slide1"> <!-- population age -->
             <div class="block">
                 <p class="header" style="float: right;">פילוג לגילאים</p> 
         
@@ -134,26 +134,26 @@
                 </div>
             </div>
         </div>
-        <a class="prev" onclick="plusSlides(-1)">❮</a>
-        <a class="next" onclick="plusSlides(1)">❯</a>
+        <a class="prev prev1" onclick="plusSlides(-1, 'section1')">❮</a>
+        <a class="next next1" onclick="plusSlides(1, 'section1')">❯</a>
         
         <div class="dot-container">
-            <span class="dot dot1" onclick="currentSlide(1)"></span> 
-            <span class="dot dot1" onclick="currentSlide(2)"></span> 
-            <span class="dot dot1" onclick="currentSlide(3)"></span> 
+            <span class="dot dot1" onclick="currentSlide(1, 'section1')"></span> 
+            <span class="dot dot1" onclick="currentSlide(2, 'section1')"></span> 
+            <span class="dot dot1" onclick="currentSlide(3, 'section1')"></span> 
         </div>  
     </div>
     
     <!-- Second section -->
-    <div class="section">
-        <div class="slide2">      
+    <div class="section section2">
+        <div class="slide slide2">      
             
         </div>
-        <div class="slide2">
+        <div class="slide slide2">
             <div class="block">
                 <p class="header">דתות</p> 
-                <div class="graph_div" style="width: 100%; height: 40vw;float: right;"> <!-- Chart -->
-                    <canvas id="chart" width="400" style="float: right; margin: 0; padding: 0;"></canvas>
+                <div class="graph_div" style="width: 100%; height: 40vw;"> <!-- Chart -->
+                    <canvas id="chart" width="400" style="width: 100%; padding: 0;"></canvas>
                     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>                           
                     <script type="text/javascript"> // Chart
                     var ctx = document.getElementById('chart').getContext('2d');
@@ -210,10 +210,10 @@
                 </div>
             </div>
         </div>
-        <div class="slide2">
+        <div class="slide slide2">
             <div class="block">
                 <p class="header" style="float: right;">יהודים</p> 
-                <div class="graph_div" style="width: 100%; height: 40vw; margin-top: 6vw;"> <!-- Chart -->
+                <div class="graph_div" style="width: 100%; height: 40vw; "> <!-- Chart -->
                     <canvas id="chart2" width="400" style=" margin: 0; padding: 0;"></canvas>
                     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>                           
                     <script type="text/javascript"> // Chart
@@ -271,19 +271,19 @@
                 </div>
             </div>
         </div>
-        <a class="prev prev2" onclick="plusSlides(-1)">❮</a>
-        <a class="next next2" onclick="plusSlides(1)">❯</a>
+        <a class="prev prev2" onclick="plusSlides(-1, 'section2')">❮</a>
+        <a class="next next2" onclick="plusSlides(1, 'section2')">❯</a>
         
         <div class="dot-container">
-            <span class="dot dot2" onclick="currentSlide(1)"></span> 
-            <span class="dot dot2" onclick="currentSlide(2)"></span> 
-            <span class="dot dot2" onclick="currentSlide(3)"></span> 
+            <span class="dot dot2" onclick="currentSlide(1, 'section2')"></span> 
+            <span class="dot dot2" onclick="currentSlide(2, 'section2')"></span> 
+            <span class="dot dot2" onclick="currentSlide(3, 'section2')"></span> 
         </div>  
     </div>
     
 </div>
 
-
+<!-- number animation and auto scroll -->
 <script>
       function animateCounter(id, start, end, duration) {
         const counter = document.getElementById(id);
@@ -364,31 +364,41 @@
 
 <!-- Slides script -->
 <script>
-    // slides script
-    var slideIndex = 2;
-    showSlides(slideIndex);
-    
-    function plusSlides(n) {
-      showSlides(slideIndex += n);
-    }
-    
-    function currentSlide(n) {
-      showSlides(slideIndex = n);
-    }
-    
-    function showSlides(n) {
-      var i;
-      var slides = document.getElementsByClassName("slide1");
-      var dots = document.getElementsByClassName("dot1");
-      if (n > slides.length) {slideIndex = 1}    
-      if (n < 1) {slideIndex = slides.length}
-      for (i = 0; i < slides.length; i++) {
-          slides[i].style.display = "none";  
-      }
-      for (i = 0; i < dots.length; i++) {
-          dots[i].className = dots[i].className.replace(" active", "");
-      }
-      slides[slideIndex-1].style.display = "block";  
-      dots[slideIndex-1].className += " active";
-    }
+   // Object to keep track of current slides for each section
+const slideIndices = {
+    section1: 2,
+    section2: 2,
+};
+
+// Show the initial slides for both sections
+showSlides(2, 'section1');
+showSlides(2, 'section2');
+
+// Function to handle navigation
+function plusSlides(n, section) {
+    showSlides((slideIndices[section] += n), section);
+}
+
+// Function to jump to a specific slide
+function currentSlide(n, section) {
+    showSlides((slideIndices[section] = n), section);
+}
+
+// Function to display the correct slide
+function showSlides(n, section) {
+    const slides = document.querySelectorAll(`.${section} .slide`);
+    const dots = document.querySelectorAll(`.${section} .dot`);
+
+    if (n > slides.length) slideIndices[section] = 1;
+    if (n < 1) slideIndices[section] = slides.length;
+
+    // Hide all slides and deactivate all dots
+    slides.forEach(slide => (slide.style.display = 'none'));
+    dots.forEach(dot => dot.classList.remove('active'));
+
+    // Show the current slide and activate the corresponding dot
+    slides[slideIndices[section] - 1].style.display = 'block';
+    dots[slideIndices[section] - 1].classList.add('active');
+}
+
 </script>
