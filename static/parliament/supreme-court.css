@@ -176,7 +176,7 @@ body{
         transition: transform 0.2s ease;
         cursor: pointer;
         box-shadow: 0px .1vw .5vw gray;
-
+        border: .4vw solid;
     }
     .space-span{
         width: 4wv;
@@ -283,8 +283,11 @@ body{
   
   /* Styling the front and back sides */
   .coin-front-s {
-    background-color: rgb(101, 101, 232);
-   
+    background: conic-gradient(
+      from 180deg,              /* Start the gradient from the bottom */
+      rgb(101, 101, 232) 0% 67%,   /* Blue from 0 to 144 degrees (40% of 360 degrees) */
+      #ffc354 67% 100% /* Orange for the remaining part */
+    );
     padding: 1.5vw;
     cursor:default;
      }

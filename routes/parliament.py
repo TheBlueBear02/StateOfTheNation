@@ -210,7 +210,8 @@ def parlament():
             'role': member.role,
             'start_date': member.start_date,
             'finish_date': member.finish_date,
-            'image':member.image
+            'image':member.image,
+            'appointed_by':member.appointed_by
         }
         supreme_court_members.append(data)
 
@@ -224,9 +225,6 @@ def parlament():
         ["seat","space","space", "space","space", "space","space","space","space", "space","space","seat"],
         ["space","space","space", "space","space", "space","space","space","space", "space","space","space"],
         ["space","space","space", "space","space", "space","space","space","space", "space","space","space" ],
-        ["space","space","space", "space","space", "space","space","space","space", "space","space","space"],
-        ["space","space","space", "space","space", "space","space","space","space", "space","space","space"],
-        ["space","space","space", "space","space", "space","space","space","space", "space","space","space"],
         ["space","space","space", "space","space", "space","space","space","space", "space","space","space"],
         ["space","space","space", "space","space", "space","space","space","space", "space","space","space"],
         ["space","space","space", "space","space", "space","space","space","space", "space","space","space"],
