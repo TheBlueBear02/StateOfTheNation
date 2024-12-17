@@ -1,13 +1,16 @@
 <!-- KPI Modal -->
 <dialog kpi-modal class="kpi-modal">
     <span class="close_button" onclick="closeModal()"><img class="close_icon" style="width: 3vh;display: block;margin-left: 18%;margin-top: 20%;" src="/static/images/buttons/close-icon-white.png"></span>
-    <span class="share_button" onclick="closeModal()"><img class="close_icon" style="width: 4vh;display: block;margin-top: 2%;" src="/static/images/buttons/share-icon-white.png"><p>Share</p></span>
+    <span class="share_button" onclick="closeModal()" style="padding: .6vw;"><p style="font-size: 2vw;">שתף</p><img class="close_icon" style="width: 3.5vh;display: block;margin-top: 2%;" src="/static/images/buttons/share-icon-white.png"></span>
+    <a id="modal-source-link" href="#" target="_blank"><span class="source-span" style="padding: .6vw;">מקור</span></a>
 
     <div class="modal-content">
         <table class="modal-info-table">
             <tr>
-                <th style="width: 65%;">
-                    <p id="modal-info-kpi" style="font-size: 2.5vh; float: right;"></p>
+                <th style="width: 10%;">
+                </th>
+                <th style="width: 60%;">
+                    <p id="modal-info-kpi" style="font-size: 3vh; float: right;"></p>
                 </th>
                 <th style="padding: 0; height: 100%; float: right;margin:0;">
                     <div style="width: 100%;height: 4vh; border-bottom: .4vh solid #4890FD;position: relative;">

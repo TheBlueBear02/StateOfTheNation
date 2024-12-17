@@ -8,7 +8,7 @@ import json
 offices_bp = Blueprint('offices', __name__)
 
 
-Cell = namedtuple("cell", ["cell_type", "size", "alert", "name","info","icon","chart_type","labels","values"]) # SET the Cell coloumns 
+Cell = namedtuple("cell", ["cell_type", "size", "alert", "name","info","source","icon","chart_type","labels","values"]) # SET the Cell coloumns 
 Minister_term = namedtuple("Minister_term", ["name", "start_date", "image", "party"])  
 
 # Helper to create KPI and policy cells
@@ -42,6 +42,7 @@ def fetch_indexes(office_id):
         indexes_info.append({
             'name': index.name,
             'info': index.info,
+            'source': index.source,
             'icon': index.icon,
             'is_kpi': index.is_kpi,
             'alert': index.alert,
@@ -57,6 +58,7 @@ def create_cell(cell_type, info=None):
         'alert': False,
         'name': '',
         'info': 'info',
+        'source': '',
         'icon': '',
         'chart_type': 'line',
         'labels': [],
@@ -84,6 +86,7 @@ def create_cell(cell_type, info=None):
         alert=data['alert'],
         name=data['name'],
         info=data['info'],
+        source=data['source'],
         icon=icon,
         chart_type=data['chart_type'],
         labels=data['labels'],
@@ -177,7 +180,6 @@ def offices():
    
    # save the first 4 offices from the database and their ministers data in a list
     offices_list = []
-
     for office in all_offices:
         minister = db.session.query(ParliamentMember).filter_by(id=office.minister_id).first() 
         

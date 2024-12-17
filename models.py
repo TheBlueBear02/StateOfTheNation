@@ -12,6 +12,7 @@ class Index(db.Model):
     is_kpi = db.Column(db.Boolean, default=False, nullable=False)
     alert = db.Column(db.Boolean, default=False, nullable=False)
     chart_type = db.Column(db.String, nullable=True)
+    source = db.Column(db.String, nullable=True)
 
     # Relationships
     data = db.relationship('IndexData', backref='index', lazy=True)
