@@ -1,5 +1,7 @@
 
 <link rel="stylesheet" href="{{ url_for('static', filename='offices_style.css') }}">
+<script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+
 <span class="explain_span" onclick="openExplainModal()"><img class="explain_icon" style="width: 2vw;display: block;margin: auto;margin-top: 15%;" src="/static/images/offices/question_mark.png"></span>
 
 {% macro render_office(office, office_cells, position, main_bubble_id, border_style) %}
@@ -78,6 +80,7 @@
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> <!-- graph library js -->
 <script src="static\js\create-timeline.js" defer></script> <!-- create Timeline -->
+<script src="static\js\create-png.js" defer></script> <!-- create png file to share -->
 
 <!-- Script -->
 <script>

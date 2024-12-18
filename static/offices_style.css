@@ -331,7 +331,7 @@ p {
 .source-span {
     border: none;
     font-weight: 700;
-    background-color: #d4b4de;
+    background-color: #d8d4d9;
     border-radius: 3vh;
     color: white;
     width: 10vh;
@@ -349,7 +349,7 @@ p {
     font-weight: bold; 
 }
 .source-span:hover{
-    background-color: #c072d8;
+    background-color: rgb(201, 201, 201);
 }
 #modal-source-link{
     outline: none;        
@@ -358,9 +358,9 @@ p {
 .source-span-p {
     border: none;
     font-weight: 700;
-    background-color: #d4b4de;
+    background-color: #d8d4d9;
     border-radius: 3vh;
-    color: white;
+    color: rgb(142, 142, 142);
     width: 10vh;
     height: 3vh;
     cursor: pointer;
@@ -376,7 +376,7 @@ p {
     font-weight: bold; 
     }
 .source-span-p:hover{
-    background-color: #c072d8;
+    background-color: rgb(201, 201, 201);
 }
 #policy-source-link{ 
     outline: none;        
