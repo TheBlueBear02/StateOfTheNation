@@ -135,7 +135,6 @@
 
         // call the function to create the timeline
         let first_graph_date = labels[0];
-        createTimeline(ministers_history, totalDuration,first_graph_date,labels,dates);
         
         
         // modals objects
@@ -151,10 +150,12 @@
                 document.getElementById("kpi-source-link").style.display = 'block';
                 document.getElementById("kpi-source-link").href = source;
             }
- 
+            
+            createTimeline(ministers_history, totalDuration,first_graph_date,labels,dates,'kpi');
 
             updateChart("kpi_chart", labels, values, chart, name);
             kpiModal.showModal();
+ 
         } else if (cellElement.classList.contains('policy')) {
             document.getElementById("modal-name-policy").textContent = name;
             document.getElementById("modal-info-policy").textContent = info;
@@ -167,6 +168,8 @@
                 document.getElementById("policy-source-link").style.display = 'block';
                 document.getElementById("policy-source-link").href = source;
             }
+            createTimeline(ministers_history, totalDuration,first_graph_date,labels,dates,'policy');
+
             updateChart("policies_chart", labels, values, chart, name);
             policiesModal.showModal();
         }

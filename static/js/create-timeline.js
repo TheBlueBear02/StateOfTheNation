@@ -1,12 +1,17 @@
-function createTimeline(ministers_history, totalDuration1,first_graph_date,lables,dates) {
+function createTimeline(ministers_history, totalDuration1,first_graph_date,lables,dates,type) {
         
     let currentDate = new Date().toJSON().slice(0, 7);
 
     const colors = ["#FF6B6B", "#6EC1E4", "#90EE90", "#FFD56B", "#C9A0DC"];
     const labels_length = lables.length;
 
+    let timeline;
     // Clear previous timeline content
-    const timeline = document.getElementById("timeline");
+    if (type == 'kpi'){
+        timeline = document.getElementById("timeline");
+    } else {
+        timeline = document.getElementById("timeline-p");
+    }
     timeline.innerHTML = "";  // This removes all child elements
 
    
@@ -24,9 +29,6 @@ function createTimeline(ministers_history, totalDuration1,first_graph_date,lable
    
     // Generate each era div
     for (let i = 0; i < dates.length - 1; i++) {
-        
-        
-        
         
         // if the labales are years and months calculate the widths like this
         if (lables[0].length == 7){
@@ -106,8 +108,6 @@ function createTimeline(ministers_history, totalDuration1,first_graph_date,lable
 
         }
         
-        
-
         // Append to timeline container
         timeline.appendChild(eraDiv);
     }
