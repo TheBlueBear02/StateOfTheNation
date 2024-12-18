@@ -36,12 +36,12 @@ p {
 }
 
 .nav_icon{
-    width: 1.8vw;
+    width: 4vh;
     cursor: pointer;
     margin-top: 2vh;
     display: flex;
-
     padding: .5vh;
+    margin-right: .5vh;
 }
 .nav_icon:hover{
     transform: scale(1.1);

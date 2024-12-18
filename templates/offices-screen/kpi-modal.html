@@ -32,4 +32,27 @@
         <div id="timeline" class="timeline"></div>        
 
     </div>
+    <!-- copy image message -->
+    <div id="share-message">
+        <img src="static/images/icons/green-check.svg">
+        <p id="popupMessage">!הגרף הועתק בהצלחה</p>
+    </div>
+
+    <script>
+    function closeMessage() {
+        const modal = document.getElementById('share-message');
+        modal.style.display = 'none';    }
+    
+    // Function to show the modal
+    function showMessage() {
+        const modal = document.getElementById('share-message');
+        modal.style.display = 'block';
+
+        // Optional: Auto-close after 3 seconds
+        setTimeout(() => {
+            closeMessage();
+        }, 3000); // Closes the modal after 3 seconds
+    }
+    </script>
+    
 </dialog>

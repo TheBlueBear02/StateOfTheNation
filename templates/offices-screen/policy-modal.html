@@ -1,15 +1,15 @@
 <!-- KPI Modal -->
-<dialog policies-modal class="policies-modal">
+<dialog policies-modal class="policies-modal" id="policy-modal">
     <span class="close_button" onclick="closeModal()"><img class="close_icon" style="width: 3vh;display: block;margin-left: 18%;margin-top: 20%;" src="/static/images/buttons/close-icon-white.png"></span>
-    <span class="share_button" onclick="closeModal()" style="padding: .6vw;"><p style="font-size: 2vw;">שתף</p><img class="close_icon" style="width: 3.5vh;display: block;margin-top: 2%;" src="/static/images/buttons/share-icon-white.png"></span>
+    <span class="share_button" onclick="copyElementAsPngToClipboard('policy-modal')" style="padding: .6vw;"><p style="font-size: 2vw;">שתף</p><img class="close_icon" style="width: 3.5vh;display: block;margin-top: 2%;" src="/static/images/buttons/share-icon-white.png"></span>
     <a id="policy-source-link" href="#" target="_blank"><span class="source-span-p" style="padding: .6vw;">מקור</span></a>
 
     <div class="modal-content">
         <table class="modal-info-table">
             <tr>
-                <th style="width: 20%;">
+                <th style="width: 30%;">
                 </th>
-                <th style="width: 50%;">
+                <th style="width:40%;">
                     <p id="modal-info-policy" style="font-size: 3vh; float: right;"></p>
                 </th>
                 <th style="padding: 0; height: 100%; float: right;margin:0;">
@@ -32,4 +32,27 @@
         <div id="timeline-p" class="timeline"></div>        
 
     </div>
+       <!-- copy image message -->
+       <div id="share-message">
+        <img src="static/images/icons/green-check.svg">
+        <p id="popupMessage">!הגרף הועתק בהצלחה</p>
+    </div>
+
+    <script>
+    function closeMessage() {
+        const modal = document.getElementById('share-message');
+        modal.style.display = 'none';    }
+    
+    // Function to show the modal
+    function showMessage() {
+        const modal = document.getElementById('share-message');
+        modal.style.display = 'block';
+
+        // Optional: Auto-close after 3 seconds
+        setTimeout(() => {
+            closeMessage();
+        }, 3000); // Closes the modal after 3 seconds
+    }
+    </script>
+    
 </dialog>

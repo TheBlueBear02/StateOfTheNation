@@ -360,7 +360,7 @@ p {
     font-weight: 700;
     background-color: #d8d4d9;
     border-radius: 3vh;
-    color: rgb(142, 142, 142);
+    color: white;
     width: 10vh;
     height: 3vh;
     cursor: pointer;
@@ -534,4 +534,31 @@ p {
 .chart-div{
     margin: 0 auto;
     max-width: 100%;
+}
+
+#share-message{
+    display: none; 
+    position: fixed; 
+    width: 25vw;
+    height: 3vw;
+    top: 85%; 
+    left: 70%; 
+    padding: .5vw; 
+    background: rgba(0, 0, 0, 0.8); 
+    color: white; 
+    border-radius: 2.5vh;
+}
+#share-message p{
+    font-weight: bold;
+    color: white;
+    margin: auto;
+    float: right;
+    margin-right: 1vw;
+    font-size: 2.2vw;
+}
+#share-message img{
+    width: 2.5vw;
+    height: 2.5vw;
+    float: right;
+    margin-right: 1vw;
 }
