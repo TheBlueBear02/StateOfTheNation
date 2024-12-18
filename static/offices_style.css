@@ -261,17 +261,21 @@ td {
 }
 
 .policies-modal {
-    width: 100%;
-    height: 100%;
+
     border: .3vh solid rgb(188, 188, 188);
-    border-radius: 25px;
+    width: 94%;
+    height: 100%;
+    border-radius: 3vh;
     padding: 3vh;
     margin: 0;
     padding-top: 0;
+    margin-left: 1%;
+    background-image: linear-gradient(#fff, #f2f2f2);
+    margin-top: 1vh;
 }
 
 .policies-modal::backdrop {
-    background-color: white;
+    background-image: linear-gradient(#fff, #f2f2f2);
 }
 
 .close_button {
@@ -327,13 +331,13 @@ p {
 .source-span {
     border: none;
     font-weight: 700;
-    background-color: #d1a6de;
+    background-color: #d4b4de;
     border-radius: 3vh;
     color: white;
     width: 10vh;
     height: 3vh;
     cursor: pointer;
-    font-size: 4vh;
+    font-size:3.5vh;
     padding: 0;
     position: fixed;
     top: 2.7vh;
@@ -341,7 +345,8 @@ p {
     display: flex;
     align-items: center; 
     justify-content: center;
- 
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold; 
 }
 .source-span:hover{
     background-color: #c072d8;
@@ -350,6 +355,33 @@ p {
     outline: none;        
     text-decoration: none;
 }
+.source-span-p {
+    border: none;
+    font-weight: 700;
+    background-color: #d4b4de;
+    border-radius: 3vh;
+    color: white;
+    width: 10vh;
+    height: 3vh;
+    cursor: pointer;
+    font-size:3.5vh;
+    padding: 0;
+    position: fixed;
+    top: 2.7vh;
+    left: 22vh;
+    display: flex;
+    align-items: center; 
+    justify-content: center;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold; 
+    }
+.source-span-p:hover{
+    background-color: #c072d8;
+}
+#policy-source-link{ 
+    outline: none;        
+    text-decoration: none;}
+    
 .up-left {
     border-right: 1vh solid;
     border-image-slice: 1;
@@ -434,6 +466,7 @@ p {
     height: 100%;
     margin: 0;
     padding: 0;
+
 }
 
 .modal-info-table{
@@ -443,6 +476,8 @@ p {
     padding: 0;
 }
 .modal-info-table p{
+    font-family: 'Assistant', sans-serif;
+
     margin-top: 2.5vh;
     padding: 0;
 }

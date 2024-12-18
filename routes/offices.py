@@ -15,6 +15,7 @@ Minister_term = namedtuple("Minister_term", ["name", "start_date", "image", "par
 def create_cells(indexes_info, structure):
     kpi_indexes = [info for info in indexes_info if info['is_kpi']]
     policy_indexes = [info for info in indexes_info if not info['is_kpi']]
+    
     cells = []
     kpi_idx, policy_idx = 0, 0
     for row_structure in structure:
@@ -38,7 +39,8 @@ def fetch_indexes(office_id):
     for index in indexes:
         index_data = db.session.query(IndexData).filter_by(index_id=index.id).all()
         labels = parse_dates([row.label for row in index_data])  # Convert dates once
-        values = [row.value for row in index_data]
+        values = [float(str(row.value).replace(',', '').replace('%', '')) for row in index_data]
+
         indexes_info.append({
             'name': index.name,
             'info': index.info,

@@ -1,6 +1,6 @@
 import csv
 import sys
-sys.path.append('D:\Projects\stateofthenation')
+sys.path.append('E:\\Development Projects\\SN')
 import json
 from app import db, create_app
 from models import ParliamentMember,Tweet,IndexData,Index
@@ -9,21 +9,26 @@ app = create_app()
 
 # add data from csv file to index_data table
 def save_csv_to_db():
-    with open("D:\Projects\SN - DATA\נתוני דמוגרפיה - גיל.csv", newline='',encoding='utf-8') as csvfile:
+    with open("E:\\Development Projects\\SN - DATA\המשרד לביטחון לאומי\\המשרד לביטחון לאומי - מדיניות -  חלוקת כלי נשק אישיים בשנה.csv", newline='',encoding='utf-8') as csvfile:
         csv_reader = csv.DictReader(csvfile)
-        index_id = "17"
+        # Query the max id and increment
+        max_id = db.session.query(db.func.max(IndexData.id)).scalar()
+        new_id = (max_id or 0) + 1  # Handle None case if table is empty
+        index_id = "3"
         date = ""
         value = None
         for row in csv_reader:
             # Create an instance of YourModel
             new_record = IndexData(
+                id=new_id,
                 index_id = index_id,
-                label=row['labels'],  # Map CSV fields to your model's columns
+                label=row['labels'],  
                 value=row['values']
 
             )
             # Add the record to the session if not saved yet
             db.session.add(new_record)
+            new_id += 1
             
         # Commit all changes to the database
         db.session.commit()
@@ -103,6 +108,6 @@ def add_tweet():
 
 if __name__ == "__main__":
     with app.app_context():
-        # save_csv_to_db()
-        add_index()
+        save_csv_to_db()
+        #add_index()
         print("Data Saved")

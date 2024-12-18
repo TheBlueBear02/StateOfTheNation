@@ -68,33 +68,7 @@
 {% include 'offices-screen/kpi-modal.html' %}
 
 <!-- Policies Modal -->
-<dialog policies-modal class="policies-modal">
-    <div class="modal-content">
-        <table class="modal-info-table">
-            <tr>
-                <button onclick="closeModal()" class="close_button">X</button>
-                <th style="width: 60%; ">
-                    <p id="modal-info-policy" style="font-size: 1rem;"></p>
-                </th>
-                <th style="margin-bottom: 5vh; min-width: 20%; height: 100%; float: right;">
-                    <div style="width: 100%;height: 5vh; border-bottom: 2px solid #c3c3c3;">
-                        <p id="modal-office-policy" style="font-size: 1.3rem; padding: 0; "><p>
-                    </div>
-                    <p id="modal-name-policy" style="float: right; margin: 0;padding: 0; font-size: 1rem; "></h3>
-                </th>
-                <th  style="width: 5%; ">
-                    <span style="height: 6vw;width: 6vw; background: radial-gradient(#e3e3e3, #c3c3c3); border-radius: 50%;float: left;margin: 0;">
-                        <img class="bubble_icon large_icon" id="modal-icon-policy" src="/static/images/offices/policy/grey_bag.png">
-                    </span>
-                </th>   
-            </tr>
-        </table>
-        <div id="graph_div_kpi" class="chart-div">
-            <canvas class="chart" id="policies_chart"></canvas>
-        </div>
-        <button onclick="" class="share_button">Share</button>
-    </div>
-</dialog>
+{% include 'offices-screen/policy-modal.html' %}
 
 <!-- Info Modal -->
 <dialog explain-modal class="explain-modal">
@@ -102,7 +76,8 @@
     <img style="width: 100%; height: 90vh;" src="/static/images/offices/explain.png">
 </dialog>
 
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script> <!-- graph library js -->
+<script src="static\js\create-timeline.js" defer></script> <!-- create Timeline -->
 
 <!-- Script -->
 <script>
@@ -138,7 +113,7 @@
         const icon = cellElement.getAttribute("data-icon");
         const labels = JSON.parse(cellElement.getAttribute("data-labels"));
         const values = JSON.parse(cellElement.getAttribute("data-values"));
-
+        
         // office info
         const office_name = cellElement.getAttribute("office-name");
         const minister_name = cellElement.getAttribute("office-minister");
@@ -167,145 +142,37 @@
         if (cellElement.classList.contains('kpi') || cellElement.classList.contains('alert_bubble')) {
             document.getElementById("modal-name-kpi").textContent = name;
             document.getElementById("modal-info-kpi").textContent = info;
-            if(source == 'None'){
-                document.getElementById("modal-source-link").style.display = 'None';
-            } else {
-                document.getElementById("modal-source-link").style.display = 'block';
-                document.getElementById("modal-source-link").href = source;
-            }
-            document.getElementById("modal-source-link").href = source;
             document.getElementById("modal-office-kpi").textContent = office_name;
             document.getElementById("modal-icon-kpi").src = icon;
+
+            if(source == 'None'){
+                document.getElementById("kpi-source-link").style.display = 'None';
+            } else {
+                document.getElementById("kpi-source-link").style.display = 'block';
+                document.getElementById("kpi-source-link").href = source;
+            }
+ 
 
             updateChart("kpi_chart", labels, values, chart, name);
             kpiModal.showModal();
         } else if (cellElement.classList.contains('policy')) {
             document.getElementById("modal-name-policy").textContent = name;
             document.getElementById("modal-info-policy").textContent = info;
-            document.getElementById("modal-source-link").textContent = source;
             document.getElementById("modal-office-policy").textContent = office_name;
             document.getElementById("modal-icon-policy").src = icon;
-
+            
+            if(source == 'None'){
+                document.getElementById("policy-source-link").style.display = 'None';
+            } else {
+                document.getElementById("policy-source-link").style.display = 'block';
+                document.getElementById("policy-source-link").href = source;
+            }
             updateChart("policies_chart", labels, values, chart, name);
             policiesModal.showModal();
         }
     }
     
-    function createTimeline(ministers_history, totalDuration1,first_graph_date,lables,dates) {
-        
-        let currentDate = new Date().toJSON().slice(0, 7);
-
-        const colors = ["#FF6B6B", "#6EC1E4", "#90EE90", "#FFD56B", "#C9A0DC"];
-        const labels_length = lables.length;
-
-        // Clear previous timeline content
-        const timeline = document.getElementById("timeline");
-        timeline.innerHTML = "";  // This removes all child elements
-
-       
-        // Adding today's date to the end of the dates array
-        dates.push(lables[labels_length - 1]+"-12")
-
-        
-        if (dates[0] < first_graph_date){
-            dates[0] = first_graph_date
-        }
-        
-        let widthPercent;
-        let previous_date = 0;
-
-       
-        // Generate each era div
-        for (let i = 0; i < dates.length - 1; i++) {
-            
-            
-            
-            
-            // if the labales are years and months calculate the widths like this
-            if (lables[0].length == 7){
-                for(let j = 0; j < labels_length; j++){
-                if (lables[j] == dates[i + 1]){ // check if the current label queal to the end of the era date
-                    widthPercent = (j - previous_date) / labels_length * 100; // calculate the precentage of the number of labales in the era from the overall labales 
-                    previous_date = j; // set the previous date parameter to the this label
-                    }
-                }
-            }
-            else{ // if the labales are only years
-                // Calculate the duration of this period
-                const periodDuration = Date.parse(dates[i + 1]) - Date.parse(dates[i]);
-
-                // Calculate width as a percentage of total duration
-                widthPercent = (periodDuration / totalDuration1) * 100;
-            }
-           
-            // Create div for this era
-            const eraDiv = document.createElement("div");
-            eraDiv.className = "era";
-            eraDiv.style.width = widthPercent + "%";
-            eraDiv.style.backgroundColor = colors[i % colors.length];  // Cycle through colors
-            
-            // Set the era div info for the minister
-            const ministerData = ministers_history[i];
-
-            // Create and append minister image
-            const ministerImage = document.createElement("img");
-            ministerImage.src = ministerData["image"]; // Replace with actual image property
-            ministerImage.alt = `${ministerData.name} image`; // Alt text for accessibility
-            ministerImage.style.width = "7vh"; // Adjust size as needed
-            ministerImage.style.height = "auto"; // Maintain aspect ratio
-            ministerImage.style.border = ".3vh solid "+colors[i % colors.length]; // Maintain aspect ratio
-        
-        
-            // Create a container for the minister's name and party
-            const ministerInfoContainer = document.createElement("div");
-            ministerInfoContainer.style.textAlign = "right"; // Aligns content to the right
-            ministerInfoContainer.style.direction = "rtl"; // RTL for Hebrew or Arabic
-            ministerInfoContainer.style.margin = 0;
-
-            // Create and append minister name
-            const ministerName = document.createElement("p");
-            ministerName.textContent = ministerData["name"];
-            ministerName.style.fontWeight = "bold";
-            ministerName.style.margin = 0;
-
-            // Create and append minister party
-            const ministerParty = document.createElement("p");
-            ministerParty.textContent = ministerData["party"];
-            ministerParty.style.margin = 0;
-
-            // Create and append start and end dates
-            const dateInfo = document.createElement("p");
-            dateInfo.textContent = ` ${ministerData.start_date} `; // Adjust as necessary
-            dateInfo.style.position = "absolute";
-            dateInfo.style.marginTop = "15vh";
-            dateInfo.style.fontSize = "1.8vh";
-            dateInfo.style.color = "grey";
-            dateInfo.style.fontWeight = "bold";
-
-
-            // Append the info container to the eraDiv
-            if (widthPercent < 5) {
-
-            } else if (widthPercent >= 5 && widthPercent < 10) {
-                eraDiv.appendChild(dateInfo);
-                eraDiv.appendChild(ministerImage);
-                
-            } else {
-                eraDiv.appendChild(dateInfo);
-                eraDiv.appendChild(ministerImage);
-                ministerInfoContainer.appendChild(ministerName);
-                ministerInfoContainer.appendChild(ministerParty);
-                eraDiv.appendChild(ministerInfoContainer);
-
-            }
-            
-            
-
-            // Append to timeline container
-            timeline.appendChild(eraDiv);
-        }
-    }
-
+    
     function updateChart(chartId, labels, values, chart, name,dates) {
          // Destroy existing chart if it exists
          if (charts[chartId]) {
