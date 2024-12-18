@@ -1,7 +1,7 @@
 <!-- KPI Modal -->
-<dialog kpi-modal class="kpi-modal">
+<dialog kpi-modal class="kpi-modal" id="kpi-modal">
     <span class="close_button" onclick="closeModal()"><img class="close_icon" style="width: 3vh;display: block;margin-left: 18%;margin-top: 20%;" src="/static/images/buttons/close-icon-white.png"></span>
-    <span class="share_button" onclick="closeModal()" style="padding: .6vw;"><p style="font-size: 2vw;">שתף</p><img class="close_icon" style="width: 3.5vh;display: block;margin-top: 2%;" src="/static/images/buttons/share-icon-white.png"></span>
+    <span class="share_button" onclick="copyElementAsPngToClipboard('kpi-modal')" style="padding: .6vw;"><p style="font-size: 2vw;">שתף</p><img class="close_icon" style="width: 3.5vh;display: block;margin-top: 2%;" src="/static/images/buttons/share-icon-white.png"></span>
     <a id="kpi-source-link" href="#" target="_blank"><span class="source-span" style="padding: .6vw;">מקור</span></a>
 
     <div class="modal-content">
