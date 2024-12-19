@@ -536,7 +536,7 @@ p {
     max-width: 100%;
 }
 
-#share-message{
+.share-message{
     display: none; 
     position: fixed; 
     width: 25vw;
@@ -548,7 +548,7 @@ p {
     color: white; 
     border-radius: 2.5vh;
 }
-#share-message p{
+.share-message p{
     font-weight: bold;
     color: white;
     margin: auto;
@@ -556,9 +556,10 @@ p {
     margin-right: 1vw;
     font-size: 2.2vw;
 }
-#share-message img{
+.share-message img{
     width: 2.5vw;
     height: 2.5vw;
     float: right;
     margin-right: 1vw;
 }
+

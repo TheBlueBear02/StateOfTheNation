@@ -33,25 +33,25 @@
 
     </div>
        <!-- copy image message -->
-       <div id="share-message">
+       <div class="share-message" id="share-message-p">
         <img src="static/images/icons/green-check.svg">
         <p id="popupMessage">!הגרף הועתק בהצלחה</p>
     </div>
 
     <script>
-    function closeMessage() {
-        const modal = document.getElementById('share-message');
+    function closeMessageP() {
+        const modal = document.getElementById('share-message-p');
         modal.style.display = 'none';    }
     
     // Function to show the modal
-    function showMessage() {
-        const modal = document.getElementById('share-message');
+    function showMessageP() {
+        const modal = document.getElementById('share-message-p');
         modal.style.display = 'block';
 
         // Optional: Auto-close after 3 seconds
         setTimeout(() => {
-            closeMessage();
-        }, 3000); // Closes the modal after 3 seconds
+            closeMessageP();
+        }, 2000); // Closes the modal after 3 seconds
     }
     </script>
     
