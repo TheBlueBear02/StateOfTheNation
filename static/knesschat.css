@@ -132,7 +132,7 @@ background-color: #999999;
     flex-direction: column;
     align-items: flex-start;
     margin-top: 2vh;
-    box-shadow: 0 .2vh .5vh rgb(0 0 0 / 0.2);
+    box-shadow: .1vh .2vh .5vh rgb(0 0 0 / 0.5);
     max-width: 80%; 
     padding: .8vw;
 
@@ -157,7 +157,7 @@ background-color: #999999;
     flex-direction: column;
     align-items: flex-start;
     margin-top: 2vh;
-    box-shadow: 0 .2vh .5vh rgb(0 0 0 / 0.2);
+    box-shadow: -.1vh .2vh .5vh rgb(0 0 0 / 0.5);
     max-width: 80%; 
     padding: .8vw; 
     background-color: #DEEFFF; 
