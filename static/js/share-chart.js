@@ -81,6 +81,7 @@ function copyElementAsPngToClipboard(elementId) {
                 console.log("Image copied to clipboard successfully!");
                 // Show custom popup message
                 showMessage();
+                showMessageP();
             }).catch(error => {
                 console.error("Failed to copy image to clipboard:", error);
             });
