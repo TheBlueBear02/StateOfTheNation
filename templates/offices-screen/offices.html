@@ -24,6 +24,9 @@
                                 {% if cell.name !="" %}
                                     data-tooltip="{{ cell.name }}"
                                 {% endif %}
+                                {% if cell.alert %}
+                                    data-alert="{{cell.alert}}"
+                                {% endif %}
                                 data-name="{{ cell.name }}"
                                 data-info="{{ cell.info }}"
                                 data-source="{{ cell.source }}"
@@ -116,6 +119,7 @@
         const source = cellElement.getAttribute("data-source");
         const chart = cellElement.getAttribute("data-chart");
         const icon = cellElement.getAttribute("data-icon");
+        const alert = cellElement.getAttribute("data-alert");
         const labels = JSON.parse(cellElement.getAttribute("data-labels"));
         const values = JSON.parse(cellElement.getAttribute("data-values"));
         
@@ -149,6 +153,17 @@
             document.getElementById("modal-office-kpi").textContent = office_name;
             document.getElementById("modal-icon-kpi").src = icon;
 
+            if (alert){
+                kpiModal.style.borderColor = '#ee3f33';
+                document.getElementById("modal-bubble-kpi").style.background = 'radial-gradient(#ff5d5d, #ee3f33)';
+                document.getElementById("line").style.borderColor = '#ee3f33';
+            } else{
+                kpiModal.style.borderColor = '#4890FD';
+                document.getElementById("modal-bubble-kpi").style.background = 'radial-gradient(#6ba4fa, #447dd3)';
+                document.getElementById("line").style.borderColor = '#4890FD';
+            }
+
+
             if(source == 'None'){
                 document.getElementById("kpi-source-link").style.display = 'None';
             } else {
@@ -157,6 +172,8 @@
             }
             
             createTimeline(ministers_history, totalDuration,first_graph_date,labels,dates,'kpi');
+
+        
 
             updateChart("kpi_chart", labels, values, chart, name);
             kpiModal.showModal();
