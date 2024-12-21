@@ -51,7 +51,7 @@ function createTimeline(ministers_history, totalDuration1, first_graph_date, lab
         // Set the era div info for the minister
         const ministerData = ministers_history[i];
         // Only process the image and text if the width is above the threshold (5%)
-        if (widthPercent >= 13) {
+        if (widthPercent >= 15) {
             // Convert the image URL to Base64 and then append it to the timeline
             convertToDataURL(ministerData["image"], (base64Image) => {
                 // Create and append minister image with Base64 URL
@@ -95,7 +95,7 @@ function createTimeline(ministers_history, totalDuration1, first_graph_date, lab
                 ministerInfoContainer.appendChild(ministerParty);
                 eraDiv.appendChild(ministerInfoContainer);
             });
-        } else if (widthPercent >= 5 && widthPercent < 13) {
+        } else if (widthPercent >= 5 && widthPercent < 15) {
             // Process image and text if the width is between 5% and 10%
             convertToDataURL(ministerData["image"], (base64Image) => {
                 const ministerImage = document.createElement("img");

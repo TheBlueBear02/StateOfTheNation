@@ -1,6 +1,8 @@
 import csv
 import sys
-sys.path.append('E:\\Development Projects\\SN')
+#sys.path.append('E:\\Development Projects\\SN')
+sys.path.append('D:\\Projects\\stateofthenation')
+
 import json
 from app import db, create_app
 from models import ParliamentMember,Tweet,IndexData,Index
@@ -9,12 +11,12 @@ app = create_app()
 
 # add data from csv file to index_data table
 def save_csv_to_db():
-    with open("E:\\Development Projects\\SN - DATA\המשרד לביטחון לאומי\\המשרד לביטחון לאומי - מדיניות -  חלוקת כלי נשק אישיים בשנה.csv", newline='',encoding='utf-8') as csvfile:
+    with open("D:\\Projects\\SN - DATA\\המשרד לביטחון לאומי - מדדים - מספר תיקים שנפתחו.csv", newline='',encoding='utf-8') as csvfile:
         csv_reader = csv.DictReader(csvfile)
         # Query the max id and increment
         max_id = db.session.query(db.func.max(IndexData.id)).scalar()
         new_id = (max_id or 0) + 1  # Handle None case if table is empty
-        index_id = "3"
+        index_id = "19"
         date = ""
         value = None
         for row in csv_reader:
