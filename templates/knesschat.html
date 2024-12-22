@@ -42,7 +42,7 @@
                             </table>
                             <i style="float: left; margin:0px; padding:0px; font-size: 1vw; padding-left: .2vh;">{{tweet['party']}}</i>
                         </th>
-                        <th style="float: left;margin:0; padding: 0; ">
+                        <th style="float: left;margin:0; padding: 0;">
                             <span class="img_span" style="background-image: url({{tweet['minister_image']}})"></span>
                         </th>
                     </tr>
@@ -89,8 +89,8 @@
                             {% endif %}
                         </th>
                         <th style="float: right;margin:0; padding: 0;">
-                            <span class="img_span"
-                                style="background-image: url('{{tweet['minister_image']}}')"></span>
+                            <span class="img_span" id="kmImage"
+                                    style="background-image: url('{{tweet['minister_image']}}')"></span>
                         </th>
                     </tr>
                     <tr>
