@@ -164,62 +164,81 @@
                 </script>
             </div>
             <div id="2" class="graph hidden">
-                <canvas id="income-graph" width="100%" style="max-height: 80vh; margin: 0; padding: 0;"></canvas>
-                <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>                           
-                <script type="text/javascript"> // Chart
-
-                   var ctx = document.getElementById('income-graph').getContext('2d');
-                   var myChart = new Chart(ctx, {
-                        type: 'doughnut',
-                        data: {
-                            labels: {{ income_lables | safe }},
-                            datasets: [{
-                                label: 'Example Dataset',
-                                data: {{ income_values | safe }},
-                                fill: false, 
-                                borderColor: 'white',
-                                borderWidth: 1,
-                                backgroundColor: [
-                                    '#a3d9a5',  // Red
-                                    '#8fd19e',  // Blue
-                                    '#73c37c',  // Yellow
-                                    '#58c66d',  // Green
-                                    '#42c77f', // Purple
-                                    '#38b766',  // Orange
-                                    '#2ea855',  // Grey
-                                    'rgb(0, 128, 128)'
-                                ],
-                            }]
-                        },
-                        options: {
-                            responsive: true,
-                            plugins: {
-                                legend: {
-                                    display: true,
-                                    position: 'right',
+                <div class="grid-container">
+                    <div class="item item1 excluded">
+                        <canvas id="income-graph" class="graph" width="100%"></canvas>
+                        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>                           
+                        <script type="text/javascript"> // Chart
+        
+                           var ctx = document.getElementById('income-graph').getContext('2d');
+                           var myChart = new Chart(ctx, {
+                                type: 'doughnut',
+                                data: {
+                                    labels: {{ income_lables | safe }},
+                                    datasets: [{
+                                        label: 'Example Dataset',
+                                        data: {{ income_values | safe }},
+                                        fill: false, 
+                                        borderColor: 'white',
+                                        borderWidth: 1,
+                                        backgroundColor: [
+                                            '#a3d9a5',  // Red
+                                            '#8fd19e',  // Blue
+                                            '#73c37c',  // Yellow
+                                            '#58c66d',  // Green
+                                            '#42c77f', // Purple
+                                            '#38b766',  // Orange
+                                            '#2ea855',  // Grey
+                                            'rgb(0, 128, 128)'
+                                        ],
+                                    }]
                                 },
-                                title: {
-                                    display: true,
-                                    text: 'הכנסות הממשלה ב2023 (מילארדים)',
-                                },
-                                datalabels: {
-                                    color: 'white', // Label color
-                                    formatter: (value, context) => {
-                                        let label = context.chart.data.labels[context.dataIndex];
-                                        return `${value}`;  // Display label and value
-                                    },
-                                    font: {
-                                        size: 22,  // Font size for labels
-                                        weight: 'bold'
-                                    },
-                                    align: 'center',  // Align labels toward the end of the slice
-                                    anchor: 'center'  // Anchor the labels to the chart slices
+                                options: {
+                                    responsive: true,
+                                    plugins: {
+                                        legend: {
+                                            display: false,
+                                            position: 'left',
+                                        },
+                                        title: {
+                                            display: true,
+                                            text: 'פילוג הכנסות המדינה',
+                                        },
+                                        datalabels: {
+                                            color: 'white', // Label color
+                                            formatter: (value, context) => {
+                                                let label = context.chart.data.labels[context.dataIndex];
+                                                return `${value}`;  // Display label and value
+                                            },
+                                            font: {
+                                                size: 12,  // Font size for labels
+                                                weight: 'bold'
+                                            },
+                                            align: 'center',  // Align labels toward the end of the slice
+                                            anchor: 'center'  // Anchor the labels to the chart slices
+                                        }
+                                    }
                                 }
-                            }
-                        }
-                    });
-                </script>
-            </div>
+                            });
+                        </script>
+                </div>
+                    <div class="item item2">
+                        <p class="title">סה"כ הכנסות</p>
+                        <div class="center">
+                            <p class="main-num">
+                                <span style="font-weight: bold;color:rgb(1, 214, 1);">404.4</span>
+                                <span style="font-size: 5vh;"> מיליארד ש"ח</span>
+                               </p>
+                            <p class="change">
+                                <span style="font-weight: bold;color:rgb(255, 0, 0);">8%-</span>
+                                משנה שעברה
+                            </p>
+                        </div>
+                    </div>
+                    <div class="item item3">Area 3</div>
+                    <div class="item item4 excluded">Area 4</div>
+                </div>
+                
         </div>
         
     </div>
