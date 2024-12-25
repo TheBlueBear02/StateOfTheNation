@@ -14,6 +14,7 @@ def get_hebrew_date():
 
 @index_bp.route('/')
 def index():
+    # Knesschat backend
    # Query the database for all tweets and kms
     all_tweets = db.session.query(Tweet).all()
     all_kms = db.session.query(ParliamentMember).all()
