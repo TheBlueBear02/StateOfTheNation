@@ -526,9 +526,6 @@ p {
     width: 100%;
 }
 
-
-
-
  /* Timeline container */
  .timeline {
     display: flex;
@@ -600,3 +597,25 @@ p {
     margin-right: 1vw;
 }
 
+/* office modal */
+.office-modal {
+    width: 94%;
+    height: 100%;
+    border: .3vh solid #4890FD;
+    border-radius: 3vh;
+    padding: 3vh;
+    margin: 0;
+    padding-top: 0;
+    margin-left: 1%;
+    background-image: linear-gradient(#fff, #f2f2f2);
+    margin-top: 1vh;
+}
+
+.office-modal::backdrop {
+    background-image: linear-gradient(#fff, #f2f2f2);
+}
+
+.office-modal:focus{
+    outline: none;
+
+}

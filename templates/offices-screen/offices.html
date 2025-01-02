@@ -14,8 +14,17 @@
             {% elif cell.cell_type == "main_bubble" %}
                 <td>
                     <span class="main_bubble" id="{{ main_bubble_id }}" 
-                          data-tooltip="{{ office['name'] }}" 
-                          style="background-image: url({{ office['minister_image'] }});"></span>
+                          data-tooltip="{{ office['name'] }}"
+                            data-name="{{ office['name'] }}"
+                            data-info="{{ office['info'] }}"
+                            data-minister-name="{{ office['minister_name'] }}"
+                            data-minister-image="{{ office['minister_image'] }}"
+                            data-minister-party="{{ office['minister_party'] }}"
+                            data-minister-role="{{ office['minister_role'] }}"
+                            data-minister-history="{{ office['ministers_history'] }}"
+                            style="background-image: url({{ office['minister_image'] }});"
+                          onclick="openOfficeModal(this)">
+                    </span>
                 </td>
             {% else %}
                 <td>
@@ -75,6 +84,9 @@
 <!-- Policies Modal -->
 {% include 'offices-screen/policy-modal.html' %}
 
+<!-- Office Modal -->
+{% include 'offices-screen/office-modal.html' %}
+
 <!-- Info Modal -->
 <dialog explain-modal class="explain-modal">
     <button class="close_button" onclick="closeModal()" style="display: block;" id="close_button" >X</button>
@@ -92,7 +104,7 @@
     const kpiModal = document.querySelector("[kpi-modal]");
     const policiesModal = document.querySelector("[policies-modal]");
     const explainModal = document.querySelector("[explain-modal]");
-
+    const officeModal = document.querySelector("[office-modal]");
     // Store charts in a global object to manage them easily
     const charts = {};
 
@@ -100,6 +112,7 @@
         kpiModal.close();
         policiesModal.close();
         explainModal.close();
+        officeModal.close();
 
         // Destroy all active charts to clear data
         if (charts["kpi_chart"]) {
@@ -111,7 +124,44 @@
             delete charts["policies_chart"];
         }
     }
+    function openOfficeModal(mainBubbleCell) {
+        // get the data from the main bubble
+        const name = mainBubbleCell.getAttribute("data-name");
+        const info = mainBubbleCell.getAttribute("data-info");
+        const minister_name = mainBubbleCell.getAttribute("data-minister-name");
+        const minister_image = mainBubbleCell.getAttribute("data-minister-image");
+        const minister_party = mainBubbleCell.getAttribute("data-minister-party");
+        const minister_role = mainBubbleCell.getAttribute("data-minister-role");
+        const ministers_history = JSON.parse(mainBubbleCell.getAttribute("data-minister-history"));
 
+         // get the labels and dates for the timeline
+         let first_graph_date = ministers_history[0]["start_date"];
+        let today = new Date().toISOString().split('T')[0]; // Get today's date in YYYY-MM-DD format
+
+        // Ensure the last minister's end_date is set to today if not already
+        if (ministers_history[ministers_history.length - 1]["end_date"] === null) {
+            ministers_history[ministers_history.length - 1]["end_date"] = today;
+        }
+
+        let totalDuration = Date.parse(today) - Date.parse(first_graph_date);
+        let dates = [];
+        // Insert all the ministers' start dates into the array
+        for (let i = 0; i < ministers_history.length; i++) {
+            dates[i] = ministers_history[i]["start_date"];
+        }
+        let labels = dates;
+        console.log(labels);
+        
+        
+        createTimeline(ministers_history, totalDuration, first_graph_date, labels, dates, 'office');
+        
+        // set the office info in the modal
+        document.getElementById("modal-name-office").textContent = name;
+        document.getElementById("modal-ministerName-office").textContent = minister_name;
+        
+        // open the modal
+        officeModal.showModal();
+    }
     function openModal(cellElement) {
         // index info
         const name = cellElement.getAttribute("data-name");
@@ -145,7 +195,8 @@
         // call the function to create the timeline
         let first_graph_date = labels[0];
         
-        
+        console.log(labels);
+
         // modals objects
         if (cellElement.classList.contains('kpi') || cellElement.classList.contains('alert_bubble')) {
             document.getElementById("modal-name-kpi").textContent = name;

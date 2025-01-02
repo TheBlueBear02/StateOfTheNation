@@ -8,8 +8,10 @@ function createTimeline(ministers_history, totalDuration1, first_graph_date, lab
     // Clear previous timeline content
     if (type == 'kpi') {
         timeline = document.getElementById("timeline");
-    } else {
+    } else if (type == 'policy') {
         timeline = document.getElementById("timeline-p");
+    } else {
+        timeline = document.getElementById("timeline-office");
     }
     timeline.innerHTML = "";  // This removes all child elements
 
@@ -41,7 +43,7 @@ function createTimeline(ministers_history, totalDuration1, first_graph_date, lab
             // Calculate width as a percentage of total duration
             widthPercent = (periodDuration / totalDuration1) * 100;
         }
-
+        console.log(widthPercent);
         // Create div for this era
         const eraDiv = document.createElement("div");
         eraDiv.className = "era";
