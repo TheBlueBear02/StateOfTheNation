@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template
 from datetime import datetime
 from collections import namedtuple
-from models import db, ParliamentMember, Index, IndexData, Office, MinisterHistory
+from models import db, ParliamentMember, Index, IndexData, Office, MinisterHistory, OfficeBranch
 import random
 import json
 
@@ -138,6 +138,20 @@ def ministers_history_timeline(ministers_list):
     json_data = json.dumps(dict_data)  
     return json_data
 
+def getOfficeBranches(office_id):
+    branches = db.session.query(OfficeBranch).filter_by(office_id=office_id).all()
+    branches_list = []
+    for branch in branches:
+        branch_data = {
+            'name': branch.name,
+            'image': branch.image,
+        }
+        branches_list.append(branch_data)
+    
+    # Convert to JSON and pass to the template
+    json_data = json.dumps(branches_list)  
+    return json_data
+
 @offices_bp.route('/offices')
 def offices():
     all_offices = db.session.query(Office).limit(4).all()
@@ -188,6 +202,8 @@ def offices():
         ministers_history = db.session.query(MinisterHistory).filter_by(office_id=office.id).all() 
         term_history = ministers_history_timeline(ministers_history)
         
+        office_branches = getOfficeBranches(office.id)
+        
         office_data = {
             'name':office.name,
             'info': office.info,
@@ -196,9 +212,12 @@ def offices():
             'minister_party': minister.party,
             'minister_role': minister.additional_role,
             'ministers_history' : term_history,
+            'branches': office_branches
         }
         offices_list.append(office_data)
 
     
+
+
     # send the page offices and indexes data
     return render_template('offices-screen/offices.html',  offices=offices_list,first_office_cells=first_office_cells, second_office_cells=second_office_cells, third_office_cells=third_office_cells, forth_office_cells=forth_office_cells)

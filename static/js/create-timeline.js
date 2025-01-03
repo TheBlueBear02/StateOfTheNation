@@ -16,34 +16,47 @@ function createTimeline(ministers_history, totalDuration1, first_graph_date, lab
     timeline.innerHTML = "";  // This removes all child elements
 
     // Adding today's date to the end of the dates array
-    dates.push(lables[labels_length - 1] + "-12");
+    if (type == 'office') {
+        dates.push(currentDate);
+    } else{
+        dates.push(lables[labels_length - 1] + "-12");
 
-    if (dates[0] < first_graph_date) {
-        dates[0] = first_graph_date;
-    }
+        if (dates[0] < first_graph_date) {
+            dates[0] = first_graph_date;
+        }
+    }    
 
     let widthPercent;
     let previous_date = 0;
 
     // Generate each era div
     for (let i = 0; i < dates.length - 1; i++) {
-        // If the labels are years and months, calculate the widths like this
-        if (lables[0].length == 7) {
-            for (let j = 0; j < labels_length; j++) {
-                if (lables[j] == dates[i + 1]) { // check if the current label equals the end of the era date
-                    widthPercent = ((j - previous_date) / labels_length) * 100; // calculate the percentage of the number of labels in the era from the overall labels
-                    previous_date = j; // set the previous date parameter to this label
-                    break; // Once we find the matching label, we break out of the loop
-                }
-            }
-        } else { // If the labels are only years
-            // Calculate the duration of this period
-            const periodDuration = Date.parse(dates[i + 1]) - Date.parse(dates[i]);
+        // Check if its timeline for office or not
+        if (type == 'office'){
+             // Calculate the duration of this period
+             const periodDuration = Date.parse(dates[i + 1]) - Date.parse(dates[i]);
 
-            // Calculate width as a percentage of total duration
-            widthPercent = (periodDuration / totalDuration1) * 100;
+             // Calculate width as a percentage of total duration
+             widthPercent = (periodDuration / totalDuration1) * 100;
+        } else {
+            // If the labels are years and months, calculate the widths like this
+            if (lables[0].length == 7) {
+                for (let j = 0; j < labels_length; j++) {
+                    if (lables[j] == dates[i + 1]) { // check if the current label equals the end of the era date
+                        widthPercent = ((j - previous_date) / labels_length) * 100; // calculate the percentage of the number of labels in the era from the overall labels
+                        previous_date = j; // set the previous date parameter to this label
+                        break; // Once we find the matching label, we break out of the loop
+                    }
+                }
+            } else { // If the labels are only years
+                // Calculate the duration of this period
+                const periodDuration = Date.parse(dates[i + 1]) - Date.parse(dates[i]);
+
+                // Calculate width as a percentage of total duration
+                widthPercent = (periodDuration / totalDuration1) * 100;
+            }
         }
-        console.log(widthPercent);
+       
         // Create div for this era
         const eraDiv = document.createElement("div");
         eraDiv.className = "era";

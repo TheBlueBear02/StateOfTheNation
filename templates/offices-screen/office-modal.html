@@ -1,3 +1,4 @@
+
 <!-- OFFICE Modal -->
 <dialog office-modal class="office-modal" id="office-modal">
     <span class="close_button" onclick="closeModal()"><img class="close_icon" style="width: 3vh;display: block;margin-left: 18%;margin-top: 20%;" src="/static/images/buttons/close-icon-white.png"></span>
@@ -24,13 +25,29 @@
             </tr>
         </table>
 
-
+        <div class="office-content">
+            <table class="office-info-table">
+                <tr >
+                    <td style="width: 65%; height: 100%; border: 1px solid black;">
+                        
+                    </td>
+                    <td style="width: 35%; height: 100%; vertical-align: top;">
+                        <div class="office-info">
+                            <p id="office-info-p"></p>
+                        </div>
+                        <div class="office-branches" id="office-branches">
+                         
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </div>
         <!-- copy image message -->
         <div class="share-message" id="share-message">
             <img src="static/images/icons/green-check.svg">
             <p id="popupMessage">!הגרף הועתק בהצלחה</p>
         </div>
         <!-- timeline -->
-        <div id="timeline-office" class="timeline"></div>        
+        <div id="timeline-office" class="timeline office"></div>        
     </div>
 </dialog>
