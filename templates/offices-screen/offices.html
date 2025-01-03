@@ -13,18 +13,21 @@
                 <td></td>
             {% elif cell.cell_type == "main_bubble" %}
                 <td>
-                    <span class="main_bubble" id="{{ main_bubble_id }}" 
-                          data-tooltip="{{ office['name'] }}"
-                            data-name="{{ office['name'] }}"
-                            data-info="{{ office['info'] }}"
-                            data-minister-name="{{ office['minister_name'] }}"
-                            data-minister-image="{{ office['minister_image'] }}"
-                            data-minister-party="{{ office['minister_party'] }}"
-                            data-minister-role="{{ office['minister_role'] }}"
-                            data-minister-history="{{ office['ministers_history'] }}"
-                            style="background-image: url({{ office['minister_image'] }});"
-                          onclick="openOfficeModal(this)">
-                    </span>
+                    <div class="transform_div-main">
+                        <span class="main_bubble" id="{{ main_bubble_id }}" 
+                            data-tooltip="{{ office['name'] }}"
+                                data-name="{{ office['name'] }}"
+                                data-info="{{ office['info'] }}"
+                                data-minister-name="{{ office['minister_name'] }}"
+                                data-minister-image="{{ office['minister_image'] }}"
+                                data-minister-party="{{ office['minister_party'] }}"
+                                data-minister-role="{{ office['minister_role'] }}"
+                                data-minister-history="{{ office['ministers_history'] }}"
+                                data-office-branches="{{ office['branches'] }}"
+                                style="background-image: url({{ office['minister_image'] }});"
+                            onclick="openOfficeModal(this)">
+                        </span>
+                    </div>
                 </td>
             {% else %}
                 <td>
@@ -55,7 +58,7 @@
                             {% if cell.icon %}
                                 <img class="bubble_icon {{ cell.size }}_icon" src="{{ cell.icon }}" alt="{{ cell.name }}">
                             {% else %}
-                                <img class="bubble_icon {{ cell.size }}_icon" src="/static/images/offices/{% if cell.cell_type == 'kpi' %}kpi/white_bag.png{% else %}policy/grey_bag.png{% endif %}" alt="{{ cell.name }}">
+                                <img class="bubble_icon {{ cell.size }}_icon" src="/static/images/offices/{% if cell.cell_type == 'kpi' %}/white_bag.png{% else %}/grey_bag.png{% endif %}" alt="{{ cell.name }}">
                             {% endif %}
                         </span>
                     </div>
@@ -124,6 +127,30 @@
             delete charts["policies_chart"];
         }
     }
+    // Function to generate branches HTML
+    function generateBranches(branches) {
+        const branchesContainer = document.getElementById('office-branches');
+        branchesContainer.innerHTML = ''; // Clear existing branches
+        branches.forEach(branch => {
+            const branchDiv = document.createElement('div');
+            branchDiv.className = 'branch';
+            
+            const branchContentDiv = document.createElement('div');
+            branchContentDiv.className = 'branch-content';
+            
+            const branchP = document.createElement('p');
+            branchP.textContent = branch['name'];
+            
+            const branchImg = document.createElement('img');
+            branchImg.src = branch['image'];
+            branchImg.className = 'branch-img';
+            
+            branchContentDiv.appendChild(branchP);
+            branchContentDiv.appendChild(branchImg);
+            branchDiv.appendChild(branchContentDiv);
+            branchesContainer.appendChild(branchDiv);
+        });
+    }
     function openOfficeModal(mainBubbleCell) {
         // get the data from the main bubble
         const name = mainBubbleCell.getAttribute("data-name");
@@ -133,9 +160,14 @@
         const minister_party = mainBubbleCell.getAttribute("data-minister-party");
         const minister_role = mainBubbleCell.getAttribute("data-minister-role");
         const ministers_history = JSON.parse(mainBubbleCell.getAttribute("data-minister-history"));
+        const branches = JSON.parse(mainBubbleCell.getAttribute("data-office-branches"));
+        
+        // create branches list
+        // Call the function with the office branches
+        generateBranches(branches);
 
-         // get the labels and dates for the timeline
-         let first_graph_date = ministers_history[0]["start_date"];
+        // get the timeline data
+        let first_graph_date = ministers_history[0]["start_date"];
         let today = new Date().toISOString().split('T')[0]; // Get today's date in YYYY-MM-DD format
 
         // Ensure the last minister's end_date is set to today if not already
@@ -149,16 +181,15 @@
         for (let i = 0; i < ministers_history.length; i++) {
             dates[i] = ministers_history[i]["start_date"];
         }
-        let labels = dates;
-        console.log(labels);
-        
-        
+        let labels = dates;        
+
+        // call the function to create the timeline
         createTimeline(ministers_history, totalDuration, first_graph_date, labels, dates, 'office');
         
         // set the office info in the modal
         document.getElementById("modal-name-office").textContent = name;
         document.getElementById("modal-ministerName-office").textContent = minister_name;
-        
+        document.getElementById("office-info-p").textContent = info;
         // open the modal
         officeModal.showModal();
     }
@@ -195,7 +226,6 @@
         // call the function to create the timeline
         let first_graph_date = labels[0];
         
-        console.log(labels);
 
         // modals objects
         if (cellElement.classList.contains('kpi') || cellElement.classList.contains('alert_bubble')) {
@@ -247,7 +277,9 @@
             policiesModal.showModal();
         }
     }
-    
+    function getFontSize() {
+        return Math.max(window.innerHeight * 0.02, 12); // Example: 2% of viewport height, minimum 12px
+    }
     
     function updateChart(chartId, labels, values, chart, name,dates) {
          // Destroy existing chart if it exists
@@ -271,13 +303,27 @@
                 }]
             },
             options: {
-                responsive: true,
-                plugins: { legend: { display: false } },
-                scales: { x: { 
-                    grid: { 
-                        display: false 
-                    
-                    } } }
+        responsive: true,
+        plugins: { legend: { display: false } },
+        scales: { 
+            x: { 
+                grid: { 
+                    display: false 
+                },
+                ticks: {
+                    font: {
+                        size: 12 // Set the desired font size
+                    }
+                }
+            },
+            y: {
+                ticks: {
+                    font: {
+                        size: 12 // Set the desired font size
+                    }
+                }
+            }
+        }
             }
         });
     }
@@ -285,5 +331,5 @@
     function openExplainModal(){
         explainModal.showModal();
     }
-    
+
 </script>

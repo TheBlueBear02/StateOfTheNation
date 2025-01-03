@@ -81,3 +81,10 @@ class NonParliamentMember(db.Model):
     image = db.Column(db.String, nullable=True)
     twitter_id = db.Column(db.String, nullable=True)
     appointed_by = db.Column(db.String, nullable=True)
+
+class OfficeBranch(db.Model):
+    __tablename__ = 'office_branches'
+    id = db.Column(db.BigInteger, primary_key=True)
+    name = db.Column(db.String, nullable=False)
+    office_id = db.Column(db.BigInteger, db.ForeignKey('offices.id'), nullable=False)
+    image = db.Column(db.String, nullable=True)
