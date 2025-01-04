@@ -1,7 +1,7 @@
 
 <!-- OFFICE Modal -->
 <dialog office-modal class="office-modal" id="office-modal">
-    <span class="close_button" onclick="closeModal()"><img class="close_icon" style="width: 3vh;display: block;margin-left: 18%;margin-top: 20%;" src="/static/images/buttons/close-icon-white.png"></span>
+    <span class="close_button" onclick="closeOfficeModal()"><img class="close_icon" style="width: 3vh;display: block;margin-left: 18%;margin-top: 20%;" src="/static/images/buttons/close-icon-white.png"></span>
     <span class="share_button" onclick="copyElementAsPngToClipboard('office-modal')" style="padding: .6vw;"><p style="font-size: 2vw;">שתף</p><img class="close_icon" style="width: 3.5vh;display: block;margin-top: 2%;" src="/static/images/buttons/share-icon-white.png"></span>
 
     <div class="modal-content">
@@ -18,8 +18,7 @@
                     <p id="modal-ministerName-office" style="float: right; margin: 0;padding: 0; font-size: 3.4vh;line-height: 1;"></h3>
                 </th>
                 <th  style="width: 5%; margin:0;padding: 0; ">
-                    <span id="modal-bubble-kpi" style="margin: 0;height: 6vw;width: 6vw; background: radial-gradient(#6ba4fa, #447dd3); border-radius: 50%;float: left;margin-top: 1vh;">
-                        <img class="bubble_icon large_icon" id="modal-icon-office" src="/static/images/offices/kpi/white_bag.png">
+                    <span id="modal-img-office" style="">
                     </span>
                 </th>
             </tr>
@@ -28,8 +27,11 @@
         <div class="office-content">
             <table class="office-info-table">
                 <tr >
-                    <td style="width: 65%; height: 100%; border: 1px solid black;">
-                        
+                    <td style="width: 65%; height: 100%;">
+                        <div class="office-bubbles" id="office-bubbles">
+                            {{ render_modal_bubbles(offices[1], second_office_cells, "office-modal-position", "main_upper_right") }}
+
+                        </div>
                     </td>
                     <td style="width: 35%; height: 100%; vertical-align: top;">
                         <div class="office-info">

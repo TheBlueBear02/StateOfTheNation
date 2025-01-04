@@ -4,6 +4,59 @@
 
 <span class="explain_span" onclick="openExplainModal()"><img class="explain_icon" style="width: 2vw;display: block;margin: auto;margin-top: 15%;" src="/static/images/offices/question_mark.png"></span>
 
+<!-- office modal cells function -->
+{% macro render_modal_bubbles(office, office_cells, position, main_bubble_id, border_style) %}
+<table class="{{ position }}" style="{{ border_style }}">
+    {% for row in office_cells %}
+    <tr>
+        {% for cell in row %}
+            {% if cell.cell_type == "space" %}
+                <td></td>
+            {% elif cell.cell_type == "main_bubble" %}
+                <td></td>
+            {% else %}
+                <td>
+                    <div class="transform_div">
+                        <span class="{{ cell.size }} {% if cell.alert %} alert_bubble {% else %} {{ cell.cell_type }} {% endif %}"
+                                {% if cell.name !="" %}
+                                    data-tooltip="{{ cell.name }}"
+                                {% endif %}
+                                {% if cell.alert %}
+                                    data-alert="{{cell.alert}}"
+                                {% endif %}
+                                data-name="{{ cell.name }}"
+                                data-info="{{ cell.info }}"
+                                data-source="{{ cell.source }}"
+                                data-icon="{{ cell.icon }}"
+                                data-chart="{{ cell.chart_type }}"
+                                data-labels="{{ cell.labels }}"
+                                data-values="{{ cell.values | tojson }}"
+                                data-position="{{ position }}"
+
+                                office-name="{{ office['name'] }}"
+                                office-minister="{{ office['minister_name'] }}"
+                                office-minister-image="{{ office['minister_image'] }}"
+                                office-minister-party="{{ office['minister_party'] }}"
+                                office-minister-role="{{ office['minister_role'] }}"
+                                office-minister-history="{{ office['ministers_history'] }}"
+
+                                onclick="openModal(this)">
+                            {% if cell.icon %}
+                                <img class="bubble_icon {{ cell.size }}_icon" src="{{ cell.icon }}" alt="{{ cell.name }}">
+                            {% else %}
+                                <img class="bubble_icon {{ cell.size }}_icon" src="/static/images/offices/{% if cell.cell_type == 'kpi' %}/white_bag.png{% else %}/grey_bag.png{% endif %}" alt="{{ cell.name }}">
+                            {% endif %}
+                        </span>
+                    </div>
+                </td>
+            {% endif %}
+        {% endfor %}
+    </tr>
+    {% endfor %}
+</table>
+{% endmacro %}
+
+<!-- main table cells function -->
 {% macro render_office(office, office_cells, position, main_bubble_id, border_style) %}
 <table class="{{ position }}" style="{{ border_style }}">
     {% for row in office_cells %}
@@ -115,7 +168,6 @@
         kpiModal.close();
         policiesModal.close();
         explainModal.close();
-        officeModal.close();
 
         // Destroy all active charts to clear data
         if (charts["kpi_chart"]) {
@@ -126,6 +178,10 @@
             charts["policies_chart"].destroy();
             delete charts["policies_chart"];
         }
+    }
+    // Function to close the office modal
+    function closeOfficeModal() {
+        officeModal.close();
     }
     // Function to generate branches HTML
     function generateBranches(branches) {
@@ -151,6 +207,12 @@
             branchesContainer.appendChild(branchDiv);
         });
     }
+    function generateOfficeBubbles(position){
+        const officeBubbles = document.getElementById('office-bubbles');
+        officeBubbles.innerHTML = ''; // Clear existing bubbles
+        const officeBubble = document.createElement('div');
+
+    }
     function openOfficeModal(mainBubbleCell) {
         // get the data from the main bubble
         const name = mainBubbleCell.getAttribute("data-name");
@@ -161,11 +223,19 @@
         const minister_role = mainBubbleCell.getAttribute("data-minister-role");
         const ministers_history = JSON.parse(mainBubbleCell.getAttribute("data-minister-history"));
         const branches = JSON.parse(mainBubbleCell.getAttribute("data-office-branches"));
+        const position = mainBubbleCell.getAttribute("data-position");
+
+   
+        // Set the background image
+        const image = document.getElementById("modal-img-office");
+        image.style.backgroundImage = `url(${minister_image})`;
+        image.style.backgroundSize = 'cover'; // Ensure the image covers the span
+        image.style.backgroundPosition = 'center'; // Center the image
         
-        // create branches list
         // Call the function with the office branches
         generateBranches(branches);
 
+        
         // get the timeline data
         let first_graph_date = ministers_history[0]["start_date"];
         let today = new Date().toISOString().split('T')[0]; // Get today's date in YYYY-MM-DD format

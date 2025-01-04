@@ -277,7 +277,12 @@ td {
 .down-left{
     float: right;
 }
-
+.office-modal-position{
+    float: none;
+    margin: 0 auto;
+    height: 50vh;
+    width: 60vh;
+}
 /* modals */
 .kpi-modal {
     width: 94%;
@@ -446,6 +451,11 @@ p {
 .policies-modal::-webkit-scrollbar{
     width: 0;
     height: 0;
+}
+/* Define the scrollbar style */
+.office-modal::-webkit-scrollbar {
+    width: 0vh;
+    height: 0vh;
 }
 
 /* icons */
@@ -626,7 +636,7 @@ p {
 
 .office-content{
     width: 100%;
-    height: 70vh;
+    height: 72vh;
 }
 .office-info-table{
     width: 100%;
@@ -642,23 +652,23 @@ p {
     padding: 0;
     direction: rtl;
     margin: 0;
-    font-size: 2.5vh;
+    font-size: 2.7vh;
 }
 .office-branches{
     padding-top: 2vh;
-    height: 45vh;
+    height: 50vh;
 }
 .office-branches p{
     font-size: 3vh;
     margin-bottom: 3vh;
 }
 .office-branches img{
-    width: 6vh;
-    height: 6vh;
+    width: 7vh;
+    height: 7vh;
     margin-bottom: 3vh;
     margin-right: 0vh;
     border-radius: 50%;
-    box-shadow: 0px 3px 3px rgb(189, 189, 189);
+    box-shadow: 0px .5vh .5vh rgb(189, 189, 189);
 }
 .branch-content {
     display: flex;
@@ -673,4 +683,16 @@ p {
 }
 .branch-img {
     height: auto;
+}
+
+
+#modal-img-office {
+    margin: 0;
+    height: 6vw;
+    width: 6vw; 
+    background: radial-gradient(#6ba4fa, #447dd3); 
+    border-radius: 50%;
+    float: left;
+    margin-top: 1.5vh;
+    border: .3vh solid #4890FD;
 }
