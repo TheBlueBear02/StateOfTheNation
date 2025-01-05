@@ -52,4 +52,4 @@ def index():
             'image': tweet.image
         }
         tweets_list.append(tweet_data)
-    return render_template('index.html', today_date=get_date(), hebrew_date=get_hebrew_date(), tweets=list(reversed(tweets_list)))
+    return render_template('index.html', today_date=get_date(), hebrew_date=get_hebrew_date(), tweets=list(reversed(tweets_list)), all_kms=all_kms)
