@@ -65,7 +65,7 @@ height: 0;
 
 }
 .badge {
-    width: 1.6vw;
+    width: auto;
     height: 1vw;
     background-color: #4890FD;
     text-align: center;
@@ -75,6 +75,11 @@ height: 0;
     margin-left: 60%;
     padding: .3vw;
     color: white;
-    font-size: .8vw;
     font-weight: bold;
+    justify-content: center; 
+    align-items: center; 
+  }
+  .badge p{
+    margin: 0, auto;
+    font-size: 1vw;
   }

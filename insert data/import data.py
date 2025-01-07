@@ -1,7 +1,7 @@
 import csv
 import sys
-#sys.path.append('E:\\Development Projects\\SN')
-sys.path.append('D:\\Projects\\stateofthenation')
+sys.path.append('E:\\Development Projects\\SN')
+#sys.path.append('D:\\Projects\\stateofthenation')
 
 import json
 from app import db, create_app
@@ -11,7 +11,7 @@ app = create_app()
 
 # add data from csv file to index_data table
 def save_csv_to_db():
-    with open("D:\\Projects\\SN - DATA\\המשרד לביטחון לאומי - מדיניות - סה_כ כלי נשק אישיים.csv", newline='',encoding='utf-8') as csvfile:
+    with open("E:\\Development Projects\\SN - DATA\\המשרד לביטחון לאומי\\המשרד לביטחון לאומי - מדדים - כוח אדם במשטרה.csv", newline='',encoding='utf-8') as csvfile:
         csv_reader = csv.DictReader(csvfile)
         # Query the max id and increment
         max_id = db.session.query(db.func.max(IndexData.id)).scalar()

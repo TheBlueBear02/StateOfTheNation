@@ -12,18 +12,36 @@
         </div>
        
         <div class="tweets_div">
-            {% if tweets %}
-                {% for tweet in tweets %}
-                    {% if tweet['is_coalition'] == False %}
-                        <span class="img_span_close" id="oposition_img" style="background-image: url({{ tweet['minister_image'] }})"><span class="badge">חדש</span></span>
-                    {% else %}
-                        <span class="img_span_close" id="coalition_img" style="background-image: url({{ tweet['minister_image'] }})"></span>
-                    {% endif %}
+            {% if km_data %}
+                {% for km in km_data %}
+                        <span class="img_span_close" 
+                            {% if km['is_coalition'] == False %} id="oposition_img" {% else %} id="coalition_img" {% endif %} 
+                            style="background-image: url({{ km['image'] }})"
+                            onclick="getKmTweets('{{ km['twitter_id'] }}')">
+                            <span class="badge"><p>{{ km['tweet_count']}}</p></span>
+                        </span>
                     {% endfor %}
             {% else %}
-                <p>No tweets data available in knesschat-close.html.</p>
+                <p>No tweets data available</p>
             {% endif %}
         </div>
     </div>
-    
 </body>
+<script>
+    function getKmTweets(twitter_id) {
+    fetch('/get_km_tweets', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ twitter_id: twitter_id })
+    })
+    .then(response => response.json())
+    .then(data => {
+        displayTweets(data, 'chat_div');
+    })
+    .catch(error => {
+        console.error('Error fetching tweets:', error);
+    });
+}
+</script>
