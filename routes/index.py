@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request
+from flask import Blueprint, render_template, request, jsonify
 from datetime import datetime
 from pyluach import dates
 from models import Tweet, ParliamentMember, db
@@ -36,63 +36,53 @@ def get_knesset_members():
     km_list = sorted(km_list, key=lambda x: x['tweet_count'], reverse=True)
     return km_list
 
-# This function is used to get the tweets of a specific knesset member
-@index_bp.route('/get_km_tweets', methods=['POST'])
-def get_km_tweets():
-    twitter_id = request.json.get('twitter_id')
-    km_tweets = db.session.query(Tweet).filter(Tweet.twitter_id == twitter_id)
-    km_data = db.session.query(ParliamentMember).filter(ParliamentMember.twitter_id == twitter_id).first()
-    km_tweets_list = []
-    for tweet in km_tweets:
+
+def get_tweets_data(tweets):
+    tweets_list = []
+    for tweet in tweets:
+        km_data = db.session.query(ParliamentMember).filter(ParliamentMember.twitter_id == tweet.twitter_id).first()
+        if km_data is None:
+            # Skip this tweet if no matching ParliamentMember is found
+            continue
         tweet_data = {
             'id': tweet.id,
             'text': tweet.text,
             'date': tweet.date,
             'time': tweet.time,
             'topic': tweet.topic,
-            'image': tweet.image,
             'name': km_data.name,
             'party': km_data.party,
             'is_coalition': km_data.is_coalition,
             'minister_image': km_data.image,
             'additional_role': km_data.additional_role,
-        }
-        km_tweets_list.append(tweet_data)
-    return list(reversed(km_tweets_list))
-
-@index_bp.route('/get_all_tweets', methods=['POST'])
-def get_all_tweets():
-    all_tweets = db.session.query(Tweet).all()
-    all_kms = db.session.query(ParliamentMember).all()
-    tweets_list = []
-    for tweet in all_tweets:
-        for member in all_kms:
-            try:
-                if int(member.twitter_id) == int(tweet.twitter_id):
-                    name = member.name
-                    party = member.party
-                    is_coalition = member.is_coalition
-                    image = member.image
-                    additional_role = member.additional_role
-                    break
-            except:
-                #print("knesset member not found")
-                print()
-        tweet_data = {
-            'id':tweet.id,
-            'text': tweet.text,
-            'date': tweet.date,
-            'time': tweet.time,
-            'topic': tweet.topic,  
-            'name': name,
-            'party': party,
-            'is_coalition': is_coalition,
-            'minister_image': image,
-            'additional_role': additional_role,
             'image': tweet.image
         }
         tweets_list.append(tweet_data)
     return list(reversed(tweets_list))
+# This function is used to get the tweets of a specific knesset member
+@index_bp.route('/get_km_tweets', methods=['POST'])
+def get_km_tweets():
+    twitter_id = request.json.get('twitter_id')
+    km_tweets = db.session.query(Tweet).filter(Tweet.twitter_id == twitter_id)
+    
+    return get_tweets_data(km_tweets)
+
+@index_bp.route('/get_all_tweets', methods=['POST'])
+def get_all_tweets():
+    all_tweets = db.session.query(Tweet).all()
+
+    return get_tweets_data(all_tweets)
+
+@index_bp.route('/get_tweets_by_topic', methods=['POST'])
+def get_filtered_tweets():
+    topic = request.json.get('topic')
+    if not topic:
+        return jsonify({'error': 'Missing topic'}), 400
+
+    all_tweets = db.session.query(Tweet).filter(Tweet.topic == topic)
+    
+    return get_tweets_data(all_tweets)
+
 @index_bp.route('/')
 def index():
     # Knesschat backend
