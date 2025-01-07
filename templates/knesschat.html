@@ -15,10 +15,10 @@
         </button>
     </div>
     <div id="buttons_div">
-        <button class="filter_button" type="button">מלחמה</button>
-        <button class="filter_button" type="button">חוק הגיוס</button>
-        <button class="filter_button" type="button">חטופים</button>
-        <button class="filter_button" id="all_button" type="button">כל הציוצים</button>
+        <button class="filter_button" onclick="filterTweets(this, 'מלחמה')" type="button">מלחמה</button>
+        <button class="filter_button" onclick="filterTweets(this, 'חוק הגיוס')" type="button">חוק הגיוס</button>
+        <button class="filter_button" onclick="filterTweets(this, 'חטופים')" type="button">חטופים</button>
+        <button class="filter_button" id="all_button" onclick="filterTweets(this, 'all')" type="button">כל הציוצים</button>
     </div>
         <div id="chat_div">
  
@@ -31,7 +31,22 @@
 <script>
     const myDiv = document.getElementById("chat_div");
     const scrollTopButton = document.getElementById("scrollTopButton");
+    // Function to filter tweets based on the topic
+    function filterTweets(button, topic) {
+        // Remove the 'active' class from all buttons
+        const buttons = document.querySelectorAll('.filter_button');
+        buttons.forEach(btn => btn.classList.remove('active'));
 
+        // Add the 'active' class to the clicked button
+        button.classList.add('active');
+
+        // Fetch and display tweets based on the topic
+        if (topic === 'all') {
+            getAllTweets();
+        } else {
+            get_tweets_by_topic(topic);
+        }
+    }
     // Show/hide button based on scroll position
     myDiv.addEventListener("scroll", () => {
         if (myDiv.scrollTop > 0) {
@@ -69,6 +84,30 @@
         .catch(error => {
             console.error('Error fetching tweets:', error);
         });
+        scrollToTop();
+    }
+
+    function get_tweets_by_topic(topic) {
+        fetch('/get_tweets_by_topic', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ topic: topic })
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(data => {
+            displayTweets(data, 'chat_div');
+        })
+        .catch(error => {
+            console.error('Error fetching tweets:', error);
+        });
+        scrollToTop();
     }
 
      // Call getAllTweets on DOMContentLoaded

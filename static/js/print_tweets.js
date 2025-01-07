@@ -11,7 +11,7 @@ function displayTweets(tweets, divId) {
                             <table style="width: 100%; margin: 0; padding: 0;direction: ${tweet.is_coalition ? 'ltr' : 'rtl'}">
                                 <tr>
                                     <th style="width: 20%; padding: 0; margin: 0;">
-                                        <div style="text-align: center; box-shadow: 0 .1vw .3vw rgb(0 0 0 / 0.2); border-radius: 25px; display:flex; margin:0px; background-color:#C3FBC2; width:3.5vw;">
+                                        <div style="text-align: center; box-shadow: 0 .1vw .3vw rgb(0 0 0 / 0.2); border-radius: 25px; display:flex; margin:0px; background-color:#C3FBC2; width:4vw;">
                                             <p style="font-size: .9vw; font-weight: 700; margin: auto; padding:0px;">${tweet.topic}</p>
                                         </div>
                                     </th>
@@ -35,10 +35,10 @@ function displayTweets(tweets, divId) {
                     <tr>
                         <span class="tweet_image" style="background-image: url(${tweet.image})"></span>
                     </tr>` : ''}
-                    <tr style="float: ${tweet.is_coalition ? 'right' : 'left'};display: block;">
+                    <tr style="display: block;">
                         <td>
                             <img style="margin-bottom:5px;border-radius:25px; width:100%;" src="" />
-                            <p style="margin: auto; color: black;  font-size: .8vw; margin-right:.2vw; padding:0px;">${tweet.time} | ${tweet.date}</p>
+                            <p style="margin: ${tweet.is_coalition ? '0' : 'auto'}; color: black;  font-size: .8vw; margin-right:.2vw; padding:0px;">${tweet.is_coalition ? tweet.time : tweet.date} | ${tweet.is_coalition ? tweet.date : tweet.time}</p>
                         </td>
                     </tr>
                 </table>

@@ -59,7 +59,7 @@ body{
 #buttons_div{
     width: 100%;
     height: 5vh;
-    margin-top: 2.5vh;
+    margin-top: 3vh;
     margin-left: .8vh;
     margin-bottom: 0vh;
 }
@@ -88,11 +88,16 @@ body{
     background-color: #3283fd;
 
 }
+#all_button:hover, #all_button.active {
+    background-color: #3283fd; /* Replace with your hover color */
+    }
 .filter_button:hover{
     background-color: rgb(243, 243, 243);
 
 }
-
+.filter_button:hover, .filter_button.active {
+    background-color: rgb(243, 243, 243); /* Replace with your hover color */
+    }
 
 #chat_div{
     width: 96%;
