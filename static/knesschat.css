@@ -108,6 +108,9 @@ body{
     font-family: 'Assistant', sans-serif;
 
 }
+#chat_div * {
+    font-family: 'Assistant', sans-serif;
+}
 /* Define the scrollbar style */
 #chat_div::-webkit-scrollbar {
 width: .6vh;
@@ -136,6 +139,7 @@ background-color: #999999;
     display: flex; 
     flex-direction: column;
     align-items: flex-start;
+
     margin-top: 2vh;
     box-shadow: .1vh .2vh .5vh rgb(0 0 0 / 0.5);
     max-width: 80%; 
