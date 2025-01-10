@@ -23,7 +23,9 @@ function displayTweets(tweets, divId) {
                             <i style="float: ${tweet.is_coalition ? 'right' : 'left'}; margin:0px; padding:0px; font-size: 1vw; padding-left: .4vh;padding-right:.4vw">${tweet.additional_role ? tweet.additional_role + ' | ': ''}${tweet.party} </i>
                         </th>
                         <th style="float: ${tweet.is_coalition ? 'right' : 'left'}; margin:0; padding: 0;">
-                            <span class="img_span" style="background-image: url(${tweet.minister_image})"></span>
+                            <span class="img_span" style="z-index: 1; background-image: url('static/images/KMs/default-km.svg');">    
+                                <span class="img_span" style="background-image: url(${tweet.minister_image})"></span>
+                            </span>
                         </th>
                     </tr>
                     <tr>
