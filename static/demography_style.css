@@ -90,7 +90,7 @@ background-color: #4d7fff;
 .prev, .next {
     cursor: pointer;
     position: absolute;
-    top: 40%;
+    top: 45%;
     width: auto;
     margin-top: -3vw;
     padding: 1.6vw;
