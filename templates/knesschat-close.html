@@ -14,12 +14,14 @@
         <div class="tweets_div">
             {% if km_data %}
                 {% for km in km_data %}
+                    <span class="defualt_img" style="z-index: 1; background-image: url('static\\images\\KMs\\default-km.svg');">
                         <span class="img_span_close" 
                             {% if km['is_coalition'] == False %} id="oposition_img" {% else %} id="coalition_img" {% endif %} 
-                            style="background-image: url({{ km['image'] }})"
+                            style="z-index: 10; background-image: url({{ km['image'] }})"
                             onclick="getKmTweets('{{ km['twitter_id'] }}')">
                             <span class="badge"><p>{{ km['tweet_count']}}</p></span>
                         </span>
+                    </span>
                     {% endfor %}
             {% else %}
                 <p>No tweets data available</p>

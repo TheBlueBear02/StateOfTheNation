@@ -52,9 +52,19 @@ height: 0;
     border: 1px solid grey;
     margin-bottom: 1vh;
 }
-.img_span_close:hover{
-    transform: scale(1.1);
 
+.defualt_img{
+    background-size: cover;
+    padding:0;
+    margin:0;
+    width: 4.2vw; 
+    height: 4.2vw; 
+    border-radius: 50%;
+    display: block;
+    margin-bottom: 1vh;
+}
+.defualt_img:hover{
+    transform: scale(1.1);
 }
 #coalition_img{
     border: .3vh solid #a3d3ff;
