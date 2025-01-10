@@ -58,7 +58,7 @@ def get_tweets_data(tweets):
             'image': tweet.image
         }
         tweets_list.append(tweet_data)
-    return list(reversed(tweets_list))
+    return jsonify(list(reversed(tweets_list)))
 # This function is used to get the tweets of a specific knesset member
 @index_bp.route('/get_km_tweets', methods=['POST'])
 def get_km_tweets():
