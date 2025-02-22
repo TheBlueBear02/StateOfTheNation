@@ -144,10 +144,8 @@
 {% include 'offices-screen/office-modal.html' %}
 
 <!-- Info Modal -->
-<dialog explain-modal class="explain-modal">
-    <button class="close_button" onclick="closeModal()" style="display: block;" id="close_button" >X</button>
-    <img style="width: 100%; height: 90vh;" src="/static/images/offices/explain.png">
-</dialog>
+{% include 'offices-screen/info-modal.html' %}
+
 
 
 
@@ -159,7 +157,7 @@
 <script>
     const kpiModal = document.querySelector("[kpi-modal]");
     const policiesModal = document.querySelector("[policies-modal]");
-    const explainModal = document.querySelector("[explain-modal]");
+    const infoModal = document.querySelector("[info-modal]");
     const officeModal = document.querySelector("[office-modal]");
     // Store charts in a global object to manage them easily
     const charts = {};
@@ -167,7 +165,7 @@
     function closeModal() {
         kpiModal.close();
         policiesModal.close();
-        explainModal.close();
+        infoModal.close();
 
         // Destroy all active charts to clear data
         if (charts["kpi_chart"]) {
@@ -399,7 +397,7 @@
     }
 
     function openExplainModal(){
-        explainModal.showModal();
+        infoModal.showModal();
     }
 
 </script>

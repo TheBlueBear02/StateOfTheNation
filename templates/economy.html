@@ -11,73 +11,99 @@
                 <th><span id="12" class="nav-button" onclick="change_graph(2,12)">הכנסות</span> </th>
             </tr>
         </table>
-
+        <!-- expenses -->
         <div class="chart-div">
            
             <div id="0" class="graph hidden">
-                <div id="center-text" style="position: absolute; top: 50%; left: 60%; transform: translate(-50%, -50%); font-size: 1rem; font-weight: bold;">
-
-                </div>
-                <canvas id="expenses-graph" width="100%" style="max-height: 85vh; margin: 0; padding: 0;"></canvas>
-                <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>   
-                <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>    
-                <script>                    
-                    Chart.register(ChartDataLabels);
-                </script>                    
-                <script type="text/javascript"> // Chart
-
-                   var ctx = document.getElementById('expenses-graph').getContext('2d');
-
-                   var myChart = new Chart(ctx, {
-                        type: 'doughnut',
-                        data: {
-                            labels: {{ expenses_lables | safe }},
-                            datasets: [{
-                                label: 'Example Dataset',
-                                data: {{ expenses_values | safe }},
-                                fill: false, 
-                                borderColor: 'white',
-                                borderWidth: 1,
-                                backgroundColor: [
-                                    'rgb(255, 99, 132)',  // Red
-                                    'rgb(54, 162, 235)',  // Blue
-                                    'rgb(255, 206, 86)',  // Yellow
-                                    'rgb(75, 192, 192)',  // Green
-                                    'rgb(153, 102, 255)', // Purple
-                                    'rgb(255, 159, 64)',  // Orange
-                                    'rgb(201, 203, 207)',  // Grey
-                                    'rgb(0, 128, 128)'
-                                ],
-                            }]
-                        },
-                        options: {
-                            responsive: true,
-                            plugins: {
-                                legend: {
-                                    display: true,
-                                    position: 'left',
+                <div class="grid-container">
+                    <div class="item item1 excluded">
+                        <canvas id="expenses-graph" class="graph" width="100%"></canvas>
+                        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>                           
+                        <script type="text/javascript"> // Chart
+        
+                           var ctx = document.getElementById('expenses-graph').getContext('2d');
+                           var myChart = new Chart(ctx, {
+                                type: 'doughnut',
+                                data: {
+                                    labels: {{ expenses_lables | safe }},
+                                    datasets: [{
+                                        label: 'Example Dataset',
+                                        data: {{ expenses_values | safe }},
+                                        fill: false, 
+                                        borderColor: 'white',
+                                        borderWidth: 1,
+                                        backgroundColor: [
+                                        '#ff1a1a', // Vibrant Soft Red  
+                                        '#ff3333', // Deep Soft Red  
+                                        '#ff4d4d', // Rich Soft Red  
+                                        '#ff6666', // Medium Soft Red  
+                                        '#ff8080', // Mild Soft Red  
+                                        '#ff9999', // Light Soft Red  
+                                        '#ffc2c2', // Soft Pastel Red  
+                                        '#ffebeb',  // Very Light Red 
+                                        'rgb(0, 128, 128)'
+                                        ],
+                                    }]
                                 },
-                                title: {
-                                    display: true,
-                                    text: 'הוצאות הממשלה ב2023 (מילארדים)'
-                                },
-                                datalabels: {
-                                    color: 'white', // Label color
-                                    formatter: (value, context) => {
-                                        let label = context.chart.data.labels[context.dataIndex];
-                                        return `${value}`;  // Display label and value
-                                    },
-                                    font: {
-                                        size: 22,  // Font size for labels
-                                        weight: 'bold'
-                                    },
-                                    align: 'center',  // Align labels toward the end of the slice
-                                    anchor: 'center'  // Anchor the labels to the chart slices
+                                options: {
+                                    responsive: true,
+                                    plugins: {
+                                        legend: {
+                                            display: false,
+                                            position: 'left',
+                                        },
+                                        title: {
+                                            display: true,
+                                            text: 'פילוג הוצאות המדינה',
+                                        },
+                                        datalabels: {
+                                            color: 'white', // Label color
+                                            formatter: (value, context) => {
+                                                let label = context.chart.data.labels[context.dataIndex];
+                                                return `${value}`;  // Display label and value
+                                            },
+                                            font: {
+                                                size: 12,  // Font size for labels
+                                                weight: 'bold'
+                                            },
+                                            align: 'center',  // Align labels toward the end of the slice
+                                            anchor: 'center'  // Anchor the labels to the chart slices
+                                        }
+                                    }
                                 }
-                            }
-                        }
-                    });
-                </script>
+                            });
+                        </script>
+                </div>
+                    <div class="item item2">
+                        <p class="title">הוצאות המדינה</p>
+                        <div class="center">
+                            <p class="main-num">
+                                <span style="font-weight: bold;color:rgb(0, 0, 0);">404.4</span>
+                                <span style="font-size: 4vh;"> מיליארד ש"ח</span>
+                               </p>
+                            <p class="change">
+                                <span style="font-weight: bold;color:rgb(255, 0, 0);">8%-</span>
+                                משנה שעברה
+                            </p>
+                        </div>
+                    </div>
+                    <div class="item item3">
+                        <p class="title">ייבוא מחו"ל</p>
+                        <div class="center">
+                            <p class="main-num">
+                                <span style="font-weight: bold;color:rgb(0, 0, 0);">404.4</span>
+                                <span style="font-size: 4vh;"> מיליארד ש"ח</span>
+                               </p>
+                            <p class="change">
+                                <span style="font-weight: bold;color:rgb(255, 0, 0);">8%-</span>
+                                משנה שעברה
+                            </p>
+                        </div>
+                    </div>
+                    <div class="item item4 excluded">
+                        
+                    </div>
+                </div>
             </div>
             <div id="1" class="graph">
                 <canvas id="index-graph" width="600" height="350"  style="margin: 0; padding: 0;"></canvas>
@@ -163,6 +189,7 @@
                     }); 
                 </script>
             </div>
+            <!-- income -->
             <div id="2" class="graph hidden">
                 <div class="grid-container">
                     <div class="item item1 excluded">
@@ -223,11 +250,11 @@
                         </script>
                 </div>
                     <div class="item item2">
-                        <p class="title">סה"כ הכנסות</p>
+                        <p class="title">הכנסות המדינה</p>
                         <div class="center">
                             <p class="main-num">
                                 <span style="font-weight: bold;color:rgb(0, 0, 0);">404.4</span>
-                                <span style="font-size: 5vh;"> מיליארד ש"ח</span>
+                                <span style="font-size: 4vh;"> מיליארד ש"ח</span>
                                </p>
                             <p class="change">
                                 <span style="font-weight: bold;color:rgb(255, 0, 0);">8%-</span>
@@ -235,7 +262,19 @@
                             </p>
                         </div>
                     </div>
-                    <div class="item item3">Area 3</div>
+                    <div class="item item3">
+                        <p class="title">ייצוא לחו"ל</p>
+                        <div class="center">
+                            <p class="main-num">
+                                <span style="font-weight: bold;color:rgb(0, 0, 0);">404.4</span>
+                                <span style="font-size: 4vh;"> מיליארד ש"ח</span>
+                               </p>
+                            <p class="change">
+                                <span style="font-weight: bold;color:rgb(255, 0, 0);">8%-</span>
+                                משנה שעברה
+                            </p>
+                        </div>
+                    </div>
                     <div class="item item4 excluded">
                         
                     </div>

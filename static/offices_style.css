@@ -431,15 +431,20 @@ p {
     border-image-source: linear-gradient(#ffffff, #858585);
 }
 
-.explain-modal {
-    width: 100%;
-    height: 90%;
+.info-modal {
+    width: 94%;
+    height: 100%;
     border: .3vh solid #4890FD;
-    border-radius: 25px;
+    border-radius: 3vh;
+    padding: 3vh;
+    margin: 0;
+    padding-top: 0;
+    margin-left: 1%;
+    background-image: linear-gradient(#fff, #f2f2f2);
     margin-top: 1vh;
 }
 
-.explain-modal::backdrop {
+.info-modal::backdrop {
     background-image: linear-gradient(#fff, #f2f2f2);
 }
 
