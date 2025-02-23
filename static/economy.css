@@ -42,6 +42,7 @@
     padding-right: 10vw;
     cursor: pointer;
     border: .6vh solid #4890FD;
+
 }
 .chossen-button:hover{
     background-color: rgb(255, 255, 255);
