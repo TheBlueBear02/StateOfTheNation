@@ -717,7 +717,7 @@ background: #c5c5c5;
     z-index: 1000;
 }
 .news-feed{
-    z-index: -10;
+    margin-top: 5vh;
 }
 .news-feed:focus{
     outline: none;
