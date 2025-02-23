@@ -180,6 +180,7 @@
     // Function to close the office modal
     function closeOfficeModal() {
         officeModal.close();
+
     }
     // Function to generate branches HTML
     function generateBranches(branches) {
@@ -211,6 +212,11 @@
         const officeBubble = document.createElement('div');
 
     }
+
+    function scrollToTop(modal) {
+        modal.scrollTop = 0;
+    }
+
     function openOfficeModal(mainBubbleCell) {
         // get the data from the main bubble
         const name = mainBubbleCell.getAttribute("data-name");
@@ -258,9 +264,14 @@
         document.getElementById("modal-name-office").textContent = name;
         document.getElementById("modal-ministerName-office").textContent = minister_name;
         document.getElementById("office-info-p").textContent = info;
+        
         // open the modal
         officeModal.showModal();
+
+        // Scroll to the top of the modal
+        scrollToTop(officeModal);
     }
+    
     function openModal(cellElement) {
         // index info
         const name = cellElement.getAttribute("data-name");
