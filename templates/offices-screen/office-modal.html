@@ -1,9 +1,10 @@
-
 <!-- OFFICE Modal -->
 <dialog office-modal class="office-modal" id="office-modal">
-    <span class="close_button" onclick="closeOfficeModal()"><img class="close_icon" style="width: 3vh;display: block;margin-left: 18%;margin-top: 20%;" src="/static/images/buttons/close-icon-white.png"></span>
-    <span class="share_button" onclick="copyElementAsPngToClipboard('office-modal')" style="padding: .6vw;"><p style="font-size: 2vw;">שתף</p><img class="close_icon" style="width: 3.5vh;display: block;margin-top: 2%;" src="/static/images/buttons/share-icon-white.png"></span>
-
+    <div class="btns-div">
+        <span class="close_button" onclick="closeOfficeModal()"><img class="close_icon" style="width: 3vh;display: block;margin-left: 18%;margin-top: 20%;" src="/static/images/buttons/close-icon-white.png"></span>
+        <span class="share_button" onclick="copyElementAsPngToClipboard('office-modal')" style="padding: .6vw;"><p style="font-size: 2vw;">שתף</p><img class="close_icon" style="width: 3.5vh;display: block;margin-top: 2%;" src="/static/images/buttons/share-icon-white.png"></span>    
+    </div>
+   
     <div class="modal-content">
         <!-- header table -->
         <table class="modal-info-table">
@@ -50,6 +51,11 @@
             <p id="popupMessage">!הגרף הועתק בהצלחה</p>
         </div>
         <!-- timeline -->
-        <div id="timeline-office" class="timeline office"></div>        
+        <div id="timeline-office" class="timeline office"></div>    
+        
     </div>
+    <div class="news-feed">
+        <rssapp-wall id="CbqVitvqTAX59Bdv"></rssapp-wall><script src="https://widget.rss.app/v1/wall.js" type="text/javascript" async></script>
+    </div>
+
 </dialog>

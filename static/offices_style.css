@@ -442,10 +442,12 @@ p {
     margin-left: 1%;
     background-image: linear-gradient(#fff, #f2f2f2);
     margin-top: 1vh;
+    overflow: hidden;
 }
 
 .info-modal::backdrop {
     background-image: linear-gradient(#fff, #f2f2f2);
+
 }
 
 /* Define the scrollbar style */
@@ -457,12 +459,19 @@ p {
     width: 0;
     height: 0;
 }
-/* Define the scrollbar style */
 .office-modal::-webkit-scrollbar {
-    width: 0vh;
-    height: 0vh;
+    width: 1vh;
+    height: .2vh;
 }
 
+/* Define the thumb style */
+.office-modal::-webkit-scrollbar-thumb {
+background: rgb(207, 207, 207);
+border-radius: 10px;
+}
+.office-modal::-webkit-scrollbar-thumb:hover {
+background: #c5c5c5;
+}
 /* icons */
 .bubble_icon {
     width: 3vw;
@@ -702,4 +711,14 @@ p {
     float: left;
     margin-top: 1.5vh;
     border: .3vh solid #4890FD;
+}
+.btns-div{
+    position: relative; /* Ensure the element is positioned */
+    z-index: 1000;
+}
+.news-feed{
+    z-index: -10;
+}
+.news-feed:focus{
+    outline: none;
 }
