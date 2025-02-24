@@ -1,0 +1,52 @@
+<!-- office modal cells function -->
+{% macro render_modal_bubbles(office, office_cells, position, main_bubble_id, border_style) %}
+<table class="{{ position }}" style="{{ border_style }}">
+    {% for row in office_cells %}
+    <tr>
+        {% for cell in row %}
+            {% if cell.cell_type == "space" %}
+                <td></td>
+            {% elif cell.cell_type == "main_bubble" %}
+                <td></td>
+            {% else %}
+                <td>
+                    <div class="transform_div">
+                        <span class="{{ cell.size }} {% if cell.alert %} alert_bubble {% else %} {{ cell.cell_type }} {% endif %}"
+                                {% if cell.name !="" %}
+                                    data-tooltip="{{ cell.name }}"
+                                {% endif %}
+                                {% if cell.alert %}
+                                    data-alert="{{cell.alert}}"
+                                {% endif %}
+                                data-name="{{ cell.name }}"
+                                data-info="{{ cell.info }}"
+                                data-source="{{ cell.source }}"
+                                data-icon="{{ cell.icon }}"
+                                data-chart="{{ cell.chart_type }}"
+                                data-labels="{{ cell.labels }}"
+                                data-values="{{ cell.values | tojson }}"
+                                data-position="{{ position }}"
+
+                                office-name="{{ office['name'] }}"
+                                office-minister="{{ office['minister_name'] }}"
+                                office-minister-image="{{ office['minister_image'] }}"
+                                office-minister-party="{{ office['minister_party'] }}"
+                                office-minister-role="{{ office['minister_role'] }}"
+                                office-minister-history="{{ office['ministers_history'] }}"
+
+                                onclick="openModal(this)">
+                            {% if cell.icon %}
+                                <img class="bubble_icon {{ cell.size }}_icon" src="{{ cell.icon }}" alt="{{ cell.name }}">
+                            {% else %}
+                                <img class="bubble_icon {{ cell.size }}_icon" src="/static/images/offices/{% if cell.cell_type == 'kpi' %}/white_bag.png{% else %}/grey_bag.png{% endif %}" alt="{{ cell.name }}">
+                            {% endif %}
+                        </span>
+                    </div>
+                </td>
+            {% endif %}
+        {% endfor %}
+    </tr>
+    {% endfor %}
+</table>
+{% endmacro %}
+{{ render_modal_bubbles(office, cells, position, alignment) }}

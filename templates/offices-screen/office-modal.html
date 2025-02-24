@@ -30,8 +30,7 @@
                 <tr >
                     <td style="width: 65%; height: 100%;">
                         <div class="office-bubbles" id="office-bubbles">
-                            {{ render_modal_bubbles(offices[1], second_office_cells, "office-modal-position", "main_upper_right") }}
-
+                            <!-- Bubbles will be dynamically inserted here -->
                         </div>
                     </td>
                     <td style="width: 35%; height: 100%; vertical-align: top;">
@@ -39,7 +38,7 @@
                             <p id="office-info-p"></p>
                         </div>
                         <div class="office-branches" id="office-branches">
-                         
+                            <!-- Branches will be dynamically inserted here -->
                         </div>
                     </td>
                 </tr>
@@ -51,11 +50,13 @@
             <p id="popupMessage">!הגרף הועתק בהצלחה</p>
         </div>
         <!-- timeline -->
-        <div id="timeline-office" class="timeline office"></div>    
+        <div id="timeline-office" class="timeline office">
+            <!-- Timeline will be dynamically inserted here -->
+        </div>    
         
     </div>
-    <div class="news-feed">
-        <rssapp-wall id="CbqVitvqTAX59Bdv"></rssapp-wall><script src="https://widget.rss.app/v1/wall.js" type="text/javascript" async></script>
+    <div class="news-feed" id="news-feed">
+        <!-- News feed will be dynamically inserted here -->
     </div>
 
 </dialog>
