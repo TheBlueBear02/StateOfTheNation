@@ -77,6 +77,8 @@
                                 data-minister-role="{{ office['minister_role'] }}"
                                 data-minister-history="{{ office['ministers_history'] }}"
                                 data-office-branches="{{ office['branches'] }}"
+                                data-news-feed-id="{{ office['news_feed_id'] }}"
+                                data-id="{{ office['id'] }}"
                                 style="background-image: url({{ office['minister_image'] }});"
                             onclick="openOfficeModal(this)">
                         </span>
@@ -106,7 +108,6 @@
                                 office-minister-party="{{ office['minister_party'] }}"
                                 office-minister-role="{{ office['minister_role'] }}"
                                 office-minister-history="{{ office['ministers_history'] }}"
-
                                 onclick="openModal(this)">
                             {% if cell.icon %}
                                 <img class="bubble_icon {{ cell.size }}_icon" src="{{ cell.icon }}" alt="{{ cell.name }}">
@@ -206,18 +207,12 @@
             branchesContainer.appendChild(branchDiv);
         });
     }
-    function generateOfficeBubbles(position){
-        const officeBubbles = document.getElementById('office-bubbles');
-        officeBubbles.innerHTML = ''; // Clear existing bubbles
-        const officeBubble = document.createElement('div');
-
-    }
-
+  
     function scrollToTop(modal) {
         modal.scrollTop = 0;
     }
 
-    function openOfficeModal(mainBubbleCell) {
+    async function openOfficeModal(mainBubbleCell) {
         // get the data from the main bubble
         const name = mainBubbleCell.getAttribute("data-name");
         const info = mainBubbleCell.getAttribute("data-info");
@@ -228,8 +223,8 @@
         const ministers_history = JSON.parse(mainBubbleCell.getAttribute("data-minister-history"));
         const branches = JSON.parse(mainBubbleCell.getAttribute("data-office-branches"));
         const position = mainBubbleCell.getAttribute("data-position");
-
-   
+        const office_news_id = mainBubbleCell.getAttribute("data-news-feed-id");
+        const office_id = mainBubbleCell.getAttribute("data-id");
         // Set the background image
         const image = document.getElementById("modal-img-office");
         image.style.backgroundImage = `url(${minister_image})`;
@@ -264,6 +259,30 @@
         document.getElementById("modal-name-office").textContent = name;
         document.getElementById("modal-ministerName-office").textContent = minister_name;
         document.getElementById("office-info-p").textContent = info;
+        
+        
+         // Fetch and insert the rendered bubbles
+        const officeBubblesContainer = document.getElementById('office-bubbles');
+        const response = await fetch('/render_bubbles', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ office_id: office_id })
+        });
+        const bubblesHtml = await response.text();
+        officeBubblesContainer.innerHTML = bubblesHtml;
+        
+        // set the feed news id for the office
+        const newsFeed = document.getElementById("news-feed");
+        newsFeed.innerHTML = `<rssapp-wall id="${office_news_id}"></rssapp-wall>`;
+
+        // Create and append the script element
+        const script = document.createElement("script");
+        script.src = "https://widget.rss.app/v1/wall.js";
+        script.type = "text/javascript";
+        script.async = true;
+        newsFeed.appendChild(script);
         
         // open the modal
         officeModal.showModal();

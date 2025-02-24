@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template
+from flask import Blueprint, render_template, request,  jsonify
 from datetime import datetime
 from collections import namedtuple
 from models import db, ParliamentMember, Index, IndexData, Office, MinisterHistory, OfficeBranch
@@ -10,6 +10,23 @@ offices_bp = Blueprint('offices', __name__)
 
 Cell = namedtuple("cell", ["cell_type", "size", "alert", "name","info","source","icon","chart_type","labels","values"]) # SET the Cell coloumns 
 Minister_term = namedtuple("Minister_term", ["name", "start_date", "image", "party"])  
+
+@offices_bp.route('/render_bubbles', methods=['POST'])
+def render_bubbles():
+    office_id = request.json.get('office_id')
+    
+    office_indexes_info = fetch_indexes(office_id)
+    if office_indexes_info is None:
+        return jsonify({'error': 'Office not found'}), 404
+    upper_right_structure = [
+        ["space", "kpi", "kpi", "space"],
+        ["policy", "kpi", "kpi", "kpi"],
+        ["policy", "policy", "kpi", "kpi"],
+        ["main_bubble", "policy", "policy", "space"]
+    ]
+    cells = create_cells(fetch_indexes(office_id), upper_right_structure)
+
+    return render_template('offices-screen/office-bubbles.html', office=office_indexes_info, cells=cells, position="office-modal-position", alignment="main_upper_right")
 
 # Helper to create KPI and policy cells
 def create_cells(indexes_info, structure):
@@ -152,6 +169,8 @@ def getOfficeBranches(office_id):
     json_data = json.dumps(branches_list)  
     return json_data
 
+    
+
 @offices_bp.route('/offices')
 def offices():
     all_offices = db.session.query(Office).limit(4).all()
@@ -212,12 +231,14 @@ def offices():
             'minister_party': minister.party,
             'minister_role': minister.additional_role,
             'ministers_history' : term_history,
-            'branches': office_branches
+            'branches': office_branches,
+            'news_feed_id': office.news_feed_id,
+            'id': office.id
         }
         offices_list.append(office_data)
-
     
 
 
     # send the page offices and indexes data
     return render_template('offices-screen/offices.html',  offices=offices_list,first_office_cells=first_office_cells, second_office_cells=second_office_cells, third_office_cells=third_office_cells, forth_office_cells=forth_office_cells)
+

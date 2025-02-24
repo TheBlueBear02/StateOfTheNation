@@ -718,6 +718,7 @@ background: #c5c5c5;
 }
 .news-feed{
     margin-top: 5vh;
+    direction: rtl;
 }
 .news-feed:focus{
     outline: none;
