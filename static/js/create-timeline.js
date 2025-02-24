@@ -2,6 +2,9 @@ function createTimeline(ministers_history, totalDuration1, first_graph_date, lab
     let currentDate = new Date().toJSON().slice(0, 7);
 
     const colors = ["#FF6B6B", "#6EC1E4", "#90EE90", "#FFD56B", "#C9A0DC"];
+ 
+    
+    
     const labels_length = lables.length;
 
     let timeline;
@@ -56,15 +59,19 @@ function createTimeline(ministers_history, totalDuration1, first_graph_date, lab
                 widthPercent = (periodDuration / totalDuration1) * 100;
             }
         }
-       
+
+        // Set the era div info for the minister
+        const ministerData = ministers_history[i];
+        //  Get the color for the party
+        let eraColor =  getPartyColor(ministerData["party"]);
+
         // Create div for this era
         const eraDiv = document.createElement("div");
         eraDiv.className = "era";
         eraDiv.style.width = widthPercent + "%";
-        eraDiv.style.backgroundColor = colors[i % colors.length];  // Cycle through colors
+        eraDiv.style.backgroundColor = eraColor;  // Cycle through colors
 
-        // Set the era div info for the minister
-        const ministerData = ministers_history[i];
+        
         // Only process the image and text if the width is above the threshold (5%)
         if (widthPercent >= 15) {
             // Convert the image URL to Base64 and then append it to the timeline
@@ -75,7 +82,7 @@ function createTimeline(ministers_history, totalDuration1, first_graph_date, lab
                 ministerImage.alt = `${ministerData.name} image`; // Alt text for accessibility
                 ministerImage.style.width = "7vh"; // Adjust size as needed
                 ministerImage.style.height = "auto"; // Maintain aspect ratio
-                ministerImage.style.border = ".3vh solid " + colors[i % colors.length]; // Border color
+                ministerImage.style.border = ".3vh solid " + eraColor; // Border color
 
                 // Create a container for the minister's name and party
                 const ministerInfoContainer = document.createElement("div");
@@ -88,11 +95,14 @@ function createTimeline(ministers_history, totalDuration1, first_graph_date, lab
                 ministerName.textContent = ministerData["name"];
                 ministerName.style.fontWeight = "bold";
                 ministerName.style.margin = 0;
+                ministerName.style.color = "white";
 
                 // Create and append minister party
                 const ministerParty = document.createElement("p");
                 ministerParty.textContent = ministerData["party"];
                 ministerParty.style.margin = 0;
+                ministerParty.style.color = "white";
+
 
                 // Create and append start and end dates
                 const dateInfo = document.createElement("p");
@@ -118,7 +128,7 @@ function createTimeline(ministers_history, totalDuration1, first_graph_date, lab
                 ministerImage.alt = `${ministerData.name} image`;
                 ministerImage.style.width = "7vh";
                 ministerImage.style.height = "auto";
-                ministerImage.style.border = ".3vh solid " + colors[i % colors.length];
+                ministerImage.style.border = ".3vh solid " + eraColor;
 
                 const ministerInfoContainer = document.createElement("div");
                 ministerInfoContainer.style.textAlign = "right";
