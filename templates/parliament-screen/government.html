@@ -67,6 +67,8 @@
     <p id="party-sum-g" style="font-size: 4vh; margin: 0;padding: 0;"></p>
 </div>
 </div>
+<!-- return the color of the party -->
+<script src="static\js\party_colors.js" defer></script> 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         const seatSpans = document.querySelectorAll('.government-span');
@@ -103,51 +105,8 @@
                 
                 infoSection.style.backgroundColor = "#e0e0f6"
  
-                let borderColor;
-                switch (party) {
-                    case 'הליכוד':
-                        borderColor = '#4169E1';
-                        break;
-                    case 'יש עתיד':
-                        borderColor = '#ffb326';
-                        break;
-                    case 'המחנה הממלכתי':
-                        borderColor = '#80caff';
-                        break;
-                    case 'העבודה':
-                        borderColor = '#6A0DAD';
-                        break;
-                    case 'עוצמה יהודית':
-                        borderColor = '#ff702e';
-                        break;
-                    case 'הציונות הדתית':
-                        borderColor = '#8dc035';
-                        break;
-                    case 'תקווה חדשה':
-                        borderColor = '#00008B';
-                        break;
-                    case 'שס':
-                        borderColor = '#363636';
-                        break;
-                    case 'יהדות התורה':
-                        borderColor = '#1a4082';
-                        break;
-                    case 'רעמ':
-                        borderColor = 'green';
-                        break;
-                    case 'חדש-תעל':
-                        borderColor = '#db2121';
-                        break;
-                    case 'ישראל ביתנו':
-                        borderColor = '#251aa1';
-                        break;
-                    case 'נעם':
-                        borderColor = 'lightblue';
-                        break;
-                    default:
-                        borderColor = '#808080';
-                }
-
+                // Set the border color based on the party
+                let borderColor = getPartyColor(party);
                 // Apply the border color
                 coinBack.style.border = `.4vw solid ${borderColor}`;
                 //change color to the party name 
