@@ -58,10 +58,9 @@ th{
     justify-content: center;
 }
 #logo{
-    transform: scale(1.1);
 }
 #logo:hover{
-    transform: scale(1.13);
+    opacity: 0.8;
 }
 
 .progress-bar{
