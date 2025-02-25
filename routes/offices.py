@@ -8,7 +8,7 @@ import json
 offices_bp = Blueprint('offices', __name__)
 
 
-Cell = namedtuple("cell", ["cell_type", "size", "alert", "name","info","source","icon","chart_type","labels","values"]) # SET the Cell coloumns 
+Cell = namedtuple("cell", ["cell_type", "size", "alert", "name","info","source","icon","chart_type","labels","values","news_feed_id"]) # SET the Cell coloumns 
 Minister_term = namedtuple("Minister_term", ["name", "start_date", "image", "party"])  
 
 @offices_bp.route('/render_bubbles', methods=['POST'])
@@ -67,7 +67,9 @@ def fetch_indexes(office_id):
             'alert': index.alert,
             'chart_type': index.chart_type,
             'labels': json.dumps(labels),
-            'values': values
+            'values': values,
+            'news_feed_id': index.news_feed_id
+
         })
     return indexes_info
 
@@ -81,7 +83,8 @@ def create_cell(cell_type, info=None):
         'icon': '',
         'chart_type': 'line',
         'labels': [],
-        'values': ""
+        'values': "",
+        'news_feed_id': ''
     }
     
     # insert data if info exists
@@ -109,7 +112,8 @@ def create_cell(cell_type, info=None):
         icon=icon,
         chart_type=data['chart_type'],
         labels=data['labels'],
-        values=values
+        values=values,
+        news_feed_id=data['news_feed_id']
     )
 
 # setting the labels dates to json for the graphs

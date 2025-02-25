@@ -1,8 +1,10 @@
 <!-- KPI Modal -->
 <dialog policies-modal class="policies-modal" id="policy-modal">
-    <span class="close_button" onclick="closeModal()"><img class="close_icon" style="width: 3vh;display: block;margin-left: 18%;margin-top: 20%;" src="/static/images/buttons/close-icon-white.png"></span>
-    <span class="share_button" onclick="copyElementAsPngToClipboard('policy-modal')" style="padding: .6vw;"><p style="font-size: 2vw;">שתף</p><img class="close_icon" style="width: 3.5vh;display: block;margin-top: 2%;" src="/static/images/buttons/share-icon-white.png"></span>
-    <a id="policy-source-link" href="#" target="_blank"><span class="source-span-p" style="padding: .6vw;">מקור</span></a>
+    <div class="btns-div">
+        <span class="close_button" onclick="closeModal()"><img class="close_icon" style="width: 3vh;display: block;margin-left: 18%;margin-top: 20%;" src="/static/images/buttons/close-icon-white.png"></span>
+        <span class="share_button" onclick="copyElementAsPngToClipboard('policy-modal')" style="padding: .6vw;"><p style="font-size: 2vw;">שתף</p><img class="close_icon" style="width: 3.5vh;display: block;margin-top: 2%;" src="/static/images/buttons/share-icon-white.png"></span>
+        <a id="policy-source-link" href="#" target="_blank"><span class="source-span-p" style="padding: .6vw;">מקור</span></a>
+    </div>
 
     <div class="modal-content">
         <table class="modal-info-table">
@@ -31,6 +33,9 @@
         </div>
         <div class="timeline-container">
             <div id="timeline-p" class="timeline"></div>
+        </div>
+        <div class="news-feed" id="news-feed-policy">
+            <!-- News feed will be dynamically inserted here -->
         </div>
     </div>
        <!-- copy image message -->
