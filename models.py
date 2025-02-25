@@ -13,6 +13,7 @@ class Index(db.Model):
     alert = db.Column(db.Boolean, default=False, nullable=False)
     chart_type = db.Column(db.String, nullable=True)
     source = db.Column(db.String, nullable=True)
+    news_feed_id = db.Column(db.String, nullable=True)
 
     # Relationships
     data = db.relationship('IndexData', backref='index', lazy=True)
@@ -70,6 +71,7 @@ class ParliamentMember(db.Model):
     is_coalition = db.Column(db.Boolean, default=False, nullable=False)
     image = db.Column(db.String, nullable=True)
     twitter_id = db.Column(db.String, nullable=True)
+    twitter_feed_id = db.Column(db.String, nullable=True)
 
 
 class NonParliamentMember(db.Model):

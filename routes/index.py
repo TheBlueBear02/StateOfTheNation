@@ -12,6 +12,8 @@ def get_hebrew_date():
     today = dates.HebrewDate.today()
     return today.hebrew_date_string()
 
+
+
 # This function is used to get the knesset members and their tweet count 
 def get_knesset_members():
     all_kms = db.session.query(ParliamentMember).all()
@@ -28,10 +30,10 @@ def get_knesset_members():
             'image': km.image,
             'additional_role': km.additional_role,
             'twitter_id': km.twitter_id,
-            'tweet_count': tweet_count
+            'tweet_count': tweet_count,
+            'twitter_feed_id' : km.twitter_feed_id
         }
         km_list.append(km_data)
-
     # Sort the km_list by tweet_count in descending order
     km_list = sorted(km_list, key=lambda x: x['tweet_count'], reverse=True)
     return km_list
@@ -86,6 +88,5 @@ def get_filtered_tweets():
 @index_bp.route('/')
 def index():
     # Knesschat backend
-    tweets_list = get_all_tweets()
     km_data = get_knesset_members() 
     return render_template('index.html', today_date=get_date(), hebrew_date=get_hebrew_date(), km_data=km_data)
