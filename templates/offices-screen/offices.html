@@ -101,6 +101,7 @@
                                 data-chart="{{ cell.chart_type }}"
                                 data-labels="{{ cell.labels }}"
                                 data-values="{{ cell.values | tojson }}"
+                                data-news-feed-id="{{ cell.news_feed_id }}"
 
                                 office-name="{{ office['name'] }}"
                                 office-minister="{{ office['minister_name'] }}"
@@ -301,7 +302,8 @@
         const alert = cellElement.getAttribute("data-alert");
         const labels = JSON.parse(cellElement.getAttribute("data-labels"));
         const values = JSON.parse(cellElement.getAttribute("data-values"));
-        
+        const newsFeedId = cellElement.getAttribute("data-news-feed-id");
+
         // office info
         const office_name = cellElement.getAttribute("office-name");
         const minister_name = cellElement.getAttribute("office-minister");
@@ -352,7 +354,19 @@
             
             createTimeline(ministers_history, totalDuration,first_graph_date,labels,dates,'kpi');
 
-        
+            // set the feed news id for the office
+            if (newsFeedId != ''){
+                const newsFeed = document.getElementById("news-feed-kpi");
+                newsFeed.innerHTML = `<rssapp-wall id="${newsFeedId}"></rssapp-wall>`;
+
+                // Create and append the script element
+                const script = document.createElement("script");
+                script.src = "https://widget.rss.app/v1/wall.js";
+                script.type = "text/javascript";
+                script.async = true;
+                newsFeed.appendChild(script);
+            }
+            
 
             updateChart("kpi_chart", labels, values, chart, name);
             kpiModal.showModal();
@@ -370,6 +384,19 @@
                 document.getElementById("policy-source-link").href = source;
             }
             createTimeline(ministers_history, totalDuration,first_graph_date,labels,dates,'policy');
+
+            // set the feed news id for the office
+            if (newsFeedId != ''){
+                const newsFeed = document.getElementById("news-feed-policy");
+                newsFeed.innerHTML = `<rssapp-wall id="${newsFeedId}"></rssapp-wall>`;
+
+                // Create and append the script element
+                const script = document.createElement("script");
+                script.src = "https://widget.rss.app/v1/wall.js";
+                script.type = "text/javascript";
+                script.async = true;
+                newsFeed.appendChild(script);
+            }
 
             updateChart("policies_chart", labels, values, chart, name);
             policiesModal.showModal();

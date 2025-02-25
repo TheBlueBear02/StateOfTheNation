@@ -450,20 +450,36 @@ p {
 
 }
 
-/* Define the scrollbar style */
+.policies-modal::-webkit-scrollbar {
+    width: 1vh;
+    height: .2vh;
+}
+/* Define the thumb style */
+.policies-modal::-webkit-scrollbar-thumb {
+background: rgb(207, 207, 207);
+border-radius: 10px;
+}
+.policies-modal::-webkit-scrollbar-thumb:hover {
+background: #c5c5c5;
+}
+
 .kpi-modal::-webkit-scrollbar {
-    width: 0vh;
-    height: 0vh;
+    width: 1vh;
+    height: .2vh;
 }
-.policies-modal::-webkit-scrollbar{
-    width: 0;
-    height: 0;
+/* Define the thumb style */
+.kpi-modal::-webkit-scrollbar-thumb {
+background: rgb(207, 207, 207);
+border-radius: 10px;
 }
+.kpi-modal::-webkit-scrollbar-thumb:hover {
+background: #c5c5c5;
+}
+
 .office-modal::-webkit-scrollbar {
     width: 1vh;
     height: .2vh;
 }
-
 /* Define the thumb style */
 .office-modal::-webkit-scrollbar-thumb {
 background: rgb(207, 207, 207);
@@ -632,6 +648,7 @@ background: #c5c5c5;
     margin-left: 1%;
     background-image: linear-gradient(#fff, #f2f2f2);
     margin-top: 1vh;
+    
 }
 
 .office-modal::backdrop {
