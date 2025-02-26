@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>הכנסצ'אט - מצב האומה</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='mobile.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <img onclick="scrollToTop()" id="knesschat_logo" src="static\images\header\mobile-header-logo.png">
+        </header>
+
+        <div id="feed" class="feed scrollable">
+            <div class="loading-screen" id="loader">טוען הודעות...</div>
+            <div class="tweets_feed">
+                <rssapp-feed id="_1Db1KUX9hYApsDtI"></rssapp-feed><script src="https://widget.rss.app/v1/feed.js" type="text/javascript" async></script>
+            </div>
+        </div>
+     
+        <footer id="popup-footer" class="popup-footer">
+            <div class="footer-content">
+                <span id="close-footer" class="close-footer"><i class="fas fa-arrow-down"></i></span>
+                <p class="question">רוצים לדעת מה באמת המצב של המדינה?</p>
+                <p class="cta">היכנסו לאתר מצב האומה מהמחשב או עקבו ברשתות!</p>
+                <div class="buttons">
+                    <button class="btn btn-green"></button>
+                    <button class="btn btn-blue"></button>
+                    <button class="btn btn-black"></button>
+                </div>
+            </div>
+        </footer>
+    </div>
+</body>
+</html>
+<script>
+    function scrollToTop() {
+        document.getElementById('feed').scrollTo({
+            top: 0,
+            behavior: 'smooth' // Smooth scrolling
+        });
+    }
+
+    setTimeout(() => {
+        document.getElementById('loader').style.display = 'none';
+    }, 5000); // Hide after 5 seconds
+
+    document.getElementById('close-footer').addEventListener('click', function() {
+        const footer = document.getElementById('popup-footer');
+        const icon = document.getElementById('close-footer').querySelector('i');
+        footer.classList.toggle('closed');
+        if (footer.classList.contains('closed')) {
+            icon.classList.remove('fa-arrow-down');
+            icon.classList.add('fa-arrow-up');
+        } else {
+            icon.classList.remove('fa-arrow-up');
+            icon.classList.add('fa-arrow-down');
+        }
+    });
+
+</script>

@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, jsonify
+from flask import Blueprint, render_template, request, jsonify, abort
 from datetime import datetime
 from pyluach import dates
 from models import Tweet, ParliamentMember, db
@@ -12,7 +12,11 @@ def get_hebrew_date():
     today = dates.HebrewDate.today()
     return today.hebrew_date_string()
 
-
+def is_mobile():
+    """Check if the request comes from a mobile device."""
+    user_agent = request.headers.get("User-Agent", "").lower()
+    mobile_keywords = ["mobi", "android", "iphone", "ipad"]
+    return any(keyword in user_agent for keyword in mobile_keywords)
 
 # This function is used to get the knesset members and their tweet count 
 def get_knesset_members():
@@ -89,4 +93,7 @@ def get_filtered_tweets():
 def index():
     # Knesschat backend
     km_data = get_knesset_members() 
-    return render_template('index.html', today_date=get_date(), hebrew_date=get_hebrew_date(), km_data=km_data)
+    if is_mobile():
+        return render_template("mobile.html")  # Render mobile version
+    return render_template('index.html', today_date=get_date(), hebrew_date=get_hebrew_date(), km_data=km_data)  # Render desktop version
+
