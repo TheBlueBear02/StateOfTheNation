@@ -79,8 +79,8 @@
                                 data-office-branches="{{ office['branches'] }}"
                                 data-news-feed-id="{{ office['news_feed_id'] }}"
                                 data-id="{{ office['id'] }}"
-                                style="background-image: url({{ office['minister_image'] }});"
-                            onclick="openOfficeModal(this)">
+                                style="background-image: url('{{ url_for('static', filename=office['minister_image'].replace('static/', '').replace('\\', '/')) }}');"
+                                onclick="openOfficeModal(this)">
                         </span>
                     </div>
                 </td>
@@ -218,7 +218,7 @@
         const name = mainBubbleCell.getAttribute("data-name");
         const info = mainBubbleCell.getAttribute("data-info");
         const minister_name = mainBubbleCell.getAttribute("data-minister-name");
-        const minister_image = mainBubbleCell.getAttribute("data-minister-image");
+        let minister_image = mainBubbleCell.getAttribute("data-minister-image");
         const minister_party = mainBubbleCell.getAttribute("data-minister-party");
         const minister_role = mainBubbleCell.getAttribute("data-minister-role");
         const ministers_history = JSON.parse(mainBubbleCell.getAttribute("data-minister-history"));
@@ -226,10 +226,17 @@
         const position = mainBubbleCell.getAttribute("data-position");
         const office_news_id = mainBubbleCell.getAttribute("data-news-feed-id");
         const office_id = mainBubbleCell.getAttribute("data-id");
+        
+        // Ensure the URL is correctly formatted
+        minister_image = minister_image.replace(/\\/g, '/');
+        minister_image = `/static/${minister_image.replace(/^static\//, '')}`; // Ensure correct URL
+        minister_image = encodeURI(minister_image); // Encode Hebrew characters and spaces
+
+
         // Set the background image
         const image = document.getElementById("modal-img-office");
+        console.log(minister_image);
         image.style.backgroundImage = `url(${minister_image})`;
-        image.style.backgroundSize = 'cover'; // Ensure the image covers the span
         image.style.backgroundPosition = 'center'; // Center the image
         
         // Call the function with the office branches

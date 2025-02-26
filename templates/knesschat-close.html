@@ -7,7 +7,7 @@
     <div class="sidebar">
         <div class="sidebar_header">
             <div class="logo">
-                <img id="logo" src="/static/images/logo.png">
+                <img id="logo" src="/static/images/logo-icon-nobg.png">
             </div>
         </div>
        
@@ -18,10 +18,12 @@
                         <span class="defualt_img" style="z-index: 1; background-image: url('static\\images\\KMs\\default-km.svg');">
                             <span class="img_span_close"
                                 {% if km['is_coalition'] == False %} id="oposition_img" {% else %} id="coalition_img" {% endif %} 
-                                style="z-index: 10; background-image: url({{ km['image'] }})"
+                                style="z-index: 10; 
+                                background-image: url('{{ url_for('static', filename=km['image'].lstrip('static/').replace('\\', '/')) }}');"
                                 onclick="set_km_feed_id('{{ km['twitter_feed_id'] }}')">
                                 <!--<span class="badge"><p>{{ km['tweet_count']}}</p></span>-->
                             </span>
+
                         </span>
                     {% else %} 
                         <span></span>

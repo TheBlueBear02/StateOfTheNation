@@ -227,11 +227,13 @@ def offices():
         
         office_branches = getOfficeBranches(office.id)
         
+        minister_image = minister.image.replace("static/", "").replace("\\", "/")
+
         office_data = {
             'name':office.name,
             'info': office.info,
             'minister_name': minister.name,
-            'minister_image': minister.image,  
+            'minister_image': minister_image,  
             'minister_party': minister.party,
             'minister_role': minister.additional_role,
             'ministers_history' : term_history,

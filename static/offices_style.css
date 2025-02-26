@@ -188,7 +188,9 @@ td {
     animation: entrence 1s ease 0s 1 normal forwards;
     background-size: cover;
     border: .1vw solid grey;
-
+    object-fit: cover;    /* Crop the image to fill the container */
+    background-size: 90%; /* Increase to zoom in */
+    background-position: center; /* Keep focus in the middle */
 }
 
 .main_bubble:hover {
@@ -728,6 +730,8 @@ background: #c5c5c5;
     float: left;
     margin-top: 1.5vh;
     border: .3vh solid #4890FD;
+    background-size: 90%; /* Increase to zoom in */
+    background-position: center; /* Keep focus in the middle */
 }
 .btns-div{
     position: relative; /* Ensure the element is positioned */

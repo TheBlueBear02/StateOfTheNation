@@ -27,10 +27,10 @@ height: 0;
 
 }
 #logo{
-    width: 4.5vw;
-    margin: 0, auto;
-    margin-top: 1vh;
-    margin-left: .25vw;
+    width: 3.5vw;
+    margin: auto;
+    margin-top: 1.5vh;
+    margin-left: .75vw;
 }
 .tweets_div{
     padding: 0;
@@ -41,8 +41,9 @@ height: 0;
 
 }
 .img_span_close{
-    background-size: cover;
-    box-shadow: 0 .5vh .5vh rgb(0 0 0 / 0.3);
+    background-size: 90%; /* Increase to zoom in */
+    background-position: center; /* Keep focus in the middle */
+        box-shadow: 0 .5vh .5vh rgb(0 0 0 / 0.3);
     padding:0;
     margin:0;
     width:4vw; 
