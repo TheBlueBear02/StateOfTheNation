@@ -47,11 +47,10 @@ function copyElementAsPngToClipboard(elementId) {
 
     // Add logo
     const logoImg = document.createElement("img");
-    logoImg.src = "static\\images\\logo.png"; // Replace with your logo URL
+    logoImg.src = "static/images/header/header-logo.png"; // Replace with your logo URL
     logoImg.alt = "Site Logo";
-    logoImg.style.width = "30px"; // Adjust logo size
-    logoImg.style.height = "30px";
-    logoImg.style.borderRadius = "50%"; // Optional, if you want a circular logo
+    logoImg.style.width = "100px"; // Adjust logo size
+    logoImg.style.height = "50px";
 
     // Add logo and text container to the watermark div
     watermarkDiv.appendChild(logoImg);

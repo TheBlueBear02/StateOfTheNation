@@ -2,6 +2,7 @@ from flask import Blueprint, render_template, request, jsonify, abort
 from datetime import datetime
 from pyluach import dates
 from models import Tweet, ParliamentMember, db
+import random
 
 index_bp = Blueprint('index', __name__)
 
@@ -39,7 +40,10 @@ def get_knesset_members():
         }
         km_list.append(km_data)
     # Sort the km_list by tweet_count in descending order
-    km_list = sorted(km_list, key=lambda x: x['tweet_count'], reverse=True)
+    #km_list = sorted(km_list, key=lambda x: x['tweet_count'], reverse=True)
+    random.shuffle(km_list)
+
+
     return km_list
 
 

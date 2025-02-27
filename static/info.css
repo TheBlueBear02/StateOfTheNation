@@ -1,0 +1,121 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    color: #333;
+    direction: rtl;
+    line-height: 1.6;
+}
+p{
+    text-align: right;
+    font-size: 2.5vh;
+}
+.container {
+    max-width: 95%;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: row-reverse; /* RTL layout */
+}
+
+/* Left sidebar (appears on left in RTL) */
+.sidebar {
+    width: 30%;
+    padding: 2vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-right: 1px solid #000; /* Black vertical divider */
+}
+
+.profile-img {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    background-color: #eee;
+    margin: 20px 0;
+}
+
+.sidebar-title {
+    color: #4285f4;
+    margin: 30px 0 10px 0;
+    font-size: 1.5rem;
+    align-self: flex-start;
+}
+
+.sidebar-text {
+    font-size: 0.9rem;
+    color: #555;
+    margin-bottom: 15px;
+    align-self: flex-start;
+}
+
+.subscribe-button {
+    display: block;
+    width: 100%;
+    background-color: #4285f4;
+    color: white;
+    text-align: center;
+    padding: 12px;
+    border-radius: 25px;
+    text-decoration: none;
+    font-weight: bold;
+    margin: 30px 0;
+}
+
+.sidebar-footer {
+    font-size: 0.8rem;
+    color: #777;
+    margin-top: 20px;
+    text-align: right;
+    width: 100%;
+}
+
+/* Main content */
+.main-content {
+    flex: 1;
+    padding: 20px 30px;
+}
+
+.header-text {
+    margin-bottom: 20px;
+    font-weight: bold;
+}
+
+.header-link {
+    color: #4285f4;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.content-paragraph {
+    margin-bottom: 20px;
+}
+
+.section-title {
+    color: #4285f4;
+    font-size: 1.5rem;
+    text-align: right; /* Will appear on right in RTL */
+}
+
+.email {
+    font-size: 0.9rem;
+    color: #333;
+    text-align: right; /* Will appear on right in RTL */
+}
+
+.social-icons {
+    display: flex;
+    justify-content: flex-start;
+    margin-top: 2vh;
+}
+
+.social-icon {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
