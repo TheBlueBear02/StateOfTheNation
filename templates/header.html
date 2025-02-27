@@ -21,7 +21,7 @@
         </td>
         <td style="width: 30vw;">
             <table style="float: right; width: 30%;margin-right: 5px; " id="nav_table">
-                <th data-tooltip="הסבר"><div class="line"><a href="#"><img class="nav_icon" src="\static\images\header\info-circle-icon.svg" ></a></div></th>
+                <th data-tooltip="הסבר"><div class="line"><a onclick="change_view(4)" href="#"><img class="nav_icon" src="\static\images\header\info-circle-icon.svg" ></a></div></th>
                 <th data-tooltip="רשויות"><div class="line"><a onclick="change_view(3)" href="#"><img class="nav_icon" src="/static/images/header/governor-building-icon.png" ></a></div></th>
                 <th data-tooltip="כלכלה"><div class="line"><a onclick="change_view(2)" href="#"><img class="nav_icon" src="static\images\header\circle-shekel-icon.svg" ></a></div></th>
                 <th data-tooltip="דמוגרפיה"><a onclick="change_view(1)"  href="#"><img class="nav_icon" src="/static/images/header/people_icon.png" ></a></th>
@@ -68,7 +68,7 @@
 
 
     function change_view(id){
-        for(var i = 0; i <= 3; i++){
+        for(var i = 0; i <= 4; i++){
             if(!document.getElementById(i).classList.contains('hidden'))
                 document.getElementById(i).classList.toggle('hidden');
         }

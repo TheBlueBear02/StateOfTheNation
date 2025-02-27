@@ -11,7 +11,7 @@
     overflow: auto;
     cursor: pointer;
     box-shadow: 1px 0 20px rgba(99, 99, 99, 0.3); /* Shadow on the right side */
-
+    z-index: 0;
 }
 
 /* Define the scrollbar style */
@@ -38,12 +38,14 @@ height: 0;
     margin-left: .3vw;
     padding-top: 1vh;
     background-image: url(/static/images/knesschat_background1.png);
+    z-index: 1;
+    position: relative; /* Ensures tooltips are positioned correctly */
 
 }
 .img_span_close{
     background-size: 90%; /* Increase to zoom in */
     background-position: center; /* Keep focus in the middle */
-        box-shadow: 0 .5vh .5vh rgb(0 0 0 / 0.3);
+    box-shadow: 0 .5vh .5vh rgb(0 0 0 / 0.3);
     padding:0;
     margin:0;
     width:4vw; 
@@ -52,6 +54,8 @@ height: 0;
     display: block;
     border: 1px solid grey;
     margin-bottom: 1vh;
+    z-index: 5; /* Ensure it has a lower z-index than the tooltip */
+
 }
 
 .defualt_img{
@@ -63,6 +67,7 @@ height: 0;
     border-radius: 50%;
     display: block;
     margin-bottom: 1vh;
+    z-index: 1;
 }
 .defualt_img:hover{
     transform: scale(1.1);
@@ -94,3 +99,36 @@ height: 0;
     margin: 0, auto;
     font-size: 1vw;
   }
+
+#knesschat-close [data-tooltip-text] {
+    position: relative;
+    cursor: pointer;
+    z-index: 100; /* Ensure it has a higher z-index than the img_span_close */
+
+}
+
+#knesschat-close [data-tooltip-text]::before {
+    content: attr(data-tooltip-text);
+    position: absolute;
+    top: 70%; /* Position above the element */
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: rgba(0, 0, 0, 0.55);
+    color: #fff;
+    padding: 5px 10px;
+    border-radius: 5px;
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.2s ease-in-out, visibility 0.2s ease-in-out;
+    z-index: 100;
+}
+
+
+
+#knesschat-close [data-tooltip-text]:hover::before
+ {
+    opacity: 1;
+    visibility: visible;
+    z-index: 500;
+}
