@@ -5,62 +5,118 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>מצב האומה</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='info.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <body>
     <div class="container">
         <!-- Sidebar (appears on left in RTL) -->
-        <div class="sidebar">
-            <div class="profile-img"></div>
-            
-            <div class="sidebar-title">תודות</div>
-            <div class="sidebar-text">תודה לאתר הכנסת על התמונות של</div>
-            <div class="sidebar-text">חברי הכנסת ושרים</div>
-            
-            <a href="#" class="subscribe-button">להרשמה</a>
-            
-            <div class="sidebar-footer">
-                <p>כל התכנים כפופים לחוקים התקפה האתר ולשימוש</p>
-            </div>
-        </div>
+      
         
         <!-- Main content -->
         <div class="main-content">
-            <div class="header-text">
-                <p>יותר ויותר קשה להבין היום מה המצב של המדינה באמת.</p>
-                <p>הכותרות בחדשות מתחלפות כל שעה וכמות הפוסטים האין סופית ברשתות החברתיות מעסיקים אותנו 24/7 ולמרות זאת קשה להבין <a href="#" class="header-link">מה באמת המצב של המדינה</a></p>
-            </div>
+            <table>
+                <tr>
+                    <td style="width: 70%;padding-left: 4vh;">
+                        <div class="content-paragraph">
+                            <p>בעולם שבו ערוצי טלוויזיה משדרים חדשות ופרשנויות שסותרות אחת את השנייה,  אלגוריטמים חכמים ברשתות החברתיות קובעים לאיזה מידע ניחשף ולאיזה לא, ופוליטיקאים שמנסים לשכנע אותנו שהמצב מצויין או גרוע לפי האינטרס האישי שלהם, קשה לדעת <a href="#" class="header-link">מה באמת המצב של המדינה</a></p>
             
+                        </div>
+                        
+                        <div class="content-paragraph">
+                            <p>בדיוק בגלל זה החלטתי להקים את “מצב האומה”, פלטפורמה שבאמצעותה ניתן להבין מה המצב של המדינה ישירות מהנתונים וללא פרשנויות ואינטרסים חבויים.
+                                באתר ניתן למצוא שלל מדדים ונתונים עדכניים על משרדי הממשלה השונים, על הדמוגרפיה והכלכלה של ישראל ביחס לנתוני העבר וגם צ’אט של כל ההודעות של חברי הכנסת במקום אחד, הכנסצ’אט!</p>
+                        </div>            
+                    </th>
+                    <td style="width: 30%;">
+                        <div class="content-paragraph" style="margin-bottom: 0;">
+                            <div class="sidebar">
+                                <div class="sidebar-footer">
+                                    <p style="font-size: 3vh;">האתר הוא יוזמה פרטית ואין לו מימון חיצוני מצד שום גורם</p>
+                                    <p style="margin-top: 2vh;">על מנת שנוכל לעמוד בעלות החודשית של תחזוקתו נשמח לעזרת הציבור</p>
+                                </div>
+                                <a href="#" class="donation-button">תרומה לאתר</a>
+
+                                <div class="sidebar-footer">
+                                    <p style="font-size: 2vh;">כל התרומות הולכות לתחזוקת האתר ולשיפורו</p>
+                                </div>
+                            </div>
+                       </div>
+                    </th>
+                </tr>
+            </table>
+           
             <div class="content-paragraph">
-        
-            </div>
-            
-            <div class="content-paragraph">
-                <p>בדיוק בגלל זה החלטתי להקים את האתר "מצב האומה", מקום שבו ניתן להבין</p>
-                <p>באמת מה המצב של המדינה מהנתונים עצמם וללא רשתניות ואינטרסים חבויים.</p>
-                <p>באתר ניתן למצוא שלל מדדים ונתונים על משרדי הממשלה השונים, על</p>
-                <p>הדמוקרטיה והכלכלה של ישראל וגם צ'אט של כל חברי הכנסת במקום אחד,</p>
-                <p>והכואחכן!</p>
-            </div>
-            
-            <div class="section-title">מי אנחנו?</div>
-            <div class="content-paragraph">
-                <p>קוראים לי אמיר גבאי, אני סטודנט לכלכלה ומדעי המדינה ואני יזמתי, עיצבתי</p>
-                <p>ובניתי את האתר לבד מתוך סקרנות ורצון לפשר את האופן שבו אנחנו, האזרחים</p>
-                <p>מבינים את המצב של המדינה. מספיק מספרות ומגבשים דעה על הפוליטיקאים</p>
-                <p>כדי נוכל להפוך את המקום הזה למקום טוב יותר.</p>
-            </div>
-            
-            <div class="contact-section">
-                <div class="section-title">יצירת קשר</div>
-                <p>stateofthenation2025@gmail.com</p>
-                <div class="social-icons">
-                    <div class="social-icon" style="background-color: #4caf50;"></div>
-                    <div class="social-icon" style="background-color: #000;"></div>
-                    <div class="social-icon" style="background-color: #e91e63;"></div>
-                    <div class="social-icon" style="background-color: #2196f3;"></div>
+                <div class="white-box">
+                    <table>
+                        <tr>
+                            <td style="width: 90%;">
+                                <p>קוראים לי אמיר גבאי, אני סטודנט לכלכלה ומדע המדינה ואני יזמתי, עיצבתי ובניתי את האתר לבד (ללא מימון של גורמים זרים, מבטיח) מתוך סקרנות ורצון לשפר את האופן שבו אנחנו האזרחים, מנתחים את המצב של המדינה, מסיקים מסקנות ומגבשים את דעתנו הפוליטית, כדי נוכל להפוך את המקום הזה למקום טוב יותר. </p>
+                            </td>
+                            <td>
+                                <table>
+                                    <tr>
+                                        <div class="profile-img"></div>
+                                    </tr>
+                                    <tr style="height: 10%;">
+                                        <div style="margin: auto; width: 9vh;">
+                                            <a href="#" class="fa pe fa-linkedin"></a>
+                                            <a href="#" class="fa pe fa-twitter"></a>
+                                        </div>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+                    
                 </div>
             </div>
+            <div class="content-paragraph" style="margin-bottom: 0;">
+                <table>
+                    <tr>
+                        <td style="width: 75%;">
+                            <div class="section-title">תודות</div>
+                            <p>תודה לאתר הכנסת על התמונות של חברי הכנסת והשרים</p>   
+                        </td>
+                        <td style="width: 25%;">
+                            <div class="section-title">יצירת קשר</div>
+                            <p style="font-size: 2vh;">stateofthenation2025@gmail.com</p>
+                            <div class="social-icons">
+                                <a href="#" class="fa fa-facebook"></a>
+                                <a href="#" class="fa fa-twitter"></a>
+                                <a href="#" class="fa fa-instagram"></a>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+                
+            </div>
+          
         </div>
     </div>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const paragraphs = document.querySelectorAll(".content-paragraph");
+            const observerOptions = {
+                root: null,
+                rootMargin: "0px",
+                threshold: 0.1
+            };
+    
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach((entry, index) => {
+                    if (entry.isIntersecting) {
+                        setTimeout(() => {
+                            entry.target.classList.add("visible");
+                        }, index * 2000); // 2000ms = 2 seconds
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
+    
+            paragraphs.forEach((paragraph) => {
+                observer.observe(paragraph);
+            });
+        });
+    </script>
 </body>
 </html>

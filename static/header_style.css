@@ -45,7 +45,7 @@ p {
     max-height: 4vh;
 }
 .nav_icon:hover{
-    transform: scale(1.1);
+    opacity: 0.6;
 
 }
 
