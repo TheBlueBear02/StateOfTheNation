@@ -9,8 +9,8 @@
 </head>
 <body>
     <div class="container">
-        <header>
-            <img onclick="scrollToTop()" id="knesschat_logo" src="static\images\header\mobile-header-logo.png">
+        <header id="header" >
+            <img id="knesschat_logo" onclick="scrollToTop()" src="static/images/header/mobile-header-logo.png">
         </header>
 
         <div id="feed" class="feed scrollable">
@@ -18,30 +18,57 @@
             <div class="tweets_feed">
                 <rssapp-feed id="_1Db1KUX9hYApsDtI"></rssapp-feed><script src="https://widget.rss.app/v1/feed.js" type="text/javascript" async></script>
             </div>
-        </div>
-     
-        <footer id="popup-footer" class="popup-footer">
-            <div class="footer-content">
-                <span id="close-footer" class="close-footer"><i class="fas fa-arrow-down"></i></span>
-                <p class="question">רוצים לדעת מה באמת המצב של המדינה?</p>
-                <p class="cta">היכנסו לאתר מצב האומה מהמחשב או עקבו ברשתות!</p>
+            <footer>
+                <p class="cta">
+                    רוצים לדעת <span class="highlight-blue">מה המצב האמיתי</span> של מדינת ישראל?
+                </p>
+                <p class="cta-desc">היכנסו לאתר מהמחשב או עקבו:</p>
                 <div class="buttons">
-                    <button class="btn btn-green"></button>
-                    <button class="btn btn-blue"></button>
-                    <button class="btn btn-black"></button>
+                    <button class="btn btn-share"></button>
+                    <button class="btn btn-twitter"></button>
+                    <button class="btn btn-facebook"></button>
+                    <button class="btn btn-instagram"></button>
                 </div>
-            </div>
-        </footer>
+            </footer>
+            <!--
+            <footer id="popup-footer" class="popup-footer">
+                <span id="close-footer" class="close-footer"><i class="fas fa-arrow-down"></i></span>
+
+                <div class="footer-content">
+                    <p class="text">
+                        נמאס לכם <span class="highlight-blue">שערוצי טלוויזיה</span> משדרים חדשות ופרשנויות שסותרות אחת את השנייה?
+                    </p>
+                    <p class="text">
+                        שאלגוריתמים  <span class="highlight-blue">ברשתות החברתיות</span> קובעים לאיזה מידע תחשפו ולאיזה לא?
+                    </p>
+                    <p class="text">
+                        <span class="highlight-blue">שפוליטיקאים</span> מנסים לשכנע אתכם שהמצב מצוין או גרוע לפי האינטרס האישי שלהם?
+                    </p>
+                    <p class="cta">
+                        רוצים לדעת <span class="highlight-blue">מה המצב האמיתי</span> של מדינת ישראל?
+                    </p>
+                    <p class="cta-desc">היכנסו לאתר מהמחשב או עקבו:</p>
+                    <div class="buttons">
+                        <button class="btn btn-green"></button>
+                        <button class="btn btn-black"></button>
+                        <button class="btn btn-blue"></button>
+                    </div>
+                </div>
+        
+            </footer>
+            -->
+        </div>
     </div>
 </body>
 </html>
+
 <script>
-    function scrollToTop() {
-        document.getElementById('feed').scrollTo({
-            top: 0,
-            behavior: 'smooth' // Smooth scrolling
-        });
-    }
+   function scrollToTop() {
+    document.getElementById("feed").scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
+}
 
     setTimeout(() => {
         document.getElementById('loader').style.display = 'none';
@@ -59,5 +86,4 @@
             icon.classList.add('fa-arrow-down');
         }
     });
-
 </script>
