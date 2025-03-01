@@ -297,7 +297,7 @@ td {
     margin: 0;
     padding-top: 0;
     margin-left: 1%;
-    background-image: linear-gradient(#fff, #f2f2f2);
+    background-color: white;
     margin-top: 1vh;
 }
 
@@ -316,7 +316,7 @@ td {
     margin: 0;
     padding-top: 0;
     margin-left: 1%;
-    background-image: linear-gradient(#fff, #f2f2f2);
+    background-color: white;
     margin-top: 1vh;
 }
 
@@ -650,7 +650,7 @@ background: #c5c5c5;
     margin: 0;
     padding-top: 0;
     margin-left: 1%;
-    background-image: linear-gradient(#fff, #f2f2f2);
+    background-color: white;
     margin-top: 1vh;
     
 }

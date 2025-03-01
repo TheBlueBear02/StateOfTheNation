@@ -12,7 +12,7 @@ body {
 }
 p{
     text-align: right;
-    font-size: 2.5vh;
+    font-size: 2.8vh;
 }
 .container {
     max-width: 95%;
@@ -23,65 +23,69 @@ p{
 
 /* Left sidebar (appears on left in RTL) */
 .sidebar {
-    width: 30%;
-    padding: 2vh;
+    height: 40vh;
+    width: 100%;
+    padding: 2vh 3vh;
     display: flex;
     flex-direction: column;
     align-items: center;
-    border-right: 1px solid #000; /* Black vertical divider */
+    background-color: white;
+    border-radius: 3vh;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+
 }
 
 .profile-img {
-    width: 120px;
-    height: 120px;
+    width: 17vh;
+    height: 17vh;
     border-radius: 50%;
-    background-color: #eee;
-    margin: 20px 0;
+    background-color: #e0e0e0;
+    margin: 2vh 0;
 }
 
 .sidebar-title {
     color: #4285f4;
-    margin: 30px 0 10px 0;
-    font-size: 1.5rem;
-    align-self: flex-start;
+    margin: 3vh 0 1vh 0;
+    font-size: 4vh;
+    
 }
 
 .sidebar-text {
-    font-size: 0.9rem;
+    font-size: 1vh;
     color: #555;
     margin-bottom: 15px;
     align-self: flex-start;
 }
 
-.subscribe-button {
-    display: block;
-    width: 100%;
+.donation-button {
+    width: 25vh;
+    position: flex-end;
     background-color: #4285f4;
     color: white;
     text-align: center;
-    padding: 12px;
-    border-radius: 25px;
+    padding: 1vh;
+    border-radius: 25vh;
     text-decoration: none;
     font-weight: bold;
-    margin: 30px 0;
+    margin: 3vh 0;
+    float: left;
+    font-size: 3vh;
+}
+.donation-button:hover {
+    background-color: #5d92e9;
 }
 
-.sidebar-footer {
-    font-size: 0.8rem;
-    color: #777;
-    margin-top: 20px;
-    text-align: right;
-    width: 100%;
+.sidebar-footer p{
+    text-align: center;
+    font-size: 2.3vh;
 }
-
 /* Main content */
 .main-content {
-    flex: 1;
-    padding: 20px 30px;
+    padding: 2vh 3vh;
 }
 
 .header-text {
-    margin-bottom: 20px;
+    margin-bottom: 2vh;
     font-weight: bold;
 }
 
@@ -89,22 +93,28 @@ p{
     color: #4285f4;
     text-decoration: none;
     font-weight: bold;
+    font-size: 2.8vh;
 }
 
 .content-paragraph {
-    margin-bottom: 20px;
+    margin-bottom: 2vh;
+    width: 100%;
 }
 
 .section-title {
     color: #4285f4;
-    font-size: 1.5rem;
-    text-align: right; /* Will appear on right in RTL */
+    font-size: 4vh;
+    align-self: flex-start;
+    margin: 0;
 }
-
-.email {
-    font-size: 0.9rem;
-    color: #333;
-    text-align: right; /* Will appear on right in RTL */
+.white-box {
+    background-color: white;
+    padding: 1vh 2vh;
+    border-radius: 3vh;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    margin-bottom: 2vh;
+    width: 100%;
+   
 }
 
 .social-icons {
@@ -114,8 +124,68 @@ p{
 }
 
 .social-icon {
-    width: 35px;
-    height: 35px;
+    width: 5vh;
+    height: 5vh;
     border-radius: 50%;
-    margin-right: 10px;
+    margin-right: 1vh;
 }
+.content-paragraph {
+    opacity: 0;
+    transition: opacity 1s ease-in-out;
+}
+.content-paragraph.visible {
+    opacity: 1;
+}
+
+.fa {
+    width: 7vh;
+    height: 7vh;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 50%;
+    margin: auto 1vh;
+    padding-top: 8%;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+
+  }
+  .pe {
+    padding-top: 8.5%;
+    width: 4vh;
+    height: 4vh;
+    margin: auto ;
+  }
+  
+  .fa:hover {
+      opacity: 0.7;
+  }
+  
+  .fa-facebook {
+    background: #3B5998;
+    color: white;
+  }
+  
+  .fa-twitter {
+    background: #000000;
+    color: white;
+  }
+  
+  .fa-google {
+    background: #dd4b39;
+    color: white;
+  }
+  
+  .fa-linkedin {
+    background: #007bb5;
+    color: white;
+  }
+  
+  .fa-youtube {
+    background: #bb0000;
+    color: white;
+  }
+  
+  .fa-instagram {
+    background: #b8044f;
+    color: white;
+  }
+  
