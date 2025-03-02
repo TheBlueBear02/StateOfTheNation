@@ -11,6 +11,8 @@
 <body>
     <div class="container">
         <header id="header" >
+            <!--<img id="knesschat-screen-icon" onclick="returnToSite()" src="static/images/icons/back-button.svg" >-->
+
             <img id="knesschat_logo" onclick="scrollToTop()" src="static/images/header/mobile-header-logo.png">
         </header>
 
@@ -26,6 +28,10 @@
 </html>
 
 <script>
+    function returnToSite() { 
+        window.location.href = "/";
+    }
+
    function scrollToTop() {
     document.getElementById("feed").scrollTo({
         top: 0,

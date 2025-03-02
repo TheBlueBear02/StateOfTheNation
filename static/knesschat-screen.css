@@ -61,3 +61,15 @@ body{
     font-size: 3vh;
     direction: rtl ;
 }
+
+#knesschat-screen-icon{
+    width: 2.2vh;
+    height: 2.2vh;
+    float: right;
+    margin-right: 1.5vh;
+    margin-top: .5vh;
+    cursor: pointer;
+}
+#knesschat-screen-icon:hover{
+    opacity: 0.8;
+}
