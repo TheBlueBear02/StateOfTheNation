@@ -1,0 +1,63 @@
+body{
+    padding: 0;
+    margin: 0;
+    direction: rtl;
+}
+.container{
+    width: 50%;
+    margin: auto;
+    box-shadow: 1px 0 20px rgba(99, 99, 99, 0.3); /* Shadow on the right side */
+}
+.scrollable {
+    height: 87vh;
+    overflow-y: auto; /* Enable vertical scrolling */
+    overflow-x: hidden; /* Hide horizontal scrolling */
+}
+.feed::-webkit-scrollbar {
+    width: .6vh;
+    height: .2vh;
+}
+/* Define the thumb style */
+.feed::-webkit-scrollbar-thumb {
+    background: rgb(207, 207, 207);
+    border-radius: 10px;
+}
+.feed::-webkit-scrollbar-thumb:hover {
+    background: rgb(184, 184, 184);
+}
+.feed{
+    background-image: url(/static/images/knesschat_background1.png);
+}
+#knesschat_header{
+    width: 91%;
+    height: 10vh;
+    margin-top: 0vh;
+    border-bottom: 0.3vh solid rgb(177, 177, 177);
+    margin: auto;
+    display: flex; /* Enables flexbox */
+
+    justify-content: center;
+    align-items: center;
+
+}
+#knesschat_logo{
+    width: 30vh;
+    cursor: pointer;
+    display: block; /* Ensures it doesn’t behave unexpectedly */
+    margin: auto;
+
+}
+#knesschat_logo:hover{
+    opacity: 0.8;
+}
+.loading-screen {
+    width: 100%;
+    height: 100%;
+    background: rgba(177, 177, 177, 0);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: block;
+    font-size: 3vh;
+    direction: rtl ;
+}

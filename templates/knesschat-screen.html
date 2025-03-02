@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/x-icon" href="/static/images/site icon7.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>הכנסצ'אט - מצב האומה</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='knesschat-screen.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <header id="header" >
+            <img id="knesschat_logo" onclick="scrollToTop()" src="static/images/header/mobile-header-logo.png">
+        </header>
+
+        <div id="feed" class="feed scrollable">
+            <div class="loading-screen" id="loader">טוען הודעות...</div>
+            <div class="tweets_feed">
+                <rssapp-feed id="_1Db1KUX9hYApsDtI"></rssapp-feed><script src="https://widget.rss.app/v1/feed.js" type="text/javascript" async></script>
+            </div>
+           
+        </div>
+    </div>
+</body>
+</html>
+
+<script>
+   function scrollToTop() {
+    document.getElementById("feed").scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
+}
+
+    setTimeout(() => {
+        document.getElementById('loader').style.display = 'none';
+    }, 5000); // Hide after 5 seconds
+
+   
+</script>

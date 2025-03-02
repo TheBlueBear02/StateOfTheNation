@@ -47,8 +47,19 @@
     font-size: 3vh;
     direction: rtl ;
 }
+#knesschat-screen-icon{
+    width: 2.2vh;
+    height: 2.2vh;
+    float: right;
+    margin-right: 1.5vh;
+    margin-top: .5vh;
+    cursor: pointer;
+}
+#knesschat-screen-icon:hover{
+    opacity: 0.8;
+}
 </style>
-
+<img id="knesschat-screen-icon" onclick="openKnesschatWindow()" src="static/images/icons/open-window-icon.svg" >
 <div id="knesschat_header" onclick="set_twitter_feed()"><img id="knesschat_logo" src="/static/images/knesschat_header.png">
 
 </div>
@@ -58,6 +69,11 @@
 </div>
 
 <script>
+    function openKnesschatWindow() {
+        window.open("/knesschat", "_blank", "width=800,height=600");
+
+    }
+
     const all_km_feed = '_1Db1KUX9hYApsDtI';
 
     function scrollToTop() {
