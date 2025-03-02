@@ -93,6 +93,12 @@ def get_filtered_tweets():
     
     return get_tweets_data(all_tweets)
 
+
+@index_bp.route("/knesschat")
+def knesschat():
+    km_data = get_knesset_members() 
+    return render_template("knesschat-screen.html")  # Ensure this template exists
+
 @index_bp.route('/')
 def index():
     # Knesschat backend
