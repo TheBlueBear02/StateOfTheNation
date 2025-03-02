@@ -107,7 +107,7 @@
                     if (entry.isIntersecting) {
                         setTimeout(() => {
                             entry.target.classList.add("visible");
-                        }, index * 2000); // 2000ms = 2 seconds
+                        }, index * 1000); // 2000ms = 2 seconds
                         observer.unobserve(entry.target);
                     }
                 });

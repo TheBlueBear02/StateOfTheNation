@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, jsonify, abort
+from flask import Blueprint, render_template, request, jsonify
 from datetime import datetime
 from pyluach import dates
 from models import Tweet, ParliamentMember, db

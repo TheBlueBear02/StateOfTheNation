@@ -100,3 +100,11 @@ p{
 button:focus {
     outline: none;
 }
+
+.credit{
+  float: left;
+  margin-left: 30vh;
+  font-size: 1.5vh;
+  margin-top: 2vh;
+  direction: rtl;
+}
