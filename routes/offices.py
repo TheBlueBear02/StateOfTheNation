@@ -15,16 +15,19 @@ Minister_term = namedtuple("Minister_term", ["name", "start_date", "image", "par
 def render_bubbles():
     office_id = request.json.get('office_id')
     
-    office_indexes_info = fetch_indexes(office_id)
-    if office_indexes_info is None:
-        return jsonify({'error': 'Office not found'}), 404
     upper_right_structure = [
         ["space", "kpi", "kpi", "space"],
         ["policy", "kpi", "kpi", "kpi"],
         ["policy", "policy", "kpi", "kpi"],
         ["main_bubble", "policy", "policy", "space"]
     ]
-    cells = create_cells(fetch_indexes(office_id), upper_right_structure)
+    print('Cells')
+
+    office_indexes_info = fetch_indexes(office_id)
+    if office_indexes_info is None:
+        return jsonify({'error': 'Office not found'}), 404
+    else:
+        cells = create_cells(office_indexes_info, upper_right_structure)
 
     return render_template('offices-screen/office-bubbles.html', office=office_indexes_info, cells=cells, position="office-modal-position", alignment="main_upper_right")
 
@@ -173,11 +176,38 @@ def getOfficeBranches(office_id):
     json_data = json.dumps(branches_list)  
     return json_data
 
-    
+def get_offices_data():
+    all_offices = db.session.query(Office).limit(4).all()
+
+    # save the first 4 offices from the database and their ministers data in a list
+    offices_list = []
+    for office in all_offices:
+        minister = db.session.query(ParliamentMember).filter_by(id=office.minister_id).first() 
+        
+        ministers_history = db.session.query(MinisterHistory).filter_by(office_id=office.id).all() 
+        term_history = ministers_history_timeline(ministers_history)
+        
+        office_branches = getOfficeBranches(office.id)
+        
+        minister_image = minister.image.replace("static/", "").replace("\\", "/")
+
+        office_data = {
+            'name':office.name,
+            'info': office.info,
+            'minister_name': minister.name,
+            'minister_image': minister_image,  
+            'minister_party': minister.party,
+            'minister_role': minister.additional_role,
+            'ministers_history' : term_history,
+            'branches': office_branches,
+            'news_feed_id': office.news_feed_id,
+            'id': office.id
+        }
+        offices_list.append(office_data)
+    return offices_list
 
 @offices_bp.route('/offices')
 def offices():
-    all_offices = db.session.query(Office).limit(4).all()
 
     # Fetch index info for each office
     first_office_indexes_info = fetch_indexes(1)
@@ -217,32 +247,8 @@ def offices():
     third_office_cells = create_cells(third_office_indexes_info, bottom_left_structure)
     forth_office_cells = create_cells(forth_office_indexes_info, bottom_right_structure)
    
-   # save the first 4 offices from the database and their ministers data in a list
-    offices_list = []
-    for office in all_offices:
-        minister = db.session.query(ParliamentMember).filter_by(id=office.minister_id).first() 
-        
-        ministers_history = db.session.query(MinisterHistory).filter_by(office_id=office.id).all() 
-        term_history = ministers_history_timeline(ministers_history)
-        
-        office_branches = getOfficeBranches(office.id)
-        
-        minister_image = minister.image.replace("static/", "").replace("\\", "/")
-
-        office_data = {
-            'name':office.name,
-            'info': office.info,
-            'minister_name': minister.name,
-            'minister_image': minister_image,  
-            'minister_party': minister.party,
-            'minister_role': minister.additional_role,
-            'ministers_history' : term_history,
-            'branches': office_branches,
-            'news_feed_id': office.news_feed_id,
-            'id': office.id
-        }
-        offices_list.append(office_data)
-    
+   
+    offices_list = get_offices_data()
 
 
     # send the page offices and indexes data
