@@ -42,9 +42,24 @@
     p{
         font-family: 'Assistant', sans-serif;
     }
+    .close_button_info{
+        border: none;
+        font-weight: 700;
+        background-color: #4890FD;
+        border-radius: 3vh;
+        color: white;
+        width: 5vh;
+        height: 5vh;
+        cursor: pointer;
+        font-size: 3vh;
+        padding: 0;
+        position: fixed;
+        top: 3vh;
+        left: 3vh;
+    }
  </style>
 <dialog info-modal class="info-modal">
-    <button class="close_button" onclick="closeModal()" style="display: block;" id="close_button" >X</button>
+    <button class="close_button_info" onclick="closeModal()" style="display: block;" id="close_button" >X</button>
     <table class="info-table">
         <tr style="height: 100%;">
             <td style="width: 35%;">

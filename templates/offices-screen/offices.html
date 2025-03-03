@@ -235,7 +235,6 @@
 
         // Set the background image
         const image = document.getElementById("modal-img-office");
-        console.log(minister_image);
         image.style.backgroundImage = `url(${minister_image})`;
         image.style.backgroundPosition = 'center'; // Center the image
         
@@ -269,7 +268,7 @@
         document.getElementById("office-info-p").textContent = info;
         
         
-         // Fetch and insert the rendered bubbles
+        // Fetch and insert the rendered bubbles
         const officeBubblesContainer = document.getElementById('office-bubbles');
         const response = await fetch('/render_bubbles', {
             method: 'POST',
