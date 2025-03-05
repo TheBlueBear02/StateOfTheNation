@@ -28,7 +28,7 @@ def create_app(config_class=None):
     
     # Initialize extensions
     db.init_app(app)
-    Migrate(app, db)
+    Migrate(app, db, compare_type=True)
 
     
     return app
