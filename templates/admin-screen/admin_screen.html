@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='admin/admin.css') }}">
+</head>
+<body>
+
+    <div class="container">
+        <!-- Sidebar Navigation -->
+        <div class="sidebar">
+            <div class="nav-buttons">
+                <button class="nav-btn" onclick="showForm('updateForm')">Update KPI/Policy</button>
+                <button class="nav-btn" onclick="showForm('addForm')">Add new KPI/Policy</button>
+            </div>
+
+            <!-- Logout Button -->
+            <a href="/logout" class="logout-btn">Logout</a>
+        </div>
+
+        <!-- Main Content Area -->
+        <div class="main-content">
+            <!-- Update KPI/Policy Form -->
+            <div id="updateForm" class="form-container">
+                <label for="officeSelect">Choose Office:</label>
+                <select id="officeSelect">
+                    <option value="">Select an office</option>
+                </select>
+
+                <label for="indexSelect">Choose Index:</label>
+                <select id="indexSelect" disabled>
+                    <option value="">Select an index</option>
+                </select>
+
+                <!-- File Upload Form -->
+                <form id="csvUploadForm" action="/upload_csv" method="POST" enctype="multipart/form-data">
+                    <input type="hidden" name="office_id" id="officeInput">
+                    <input type="hidden" name="index_id" id="indexInput">
+
+                    <input type="file" name="csv_file" accept=".csv" required>
+                    <button type="submit">Upload CSV file</button>
+                </form>
+            </div>
+
+            <!-- Add KPI/Policy Form -->
+            <div id="addForm"  style="display: none;">
+                <form class="form-container">
+                    <!-- Column 1 -->
+                    <div class="form-group">
+                        <label>Index Name</label>
+                        <input type="text" name="index_name">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Office ID</label>
+                        <select  name="office_id">
+                            <option value="">Select an office</option>
+                           
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Index Info</label>
+                        <input type="text" name="index_info">
+                    </div>
+                    <div class="form-group">
+                        <label>KPI/Policy</label>
+                        <select name="kpi_policy">
+                            <option value="true">Kpi</option>
+                            <option value="false">Policy</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Chart Type</label>
+                        <select name="chart_type">
+                            <option value="bar">Bar</option>
+                            <option value="line">Line</option>
+                            <option value="pie">Pie</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Icon (Local URL)</label>
+                        <input type="text" name="icon_url">
+                    </div>
+                    <div class="form-group">
+                        <label>Source (URL)</label>
+                        <input type="url" name="source">
+                    </div>
+                    <div class="form-group">
+                        <label>News Feed ID</label>
+                        <input type="text" name="news_feed_id">
+                    </div>
+            
+                    <div class="form-group">
+                        <label>Alert</label>
+                        <select name="alert">
+                            <option value="false">False</option>
+                            <option value="true">True</option>
+
+                        </select>
+                    </div>
+            
+                    <div class="form-group">
+                        <label>Is Shown</label>
+                        <select name="is_shown">
+                            <option value="true">True</option>
+                            <option value="false">False</option>
+                        </select>
+                    </div>
+            
+                    <div class="btn-container">
+                        <button type="submit">Add Index</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function showForm(formId) {
+            document.getElementById("updateForm").style.display = "none";
+            document.getElementById("addForm").style.display = "none";
+            document.getElementById(formId).style.display = "block";
+        }
+
+        // Fetch and populate the Office dropdown
+        fetch("/get_offices")
+            .then(response => response.json())
+            .then(data => {
+                let officeSelect = document.getElementById("officeSelect");
+                officeSelect.innerHTML += data.map(office => `<option value="${office.id}">${office.name}</option>`).join("");
+            })
+            .catch(error => console.error("Error loading offices:", error));
+
+        // Fetch indexes when an office is selected
+        document.getElementById("officeSelect").addEventListener("change", function() {
+            let officeId = this.value;
+            let indexSelect = document.getElementById("indexSelect");
+
+            if (!officeId) {
+                indexSelect.innerHTML = '<option value="">Select an index</option>';
+                indexSelect.disabled = true;
+                return;
+            }
+
+            fetch(`/get_indexes/${officeId}`)
+                .then(response => response.json())
+                .then(data => {
+                    indexSelect.innerHTML = '<option value="">Select an index</option>' + 
+                        data.map(index => `<option value="${index.id}">${index.name}</option>`).join("");
+                    indexSelect.disabled = false;
+                })
+                .catch(error => console.error("Error loading indexes:", error));
+        });
+
+        // Ensure office & index are set before uploading CSV
+        document.getElementById("csvUploadForm").addEventListener("submit", function(event) {
+            let officeSelect = document.getElementById("officeSelect");
+            let indexSelect = document.getElementById("indexSelect");
+
+            if (!officeSelect.value || !indexSelect.value) {
+                event.preventDefault(); // Stop form submission
+                alert("Please select both an office and an index before uploading.");
+                return;
+            }
+
+            // Set hidden input values
+            document.getElementById("officeInput").value = officeSelect.value;
+            document.getElementById("indexInput").value = indexSelect.value;
+        });
+    </script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            // Handle form submission for adding an index
+            document.querySelector("#addForm form").addEventListener("submit", function (event) {
+                event.preventDefault(); // Prevent default form submission
+
+                // Create FormData object
+                let formData = new FormData(this);
+
+                // Send form data via fetch API
+                fetch("/add_index", {
+                    method: "POST",
+                    body: formData
+                })
+                .then(response => response.json()) // Convert response to JSON
+                .then(data => {
+                    if (data.success) {
+                        alert("Index added successfully!");
+                        this.reset(); // Reset form fields after successful submission
+                    } else {
+                        alert("Error: " + data.error);
+                    }
+                })
+                .catch(error => console.error("Error submitting form:", error));
+            });
+
+            // Fetch and populate the Office dropdown in "Add KPI/Policy" form
+            fetch("/get_offices")
+                .then(response => response.json())
+                .then(data => {
+                    let officeSelects = document.querySelectorAll("select[name='office_id']");
+                    officeSelects.forEach(select => {
+                        select.innerHTML += data.map(office => `<option value="${office.id}">${office.name}</option>`).join("");
+                    });
+                })
+                .catch(error => console.error("Error loading offices:", error));
+        });
+    </script>
+</body>
+</html>

@@ -16,7 +16,8 @@ def create_app(config_class=None):
     app.register_blueprint(parliament_bp)
     app.register_blueprint(info_bp)
 
-    
+    app.secret_key = "pass"  # Change this to a strong, unique key
+
     # Set default configuration or override it with a provided config class
     basedir = os.path.abspath(os.path.dirname(__file__))
     app.config['SQLALCHEMY_DATABASE_URI'] = f"sqlite:///{os.path.join(basedir, 'instance', 'sn.db')}"
