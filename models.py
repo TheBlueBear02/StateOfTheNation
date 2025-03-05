@@ -4,7 +4,7 @@ db = SQLAlchemy()
 
 class Index(db.Model):
     __tablename__ = 'indexes'
-    id = db.Column(db.BigInteger, primary_key=True, autoincrement=True)
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     name = db.Column(db.String, nullable=False)
     info = db.Column(db.String, nullable=True)
     icon = db.Column(db.String, nullable=True)
@@ -22,7 +22,7 @@ class Index(db.Model):
 
 class IndexData(db.Model):
     __tablename__ = 'indexes_data'
-    id = db.Column(db.BigInteger, primary_key=True, autoincrement=True)
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     index_id = db.Column(db.BigInteger, db.ForeignKey('indexes.id'), nullable=False)
     label = db.Column(db.String, nullable=False)
     value = db.Column(db.BigInteger, nullable=False)
@@ -30,7 +30,7 @@ class IndexData(db.Model):
 
 class MinisterHistory(db.Model):
     __tablename__ = 'ministers_history'
-    id = db.Column(db.BigInteger, primary_key=True, autoincrement=True)
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     name = db.Column(db.String, nullable=False)
     party = db.Column(db.String, nullable=True)
     start_date = db.Column(db.String, nullable=False)  
@@ -40,7 +40,7 @@ class MinisterHistory(db.Model):
 
 class Office(db.Model):
     __tablename__ = 'offices'
-    id = db.Column(db.BigInteger, primary_key=True, autoincrement=True)
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     name = db.Column(db.String, nullable=False)
     info = db.Column(db.String, nullable=True)
     minister_id = db.Column(db.BigInteger, nullable=False)
@@ -53,7 +53,7 @@ class Office(db.Model):
 
 class Tweet(db.Model):
     __tablename__ = 'tweets'
-    id = db.Column(db.BigInteger, primary_key=True, autoincrement=True)
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     text = db.Column(db.String, nullable=False)
     date = db.Column(db.String, nullable=False)  # Consider using Date
     time = db.Column(db.String, nullable=False)  # Consider using Time
@@ -64,7 +64,7 @@ class Tweet(db.Model):
 
 class ParliamentMember(db.Model):
     __tablename__ = 'parliament_members'
-    id = db.Column(db.BigInteger, primary_key=True, autoincrement=True)
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     name = db.Column(db.String, nullable=False)
     party = db.Column(db.String, nullable=True)
     additional_role = db.Column(db.String, nullable=True)
@@ -77,7 +77,7 @@ class ParliamentMember(db.Model):
 
 class NonParliamentMember(db.Model):
     __tablename__ = 'non_parliament_members'
-    id = db.Column(db.BigInteger, primary_key=True, autoincrement=True)
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     name = db.Column(db.String, nullable=False)
     role = db.Column(db.String, nullable=True)
     start_date = db.Column(db.String, nullable=True)
@@ -88,7 +88,7 @@ class NonParliamentMember(db.Model):
 
 class OfficeBranch(db.Model):
     __tablename__ = 'office_branches'
-    id = db.Column(db.BigInteger, primary_key=True, autoincrement=True)
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     name = db.Column(db.String, nullable=False)
     office_id = db.Column(db.BigInteger, db.ForeignKey('offices.id'), nullable=False)
     image = db.Column(db.String, nullable=True)
