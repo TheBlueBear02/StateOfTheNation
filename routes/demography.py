@@ -6,7 +6,7 @@ demography_bp = Blueprint('demography', __name__)
 @demography_bp.route('/demography')
 def demography():
     # Get all the indexes with office_id = 100
-    demography_indexes = db.session.query(Index).filter_by(office_id=100).all()
+    demography_indexes = db.session.query(Index).filter_by(office_id=101).all()
 
     indexes_data = []
 

@@ -1,8 +1,11 @@
-from flask import Blueprint, render_template, request, jsonify
+from flask import Blueprint, render_template, request, jsonify, redirect, url_for, session, flash
 from datetime import datetime
 from pyluach import dates
-from models import Tweet, ParliamentMember, db
+from models import db, Tweet, ParliamentMember, Index, Office, IndexData
 import random
+from sqlalchemy.exc import SQLAlchemyError
+import csv
+import io
 
 index_bp = Blueprint('index', __name__)
 
@@ -92,6 +95,129 @@ def get_filtered_tweets():
     all_tweets = db.session.query(Tweet).filter(Tweet.topic == topic)
     
     return get_tweets_data(all_tweets)
+
+@index_bp.route('/add_index', methods=['POST'])
+def add_index():
+    try:
+        index_name = request.form.get('index_name')
+        is_kpi = request.form.get('kpi_policy') == "true"
+        news_feed_id = request.form.get('news_feed_id')
+        index_info = request.form.get('index_info')
+        alert = request.form.get('alert') == "true"
+        is_shown = request.form.get('is_shown') == "true"
+        icon_url = request.form.get('icon_url')
+        chart_type = request.form.get('chart_type')
+        office_id = request.form.get('office_id')
+        source = request.form.get('source')
+
+        if not index_name or not office_id or not chart_type:
+            return jsonify({"success": False, "error": "Index Name, Office, and Chart Type are required!"})
+
+        new_index = Index(
+            name=index_name,
+            info=index_info,
+            icon=icon_url,
+            is_kpi=is_kpi,
+            office_id=office_id,
+            news_feed_id=news_feed_id,
+            alert=alert,
+            is_shown=is_shown,
+            chart_type=chart_type,
+            source=source
+        )
+
+        db.session.add(new_index)
+        db.session.commit()
+
+        return jsonify({"success": True})
+
+    except Exception as e:
+        return jsonify({"success": False, "error": str(e)})
+
+@index_bp.route("/upload_csv", methods=["POST"])
+def upload_csv():
+    try:
+        office_id = request.form.get("office_id")
+        index_id = request.form.get("index_id")
+        file = request.files.get("csv_file")
+
+        if not file or not office_id or not index_id:
+            return jsonify({"error": "Missing required parameters"}), 400
+
+        # Convert file stream to text mode
+        file_stream = io.StringIO(file.stream.read().decode("utf-8"))
+        csv_reader = csv.reader(file_stream)
+
+        next(csv_reader, None)  # Skip header row if present
+
+        # Get existing labels (dates) for the given index_id
+        existing_labels = {
+            row.label.strftime("%d.%m.%Y") if isinstance(row.label, datetime) else row.label
+            for row in db.session.query(IndexData.label).filter_by(index_id=index_id).all()
+        }
+
+        new_rows = []
+
+        for row in csv_reader:
+            date_str, value = row[0].strip(), row[1].strip()
+            try:
+                date_obj = datetime.strptime(date_str, "%d.%m.%Y").strftime("%d.%m.%Y")
+            except ValueError:
+                return jsonify({"error": f"Invalid date format: {date_str}"}), 400
+
+       
+            # Insert only if label (date) is new
+            if date_obj.strip() not in {label.strip() for label in existing_labels}:
+                new_rows.append(IndexData(index_id=index_id, label=date_obj, value=value))
+
+        # Insert new rows in bulk if there are any
+        #if new_rows:
+        #    db.session.bulk_save_objects(new_rows)
+        #    db.session.commit()
+
+        return jsonify({"message": f"Inserted {len(new_rows)} new rows"}), 200
+
+    except SQLAlchemyError as e:
+        db.session.rollback()
+        return jsonify({"error": "Database error", "details": str(e)}), 500
+
+    except Exception as e:
+        return jsonify({"error": "Unexpected error", "details": str(e)}), 500
+
+# Define the admin password (store securely in production)
+ADMIN_PASSWORD = "pass"
+
+@index_bp.route("/get_offices", methods=["GET"])
+def get_offices():
+    return jsonify([{"id": o.id, "name": o.name} for o in Office.query.all()])
+
+
+@index_bp.route("/get_indexes/<int:office_id>", methods=["GET"])
+def get_indexes(office_id):
+    indexes = db.session.query(Index).filter_by(office_id=office_id).all()
+    return jsonify([{"id": index.id, "name": index.name} for index in indexes])
+
+
+@index_bp.route("/admin", methods=["GET", "POST"])
+def admin():
+    if "admin_logged_in" in session:
+        indexes = db.session.query(Index).all()
+        return render_template("admin-screen/admin_screen.html", indexes=indexes)  
+
+    if request.method == "POST":
+        password = request.form.get("password")
+        if password == ADMIN_PASSWORD:
+            session["admin_logged_in"] = True
+            return redirect(url_for("index.admin"))
+
+        return render_template("admin-screen/admin_login.html", error="Incorrect password")
+
+    return render_template("admin-screen/admin_login.html")
+
+@index_bp.route("/logout")
+def logout():
+    session.pop("admin_logged_in", None)
+    return redirect(url_for("index.admin"))  # Redirects back to the admin login page
 
 
 @index_bp.route("/knesschat")
