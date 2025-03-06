@@ -3,9 +3,9 @@ from datetime import datetime
 from pyluach import dates
 from models import db, Tweet, ParliamentMember, Index, Office, IndexData
 import random
-from sqlalchemy.exc import SQLAlchemyError
 import csv
 import io
+from sqlalchemy import exists
 
 index_bp = Blueprint('index', __name__)
 
@@ -134,6 +134,9 @@ def add_index():
     except Exception as e:
         return jsonify({"success": False, "error": str(e)})
 
+
+
+
 @index_bp.route("/upload_csv", methods=["POST"])
 def upload_csv():
     try:
@@ -144,45 +147,69 @@ def upload_csv():
         if not file or not office_id or not index_id:
             return jsonify({"error": "Missing required parameters"}), 400
 
-        # Convert file stream to text mode
-        file_stream = io.StringIO(file.stream.read().decode("utf-8"))
-        csv_reader = csv.reader(file_stream)
+        try:
+            index_id = int(index_id)  # Ensure index_id is an integer
+        except ValueError:
+            return jsonify({"error": "Invalid index_id"}), 400
 
+        print(f"Received file for office_id={office_id}, index_id={index_id}")
+
+        # Read file content
+        file_content = file.read().decode("utf-8")
+        file_stream = io.StringIO(file_content)
+        csv_reader = csv.reader(file_stream)
         next(csv_reader, None)  # Skip header row if present
 
-        # Get existing labels (dates) for the given index_id
-        existing_labels = {
-            row.label.strftime("%d.%m.%Y") if isinstance(row.label, datetime) else row.label
-            for row in db.session.query(IndexData.label).filter_by(index_id=index_id).all()
-        }
-
         new_rows = []
+        invalid_rows = []
+
+        # Ensure database has the latest committed data
+        db.session.commit()
 
         for row in csv_reader:
-            date_str, value = row[0].strip(), row[1].strip()
-            try:
-                date_obj = datetime.strptime(date_str, "%d.%m.%Y").strftime("%d.%m.%Y")
-            except ValueError:
-                return jsonify({"error": f"Invalid date format: {date_str}"}), 400
+            if len(row) < 2:
+                print(f"Skipping row due to insufficient columns: {row}")
+                continue
 
-       
-            # Insert only if label (date) is new
-            if date_obj.strip() not in {label.strip() for label in existing_labels}:
+            date_str, value = row[0].strip(), row[1].strip()
+
+            try:
+                date_obj = datetime.strptime(date_str, "%d.%m.%Y").strftime("%d.%m.%Y").strip()
+            except ValueError:
+                invalid_rows.append(date_str)
+                continue
+
+            # Check if the row exists in the DB using LIKE for better matching
+            row_exists = db.session.query(
+                exists().where(
+                    (IndexData.index_id == index_id) &
+                    (IndexData.label.like(f"%{date_obj}%"))  # Flexible match
+                )
+            ).scalar()
+
+            if row_exists:
+                print(f"Date {date_obj} already exists in DB, skipping.")
+            else:
+                print(f"Date {date_obj} not found in DB, adding to new rows.")
                 new_rows.append(IndexData(index_id=index_id, label=date_obj, value=value))
 
-        # Insert new rows in bulk if there are any
-        #if new_rows:
-        #    db.session.bulk_save_objects(new_rows)
-        #    db.session.commit()
+        if invalid_rows:
+            print(f"Skipped invalid dates: {invalid_rows}")
 
-        return jsonify({"message": f"Inserted {len(new_rows)} new rows"}), 200
-
-    except SQLAlchemyError as e:
-        db.session.rollback()
-        return jsonify({"error": "Database error", "details": str(e)}), 500
+        if new_rows:
+            #db.session.bulk_save_objects(new_rows)
+            #db.session.commit()
+            print(f"Inserted {len(new_rows)} new records.")
+            return jsonify({"message": f"Inserted {len(new_rows)} new records"}), 200
+        else:
+            return jsonify({"message": "No new records to insert"}), 200
 
     except Exception as e:
-        return jsonify({"error": "Unexpected error", "details": str(e)}), 500
+        print(f"Error: {e}")
+        return jsonify({"error": str(e)}), 500
+
+
+
 
 # Define the admin password (store securely in production)
 ADMIN_PASSWORD = "pass"
