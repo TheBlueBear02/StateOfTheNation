@@ -7,23 +7,23 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='admin/admin.css') }}">
 </head>
 <body>
-
+    
     <div class="container">
         <!-- Sidebar Navigation -->
         <div class="sidebar">
             <div class="nav-buttons">
-                <button class="nav-btn" onclick="showForm('updateForm')">Update KPI/Policy</button>
-                <button class="nav-btn" onclick="showForm('addForm')">Add new KPI/Policy</button>
+                <button class="nav-btn" onclick="showForm('updateForm')">Update Index</button>
+                <button class="nav-btn" onclick="showForm('addForm')">Add new Index</button>
             </div>
 
             <!-- Logout Button -->
             <a href="/logout" class="logout-btn">Logout</a>
         </div>
-
+        
         <!-- Main Content Area -->
         <div class="main-content">
-            <!-- Update KPI/Policy Form -->
-            <div id="updateForm" class="form-container">
+            <!-- Update Index Form -->
+            <div id="updateForm" style="display: none;" class="form-container">
                 <label for="officeSelect">Choose Office:</label>
                 <select id="officeSelect">
                     <option value="">Select an office</option>
@@ -35,7 +35,7 @@
                 </select>
 
                 <!-- File Upload Form -->
-                <form id="csvUploadForm" action="/upload_csv" method="POST" enctype="multipart/form-data">
+                <form  id="csvUploadForm" action="/upload_csv" method="POST" enctype="multipart/form-data">
                     <input type="hidden" name="office_id" id="officeInput">
                     <input type="hidden" name="index_id" id="indexInput">
 
@@ -44,7 +44,7 @@
                 </form>
             </div>
 
-            <!-- Add KPI/Policy Form -->
+            <!-- Add Index Form -->
             <div id="addForm"  style="display: none;">
                 <form class="form-container">
                     <!-- Column 1 -->
@@ -65,7 +65,7 @@
                         <input type="text" name="index_info">
                     </div>
                     <div class="form-group">
-                        <label>KPI/Policy</label>
+                        <label>Index</label>
                         <select name="kpi_policy">
                             <option value="true">Kpi</option>
                             <option value="false">Policy</option>
@@ -115,6 +115,9 @@
                     </div>
                 </form>
             </div>
+        </div>
+        <div class="logo-div">
+            <img src="/static/images/header/header-logo.png" width="100%"></a></td>
         </div>
     </div>
 
@@ -197,7 +200,7 @@
                 .catch(error => console.error("Error submitting form:", error));
             });
 
-            // Fetch and populate the Office dropdown in "Add KPI/Policy" form
+            // Fetch and populate the Office dropdown in "Add Index" form
             fetch("/get_offices")
                 .then(response => response.json())
                 .then(data => {

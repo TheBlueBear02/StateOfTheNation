@@ -145,12 +145,20 @@
     <!-- Second section -->
     <div class="section section2">
         <div class="slide slide2">      
-            
+            <div class="block">
+                <p class="header">חלוקה לזרמי חינוך בכיתות א'</p> 
+
+                <div class="graph_div" style="width: 90%; margin: auto;"> <!-- Chart -->
+                    <img style="width: 100%; margin:0vh auto;" src="static\images\demography\חלוקה לזרמי חינוך 1.png">
+
+                    
+                </div>
+            </div>
         </div>
         <div class="slide slide2">
             <div class="block">
                 <p class="header">דתות</p> 
-                <div class="graph_div" style="width: 100%; height: 40vw;"> <!-- Chart -->
+                <div class="graph_div" style="width: 50%;"> <!-- Chart -->
                     <canvas id="chart" width="400" style="width: 100%; padding: 0;"></canvas>
                     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>                           
                     <script type="text/javascript"> // Chart
@@ -211,7 +219,7 @@
         <div class="slide slide2">
             <div class="block">
                 <p class="header" style="float: right;">יהודים</p> 
-                <div class="graph_div" style="width: 100%; height: 40vw; "> <!-- Chart -->
+                <div class="graph_div" style="width: 50%; "> <!-- Chart -->
                     <canvas id="chart2" width="400" style=" margin: 0; padding: 0;"></canvas>
                     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>                           
                     <script type="text/javascript"> // Chart
@@ -308,7 +316,7 @@
     function onDivInView(entries, observer) {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
-                animateCounter("counter", 9899960, 9900000, 5000); // Counts from 9,899,300 to 9,900,000 over 2 seconds
+                animateCounter("counter", 9999960, 10000000, 5000); // Counts from 9,899,300 to 9,900,000 over 2 seconds
 
                 // Stop observing if you only want to run it once
                 observer.unobserve(entry.target);

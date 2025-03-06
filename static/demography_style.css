@@ -37,6 +37,7 @@ background-color: #4d7fff;
 }
 .header{
   float: right;
+  direction: rtl;
 }
 
 .section{
@@ -53,6 +54,7 @@ background-color: #4d7fff;
     padding: 0;
     padding-top: 3vh;
     height: 80vh;
+    width: 100%;
 }
 
 
@@ -79,7 +81,7 @@ background-color: #4d7fff;
 }
 .graph_div{
     margin: 0 auto;
-    width: 100%;
+    width: 90%;
     margin-top: 2vw;
     margin-bottom: 2vw;
 }
