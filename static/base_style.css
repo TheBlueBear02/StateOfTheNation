@@ -18,7 +18,11 @@ body {
   padding: .5vh;
   border-bottom: 0.3vh solid rgb(177, 177, 177);
 }
-
+.footer{
+  width: 55vw;
+  height: 1vh;
+  margin: 1vh auto;
+}
 .sidebar-open {
   height: 100%;
   width: 23vw;
@@ -46,7 +50,7 @@ body {
 .main{
   width: 60vw;
   margin: 0 auto;
-  height: 82vh;
+  height: 85vh;
   padding: 0;
   
 }
