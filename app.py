@@ -2,7 +2,7 @@ import os
 from flask import Flask
 from flask_migrate import Migrate
 from models import db
-from routes import index_bp, offices_bp, demography_bp, economy_bp, parliament_bp, info_bp
+from routes import index_bp, offices_bp, demography_bp, economy_bp, parliament_bp, info_bp, admin_bp
 
 # Create the app factory
 def create_app(config_class=None):
@@ -15,8 +15,9 @@ def create_app(config_class=None):
     app.register_blueprint(economy_bp)
     app.register_blueprint(parliament_bp)
     app.register_blueprint(info_bp)
-
-    app.secret_key = "pass"  # Change this to a strong, unique key
+    app.register_blueprint(admin_bp)
+    
+    app.secret_key = os.getenv("ADMIN_PASSWORD")
 
     # Set default configuration or override it with a provided config class
     basedir = os.path.abspath(os.path.dirname(__file__))
