@@ -142,38 +142,61 @@ td {
 /* bubbles */
 .kpi {
     margin-left: 25%;
-    background: radial-gradient(#6ba4fa, #447dd3);
+    background: #447dd3; /* Base color */
+    background: linear-gradient(145deg, #4d89e8, #3a6ab3); /* Subtle gradient for depth */
     border-radius: 50%;
     display: inline-block;
     cursor: pointer;
-    animation: entrence 1.3s ease 0s 1 normal forwards; /* attention 15s linear 1.4s 30; */
-    box-shadow: 0vw 0.2vw 0.2vw .1vw rgb(206, 206, 206);
+    animation: entrence 1.3s ease 0s 1 normal forwards;
+    box-shadow: 
+        inset 0 -2px 4px rgba(0,0,0,0.15),  /* Reduced inner shadow at bottom */
+        inset 0 2px 4px rgba(255,255,255,0.2), /* Kept inner highlight at top */
+        0 2px 6px -2px rgba(0,0,0,0.2), /* Reduced outer shadow */
+        0 6px 12px rgba(0,0,0,0.15); /* Reduced larger shadow for depth */
+    position: relative;
+    transition: all 0.3s ease;
 }
 
 .kpi:hover {
-    background: radial-gradient(#5396fc, #447dd3);
-    margin-left: 25%;
+    background: linear-gradient(145deg, #5494f5, #447dd3);
+    transform: translateY(-2px);
+    box-shadow: 
+        inset 0 -2px 4px rgba(0,0,0,0.15),
+        inset 0 2px 4px rgba(255,255,255,0.3),
+        0 4px 8px -2px rgba(0,0,0,0.3),
+        0 8px 16px rgba(0,0,0,0.15);
 }
 
 
 
-.policy{
+.policy {
     margin-left: 25%;
     height: 4.5vw;
     width: 4.5vw;
-    background: radial-gradient(#e3e3e3, #c3c3c3);
+    background: #c3c3c3; /* Base color */
+    background: linear-gradient(145deg, #d4d4d4, #b4b4b4); /* Subtle gradient for depth */
     border-radius: 50%;
     display: inline-block;
     cursor: pointer;
-    animation: entrence 1.3s ease 0s 1 normal forwards; /* attention 15s linear 1.4s 30; */
-    box-shadow: 0vw 0.2vw 0.2vw .1vw rgb(206, 206, 206);
+    animation: entrence 1.3s ease 0s 1 normal forwards;
+    box-shadow: 
+        inset 0 -2px 4px rgba(0,0,0,0.15),  /* Reduced inner shadow at bottom */
+        inset 0 2px 4px rgba(255,255,255,0.2), /* Kept inner highlight at top */
+        0 2px 6px -2px rgba(0,0,0,0.2), /* Reduced outer shadow */
+        0 6px 12px rgba(0,0,0,0.15); /* Reduced larger shadow for depth */
+    position: relative;
+    transition: all 0.3s ease;
 }
 
 .policy:hover {
-
-    background: rgb(211, 211, 211);
+    background: linear-gradient(145deg, #e3e3e3, #c3c3c3);
+    transform: translateY(-2px);
+    box-shadow: 
+        inset 0 -2px 4px rgba(0,0,0,0.15),
+        inset 0 2px 4px rgba(255,255,255,0.3),
+        0 4px 8px -2px rgba(0,0,0,0.3),
+        0 8px 16px rgba(0,0,0,0.15);
     margin-left: 25%;
-
 }
 
 .main_bubble {
@@ -191,6 +214,7 @@ td {
     object-fit: cover;    /* Crop the image to fill the container */
     background-size: 90%; /* Increase to zoom in */
     background-position: center; /* Keep focus in the middle */
+
 }
 
 .main_bubble:hover {
@@ -199,37 +223,63 @@ td {
     background-color: rgb(155, 155, 155);
 
 }
-
 .alert_bubble {
     margin-left: 25%;
     height: 6vw;
     width: 6vw;
-    background: radial-gradient(#ff5d5d, #ee3f33);
+    background: #ee3f33; /* Base color */
+    background: linear-gradient(145deg, #ff5d5d, #ee3f33); /* Subtle gradient for depth */
     border-radius: 50%;
     display: inline-block;
     cursor: pointer;
-    box-shadow: 0vw 0.2vw 0.2vw .1vw rgb(206, 206, 206);
+    box-shadow: 
+        inset 0 -2px 4px rgba(0,0,0,0.15),
+        inset 0 2px 4px rgba(255,255,255,0.2),
+        0 2px 6px -2px rgba(0,0,0,0.2),
+        0 6px 12px rgba(0,0,0,0.15);
+    position: relative;
+    transition: all 0.3s ease;
     animation: 
-    entrence 1.3s ease 0s 1 forwards, /* First animation */
-    pulsate-bck 1.5s linear 1.5s infinite; /* Third animation */
+        entrence 1.3s ease 0s 1 forwards,
+        pulsate-bck 1.5s linear 1.5s infinite;
 }
-
+.alert_bubble:hover {
+    background: linear-gradient(145deg, #ff6b6b, #ff4040);
+    transform: translateY(-2px);
+    box-shadow: 
+        inset 0 -2px 4px rgba(0,0,0,0.15),
+        inset 0 2px 4px rgba(255,255,255,0.3),
+        0 4px 8px -2px rgba(0,0,0,0.3),
+        0 8px 16px rgba(255,0,0,0.15);
+}
 .explain_span {
     margin-right: 6vw;
     display: block;
     float: right;
     height: 3vw;
     width: 3vw;
-    background: radial-gradient(#cecece, #ababab);
+    background: #ababab; /* Base color */
+    background: linear-gradient(145deg, #cecece, #9a9a9a); /* Subtle gradient for depth */
     border-radius: 50%;
     cursor: pointer;
     position: absolute;
     left: 90%;
+    box-shadow: 
+        inset 0 -2px 4px rgba(0,0,0,0.15),
+        inset 0 2px 4px rgba(255,255,255,0.2),
+        0 2px 6px -2px rgba(0,0,0,0.2),
+        0 6px 12px rgba(0,0,0,0.15);
+    transition: all 0.3s ease;
 }
 
 .explain_span:hover {
-    background: radial-gradient(#a3a3a3, #8b8b8b);
-
+    background: linear-gradient(145deg, #d8d8d8, #a3a3a3);
+    transform: translateY(-1px);
+    box-shadow: 
+        inset 0 -2px 4px rgba(0,0,0,0.15),
+        inset 0 2px 4px rgba(255,255,255,0.3),
+        0 4px 8px -2px rgba(0,0,0,0.3),
+        0 8px 16px rgba(0,0,0,0.15);
 }
 
 
