@@ -534,7 +534,8 @@ background: #c5c5c5;
 }
 .medium_icon{
     width: 5vh;
-    height: 5h;
+    height: 5vh;
+    margin-bottom: 1vh;
 }
 .large_icon{
     width: 6vh;
