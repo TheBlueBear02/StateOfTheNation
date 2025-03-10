@@ -6,9 +6,9 @@
     <title>Admin Panel</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='admin/admin.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
 </head>
 <body>
-  
     <div class="container">
         <!-- Sidebar Navigation -->
         <div class="sidebar">
@@ -16,6 +16,10 @@
             <div class="nav-section">
                 <h4 class="section-title">Forms</h4>
                 <div class="nav-buttons">
+                    <button class="nav-btn" onclick="showForm('indexDashboard')">
+                        <i class="fas fa-chart-line"></i>
+                        <span style="margin-left: 10px;">Index Dashboard</span>
+                    </button>
                     <button class="nav-btn" onclick="showForm('updateForm')">
                         <i class="fas fa-upload"></i>
                         <span style="margin-left: 10px;">Update Index</span>
@@ -47,7 +51,49 @@
         
         <!-- Main Content Area -->
         <div class="main-content">
-              <!-- Results Table (renamed to View Index Data) -->
+            <!-- Index Dashboard -->
+            <div id="indexDashboard" class="section">
+                <div class="indices-dashboard">
+                    <h2>Index Dashboard</h2>
+                    
+                    <!-- Offices Section -->
+                    <div class="index-section">
+                        <div class="section-header" onclick="toggleSection(this)">
+                            <h3>Offices</h3>
+                            <button class="toggle-btn">
+                                <i class="fas fa-chevron-up"></i>
+                            </button>
+                        </div>
+                        <div id="officesContainer" class="section-content">
+                            <!-- Office subsections will be added here -->
+                        </div>
+                    </div>
+
+                    <!-- Economy Section -->
+                    <div class="index-section">
+                        <div class="section-header" onclick="toggleSection(this)">
+                            <h3>Economy</h3>
+                            <button class="toggle-btn">
+                                <i class="fas fa-chevron-up"></i>
+                            </button>
+                        </div>
+                        <div id="economyGrid" class="indices-grid section-content"></div>
+                    </div>
+
+                    <!-- Demography Section -->
+                    <div class="index-section">
+                        <div class="section-header" onclick="toggleSection(this)">
+                            <h3>Demography</h3>
+                            <button class="toggle-btn">
+                                <i class="fas fa-chevron-up"></i>
+                            </button>
+                        </div>
+                        <div id="demographyGrid" class="indices-grid section-content"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Results Table (renamed to View Index Data) -->
             <div id="resultsTable" style="display: none;">
                 <div class="form-container">
                     <h3>View Index Data</h3>
@@ -253,6 +299,7 @@
             document.getElementById("updateForm").style.display = "none";
             document.getElementById("addForm").style.display = "none";
             document.getElementById("resultsTable").style.display = "none";
+            document.getElementById("indexDashboard").style.display = "none";
             
             // Show the selected form/table
             document.getElementById(formId).style.display = "block";
@@ -331,6 +378,14 @@
                     btn.classList.add('active');
                 }
             });
+
+            // If showing index dashboard, refresh the data
+            if (formId === 'indexDashboard') {
+                fetch('/admin/indices-status')
+                    .then(res => res.json())
+                    .then(updateDashboard)
+                    .catch(err => console.error('Failed to update indices:', err));
+            }
         }
 
         // Fetch and populate the Office dropdown
@@ -416,6 +471,161 @@
                 })
                 .catch(error => console.error("Error loading offices:", error));
         });
+    </script>
+    <script>
+        function toggleSection(header) {
+            const content = header.nextElementSibling;
+            const toggleBtn = header.querySelector('.toggle-btn i');
+            
+            content.classList.toggle('collapsed');
+            toggleBtn.classList.toggle('fa-chevron-down');
+            toggleBtn.classList.toggle('fa-chevron-up');
+        }
+
+        function updateOfficesSection(officesData) {
+            const container = document.getElementById('officesContainer');
+            if (!container) return;
+
+            container.innerHTML = '';
+
+            for (const [officeName, indices] of Object.entries(officesData)) {
+                const officeSection = document.createElement('div');
+                officeSection.className = 'office-subsection';
+                
+                officeSection.innerHTML = `
+                    <div class="office-header" onclick="toggleOffice(this)">
+                        <h4>${officeName}</h4>
+                        <button class="toggle-btn">
+                            <i class="fas fa-chevron-up"></i>
+                        </button>
+                    </div>
+                    <div class="indices-grid"></div>
+                `;
+
+                const grid = officeSection.querySelector('.indices-grid');
+                if (!indices || Object.keys(indices).length === 0) {
+                    grid.innerHTML = '<p>No indices found</p>';
+                } else {
+                    for (const [indexName, indexInfo] of Object.entries(indices)) {
+                        const card = document.createElement('div');
+                        card.className = `index-card ${indexInfo.status}`;
+                        
+                        let statusText = indexInfo.status.charAt(0).toUpperCase() + indexInfo.status.slice(1);
+                        let lastUpdate = 'Invalid date format';
+                        if (indexInfo.status !== 'error' || (indexInfo.error && !indexInfo.error.includes('Invalid date format'))) {
+                            lastUpdate = indexInfo.last_update || 'Never';
+                        }
+
+                        card.innerHTML = `
+                            <h3>${indexName}</h3>
+                            <p>Last Update: ${lastUpdate}</p>
+                            <p class="status-text ${indexInfo.status}">Status: ${statusText}</p>
+                            ${indexInfo.error ? `<p class="error-message">${indexInfo.error}</p>` : ''}
+                        `;
+                        
+                        grid.appendChild(card);
+                    }
+                }
+
+                // Add click handler for office toggle
+                const toggleBtn = officeSection.querySelector('.toggle-btn');
+                const indicesGrid = officeSection.querySelector('.indices-grid');
+                toggleBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();  // Prevent event bubbling
+                    indicesGrid.classList.toggle('collapsed');
+                    toggleBtn.querySelector('i').classList.toggle('fa-chevron-down');
+                    toggleBtn.querySelector('i').classList.toggle('fa-chevron-up');
+                });
+
+                container.appendChild(officeSection);
+            }
+        }
+
+        function toggleOffice(header) {
+            const content = header.nextElementSibling;
+            const toggleBtn = header.querySelector('.toggle-btn i');
+            
+            content.classList.toggle('collapsed');
+            toggleBtn.classList.toggle('fa-chevron-down');
+            toggleBtn.classList.toggle('fa-chevron-up');
+        }
+
+        function updateIndicesDashboard() {
+            fetch('/admin/indices-status')
+                .then(response => response.json())
+                .then(data => {
+                    updateOfficesSection(data.offices);
+                    updateSection('economy', data.economy);
+                    updateSection('demography', data.demography);
+                })
+                .catch(error => {
+                    console.error('Error fetching indices status:', error);
+                });
+        }
+
+        function updateSection(sectionId, data) {
+            const grid = document.getElementById(`${sectionId}Grid`);
+            if (!grid) return;
+
+            grid.innerHTML = '';
+
+            if (!data || Object.keys(data).length === 0) {
+                grid.innerHTML = '<p>No indices found</p>';
+                return;
+            }
+
+            for (const [indexName, indexInfo] of Object.entries(data)) {
+                const card = document.createElement('div');
+                card.className = `index-card ${indexInfo.status}`;
+                
+                let statusText = indexInfo.status.charAt(0).toUpperCase() + indexInfo.status.slice(1);
+                let lastUpdate = 'Invalid date format';
+                if (indexInfo.status !== 'error' || (indexInfo.error && !indexInfo.error.includes('Invalid date format'))) {
+                    lastUpdate = indexInfo.last_update || 'Never';
+                }
+
+                card.innerHTML = `
+                    <h3>${indexName}</h3>
+                    <p>Last Update: ${lastUpdate}</p>
+                    <p class="status-text ${indexInfo.status}">Status: ${statusText}</p>
+                `;
+                
+                grid.appendChild(card);
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            updateIndicesDashboard();
+            setInterval(updateIndicesDashboard, 5 * 60 * 1000);
+        });
+    </script>
+    <script>
+        // Update your CSS
+        document.head.insertAdjacentHTML('beforeend', `
+            <style>
+                .section-header {
+                    cursor: pointer;
+                    user-select: none;
+                }
+
+                .section-header:hover {
+                    background-color: rgba(33, 150, 243, 0.05);
+                }
+
+                .office-header {
+                    cursor: pointer;
+                    user-select: none;
+                }
+
+                .office-header:hover {
+                    background-color: rgba(33, 150, 243, 0.05);
+                }
+
+                .toggle-btn {
+                    pointer-events: none; /* This makes the button part of the header click */
+                }
+            </style>
+        `);
     </script>
 </body>
 </html>
