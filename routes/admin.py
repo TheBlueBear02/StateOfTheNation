@@ -266,7 +266,8 @@ def get_indices_status():
                 index_data = {
                     'name': index.name,
                     'last_update': None,
-                    'status': 'empty'
+                    'status': 'empty',
+                    'is_kpi': index.is_kpi
                 }
 
                 if last_record:
