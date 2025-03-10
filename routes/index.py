@@ -93,6 +93,10 @@ def get_filtered_tweets():
     
     return get_tweets_data(all_tweets)
 
+@index_bp.route('/knesschat-screen')
+def knesschat_screen():
+    return render_template('knesschat-screen.html')
+
 @index_bp.route('/')
 def index():
     # Knesschat backend
@@ -100,4 +104,8 @@ def index():
     if is_mobile():
         return render_template("mobile.html")  # Render mobile version
     return render_template('index.html', today_date=get_date(), hebrew_date=get_hebrew_date(), km_data=km_data)  # Render desktop version
+
+@index_bp.route('/terms_of_use')
+def terms_of_use():
+    return render_template('terms_of_use.html')
 

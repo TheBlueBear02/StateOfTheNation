@@ -482,6 +482,29 @@
             toggleBtn.classList.toggle('fa-chevron-up');
         }
 
+        function createIndexCard(indexName, indexInfo) {
+            const card = document.createElement('div');
+            card.className = `index-card ${indexInfo.status}`;
+            
+            let statusText = indexInfo.status.charAt(0).toUpperCase() + indexInfo.status.slice(1);
+            let lastUpdate = 'Invalid date format';
+            if (indexInfo.status !== 'error' || (indexInfo.error && !indexInfo.error.includes('Invalid date format'))) {
+                lastUpdate = indexInfo.last_update || 'Never';
+            }
+
+            // Add type text based on is_kpi
+            const typeText = indexInfo.is_kpi ? 'מדד' : 'מדיניות';
+
+            card.innerHTML = `
+                <h3>${indexName}</h3>
+                <p class="index-type">${typeText}</p>
+                <p>Last Update: ${lastUpdate}</p>
+                <p class="status-text ${indexInfo.status}">Status: ${statusText}</p>
+            `;
+            
+            return card;
+        }
+
         function updateOfficesSection(officesData) {
             const container = document.getElementById('officesContainer');
             if (!container) return;
@@ -507,23 +530,7 @@
                     grid.innerHTML = '<p>No indices found</p>';
                 } else {
                     for (const [indexName, indexInfo] of Object.entries(indices)) {
-                        const card = document.createElement('div');
-                        card.className = `index-card ${indexInfo.status}`;
-                        
-                        let statusText = indexInfo.status.charAt(0).toUpperCase() + indexInfo.status.slice(1);
-                        let lastUpdate = 'Invalid date format';
-                        if (indexInfo.status !== 'error' || (indexInfo.error && !indexInfo.error.includes('Invalid date format'))) {
-                            lastUpdate = indexInfo.last_update || 'Never';
-                        }
-
-                        card.innerHTML = `
-                            <h3>${indexName}</h3>
-                            <p>Last Update: ${lastUpdate}</p>
-                            <p class="status-text ${indexInfo.status}">Status: ${statusText}</p>
-                            ${indexInfo.error ? `<p class="error-message">${indexInfo.error}</p>` : ''}
-                        `;
-                        
-                        grid.appendChild(card);
+                        grid.appendChild(createIndexCard(indexName, indexInfo));
                     }
                 }
 
@@ -575,22 +582,7 @@
             }
 
             for (const [indexName, indexInfo] of Object.entries(data)) {
-                const card = document.createElement('div');
-                card.className = `index-card ${indexInfo.status}`;
-                
-                let statusText = indexInfo.status.charAt(0).toUpperCase() + indexInfo.status.slice(1);
-                let lastUpdate = 'Invalid date format';
-                if (indexInfo.status !== 'error' || (indexInfo.error && !indexInfo.error.includes('Invalid date format'))) {
-                    lastUpdate = indexInfo.last_update || 'Never';
-                }
-
-                card.innerHTML = `
-                    <h3>${indexName}</h3>
-                    <p>Last Update: ${lastUpdate}</p>
-                    <p class="status-text ${indexInfo.status}">Status: ${statusText}</p>
-                `;
-                
-                grid.appendChild(card);
+                grid.appendChild(createIndexCard(indexName, indexInfo));
             }
         }
 
