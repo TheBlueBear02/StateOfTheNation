@@ -21,7 +21,7 @@ body {
 .footer{
   width: 55vw;
   height: 1vh;
-  margin: 1vh auto;
+  margin: 0vh auto;
 }
 .sidebar-open {
   height: 100%;

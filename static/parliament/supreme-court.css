@@ -163,20 +163,22 @@ body{
         margin: 0 auto;
     }
     .court-span{
-        width: 6vw;
-        height: 6vw;
-        background-color: rgb(179, 179, 208);
-        border-radius: 50%;
-        display:block;
-        padding: 0;
-        margin-left: 0vw;
-        margin: auto;
-        background-size: cover;
-        border: .1vw solid grey;
-        transition: transform 0.2s ease;
-        cursor: pointer;
-        box-shadow: 0px .1vw .5vw gray;
-        border: .4vw solid;
+      width: 6vw;
+      height: 6vw;
+      background-color: #829a9b85;  /* More modern blue color */
+      border-radius: 50%;
+      display: block;
+      margin: auto;
+      background-size: cover;
+      border: 0.5vw solid rgba(0, 0, 0, 0.5);  /* Subtle white border */
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);  /* Smooth transition */
+      cursor: pointer;
+      box-shadow: 
+          0 0.2vw 0.4vw rgba(0, 0, 0, 0.1),  /* Subtle shadow */
+          0 0.4vw 0.8vw rgba(0, 0, 0, 0.1),  /* Medium shadow */
+          inset 0 0.1vw 0.3vw rgba(255, 255, 255, 0.2);  /* Inner highlight */
+      position: relative;
+      overflow: hidden;
     }
     .space-span{
         width: 4wv;
@@ -358,7 +360,7 @@ h5{
 }
 
 .info-div-s{
-  margin: 0;
+  margin: 2vh auto;
   padding: 0;
   width: 23vw;
   height: 10vw;

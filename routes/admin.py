@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, jsonify, redirect, url_for, session
+from flask import Blueprint, render_template, request, jsonify, redirect, url_for, session, json
 from models import db, Index, IndexData, Office
 from datetime import datetime
 import csv
@@ -6,6 +6,8 @@ import io
 from sqlalchemy import exists
 import os
 from dotenv import load_dotenv
+from elasticsearch import Elasticsearch
+import elasticsearch
 
 # Load environment variables
 load_dotenv()
@@ -218,3 +220,124 @@ def delete_index_data(row_id):
         db.session.rollback()
         print(f"Error deleting index data: {str(e)}")
         return jsonify({"success": False, "error": str(e)}), 500
+
+def parse_date(date_str):
+    """Parse different date formats and return year and month"""
+    try:
+        # Try to parse full date format (31.1.2025)
+        if '.' in date_str:
+            date_obj = datetime.strptime(date_str, '%d.%m.%Y')
+            return date_obj.year, date_obj.month
+        # Try to parse year only format (2025)
+        else:
+            year = int(date_str)
+            return year, None
+    except Exception as e:
+        print(f"Error parsing date {date_str}: {e}")
+        return None, None
+
+def get_indices_status():
+    """Get status for all indices comparing their last label with current date"""
+    current_date = datetime.now()
+    current_year = current_date.year
+    current_month = current_date.month
+    
+    indices_info = {
+        'offices': {},  # This will now be a nested dictionary by office
+        'economy': {},
+        'demography': {}
+    }
+    
+    try:
+        # First, get all offices with id < 100
+        offices = db.session.query(Office).filter(Office.id < 100).all()
+        # Initialize sub-dictionaries for each office
+        indices_info['offices'] = {office.name: {} for office in offices}
+        
+        indices = db.session.query(Index).all()
+        
+        for index in indices:
+            try:
+                last_record = (db.session.query(IndexData)
+                             .filter(IndexData.index_id == index.id)
+                             .order_by(IndexData.label.desc(), IndexData.id.desc())
+                             .first())
+                
+                index_data = {
+                    'name': index.name,
+                    'last_update': None,
+                    'status': 'empty'
+                }
+
+                if last_record:
+                    year, month = parse_date(last_record.label)
+                    
+                    if year:
+                        if month:
+                            is_current = (year == current_year and 
+                                        month == current_month)
+                        else:
+                            is_current = (year == current_year or year == current_year - 1)
+                        
+                        index_data.update({
+                            'last_update': last_record.label,
+                            'status': 'current' if is_current else 'outdated'
+                        })
+                    else:
+                        index_data.update({
+                            'last_update': last_record.label,
+                            'status': 'error',
+                            'error': 'Invalid date format'
+                        })
+
+                # Group assignment with office subdivision
+                if index.office_id == 100:
+                    indices_info['economy'][index.name] = index_data
+                elif index.office_id == 101:
+                    indices_info['demography'][index.name] = index_data
+                elif index.office_id < 100:
+                    # Get office name
+                    office_name = next((office.name for office in offices if office.id == index.office_id), 'Other')
+                    indices_info['offices'][office_name][index.name] = index_data
+                    
+            except Exception as e:
+                error_data = {
+                    'name': index.name,
+                    'last_update': None,
+                    'status': 'error',
+                    'error': str(e)
+                }
+                
+                if index.office_id == 100:
+                    indices_info['economy'][index.name] = error_data
+                elif index.office_id == 101:
+                    indices_info['demography'][index.name] = error_data
+                elif index.office_id < 100:
+                    office_name = next((office.name for office in offices if office.id == index.office_id), 'Other')
+                    indices_info['offices'][office_name][index.name] = error_data
+
+    except Exception as e:
+        print(f"Error getting indices: {e}")
+    
+    return indices_info
+
+@admin_bp.route('/admin/dashboard')
+def admin_dashboard():
+    """Render admin dashboard with initial indices status"""
+    try:
+        indices_status = get_indices_status()
+        print("Indices Status:", indices_status)  # Debug print
+        return render_template('admin_screen.html', indices_status=json.dumps(indices_status))
+    except Exception as e:
+        print(f"Error in admin_dashboard: {e}")
+        return render_template('admin_screen.html', indices_status=json.dumps({}))
+
+@admin_bp.route('/admin/indices-status')
+def get_indices_status_endpoint():
+    """API endpoint for getting indices status"""
+    try:
+        return jsonify(get_indices_status())
+    except Exception as e:
+        print(f"Error in get_indices_status_endpoint: {e}")
+        return jsonify({'error': str(e)}), 500
+
