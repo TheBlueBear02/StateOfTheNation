@@ -8,6 +8,7 @@ import os
 from dotenv import load_dotenv
 from elasticsearch import Elasticsearch
 import elasticsearch
+from functools import wraps
 
 # Load environment variables
 load_dotenv()
@@ -19,6 +20,17 @@ admin_bp = Blueprint('admin', __name__)
 ADMIN_PASSWORD = os.getenv('ADMIN_PASSWORD')
 if not ADMIN_PASSWORD:
     raise ValueError("ADMIN_PASSWORD environment variable is not set")
+
+# Add this decorator function at the top of your file
+def admin_required(f):
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        if not session.get("admin_logged_in"):
+            if request.is_json:
+                return jsonify({"error": "Authentication required", "redirect": url_for("admin.admin")}), 401
+            return redirect(url_for("admin.admin"))
+        return f(*args, **kwargs)
+    return decorated_function
 
 @admin_bp.route("/admin", methods=["GET", "POST"])
 def admin():
@@ -42,6 +54,7 @@ def logout():
     return redirect(url_for("admin.admin"))
 
 @admin_bp.route("/upload_csv", methods=["POST"])
+@admin_required
 def upload_csv():
     try:
         office_id = request.form.get("office_id")
@@ -129,6 +142,7 @@ def upload_csv():
         return jsonify({"error": str(e)}), 500
 
 @admin_bp.route("/add_index", methods=['POST'])
+@admin_required
 def add_index():
     try:
         index_name = request.form.get('index_name')
@@ -203,6 +217,7 @@ def get_index_data(office_id, index_id):
         return jsonify({"error": str(e)}), 500
 
 @admin_bp.route("/delete_index_data/<int:row_id>", methods=["DELETE"])
+@admin_required
 def delete_index_data(row_id):
     try:
         # Find the record

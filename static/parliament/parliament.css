@@ -429,3 +429,43 @@ h5{
 .screen{
   height: 90vh;
 }
+.tooltip-wrapper {
+  position: fixed;  /* Match the coin's positioning */
+  top: 32%;        /* Match the coin's top position */
+  left: 38%;       /* Match the coin's left position */
+  width: 23vw;     /* Match the coin's width */
+  height: 23vw;    /* Match the coin's height */
+}
+
+.tooltip-text {
+    visibility: hidden;
+    background-color: transparent;  /* Remove background */
+    text-align: center;
+    padding: 0vh 2vh;
+    position: absolute;
+    z-index: 9999;
+    width: max-content;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 4vh;
+    margin-bottom: 1vh;
+    font-weight: bold;  /* Add this line to make all text bold */
+}
+
+.tooltip-text .coalition {
+    color: rgb(101, 101, 232);
+}
+
+.tooltip-text .opposition {
+    color: #ffc354;
+}
+
+/* Add this new style for the slash */
+.tooltip-text .divider {
+    color: black;
+}
+
+.tooltip-wrapper:hover .tooltip-text {
+    visibility: visible;
+}
