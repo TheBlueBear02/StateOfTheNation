@@ -139,8 +139,8 @@ p{
 }
 
 .fa {
-    width: 7vh;
-    height: 7vh;
+    width: 9vh;
+    height: 9vh;
     text-align: center;
     text-decoration: none;
     border-radius: 50%;
@@ -151,8 +151,8 @@ p{
   }
   .pe {
     padding-top: 8.5%;
-    width: 4vh;
-    height: 4vh;
+    width: 3vh;
+    height: 3vh;
     margin: auto ;
   }
   
@@ -197,8 +197,8 @@ p{
 }
 
 .btn-circle {
-    width: 45px;
-    height: 45px;
+    width: 6vh;
+    height: 6vh;
     border-radius: 50%;
     border: none;
     display: flex;

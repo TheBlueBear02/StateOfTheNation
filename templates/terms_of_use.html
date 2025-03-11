@@ -5,11 +5,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Terms of Use</title>
     <style>
+        html {
+            direction: ltr;
+            overflow-y: scroll;
+            scrollbar-width: thin;
+            scrollbar-color: #ccc #f1f1f1;
+        }
+
         body {
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 20px;
             direction: rtl;
+            overflow-y: auto;
+            overflow-x: hidden;
         }
 
         /* Scrollbar styles */
@@ -35,31 +44,93 @@
             max-width: 800px;
             margin: 0 auto;
             line-height: 1.6;
+            direction: rtl;
+            padding-right: 20px;
+            padding-left: 20px;
         }
 
         /* Heading styles */
         h1 {
             color: #333;
             text-align: center;
-            margin-top: 0px;
+            margin-bottom: 30px;
         }
 
         h2 {
             color: #444;
-            margin-top: 0px;
+            margin-top: 30px;
+            margin-bottom: 15px;
         }
 
-        /* Last update section */
-        .last-update {
+        /* Section styles */
+        .section {
+            margin-bottom: 20px;
+        }
+
+        .subsection {
+            margin-right: 20px;
+            margin-bottom: 10px;
+        }
+
+        /* Link styles */
+        a {
+            color: #2196F3;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        /* Contact section */
+        .contact-section {
             margin-top: 40px;
             padding: 20px;
             border-radius: 5px;
         }
 
-        .last-update p {
-            margin: 0;
-            color: #666;
+        .contact-email {
+            color: #3a3a3a;
             font-style: italic;
+        }
+
+        /* Introduction text */
+        .intro-text {
+            margin-bottom: 30px;
+            font-size: 1.1em;
+        }
+
+        /* Add these styles to the existing <style> section in the header */
+        .last-update-section {
+            background-color: #f8f9fa;
+            border-right: 4px solid #2196F3;
+            padding: 12px 20px;
+            margin: 30px 0;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .last-update-section .update-icon {
+            color: #2196F3;
+            font-size: 1.2em;
+        }
+
+        .last-update-section .update-content {
+            flex-grow: 1;
+        }
+
+        .last-update-section .update-label {
+            font-size: 0.9em;
+        }
+
+        /* Add this new style */
+        html {
+            overflow-y: scroll;
+            scrollbar-width: thin;
+            scrollbar-color: #ccc #f1f1f1;
+            direction: rtl;
         }
     </style>
 </head>
@@ -67,28 +138,79 @@
     <div class="container">
         <h1>תנאי שימוש</h1>
         
-        <div>
-            <h2>1. קבלת התנאים</h2>
-            <p>בגישה ושימוש באתר זה, הנך מקבל ומסכים להיות מחויב לתנאים ולהוראות של הסכם זה.</p>
-
-            <h2>2. רישיון שימוש</h2>
-            <p>ניתן אישור לגישה זמנית לחומרים (מידע או תוכנה) באתר זה לצפייה אישית, לא מסחרית בלבד.</p>
-
-            <h2>3. כתב ויתור</h2>
-            <p>החומרים באתר זה מסופקים 'כמות שהם'. איננו מספקים אחריות, מפורשת או משתמעת, ובזאת מסירים ומבטלים כל אחריות אחרת כולל, ללא הגבלה, אחריות משתמעת או תנאים של סחירות, התאמה למטרה מסוימת, או אי הפרה של קניין רוחני או הפרה אחרת של זכויות.</p>
-
-            <h2>4. מגבלות</h2>
-            <p>בשום מקרה לא נהיה אנחנו או הספקים שלנו אחראים לנזקים כלשהם (כולל, ללא הגבלה, נזקים בגין אובדן נתונים או רווח, או עקב הפרעה עסקית) הנובעים משימוש או חוסר יכולת להשתמש בחומרים באתר שלנו.</p>
-
-            <h2>5. מדיניות פרטיות</h2>
-            <p>השימוש שלך באתר זה כפוף גם למדיניות הפרטיות שלנו. אנא עיין במדיניות הפרטיות שלנו, אשר מסדירה גם את האתר ומיידעת את המשתמשים על נוהלי איסוף הנתונים שלנו.</p>
-
-            <h2>6. החוק החל</h2>
-            <p>תנאים והגבלות אלה מוסדרים ומפורשים בהתאם לחוקי מדינת ישראל ואתה מסכים באופן בלתי חוזר לסמכות השיפוט הבלעדית של בתי המשפט במיקום זה.</p>
-
-            <div class="last-update">
-                <p>עודכן לאחרונה: ינואר 2025</p>
+        <div class="intro-text">
+            ברוכים הבאים לאתר "מצב האומה" ("האתר"). השימוש באתר כפוף לתנאי השימוש שלהלן. אנא קראו בעיון את התנאים לפני השימוש באתר. עצם השימוש באתר מעיד על הסכמתכם לתנאים אלה.
+        </div>
+        <div class="section">
+            <div class="subsection">
+                תאריך עדכון אחרון: ינואר 2025
             </div>
+        </div>
+
+        <div class="section">
+            <h2>1. כללי</h2>
+            <div class="subsection">
+                1.1 האתר מוצע לציבור “כמו שהוא” (”As is”) בעלי האתר לא ישאו באחריות להתאמת האתר לצורכי המתמש, וכן לאי יכולת להשתמש בשירותי האתר.
+                <br>
+                1.2 הכניסה והשימוש באתר מותרים לכל משתמש בהתאם לתנאי השימוש המפורטים במסמך זה.
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>2. השימוש באתר</h2>
+            <div class="subsection">
+                2.1 השימוש באתר מותר למטרות אישיות ולימודיות בלבד. אין להשתמש באתר למטרות מסחריות ללא קבלת אישור מראש.<br>
+                2.2 אין להעלות, לפרסם, לשלוח או להפיץ תוכן בלתי חוקי, פוגעני, משמיץ, מאיים או מפר זכויות צד ג' כלשהו.<br>
+                2.3 אין לבצע באתר כל פעולה העלולה לפגוע בתקינותו או בתפקודו.
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>3. מקורות המידע ואחריות</h2>
+            <div class="subsection">
+                3.1 האתר מסתמך על נתונים ממקורות רשמיים ואמינים ככל האפשר, אך אינו מתחייב לדיוקם, לשלמותם או לעדכניותם.<br>
+                3.2 אין לראות במידע שבאתר כייעוץ מקצועי, פיננסי, משפטי או אחר, והשימוש במידע הוא באחריות המשתמש בלבד.<br>
+                3.3 בעל האתר אינו אחראי לכל נזק ישיר או עקיף שייגרם למשתמש עקב הסתמכותו על המידע שבאתר.<br>
+                3.4 אין להסתמך על המידע אלא יש לבררו תמיד מול המקור והגורמים הממשלתיים הרלוונטיים. ככל שאתם סבורים כי נפלה טעות במידע מסוים, אנא פנו אלינו אנו נבדוק ונתקן באם נמצא טעות.
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>4. קניין רוחני</h2>
+            <div class="subsection">
+                4.1 כל הזכויות באתר, לרבות טקסטים, עיצובים, גרפיקה, לוגו ותכנים אחרים, שמורות לבעל האתר או לצדדים שלישיים שהעניקו לו רישיון שימוש.<br>
+                4.2 אין להעתיק, להפיץ, לשכפל, לשנות, למכור או לעשות שימוש מסחרי כלשהו בתכני האתר ללא אישור מפורש.
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>5. פרטיות ואיסוף נתונים</h2>
+            <div class="subsection">
+                5.1 האתר עשוי לאסוף מידע אנונימי על דפוסי השימוש של המשתמשים לצורך שיפור חוויית הגלישה.<br>
+                5.2 במידה והאתר יכלול טפסים הדורשים מידע אישי, המידע לא יועבר לצדדים שלישיים ללא הסכמת המשתמש, למעט במקרים המחויבים בחוק.<br>
+                5.3 באתר מוטמע שירות <a href="https://marketingplatform.google.com/about/analytics/" target="_blank">Google Analytics</a> לניתוח דפוסי השימוש ומיצוב האתר במנועי חיפוש. קוד זה חושף בפני מפעילי השירות מידע בנוגע להתנהגות המשתמשים
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>6. שינויים בתנאי השימוש</h2>
+            <div class="subsection">
+                6.1 בעל האתר שומר לעצמו את הזכות לעדכן או לשנות את תנאי השימוש בכל עת, והודעה על כך תפורסם באתר.<br>
+                6.2 המשך השימוש באתר לאחר שינוי התנאים מהווה הסכמה לתנאים החדשים.
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>7. מימון</h2>
+            <div class="subsection">
+                7.1 האתר אינו ממומן על ידי אף גורם. כל מימונו של הקמת האתר ותחזוקתו הגיע מבעלי האתר.
+            </div>
+        </div>
+
+        <div class="contact-section">
+            <h2>יצירת קשר</h2>
+            <p>במידה ויש לכם שאלות או הערות לגבי תנאי השימוש, ניתן ליצור קשר במייל:</p>
+            <p class="contact-email">stateofthenation2025@gmail.com</p>
         </div>
     </div>
 </body>
