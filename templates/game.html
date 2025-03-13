@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="/static/images/header/game_icon.svg">
+    <title>נחש את הח"כ | מצב האומה</title>
+    <link rel="stylesheet" href="/static/game.css">
+    <script src="/static/js/game.js" defer></script>
+</head>
+<body>
+    <div class="container" >
+        <h1>נחש את הח"כ</h1>
+        <h2 id="name-placeholder" class="blue-text"></h2>
+        <h3>מבית <span class="blue-text">מצב האומה</span></h3>
+        
+        <div class="difficulty">
+            <button class="difficulty-btn current-level" data-level="קל"><span class="difficulty-number">1.</span> קל</button>
+            <button class="difficulty-btn" data-level="בינוני"><span class="difficulty-number">2.</span> בינוני</button>
+            <button class="difficulty-btn" data-level="קשה"><span class="difficulty-number">3.</span> קשה</button>
+        </div>
+        
+        <div class="hint-box" id="game-container">
+            <img src="/static/images/header/game_icon.svg" alt="hint" class="hint-icon">
+            <p>שנה ראשונה כח"כ: <span id="year-first"></span></p>
+            <p>שנה אחרונה כח"כ: <span id="year-last"></span></p>
+            <p>התפקיד המשמעותי: <span id="important-role"></span></p>
+            <p>קריירה לפני הפוליטיקה: <span id="career-before"></span></p>
+            <p>מפלגה: <span id="party"></span></p>
+        </div>
+        
+        <input type="text" id="user-answer" placeholder="הכנס שם" list="knesset-members">
+        <datalist id="knesset-members">
+            <!-- Options will be populated dynamically -->
+        </datalist>
+        <button id="submit-btn">בדיקה</button>
+        <p id="result-message"></p>
+        
+        <button id="skip-btn">דלג לשלב הבא</button>
+    </div>
+
+    <!-- Summary Screen -->
+    <div class="container" id="summary-container" style="display: none;">
+        <h1>סיכום המשחק</h1>
+        <p id="summary-results"></p>
+        <button id="restart-btn">התחל מחדש</button>
+    </div>
+</body>
+</html>

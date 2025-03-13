@@ -95,7 +95,7 @@ def get_filtered_tweets():
 
 @index_bp.route('/knesschat-screen')
 def knesschat_screen():
-    return render_template('knesschat-screen.html')
+    return render_template('knesschat/knesschat-screen.html')
 
 @index_bp.route('/')
 def index():

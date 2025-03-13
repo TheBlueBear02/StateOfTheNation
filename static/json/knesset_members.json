@@ -1,0 +1,26 @@
+[
+    {
+        "name": "אהוד ברק",
+        "year_first": 1999,
+        "year_last": 2013,
+        "important_role": "ראש ממשלת ישראל",
+        "career_before": "רמטכ''ל צה''ל",
+        "party": "העבודה"
+    },
+    {
+        "name": "בנימין נתניהו",
+        "year_first": 1988,
+        "year_last": 2025,
+        "important_role": "ראש ממשלת ישראל",
+        "career_before": "שגריר ישראל באו''ם",
+        "party": "הליכוד"
+    },
+    {
+        "name": "יאיר לפיד",
+        "year_first": 2013,
+        "year_last": 2025,
+        "important_role": "ראש ממשלת ישראל",
+        "career_before": "עיתונאי ומגיש טלוויזיה",
+        "party": "יש עתיד"
+    }
+]
