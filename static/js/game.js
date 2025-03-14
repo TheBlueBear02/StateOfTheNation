@@ -4,6 +4,9 @@ document.addEventListener("DOMContentLoaded", function () {
     const userInput = document.getElementById("user-answer");
     const resultMessage = document.getElementById("result-message");
     const skipButton = document.getElementById("skip-btn");
+    const startButton = document.getElementById("start-btn");
+    const openingScreen = document.querySelector(".openingScreen");
+    const gameContainer = document.getElementById("game-container");
     let correctName = "";
     
     // Variables to track scores
@@ -177,6 +180,12 @@ document.addEventListener("DOMContentLoaded", function () {
         // Clear user input and result message
         userInput.value = "";
         resultMessage.textContent = "";
+    });
+
+    // Add event listener for the start button
+    startButton.addEventListener("click", function () {
+        openingScreen.style.display = "none"; // Hide the opening screen
+        gameContainer.style.display = "block"; // Show the game container
     });
 });
 

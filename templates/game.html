@@ -9,10 +9,43 @@
     <script src="/static/js/game.js" defer></script>
 </head>
 <body>
-    <div class="container" >
+    <div class="header">
         <h1>נחש את הח"כ</h1>
-        <h2 id="name-placeholder" class="blue-text"></h2>
-        <h3>מבית <span class="blue-text">מצב האומה</span></h3>
+        <h2>מבית <span class="blue-text">מצב האומה</span></h2>
+    </div>
+    <div class="openingScreen" >
+        <div class="difficulty-selection">
+            <h2>האם תצליחו לנחש את שלושת חברי הכנסת מכל הזמנים</h2>
+            <h2>בעזרת המידע הנתון? </h2>
+            <table class="difficulty-table">
+                <tr>
+                    <td>
+                        <div class="difficulty-item">
+                            <img src="/static/images/header/game_icon.svg" alt="hint" class="hint-icon" style="opacity: 0.3;">
+                            <button class="difficulty-btn start-screen" style="background-color: #007bff; opacity: 0.3;" data-level="קל">1. קל</button>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="difficulty-item">
+                            <img src="/static/images/header/game_icon.svg" alt="hint" class="hint-icon" style="opacity: 0.5;">
+                            <button class="difficulty-btn start-screen" style="background-color: #007bff; opacity: 0.5;" data-level="בינוני">2. בינוני</button>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="difficulty-item">
+                            <img src="/static/images/header/game_icon.svg" alt="hint" class="hint-icon" style="opacity: 0.8;">
+                            <button class="difficulty-btn start-screen" style="background-color: #007bff; opacity: 0.8;" data-level="קשה">3. קשה</button>
+                        </div>  
+                    </td>
+                </tr>
+            </table>
+            <h2>בכל יום יופיעו שלושה חברי כנסת אחרים!</h2>
+            <button id="start-btn" class="start-button">התחל</button>
+        </div>
+    </div>
+
+    <div class="container" id="game-container" style="display: none;">
+        
         
         <div class="difficulty">
             <button class="difficulty-btn current-level" data-level="קל"><span class="difficulty-number">1.</span> קל</button>
