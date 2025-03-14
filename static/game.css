@@ -8,38 +8,44 @@ body {
 
 .container {
     width: 90%;
-    max-width: 400px;
-    margin: 0px auto;
-    padding: 10px 20px;
-    border-radius: 10px;
+    max-width: 48vh;
+    margin: 0 auto;
+    padding: 1.2vh 2.4vh;
+    border-radius: 1.2vh;
 }
 
 h1 {
-    font-size: 24px;
+    font-size: 2.88vh;
 }
-
-h2.blue-text {
+h2 {
+    font-size: 3.12vh;
+    color: grey;
+}
+span.blue-text {
     color: #007bff;
-    font-size: 20px;
+    font-size: 2.4vh;
 }
+p {
+    font-size: 2.16vh;
+}   
 
 .difficulty {
     display: flex;
     justify-content: center;
-    gap: 10px;
-    margin-bottom: 10px;
+    gap: 1.2vh;
+    margin-bottom: 1.2vh;
     direction: rtl;
 }
 
 .difficulty-btn {
     background: #e9ecef;
     color: #999999;
-    padding: 10px 20px;
-    border-radius: 20px;
-    font-size: 14px;
+    padding: 1.2vh 2.4vh;
+    border-radius: 2.4vh;
+    font-size: 1.68vh;
     transition: all 0.2s ease;
-    width: 33%;
-    height: 20px;
+    width: 39.6%;
+    height: 2.4vh;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -56,66 +62,64 @@ h2.blue-text {
 
 .difficulty-number {
     position: absolute;
-    right: 12px;
+    right: 1.44vh;
 }
 
 .hint-box {
     background: #f6fbff;
-    padding: 15px;
-    border-radius: 5px;
+    padding: 1.8vh;
+    border-radius: 0.6vh;
     text-align: right;
-    box-shadow: 0 0 4px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0 0.48vh rgba(0, 0, 0, 0.1);
 }
 
 .hint-icon {
-    width: 90px;
-    height: 90px;
-    margin-bottom: 10px;
-    margin: auto;
-    display: block;
+    width: 10.8vh;
+    height: 10.8vh;
+    margin-bottom: 0.6vh;
 }
 
 input {
     width: 90%;
-    padding: 15px;
-    margin-top: 20px;
+    padding: 1.8vh;
+    margin-top: 2.4vh;
     border: 1px solid #e0e0e0;
-    border-radius: 25px;
+    border-radius: 3vh;
     text-align: right;
-    font-size: 16px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    font-size: 1.92vh;
+    box-shadow: 0 0.24vh 0.48vh rgba(0,0,0,0.1);
 }
 
 button#submit-btn {
     background: #4285f4;
     color: white;
     border: none;
-    padding: 10px;
+    padding: 1.2vh;
     width: 80%;
-    margin-top: 15px;
-    border-radius: 25px;
+    margin-top: 1.8vh;
+    border-radius: 3vh;
     cursor: pointer;
-    font-size: 25px;
+    font-size: 3vh;
     font-weight: bold;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    box-shadow: 0 0.24vh 0.48vh rgba(0,0,0,0.2);
     transition: all 0.2s ease;
 }
 
 button#submit-btn:hover {
     background: #357abd;
-    transform: translateY(-1px);
-    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    transform: translateY(-1.2vh);
+    box-shadow: 0 0.48vh 0.96vh rgba(0,0,0,0.2);
 }
 
 #result-message {
-    margin-top: 10px;
-    font-size: 18px;
+    margin-top: 1.2vh;
+    font-size: 2.16vh;
     font-weight: bold;
 }
 
 #skip-btn {
-    margin-top: 10px;
-    font-size: 18px;
+    margin-top: 1.2vh;
+    font-size: 2.16vh;
     font-weight: bold;
     background: none;
     border: none;
@@ -124,5 +128,47 @@ button#submit-btn:hover {
 }
 #skip-btn:hover {
     opacity: 0.7;
-    
+}
+.hint-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+.start-button {
+    background: #4285f4;
+    color: white;
+    border: none;
+    padding: 1.2vh;
+    width: 24vh;
+    margin-top: 1.8vh;
+    border-radius: 3vh;
+    cursor: pointer;
+    font-size: 3vh;
+    font-weight: bold;
+    box-shadow: 0 0.24vh 0.48vh rgba(0,0,0,0.2);
+    transition: all 0.2s ease;
+}
+.start-button:hover {
+    background: #357abd;
+    transform: translateY(-1.2vh);
+    box-shadow: 0 0.48vh 0.96vh rgba(0,0,0,0.2);
+}
+
+.difficulty-table {
+    width: 50%;
+    border-collapse: collapse;
+    margin-top: 1.2vh;
+    margin: auto;
+}
+
+.difficulty-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.difficulty-btn.start-screen {
+    width: 90%;
+    color: white;
 }
