@@ -1,26 +1,42 @@
 [
     {
-        "name": "אהוד ברק",
-        "year_first": 1999,
-        "year_last": 2013,
-        "important_role": "ראש ממשלת ישראל",
-        "career_before": "רמטכ''ל צה''ל",
-        "party": "העבודה"
+        "difficulty": "קל",
+        "members": [
+            {"name": "בנימין נתניהו", "year_first": 1988, "year_last": 2025, "important_role": "ראש ממשלת ישראל", "career_before": "שגריר ישראל באו''ם", "party": "הליכוד"},
+            {"name": "יאיר לפיד", "year_first": 2013, "year_last": 2025, "important_role": "ראש ממשלת ישראל", "career_before": "עיתונאי ומגיש טלוויזיה", "party": "יש עתיד"},
+            {"name": "נפתלי בנט", "year_first": 2013, "year_last": 2022, "important_role": "ראש ממשלת ישראל", "career_before": "שר החינוך", "party": "ימינה"},
+            {"name": "אביגדור ליברמן", "year_first": 1999, "year_last": 2025, "important_role": "שר הביטחון ושר האוצר", "career_before": "מנכ''ל משרד ראש הממשלה", "party": "ישראל ביתנו"},
+            {"name": "איילת שקד", "year_first": 2013, "year_last": 2022, "important_role": "שרת המשפטים", "career_before": "יועצת פוליטית", "party": "הימין החדש"},
+            {"name": "בצלאל סמוטריץ'", "year_first": 2015, "year_last": 2025, "important_role": "שר האוצר", "career_before": "פעיל חברתי", "party": "הציונות הדתית"},
+            {"name": "מאיר כהן", "year_first": 2013, "year_last": 2025, "important_role": "שר הרווחה", "career_before": "ראש עיריית דימונה", "party": "יש עתיד"},
+            {"name": "יריב לוין", "year_first": 2009, "year_last": 2025, "important_role": "יושב ראש הכנסת", "career_before": "עורך דין", "party": "הליכוד"},
+            {"name": "מירי רגב", "year_first": 2009, "year_last": 2025, "important_role": "שרת התחבורה", "career_before": "דוברת צה''ל", "party": "הליכוד"},
+            {"name": "אורית סטרוק", "year_first": 2013, "year_last": 2025, "important_role": "שרת ההתיישבות", "career_before": "פעילת ימין", "party": "הציונות הדתית"},
+            {"name": "גלעד ארדן", "year_first": 2003, "year_last": 2025, "important_role": "שגריר ישראל באו''ם", "career_before": "יועץ תקשורת", "party": "הליכוד"},
+            {"name": "שלמה קרעי", "year_first": 2019, "year_last": 2025, "important_role": "שר התקשורת", "career_before": "דוקטור לכלכלה", "party": "הליכוד"},
+            {"name": "עמיחי שיקלי", "year_first": 2021, "year_last": 2025, "important_role": "שר התפוצות", "career_before": "יזם חינוכי", "party": "הליכוד"},
+            {"name": "יצחק הרצוג", "year_first": 2003, "year_last": 2018, "important_role": "נשיא מדינת ישראל", "career_before": "עורך דין", "party": "העבודה"},
+            {"name": "גדי איזנקוט", "year_first": 2022, "year_last": 2024, "important_role": "חבר הכנסת", "career_before": "רמטכ''ל צה''ל", "party": "המחנה הממלכתי"},
+            {"name": "יואב גלנט", "year_first": 2015, "year_last": 2025, "important_role": "שר הביטחון", "career_before": "אלוף פיקוד דרום", "party": "הליכוד"},
+            {"name": "אורלי לוי-אבקסיס", "year_first": 2009, "year_last": 2021, "important_role": "חברת כנסת", "career_before": "עיתונאית", "party": "גשר"},
+            {"name": "משה גפני", "year_first": 1988, "year_last": 2025, "important_role": "יושב ראש ועדת הכספים", "career_before": "מחנך", "party": "יהדות התורה"},
+            {"name": "עידן רול", "year_first": 2019, "year_last": 2025, "important_role": "חבר כנסת", "career_before": "דוגמן", "party": "יש עתיד"},
+            {"name": "דודי אמסלם", "year_first": 2015, "year_last": 2025, "important_role": "שר הדיגיטל הלאומי", "career_before": "מנכ''ל עיריית ירושלים", "party": "הליכוד"}
+        ]
     },
     {
-        "name": "בנימין נתניהו",
-        "year_first": 1988,
-        "year_last": 2025,
-        "important_role": "ראש ממשלת ישראל",
-        "career_before": "שגריר ישראל באו''ם",
-        "party": "הליכוד"
+        "difficulty": "בינוני",
+        "members": [
+            {"name": "משה ארבל", "year_first": 2019, "year_last": 2025, "important_role": "שר הפנים", "career_before": "עורך דין", "party": "ש''ס"},
+            {"name": "דוד לוי", "year_first": 1969, "year_last": 2006, "important_role": "שר החוץ", "career_before": "ראש עיריית בית שאן", "party": "ליכוד, גשר"}
+
+        ]
     },
     {
-        "name": "יאיר לפיד",
-        "year_first": 2013,
-        "year_last": 2025,
-        "important_role": "ראש ממשלת ישראל",
-        "career_before": "עיתונאי ומגיש טלוויזיה",
-        "party": "יש עתיד"
+        "difficulty": "קשה",
+        "members": [
+            {"name": "יצחק כהן", "year_first": 1996, "year_last": 2021, "important_role": "סגן שר האוצר", "career_before": "פעיל פוליטי", "party": "ש''ס"},
+            {"name": "אברהם בורג", "year_first": 1988, "year_last": 2003, "important_role": "יושב ראש הכנסת", "career_before": "יו''ר הסוכנות היהודית", "party": "העבודה"}
+        ]
     }
 ]
