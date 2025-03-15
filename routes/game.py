@@ -20,8 +20,18 @@ def game():
 def get_question():
     difficulty = request.json.get("difficulty", "קל")
     
-    # Filter members by difficulty (if applicable)
-    member = random.choice(data)  # Select a random Knesset member
+    # Filter members by difficulty
+    members_by_difficulty = [level['members'] for level in data if level['difficulty'] == difficulty]
+    
+    if not members_by_difficulty:
+        return jsonify({"error": "No members found for the specified difficulty"}), 404
+
+    # Flatten the list of members
+    members = members_by_difficulty[0]  # Get the first (and only) list of members for the selected difficulty
+
+    # Select a random Knesset member
+    member = random.choice(members)
+    
     question = {
         "name_hidden": member["name"],
         "year_first": member.get("year_first", "לא ידוע"),
@@ -29,8 +39,8 @@ def get_question():
         "important_role": member.get("important_role", "לא ידוע"),
         "career_before": member.get("career_before", "לא ידוע"),
         "party": member.get("party", "לא ידוע"),
-        "status": member.get("status", "לא ידוע"),
     }
+    
     return jsonify(question)
 
 @game_bp.route("/api/check", methods=["POST"])
