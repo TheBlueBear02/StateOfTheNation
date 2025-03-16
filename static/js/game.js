@@ -1,6 +1,7 @@
 // Declare variables at the top level
 let correctAnswers = 0;
 let wrongAnswers = 0;
+let selectedMembers = []; // Array to store selected Knesset members
 
   // Function to update the time left until midnight
   function updateTimeLeft() {
@@ -80,6 +81,7 @@ document.addEventListener("DOMContentLoaded", function () {
             // Check if the expected fields are present in the data
             if (data.name_hidden && data.year_first && data.year_last && data.important_role && data.career_before && data.party) {
                 correctName = data.name_hidden;
+                selectedMembers.push(data.name_hidden); // Add the selected member's name to the array
                 document.getElementById("year-first").textContent = data.year_first;
                 document.getElementById("year-last").textContent = (data.year_last === new Date().getFullYear()) ? "עדיין מכהן" : data.year_last;
                 document.getElementById("important-role").textContent = data.important_role;
@@ -260,6 +262,8 @@ function showSummaryScreen() {
 
     // Replace the content of the game container with the summary results
     gamefunctionContainer.innerHTML = `
+        <p style="font-size: 2.5vh; font-weight: bold; margin: 20px 0;">${selectedMembers.join(" -  ")}</p>
+
         <p>הצלחת לנחש ${correctAnswers} מתוך 3 חברי הכנסת</p>
         <p id="summary-results">${randomMessage}</p>
         <button id="share-btn">שתף</button>

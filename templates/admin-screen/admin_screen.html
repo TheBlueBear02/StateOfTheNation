@@ -134,7 +134,7 @@
     
             <!-- Update Index Form -->
             <div id="updateForm" style="display: none;">
-                <form class="form-container">
+                <form class="form-container" id="updateIndexForm">
                     <h3>Update Index Data</h3>
                     
                     <div class="form-group">
@@ -420,6 +420,7 @@
 
         // Ensure office & index are set before uploading CSV
         document.getElementById("csvFile").addEventListener("submit", function(event) {
+            console.log("csvFile submitted");
             let officeSelect = document.getElementById("officeSelect");
             let indexSelect = document.getElementById("indexSelect");
 
@@ -618,6 +619,34 @@
                 }
             </style>
         `);
+    </script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            // Handle form submission for updating an index
+            document.querySelector("#updateIndexForm").addEventListener("submit", function (event) {
+                event.preventDefault(); // Prevent default form submission
+
+                console.log("updateIndexForm submitted");
+                // Create FormData object
+                let formData = new FormData(this);
+
+                // Send form data via fetch API
+                fetch("/upload_csv", { // Ensure this is the correct endpoint
+                    method: "POST",
+                    body: formData
+                })
+                .then(response => response.json()) // Convert response to JSON
+                .then(data => {
+                    if (data.error) {
+                        alert("Error: " + data.error);
+                    } else {
+                        alert("CSV uploaded successfully! New records: " + data.new_records);
+                        this.reset(); // Reset form fields after successful submission
+                    }
+                })
+                .catch(error => console.error("Error submitting form:", error));
+            });
+        });
     </script>
 </body>
 </html>
