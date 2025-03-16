@@ -54,6 +54,7 @@ def logout():
 @admin_bp.route("/upload_csv", methods=["POST"])
 @admin_required
 def upload_csv():
+    print("upload_csv")
     try:
         office_id = request.form.get("office_id")
         index_id = request.form.get("index_id")
@@ -72,12 +73,7 @@ def upload_csv():
         existing_dates = {}
         
         for record in existing_records:
-            try:
-                date_obj = datetime.strptime(record.label.strip(), "%d.%m.%Y").strftime("%d.%m.%Y")
-                existing_dates[date_obj] = record.value
-            except ValueError:
-                date_obj = datetime.strptime(record.label.strip(), "%d.%m.%Y").strftime("%d.%m.%Y")
-                existing_dates[date_obj] = record.value
+            existing_dates[record.label.strip()] = record.value
 
         # Read file content
         file_content = file.read().decode("utf-8")
@@ -91,6 +87,8 @@ def upload_csv():
         
         csv_data = list(csv_reader)
 
+        print(f"csv_data: {csv_data}")
+
         for row in csv_data:
             if len(row) < 2:
                 continue
@@ -98,8 +96,14 @@ def upload_csv():
             date_str, value = row[0].strip(), row[1].strip()
             
             try:
-                date_obj = datetime.strptime(date_str, "%d.%m.%Y").strftime("%d.%m.%Y")
-                
+                # Check if the date_str is a year only
+                if len(date_str) == 4 and date_str.isdigit():
+                    # Save as year only
+                    date_obj = date_str  # Store just the year
+                else:
+                    # Otherwise, parse it as a full date
+                    date_obj = datetime.strptime(date_str, "%d.%m.%Y").strftime("%d.%m.%Y")
+
                 if date_obj in existing_dates:
                     duplicate_rows.append(date_obj)
                 else:
@@ -112,8 +116,10 @@ def upload_csv():
             
             except ValueError:
                 invalid_rows.append(date_str)
+                print(f"Invalid date format: {date_str}")  # Debugging line
                 continue
 
+        print(f"new_rows: {new_rows}")
         # Save new rows to database
         if new_rows:
             db.session.bulk_save_objects(new_rows)
@@ -121,7 +127,7 @@ def upload_csv():
 
         # Prepare response
         response = {
-            "message": f"Processed CSV file successfully",
+            "message": "Processed CSV file successfully",
             "new_records": len(new_rows),
             "duplicates": len(duplicate_rows),
             "invalid_dates": len(invalid_rows),
