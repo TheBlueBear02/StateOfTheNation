@@ -4,46 +4,101 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/x-icon" href="/static/images/header/game_icon.svg">
-    <title>נחש את הח"כ | מצב האומה</title>
+    <title>זהה את הח"כ | מצב האומה</title>
     <link rel="stylesheet" href="/static/game.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
     <script src="/static/js/game.js" defer></script>
 </head>
 <body>
-    <div class="container" >
-        <h1>נחש את הח"כ</h1>
-        <h2 id="name-placeholder" class="blue-text"></h2>
-        <h3>מבית <span class="blue-text">מצב האומה</span></h3>
+    <div class="header">
+        <img src="/static/images/game_header.png" alt="hint" class="header-image" >
+    </div>
+    <div class="openingScreen" >
+        <div class="difficulty-selection">
+            <h2> האם תצליחו לנחש את שלושת חברי הכנסת מכל הזמנים בעזרת המידע הנתון?</h2>
+             
+            <table class="difficulty-table">
+                <tr>
+                    <td>
+                        <div class="difficulty-item">
+                            <img src="/static/images/header/game_icon.svg" alt="hint" class="hint-icon" style="opacity: 0.3;">
+                            <button class="difficulty-btn start-screen" data-level="קל" style="opacity: 0.3;"><span class="difficulty-number">1.</span> קל</button>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="difficulty-item">
+                            <img src="/static/images/header/game_icon.svg" alt="hint" class="hint-icon" style="opacity: 0.5;">
+                            <button class="difficulty-btn start-screen" data-level="בינוני" style="opacity: 0.5;"><span class="difficulty-number">2.</span> בינוני</button>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="difficulty-item">
+                            <img src="/static/images/header/game_icon.svg" alt="hint" class="hint-icon" style="opacity: 0.8;">
+                            <button class="difficulty-btn start-screen" data-level="קשה" style="opacity: 0.8;"><span class="difficulty-number">3.</span> קשה</button>
+                        </div>  
+                    </td>
+                </tr>
+            </table>
+            <h2>בכל יום יופיעו שלושה חברי כנסת אחרים!</h2>
+            <button id="start-btn" class="start-button">התחל</button>
+        </div>
+        <footer>
+            <p class="cta">
+                רוצים לדעת מה המצב האמיתי של מדינת ישראל?
+            </p>
+            <p class="cta-desc">היכנסו מהמחשב <a class="highlight-blue" href="http://127.0.0.1:5000/" target="_blank"> לאתר מצב האומה</a> או עקבו:</p>
+            <div class="buttons">
+                <button class="btn btn-circle" >
+                    <i class="fas fa-share-alt"></i>
+                </button>
+                <a href="https://www.facebook.com/knesschat" target="_blank" class="btn btn-circle">
+                    <i class="fab fa-facebook-f"></i>
+                </a>
+                <a href="https://twitter.com/knesschat" target="_blank" class="btn btn-circle">
+                    <i class="fa-brands fa-x"></i>
+                </a>
+                <a href="https://www.instagram.com/knesschat" target="_blank" class="btn btn-circle">
+                    <i class="fab fa-instagram"></i>
+                </a>
+            </div>
+        </footer>
+    </div>
+
+    <div class="container" id="game-container" style="display: none;">
+        
         
         <div class="difficulty">
             <button class="difficulty-btn current-level" data-level="קל"><span class="difficulty-number">1.</span> קל</button>
             <button class="difficulty-btn" data-level="בינוני"><span class="difficulty-number">2.</span> בינוני</button>
             <button class="difficulty-btn" data-level="קשה"><span class="difficulty-number">3.</span> קשה</button>
         </div>
-        
-        <div class="hint-box" id="game-container">
-            <img src="/static/images/header/game_icon.svg" alt="hint" class="hint-icon">
-            <p>שנה ראשונה כח"כ: <span id="year-first"></span></p>
-            <p>שנה אחרונה כח"כ: <span id="year-last"></span></p>
-            <p>התפקיד המשמעותי: <span id="important-role"></span></p>
-            <p>קריירה לפני הפוליטיקה: <span id="career-before"></span></p>
-            <p>מפלגה: <span id="party"></span></p>
+        <div class="game-function-container" id="game-function-container">
+            <div class="hint-box" id="game-container">
+                <img src="/static/images/header/game_icon.svg" id="hint-icon" alt="hint" class="hint-icon">
+                <p>שנה ראשונה כח"כ: <span id="year-first"></span></p>
+                <p>שנה אחרונה כח"כ: <span id="year-last"></span></p>
+                <p>התפקיד המשמעותי: <span id="important-role"></span></p>
+                <p>קריירה לפני הפוליטיקה: <span id="career-before"></span></p>
+                <p>מפלגה: <span id="party"></span></p>
+            </div>
+            
+            <input type="text" id="user-answer" placeholder="הכנס שם" list="knesset-members">
+            <datalist id="knesset-members">
+                <!-- Options will be populated dynamically -->
+            </datalist>
+            <button id="submit-btn">בדיקה</button>
+            <p id="result-message"></p>
+            
+            <button id="skip-btn">דלג לשלב הבא</button>
         </div>
         
-        <input type="text" id="user-answer" placeholder="הכנס שם" list="knesset-members">
-        <datalist id="knesset-members">
-            <!-- Options will be populated dynamically -->
-        </datalist>
-        <button id="submit-btn">בדיקה</button>
-        <p id="result-message"></p>
-        
-        <button id="skip-btn">דלג לשלב הבא</button>
     </div>
-
     <!-- Summary Screen -->
     <div class="container" id="summary-container" style="display: none;">
-        <h1>סיכום המשחק</h1>
-        <p id="summary-results"></p>
-        <button id="restart-btn">התחל מחדש</button>
+        <div id="time-left"></div>
+
     </div>
+   
 </body>
 </html>
