@@ -804,3 +804,30 @@ background: #c5c5c5;
 .news-feed:focus{
     outline: none;
 }
+
+.era {
+    position: relative; /* Ensures the tooltip is positioned relative to the era div */
+}
+
+.era::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: 120vh; /* Changed from % to vh */
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 0.5vh 1vh; /* Changed from px to vh */
+    border-radius: 0.5vh; /* Changed from px to vh */
+    font-size: 2.2vh; /* Changed from px to vh */
+    white-space: nowrap;
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 0.2s ease-in-out;
+    height: 3vh; /* Changed from % to vh */
+}
+
+.era:hover::after {
+    visibility: visible;
+    opacity: 1;
+}
