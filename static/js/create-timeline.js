@@ -71,7 +71,8 @@ function createTimeline(ministers_history, totalDuration1, first_graph_date, lab
         eraDiv.style.width = widthPercent + "%";
         eraDiv.style.backgroundColor = eraColor;  // Cycle through colors
 
-        
+        // Add tooltip attribute
+         eraDiv.setAttribute("data-tooltip", `${ministerData.name} - ${ministerData.party}`);
         // Only process the image and text if the width is above the threshold (5%)
         if (widthPercent >= 15) {
             // Convert the image URL to Base64 and then append it to the timeline

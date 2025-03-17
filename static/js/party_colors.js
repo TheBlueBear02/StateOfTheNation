@@ -10,6 +10,9 @@ function getPartyColor(party) {
         case 'המחנה הממלכתי':
             color = 'rgba(128, 202, 255, 1)'; // LightBlue with 50% opacity
             break;
+        case 'כחול לבן':
+            color = 'rgba(128, 202, 255, 1)'; // LightBlue with 50% opacity
+            break;
         case 'העבודה':
             color = 'rgba(106, 13, 173, 1)'; // Purple with 50% opacity
             break;
@@ -17,6 +20,15 @@ function getPartyColor(party) {
             color = 'rgba(255, 112, 46, 1)'; // OrangeRed with 50% opacity
             break;
         case 'הציונות הדתית':
+            color = 'rgba(141, 192, 53, 1)'; // YellowGreen with 50% opacity
+            break;
+        case 'האיחוד הלאומי':
+            color = 'rgba(141, 192, 53, 1)'; // YellowGreen with 50% opacity
+            break;
+        case 'ימינה':
+            color = 'rgba(141, 192, 53, 1)'; // YellowGreen with 50% opacity
+            break;
+        case 'הבית היהודי':
             color = 'rgba(141, 192, 53, 1)'; // YellowGreen with 50% opacity
             break;
         case 'תקווה חדשה':
