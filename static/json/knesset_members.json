@@ -21,6 +21,7 @@
             {"name": "אורלי לוי-אבקסיס", "year_first": 2009, "year_last": 2021, "important_role": "חברת כנסת", "career_before": "עיתונאית", "party": "גשר"},
             {"name": "משה גפני", "year_first": 1988, "year_last": 2025, "important_role": "יושב ראש ועדת הכספים", "career_before": "מחנך", "party": "יהדות התורה"},
             {"name": "עידן רול", "year_first": 2019, "year_last": 2025, "important_role": "חבר כנסת", "career_before": "דוגמן", "party": "יש עתיד"},
+            {"name": "דוד בן-גוריון", "year_first": 1949, "year_last": 1963, "important_role": "ראש ממשלת ישראל הראשון", "career_before": "מזכיר ההסתדרות הציונית", "party": "מפא''י"},
             {"name": "דודי אמסלם", "year_first": 2015, "year_last": 2025, "important_role": "שר הדיגיטל הלאומי", "career_before": "מנכ''ל עיריית ירושלים", "party": "הליכוד"}
         ]
     },
@@ -29,14 +30,20 @@
         "members": [
             {"name": "משה ארבל", "year_first": 2019, "year_last": 2025, "important_role": "שר הפנים", "career_before": "עורך דין", "party": "ש''ס"},
             {"name": "דוד לוי", "year_first": 1969, "year_last": 2006, "important_role": "שר החוץ", "career_before": "ראש עיריית בית שאן", "party": "ליכוד, גשר"}
-
+            {"name": "משה שרת", "year_first": 1949, "year_last": 1956, "important_role": "ראש ממשלת ישראל", "career_before": "שר החוץ", "party": "מפא''י"},
+            {"name": "יצחק שמיר", "year_first": 1973, "year_last": 1992, "important_role": "ראש ממשלת ישראל", "career_before": "ראש המוסד", "party": "הליכוד"},
+            {"name": "יוסי שריד", "year_first": 1974, "year_last": 2006, "important_role": "שר החינוך", "career_before": "יועץ פוליטי", "party": "מרצ"},
+            {"name": "ציפי לבני", "year_first": 1999, "year_last": 2019, "important_role": "שרת החוץ", "career_before": "עורכת דין", "party": "קדימה, התנועה"},
+            {"name": "ראובן ריבלין", "year_first": 1988, "year_last": 2021, "important_role": "נשיא מדינת ישראל", "career_before": "עורך דין", "party": "הליכוד"},
+            {"name": "שאול מופז", "year_first": 2003, "year_last": 2015, "important_role": "שר הביטחון", "career_before": "רמטכ''ל צה''ל", "party": "קדימה"}
         ]
     },
     {
         "difficulty": "קשה",
         "members": [
             {"name": "יצחק כהן", "year_first": 1996, "year_last": 2021, "important_role": "סגן שר האוצר", "career_before": "פעיל פוליטי", "party": "ש''ס"},
-            {"name": "אברהם בורג", "year_first": 1988, "year_last": 2003, "important_role": "יושב ראש הכנסת", "career_before": "יו''ר הסוכנות היהודית", "party": "העבודה"}
+            {"name": "אברהם בורג", "year_first": 1988, "year_last": 2003, "important_role": "יושב ראש הכנסת", "career_before": "יו''ר הסוכנות היהודית", "party": "העבודה"},
+            {"name": "יוסי ביילין", "year_first": 1988, "year_last": 2008, "important_role": "שר המשפטים", "career_before": "עיתונאי", "party": "העבודה, מרצ"}
         ]
     }
 ]
