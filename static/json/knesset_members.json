@@ -29,7 +29,7 @@
         "difficulty": "בינוני",
         "members": [
             {"name": "משה ארבל", "year_first": 2019, "year_last": 2025, "important_role": "שר הפנים", "career_before": "עורך דין", "party": "ש''ס"},
-            {"name": "דוד לוי", "year_first": 1969, "year_last": 2006, "important_role": "שר החוץ", "career_before": "ראש עיריית בית שאן", "party": "ליכוד, גשר"}
+            {"name": "דוד לוי", "year_first": 1969, "year_last": 2006, "important_role": "שר החוץ", "career_before": "ראש עיריית בית שאן", "party": "ליכוד, גשר"},
             {"name": "משה שרת", "year_first": 1949, "year_last": 1956, "important_role": "ראש ממשלת ישראל", "career_before": "שר החוץ", "party": "מפא''י"},
             {"name": "יצחק שמיר", "year_first": 1973, "year_last": 1992, "important_role": "ראש ממשלת ישראל", "career_before": "ראש המוסד", "party": "הליכוד"},
             {"name": "יוסי שריד", "year_first": 1974, "year_last": 2006, "important_role": "שר החינוך", "career_before": "יועץ פוליטי", "party": "מרצ"},
