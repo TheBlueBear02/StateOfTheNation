@@ -3,8 +3,8 @@ let correctAnswers = 0;
 let wrongAnswers = 0;
 let selectedMembers = []; // Array to store selected Knesset members
 
-  // Function to update the time left until midnight
-  function updateTimeLeft() {
+// Function to update the time left until midnight
+function updateTimeLeft() {
     const now = new Date();
     const midnight = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1); // Next midnight
     const timeLeft = midnight - now; // Time left in milliseconds
@@ -226,11 +226,6 @@ document.addEventListener("DOMContentLoaded", function () {
         gameContainer.style.display = "block"; // Show the game container
     });
 
-    // Add event listener for the share button
-    document.getElementById("share-btn").addEventListener("click", function() {
-        captureScreenshot();
-    });
-
     // Update the time left when page loads
     updateTimeLeft();
 
@@ -270,41 +265,119 @@ function showSummaryScreen() {
 
         <p>הצלחת לנחש ${correctAnswers} מתוך 3 חברי הכנסת</p>
         <p id="summary-results">${randomMessage}</p>
-        <button id="share-btn">שתף</button>
+        <button id="share-btn" onclick="copyURLToClipboard(this)">שתף</button>
         <div id="time-left"></div>
     `;
 
     // Update the time left immediately
     updateTimeLeft(); // Call this to set the initial time left
-
-    // Add event listener for the share button
-    document.getElementById("share-btn").addEventListener("click", function() {
-        captureScreenshot();
-    });
+    
+    // Add event listener for the share button as a backup
+    const shareBtn = document.getElementById("share-btn");
+    if (shareBtn) {
+        shareBtn.addEventListener("click", function(e) {
+            // Prevent default to avoid double execution with onclick
+            e.preventDefault();
+            copyURLToClipboard(this);
+        });
+    }
 }
 
-// Function to capture screenshot of the body element
-function captureScreenshot() {
-    html2canvas(document.body).then(canvas => {
-        // Convert the canvas to a data URL
-        const dataURL = canvas.toDataURL("image/png");
-
-        // Create a temporary link element to copy the image
-        const link = document.createElement("a");
-        link.href = dataURL;
-        link.download = "screenshot.png"; // Set the filename
-
-        // Append the link to the body
-        document.body.appendChild(link);
+// Global function for copying URL to clipboard
+function copyURLToClipboard(btn) {
+    // Store a reference to the button's parent node immediately
+    const btnParent = btn.parentNode;
+    
+    // Use hardcoded URL instead of browser URL
+    const url = "http://192.168.1.25:5000/guessthekm";
+    
+    // Capture button dimensions and styles before replacing it
+    const btnWidth = btn.offsetWidth;
+    const btnHeight = btn.offsetHeight;
+    const btnStyle = window.getComputedStyle(btn);
+    const btnBorderRadius = btnStyle.borderRadius;
+    const btnPadding = btnStyle.padding;
+    const btnFontSize = btnStyle.fontSize;
+    
+    // Function to show success
+    const showSuccess = () => {
+        // Safety check - make sure the button is still in the DOM
+        if (!btnParent || !btn.parentNode) {
+            return;
+        }
         
-        // Trigger the download
-        link.click();
+        // Create a "copied" span element
+        const copiedSpan = document.createElement("span");
+        copiedSpan.textContent = "הקישור הועתק!";
+        copiedSpan.style.color = "green";
+        copiedSpan.style.fontWeight = "bold";
         
-        // Remove the link from the document
-        document.body.removeChild(link);
+        // Apply button styles to maintain size and shape
+        copiedSpan.style.display = "inline-block";
+        copiedSpan.style.width = btnWidth + "px";
+        copiedSpan.style.height = btnHeight + "px";
+        copiedSpan.style.borderRadius = btnBorderRadius;
+        copiedSpan.style.padding = btnPadding;
+        copiedSpan.style.fontSize = btnFontSize;
+        copiedSpan.style.textAlign = "center";
+        copiedSpan.style.lineHeight = btnHeight + "px";
+        
+        try {
+            // Replace the button with the span
+            btnParent.replaceChild(copiedSpan, btn);
+            
+            // Make the span fade after 2 seconds
+            setTimeout(() => {
+                copiedSpan.style.opacity = "0.5";
+            }, 2000);
+        } catch (e) {
+            console.error("Error replacing button:", e);
+        }
+    };
+    
+    // Try modern Clipboard API first
+    if (navigator && navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(url)
+            .then(showSuccess)
+            .catch(err => {
+                console.error('Clipboard API failed, trying fallback method:', err);
+                fallbackCopyToClipboard(url, showSuccess);
+            });
+    } else {
+        // Fallback method
+        fallbackCopyToClipboard(url, showSuccess);
+    }
+}
 
-        // Optionally, show a message to the user
-        alert("הסקרין שוט הועתק!");
-    });
+// Fallback method using execCommand
+function fallbackCopyToClipboard(text, onSuccess) {
+    try {
+        // Create a temporary textarea element
+        const textArea = document.createElement("textarea");
+        
+        // Set its value to the text to be copied
+        textArea.value = text;
+        
+        // Make it invisible but part of the document
+        textArea.style.position = "fixed";
+        textArea.style.opacity = "0";
+        document.body.appendChild(textArea);
+        
+        // Select and copy the text
+        textArea.select();
+        const success = document.execCommand('copy');
+        
+        // Clean up
+        document.body.removeChild(textArea);
+        
+        if (success) {
+            onSuccess();
+        } else {
+            alert('לא ניתן להעתיק את הקישור');
+        }
+    } catch (err) {
+        console.error('Fallback method failed:', err);
+        alert('לא ניתן להעתיק את הקישור');
+    }
 }
 
