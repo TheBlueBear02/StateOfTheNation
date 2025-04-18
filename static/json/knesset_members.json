@@ -22,20 +22,34 @@
             {"name": "משה גפני", "year_first": 1988, "year_last": 2025, "important_role": "יושב ראש ועדת הכספים", "career_before": "מחנך", "party": "יהדות התורה"},
             {"name": "עידן רול", "year_first": 2019, "year_last": 2025, "important_role": "חבר כנסת", "career_before": "דוגמן", "party": "יש עתיד"},
             {"name": "דוד בן-גוריון", "year_first": 1949, "year_last": 1963, "important_role": "ראש ממשלת ישראל הראשון", "career_before": "מזכיר ההסתדרות הציונית", "party": "מפא''י"},
-            {"name": "דודי אמסלם", "year_first": 2015, "year_last": 2025, "important_role": "שר הדיגיטל הלאומי", "career_before": "מנכ''ל עיריית ירושלים", "party": "הליכוד"}
+            {"name": "דודי אמסלם", "year_first": 2015, "year_last": 2025, "important_role": "שר הדיגיטל הלאומי", "career_before": "מנכ''ל עיריית ירושלים", "party": "הליכוד"},
+            {"name": "יולי אדלשטיין", "year_first": 1996, "year_last": 2025, "important_role": "יושב ראש הכנסת", "career_before": "פעיל זכויות אדם בברית המועצות", "party": "הליכוד"},
+            {"name": "יעקב ליצמן", "year_first": 1999, "year_last": 2022, "important_role": "שר הבריאות", "career_before": "עסקן חרדי", "party": "יהדות התורה"},
+            {"name": "גילה גמליאל", "year_first": 2003, "year_last": 2025, "important_role": "שרת המודיעין", "career_before": "יושבת ראש אגודת הסטודנטים", "party": "הליכוד"},
+            {"name": "אלעזר שטרן", "year_first": 2013, "year_last": 2021, "important_role": "חבר ועדת חוץ וביטחון", "career_before": "ראש אכ\"א", "party": "יש עתיד"},
+            {"name": "מיקי לוי", "year_first": 2013, "year_last": 2022, "important_role": "יושב ראש הכנסת", "career_before": "מפקד מחוז ירושלים במשטרה", "party": "יש עתיד"},
+            {"name": "משה ארבל", "year_first": 2019, "year_last": 2025, "important_role": "שר הפנים", "career_before": "עורך דין", "party": "ש''ס"}
+
         ]
     },
     {
         "difficulty": "בינוני",
         "members": [
-            {"name": "משה ארבל", "year_first": 2019, "year_last": 2025, "important_role": "שר הפנים", "career_before": "עורך דין", "party": "ש''ס"},
             {"name": "דוד לוי", "year_first": 1969, "year_last": 2006, "important_role": "שר החוץ", "career_before": "ראש עיריית בית שאן", "party": "ליכוד, גשר"},
             {"name": "משה שרת", "year_first": 1949, "year_last": 1956, "important_role": "ראש ממשלת ישראל", "career_before": "שר החוץ", "party": "מפא''י"},
             {"name": "יצחק שמיר", "year_first": 1973, "year_last": 1992, "important_role": "ראש ממשלת ישראל", "career_before": "ראש המוסד", "party": "הליכוד"},
             {"name": "יוסי שריד", "year_first": 1974, "year_last": 2006, "important_role": "שר החינוך", "career_before": "יועץ פוליטי", "party": "מרצ"},
             {"name": "ציפי לבני", "year_first": 1999, "year_last": 2019, "important_role": "שרת החוץ", "career_before": "עורכת דין", "party": "קדימה, התנועה"},
             {"name": "ראובן ריבלין", "year_first": 1988, "year_last": 2021, "important_role": "נשיא מדינת ישראל", "career_before": "עורך דין", "party": "הליכוד"},
-            {"name": "שאול מופז", "year_first": 2003, "year_last": 2015, "important_role": "שר הביטחון", "career_before": "רמטכ''ל צה''ל", "party": "קדימה"}
+            {"name": "שאול מופז", "year_first": 2003, "year_last": 2015, "important_role": "שר הביטחון", "career_before": "רמטכ''ל צה''ל", "party": "קדימה"},
+            {"name": "יוסי ביילין", "year_first": 1988, "year_last": 2008, "important_role": "שר המשפטים", "career_before": "עיתונאי", "party": "העבודה, מרצ"},
+            {"name": "איתן כבל", "year_first": 1996, "year_last": 2019, "important_role": "יושב ראש ועדת הכלכלה", "career_before": "דובר הסתדרות העובדים", "party": "העבודה"},
+            {"name": "צחי הנגבי", "year_first": 1988, "year_last": 2021, "important_role": "שר במשרד ראש הממשלה", "career_before": "עורך דין", "party": "ליכוד, קדימה"},
+            {"name": "חיים כץ", "year_first": 2003, "year_last": 2022, "important_role": "שר העבודה והרווחה", "career_before": "יו''ר ועד עובדי התעשייה האווירית", "party": "הליכוד"},
+            {"name": "מיכאל איתן", "year_first": 1984, "year_last": 2013, "important_role": "שר לשיפור שירותי ממשל", "career_before": "עיתונאי", "party": "הליכוד"},
+            {"name": "דני דנון", "year_first": 2009, "year_last": 2015, "important_role": "שגריר ישראל באו''ם", "career_before":"ראש תנועת ביתר העולמית", "party": "הליכוד"}
+
+
         ]
     },
     {
@@ -43,7 +57,17 @@
         "members": [
             {"name": "יצחק כהן", "year_first": 1996, "year_last": 2021, "important_role": "סגן שר האוצר", "career_before": "פעיל פוליטי", "party": "ש''ס"},
             {"name": "אברהם בורג", "year_first": 1988, "year_last": 2003, "important_role": "יושב ראש הכנסת", "career_before": "יו''ר הסוכנות היהודית", "party": "העבודה"},
-            {"name": "יוסי ביילין", "year_first": 1988, "year_last": 2008, "important_role": "שר המשפטים", "career_before": "עיתונאי", "party": "העבודה, מרצ"}
+            {"name": "יונה יהב", "year_first": 1996, "year_last": 1999, "important_role": "חבר כנסת", "career_before": "דובר משרד התחבורה", "party": "העבודה"},
+            {"name": "צבי הנדל", "year_first": 1996, "year_last": 2009, "important_role": "סגן שר החקלאות", "career_before": "מזכ״ל תנועת אמנה", "party": "האיחוד הלאומי"},
+            {"name": "אליעזר כהן", "year_first": 1999, "year_last": 2006, "important_role": "חבר כנסת", "career_before": "טייס קרב בחיל האוויר", "party": "ישראל ביתנו"},
+            {"name": "אלכס גולדפרב", "year_first": 1992, "year_last": 1996, "important_role": "סגן שר השיכון", "career_before": "מהנדס", "party": "צומת, יח\"ד"},
+            {"name": "רומן ברונפמן", "year_first": 1999, "year_last": 2006, "important_role": "חבר כנסת", "career_before": "עיתונאי ומרצה באקדמיה", "party": "ישראל בעליה, יחד"},
+            {"name": "מרדכי וירשובסקי", "year_first": 1977, "year_last": 1992, "important_role": "חבר כנסת", "career_before": "עורך דין", "party": "שינוי, מרצ"},
+            {"name": "נחום לנגנטל", "year_first": 1996, "year_last": 2003, "important_role": "סגן שר התחבורה", "career_before": "רואה חשבון", "party": "מפד\"ל"},
+            {"name": "מיכאל קליינר", "year_first": 1981, "year_last": 2003, "important_role": "חבר כנסת", "career_before": "משפטן", "party": "הליכוד, חרות"},
+            {"name": "מקסים לוי", "year_first": 1996, "year_last": 2002, "important_role": "יו\"ר ועדת העבודה והרווחה", "career_before": "ראש עיריית לוד", "party": "גשר"},
+            {"name": "מרינה סולודקין", "year_first": 1996, "year_last": 2013, "important_role": "סגנית שר הקליטה", "career_before": "סוציולוגית", "party": "הליכוד, ישראל ביתנו, קדימה"}
+            
         ]
     }
 ]

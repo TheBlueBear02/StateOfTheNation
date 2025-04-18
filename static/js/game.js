@@ -115,10 +115,13 @@ document.addEventListener("DOMContentLoaded", function () {
     
     submitButton.addEventListener("click", function () {
         const answer = userInput.value.trim();
+        // Get the current difficulty level
+        const currentDifficulty = document.querySelector(".current-level").getAttribute("data-level");
+        
         fetch("/api/check", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ answer, correct_name: correctName })
+            body: JSON.stringify({ answer, difficulty: currentDifficulty })
         })
         .then(response => response.json())
         .then(data => {
@@ -228,10 +231,11 @@ document.addEventListener("DOMContentLoaded", function () {
         captureScreenshot();
     });
 
-  
-  
+    // Update the time left when page loads
+    updateTimeLeft();
 
     // Update the time every second
+    setInterval(updateTimeLeft, 60000); // Update every minute
 });
 
 // Function to show the summary screen
