@@ -412,10 +412,22 @@
         return Math.max(window.innerHeight * 0.02, 12); // Example: 2% of viewport height, minimum 12px
     }
     
-    function updateChart(chartId, labels, values, chart, name,dates) {
-         // Destroy existing chart if it exists
-         if (charts[chartId]) {
+    function updateChart(chartId, labels, values, chart, name, dates) {
+        // Destroy existing chart if it exists
+        if (charts[chartId]) {
             charts[chartId].destroy();
+        }
+
+        // Calculate min and max for line charts
+        let yMin = undefined;
+        let yMax = undefined;
+        if (chart === 'line') {
+            const maxValue = Math.max(...values);
+            const minValue = Math.min(...values);
+            const range = maxValue - minValue;
+            // Add 50% of the range both above and below
+            yMax = maxValue + (range * 0.5);
+            yMin = Math.max(0, minValue - (range * 0.5)); // Ensure we don't go below 0
         }
 
         const ctx = document.getElementById(chartId).getContext("2d");
@@ -434,27 +446,48 @@
                 }]
             },
             options: {
-        responsive: true,
-        plugins: { legend: { display: false } },
-        scales: { 
-            x: { 
-                grid: { 
-                    display: false 
-                },
-                ticks: {
-                    font: {
-                        size: 12 // Set the desired font size
+                responsive: true,
+                plugins: { legend: { display: false } },
+                scales: { 
+                    x: { 
+                        grid: { 
+                            display: false 
+                        },
+                        ticks: {
+                            font: {
+                                size: 12
+                            }
+                        }
+                    },
+                    y: {
+                        min: yMin,
+                        max: yMax,
+                        ticks: {
+                            font: {
+                                size: 12
+                            },
+                            callback: function(value, index, values) {
+                                // Helper function to format numbers with decimals
+                                const formatWithDecimals = (num) => {
+                                    const formatted = Number(num).toFixed(1);
+                                    return formatted.endsWith('.0') ? formatted.slice(0, -2) : formatted;
+                                };
+
+                                if (chart === 'line') {
+                                    return Math.round(value).toString();
+                                }
+                                if (value >= 1000000000) {
+                                    return formatWithDecimals(value / 1000000000) + 'B';
+                                } else if (value >= 1000000) {
+                                    return formatWithDecimals(value / 1000000) + 'M';
+                                } else if (value >= 1000) {
+                                    return formatWithDecimals(value / 1000) + 'K';
+                                }
+                                return formatWithDecimals(value);
+                            }
+                        }
                     }
                 }
-            },
-            y: {
-                ticks: {
-                    font: {
-                        size: 12 // Set the desired font size
-                    }
-                }
-            }
-        }
             }
         });
     }
