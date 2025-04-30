@@ -5,12 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/x-icon" href="/static/images/header/game_icon.svg">
     <title>זהה את הח"כ | מצב האומה</title>
-    <link rel="stylesheet" href="/static/game.css">
+    <link rel="stylesheet" href="/static/game-screen.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
     <script src="/static/js/game.js" defer></script>
 </head>
-<body>
+<body style="margin-top: 4vh;">
     <div class="header">
         <img src="/static/images/game_header.png" alt="hint" class="header-image" >
     </div>
@@ -43,35 +43,8 @@
             <h2>שלושת חברי הכנסת מתחלפים בכל יום בחצות!</h2>
             <button id="start-btn" class="start-button">התחל</button>
         </div>
-        <footer id="main-footer" class="collapsible-footer">
-            <span id="close-main-footer" class="close-footer"><i class="fas fa-times"></i></span>
-            <p class="cta">
-                רוצים לדעת <span class="highlight-blue">מה המצב האמיתי</span> של מדינת ישראל?
-            </p>
-            <p class="cta-desc">היכנסו לאתר מצב האומה מהמחשב או עקבו:</p>
-            <div class="buttons">
-                <button class="btn btn-circle" >
-                    <i class="fas fa-share-alt"></i>
-                </button>
-                <a href="https://www.facebook.com/knesschat" target="_blank" class="btn btn-circle">
-                    <i class="fab fa-facebook-f"></i>
-                </a>
-                <a href="https://twitter.com/knesschat" target="_blank" class="btn btn-circle">
-                    <i class="fa-brands fa-x"></i>
-                </a>
-                <a href="https://www.instagram.com/knesschat" target="_blank" class="btn btn-circle">
-                    <i class="fab fa-instagram"></i>
-                </a>
-            </div>
-        </footer>
-        <div class="bottom-buttons">
-            <a href="/mobile" class="bottom-btn left-btn">
-                <img class="bottom-btn-img" src="static/images/knesschat_header.png" alt="Knesschat">
-            </a>
-            <a href="/guessthekm" class="bottom-btn right-btn">
-                <img class="bottom-btn-img" src="static/images/game_header.png" alt="Guess the KM">
-            </a>
-        </div>  
+
+
     </div>
 
     <div class="container" id="game-container" style="display: none;">
@@ -101,14 +74,7 @@
             
             <button id="skip-btn">דלג לשלב הבא</button>
         </div>
-        <div class="bottom-buttons">
-            <a href="/mobile" class="bottom-btn left-btn">
-                <img class="bottom-btn-img" src="static/images/knesschat_header.png" alt="Knesschat">
-            </a>
-            <a href="/guessthekm-mobile" class="bottom-btn right-btn">
-                <img class="bottom-btn-img" src="static/images/game_header.png" alt="Guess the KM">
-            </a>
-        </div>  
+
     </div>
     <!-- Summary Screen -->
     <div class="container" id="summary-container" style="display: none;">
@@ -118,21 +84,4 @@
    
 </body>
 </html>
-<script>
-      document.getElementById('close-main-footer').addEventListener('click', function() {
-        document.getElementById('main-footer').style.display = 'none';
-    });
-    // Existing popup-footer logic
-    document.getElementById('close-footer').addEventListener('click', function() {
-        const footer = document.getElementById('popup-footer');
-        const icon = document.getElementById('close-footer').querySelector('i');
-        footer.classList.toggle('closed');
-        if (footer.classList.contains('closed')) {
-            icon.classList.remove('fa-arrow-down');
-            icon.classList.add('fa-arrow-up');
-        } else {
-            icon.classList.remove('fa-arrow-up');
-            icon.classList.add('fa-arrow-down');
-        }
-    });
-</script>
+

@@ -109,3 +109,7 @@ def index():
 def terms_of_use():
     return render_template('terms_of_use.html')
 
+@index_bp.route('/mobile')
+def mobile():
+    return render_template('mobile.html')
+

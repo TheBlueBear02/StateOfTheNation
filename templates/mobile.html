@@ -18,11 +18,12 @@
             <div class="tweets_feed">
                 <rssapp-feed id="_1Db1KUX9hYApsDtI"></rssapp-feed><script src="https://widget.rss.app/v1/feed.js" type="text/javascript" async></script>
             </div>
-            <footer>
+            <footer id="main-footer" class="collapsible-footer">
+                <span id="close-main-footer" class="close-footer"><i class="fas fa-times"></i></span>
                 <p class="cta">
                     רוצים לדעת <span class="highlight-blue">מה המצב האמיתי</span> של מדינת ישראל?
                 </p>
-                <p class="cta-desc">היכנסו לאתר מהמחשב או עקבו:</p>
+                <p class="cta-desc">היכנסו לאתר מצב האומה מהמחשב או עקבו:</p>
                 <div class="buttons">
                     <button class="btn btn-circle" >
                         <i class="fas fa-share-alt"></i>
@@ -38,6 +39,14 @@
                     </a>
                 </div>
             </footer>
+            <div class="bottom-buttons">
+                <a href="/mobile" class="bottom-btn left-btn">
+                    <img class="bottom-btn-img" src="static/images/knesschat_header.png" alt="Knesschat">
+                </a>
+                <a href="/guessthekm-mobile" class="bottom-btn right-btn">
+                    <img class="bottom-btn-img" src="static/images/game_header.png" alt="Guess the KM">
+                </a>
+            </div>  
             <!--
             <footer id="popup-footer" class="popup-footer">
                 <span id="close-footer" class="close-footer"><i class="fas fa-arrow-down"></i></span>
@@ -82,6 +91,12 @@
         document.getElementById('loader').style.display = 'none';
     }, 5000); // Hide after 5 seconds
 
+    // Collapsible footer logic
+    document.getElementById('close-main-footer').addEventListener('click', function() {
+        document.getElementById('main-footer').style.display = 'none';
+    });
+
+    // Existing popup-footer logic
     document.getElementById('close-footer').addEventListener('click', function() {
         const footer = document.getElementById('popup-footer');
         const icon = document.getElementById('close-footer').querySelector('i');

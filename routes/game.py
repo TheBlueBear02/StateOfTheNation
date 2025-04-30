@@ -35,6 +35,10 @@ def get_daily_knesset_member(difficulty):
 
 @game_bp.route("/guessthekm")
 def game():
+    return render_template("game-insite.html")
+
+@game_bp.route("/guessthekm-mobile")
+def game_mobile():
     return render_template("game.html")
 
 @game_bp.route("/api/question", methods=["POST"])
