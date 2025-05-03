@@ -5,11 +5,11 @@ import csv
 import io
 from sqlalchemy import exists
 import os
-#from dotenv import load_dotenv
+from dotenv import load_dotenv
 from functools import wraps
 
 # Load environment variables
-#load_dotenv()
+load_dotenv()
 
 # Define the admin password (store securely in production)
 admin_bp = Blueprint('admin', __name__)
