@@ -1,23 +1,27 @@
 <link rel="stylesheet" href="{{ url_for('static', filename='parliament/parliament.css') }}">
 
-<div class="slide">
-    {% include 'parliament-screen/supreme_court.html' %}
+<div class="slides-container">
+    <div class="slide">
+        {% include 'parliament-screen/supreme_court.html' %}
+    </div>
+    <div class="slide" id="government-slide">
+        {% include 'parliament-screen/government.html' %}
+    </div>
+    <div class="slide" id="knesset-slide">
+        {% include 'parliament-screen/knesset.html' %}
+    </div>
 </div>
-<div class="slide">
-    {% include 'parliament-screen/knesset.html' %}
+
+<div class="navigation-buttons">
+    <a class="prev" onclick="plusSlides(-1)">❮</a>
+    <a class="next" onclick="plusSlides(1)">❯</a>
 </div>
-<div class="slide">
-    {% include 'parliament-screen/government.html' %}
-</div>
-<a class="prev" onclick="plusSlides(-1)">❮</a>
-<a class="next" onclick="plusSlides(1)">❯</a>
 
 <div class="dot-container">
   <span class="dot" onclick="currentSlide(1)"></span> 
   <span class="dot" onclick="currentSlide(2)"></span> 
   <span class="dot" onclick="currentSlide(3)"></span> 
   <!--<p style="margin-left:15vh; position: absolute;font-size: 2.3vh;direction: rtl;">תמונות הפוליטיקאים מתוך אתר הכנסת</p>-->
-
 </div>
 
 <script>
@@ -26,26 +30,36 @@ var slideIndex = 2;
 showSlides(slideIndex);
 
 function plusSlides(n) {
-  showSlides(slideIndex += n);
+    // Hide any open popups before changing slides
+    const popup = document.getElementById('historyPopup');
+    if (popup) {
+        popup.style.display = 'none';
+    }
+    showSlides(slideIndex += n);
 }
 
 function currentSlide(n) {
-  showSlides(slideIndex = n);
+    // Hide any open popups before changing slides
+    const popup = document.getElementById('historyPopup');
+    if (popup) {
+        popup.style.display = 'none';
+    }
+    showSlides(slideIndex = n);
 }
 
 function showSlides(n) {
-  var i;
-  var slides = document.getElementsByClassName("slide");
-  var dots = document.getElementsByClassName("dot");
-  if (n > slides.length) {slideIndex = 1}    
-  if (n < 1) {slideIndex = slides.length}
-  for (i = 0; i < slides.length; i++) {
-      slides[i].style.display = "none";  
-  }
-  for (i = 0; i < dots.length; i++) {
-      dots[i].className = dots[i].className.replace(" active", "");
-  }
-  slides[slideIndex-1].style.display = "block";  
-  dots[slideIndex-1].className += " active";
+    var i;
+    var slides = document.getElementsByClassName("slide");
+    var dots = document.getElementsByClassName("dot");
+    if (n > slides.length) {slideIndex = 1}    
+    if (n < 1) {slideIndex = slides.length}
+    for (i = 0; i < slides.length; i++) {
+        slides[i].style.display = "none";  
+    }
+    for (i = 0; i < dots.length; i++) {
+        dots[i].className = dots[i].className.replace(" active", "");
+    }
+    slides[slideIndex-1].style.display = "block";  
+    dots[slideIndex-1].className += " active";
 }
 </script>

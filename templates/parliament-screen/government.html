@@ -65,6 +65,16 @@
 <div class="info-div-g">
     <p id="party-name-g" style="font-size: 5vh; font-weight: bold;margin: 0;padding: 0;">הממשלה</p>
     <p id="party-sum-g" style="font-size: 4vh; margin: 0;padding: 0;"></p>
+
+    <button id="ministersBtn" >היסטוריית שרים</button>
+
+</div>
+
+<div id="MinistersPopup" class="popup" style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background-color: white; padding: 3vh; border-radius: 2vh; box-shadow: 0 0 2vh rgba(0,0,0,0.2); z-index: 1000; width: 90%; max-width: 120vh; height: 83vh;">
+    <span class="close-btn" style="position: absolute; left: 2vh; top: 1vh; font-size: 5vh; cursor: pointer;">&times;</span>
+    <div id="MinistersContent" style="overflow-y: none;">
+        <div class="flourish-embed flourish-chart" data-src="visualisation/23069839"><script src="https://public.flourish.studio/resources/embed.js"></script><noscript><img src="https://public.flourish.studio/visualisation/23069839/thumbnail" width="100%" alt="chart visualization" /></noscript></div>
+    </div>
 </div>
 </div>
 <!-- return the color of the party -->
@@ -156,4 +166,24 @@
     });
 });
 
+</script>
+<script>
+    document.getElementById('ministersBtn').addEventListener('click', function() {
+        document.getElementById('MinistersPopup').style.display = 'block';
+    });
+
+    document.querySelector('.close-btn').addEventListener('click', function() {
+        document.getElementById('MinistersPopup').style.display = 'none';
+    });
+
+    // Close popup when clicking outside
+    window.addEventListener('click', function(event) {
+        const popup = document.getElementById('MinistersPopup');
+        const governmentSlide = document.getElementById('government-slide');
+        
+        // Only close if clicking directly on the popup background AND knesset slide is visible
+        if (event.target === popup && governmentSlide.style.display === 'block') {
+            popup.style.display = 'none';
+        }
+    });
 </script>

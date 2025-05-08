@@ -73,7 +73,15 @@
 <div class="info-div">
     <p id="party-name" style="font-size: 5vh; font-weight: bold;margin: 0;padding: 0;">הכנסת</p>
     <p id="party-sum" style="font-size: 4vh; margin: 0;padding: 0;"></p>
+
+    <button id="historyBtn" >היסטוריית הכנסת</button>
 </div>
+
+<div id="historyPopup" class="popup" style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background-color: white; padding: 3vh; border-radius: 2vh; box-shadow: 0 0 2vh rgba(0,0,0,0.2); z-index: 1000; width: 90%; max-width: 120vh; height: 83vh;">
+    <span class="close-btn" onclick="closePopup()" style="position: absolute; left: 2vh; top: 1vh; font-size: 5vh; cursor: pointer;">&times;</span>
+    <div id="historyContent" style="overflow-y: none;">
+        <div class="flourish-embed flourish-parliament" data-src="visualisation/22992415"><script src="https://public.flourish.studio/resources/embed.js"></script><noscript><img src="https://public.flourish.studio/visualisation/22992415/thumbnail" width="100%" alt="parliament visualization" /></noscript></div>
+    </div>
 </div>
 <script src="static\js\party_colors.js" defer></script> 
 <script>
@@ -170,4 +178,27 @@
     });
 });
 
+</script>
+<script>
+     document.getElementById('historyBtn').addEventListener('click', function() {
+        document.getElementById('historyPopup').style.display = 'block';
+    });
+
+    document.querySelector('.close-btn').addEventListener('click', function() {
+        document.getElementById('historyPopup').style.display = 'none';
+    });
+
+    // Close popup when clicking outside
+    window.addEventListener('click', function(event) {
+        const popup = document.getElementById('historyPopup');
+        const knessetSlide = document.getElementById('knesset-slide');
+        
+        // Only close if clicking directly on the popup background AND knesset slide is visible
+        if (event.target === popup && knessetSlide.style.display === 'block') {
+            popup.style.display = 'none';
+        }
+    });
+    function closePopup(){
+        document.getElementById('historyPopup').style.display = 'none';
+    }
 </script>

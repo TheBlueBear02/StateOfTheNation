@@ -469,3 +469,21 @@ h5{
 .tooltip-wrapper:hover .tooltip-text {
     visibility: visible;
 }
+
+#historyBtn{
+  background-color: #4890FD;
+  color: white;
+  border: none;
+  border-radius: 1vh;
+  cursor: pointer;
+  font-size: 3vh;
+  padding: 1vh 2vh;
+  position: fixed;
+  bottom: 12vh;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 100;
+}
+#historyBtn:hover{
+  opacity: 0.8;
+}
