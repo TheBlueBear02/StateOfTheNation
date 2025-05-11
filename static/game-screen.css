@@ -12,8 +12,7 @@ body {
     width: 100%;
     height: 20vh;
     object-fit: cover;
-    margin-top: 1.2vh;
-    margin-bottom: 1.2vh;
+    margin-bottom: 0vh;
 }
 .container {
     width: 94%;
@@ -131,10 +130,10 @@ button#submit-btn:hover {
     margin-top: 1.2vh;
     font-size: 2.16vh;
     font-weight: bold;
+    margin-bottom: .3vh;
 }
 
 #skip-btn {
-    margin-top: 1.2vh;
     font-size: 2.1vh;
     font-weight: bold;
     background: none;
