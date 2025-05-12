@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 
 <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='economy.css') }}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
 <div class="main">
     <div class="header">
@@ -76,32 +77,73 @@
                 </div>
                     <div class="item item2">
                         <p class="title">הוצאות המדינה</p>
+                        <i class="fas fa-coins" style="color: #cdcdcd;float: left;"></i> 
+
                         <div class="center">
                             <p class="main-num">
-                                <span style="font-weight: bold;color:rgb(0, 0, 0);">404.4</span>
+                                <span id="last-year-expenses" style="font-weight: bold;color:rgb(0, 0, 0);">{{ main_values[2][-1] | round(1) }}</span>
                                 <span style="font-size: 4vh;"> מיליארד ש"ח</span>
                                </p>
                             <p class="change">
-                                <span style="font-weight: bold;color:rgb(255, 0, 0);">8%-</span>
+                                <span style="font-weight: bold;{% if main_values[2][-1] > main_values[2][-2] %}color:rgb(255, 0, 0);{% else %}color:rgb(0, 180, 0);{% endif %}">
+                                    {% if main_values[2][-1] > main_values[2][-2] %}▲{% else %}▼{% endif %}
+                                    {{ ((main_values[2][-1] - main_values[2][-2]) / main_values[2][-2] * 100) | round(1) }}%
+                                </span>
                                 משנה שעברה
                             </p>
                         </div>
                     </div>
                     <div class="item item3">
                         <p class="title">ייבוא מחו"ל</p>
+                        <i class="fas fa-ship" style="color: #cdcdcd;float: left;"></i> 
                         <div class="center">
                             <p class="main-num">
-                                <span style="font-weight: bold;color:rgb(0, 0, 0);">404.4</span>
-                                <span style="font-size: 4vh;"> מיליארד ש"ח</span>
+                                <span style="font-weight: bold;color:rgb(0, 0, 0);">88.6</span>
+                                <span style="font-size: 4vh;"> מיליארד דולר ($)</span>
                                </p>
                             <p class="change">
-                                <span style="font-weight: bold;color:rgb(255, 0, 0);">8%-</span>
+                                <span style="font-weight: bold;color:rgb(255, 0, 0);">▼-12.7%</span>
                                 משנה שעברה
                             </p>
                         </div>
                     </div>
                     <div class="item item4 excluded">
-                        
+                        <canvas id="expenses-line-graph" class="graph" height="70%" width="100%"></canvas>
+                        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>                           
+                        <script type="text/javascript"> // Chart
+                            var ctx = document.getElementById('expenses-line-graph').getContext('2d');
+                            var myChart = new Chart(ctx, {
+                                type: 'line',
+                                data: {
+                                    labels: {{ main_lables | safe }},
+                                    datasets: [{
+                                        data: {{ main_values[2] | safe }},
+                                        fill: false, 
+                                        borderColor: '#ff6666', // Light red color
+                                        borderWidth: 4,
+                                        lineTension: 0.4,
+                                        pointRadius: 0, // Remove dots
+                                    }]
+                                },
+                                options: {
+                                    plugins: {
+                                        legend: {
+                                            display: false
+                                        },
+                                        title: {
+                                            display: true,
+                                            text: 'היסטוריית הוצאות המדינה',
+                                        }
+                                    },
+                                    
+                                    scales: {
+                                        y: {
+                                            display: false // Hide y-axis labels
+                                        }
+                                    }
+                                }
+                            });
+                        </script>
                     </div>
                 </div>
             </div>
@@ -251,32 +293,73 @@
                 </div>
                     <div class="item item2">
                         <p class="title">הכנסות המדינה</p>
+                        <i class="fas fa-coins" style="color: #cdcdcd;float: left;"></i> 
+
                         <div class="center">
                             <p class="main-num">
-                                <span style="font-weight: bold;color:rgb(0, 0, 0);">404.4</span>
+                                <span id="last-year-income" style="font-weight: bold;color:rgb(0, 0, 0);">{{ main_values[1][-1] | round(1) }}</span>
                                 <span style="font-size: 4vh;"> מיליארד ש"ח</span>
                                </p>
                             <p class="change">
-                                <span style="font-weight: bold;color:rgb(255, 0, 0);">8%-</span>
+                                <span style="font-weight: bold;{% if main_values[1][-1] > main_values[1][-2] %}color:rgb(0, 180, 0);{% else %}color:rgb(255, 0, 0);{% endif %}">
+                                    {% if main_values[1][-1] > main_values[1][-2] %}▲{% else %}▼{% endif %}
+                                    {{ ((main_values[1][-1] - main_values[1][-2]) / main_values[1][-2] * 100) | round(1) }}%
+                                </span>
                                 משנה שעברה
                             </p>
                         </div>
                     </div>
                     <div class="item item3">
                         <p class="title">ייצוא לחו"ל</p>
+                        <i class="fas fa-ship" style="color: #cdcdcd;float: left;"></i> 
                         <div class="center">
                             <p class="main-num">
-                                <span style="font-weight: bold;color:rgb(0, 0, 0);">404.4</span>
-                                <span style="font-size: 4vh;"> מיליארד ש"ח</span>
+                                <span style="font-weight: bold;color:rgb(0, 0, 0);"> 156</span>
+                                <span style="font-size: 4vh;"> מיליארד דולר ($)</span>
                                </p>
                             <p class="change">
-                                <span style="font-weight: bold;color:rgb(255, 0, 0);">8%-</span>
+                                <span style="font-weight: bold;color:rgb(255, 0, 0);">▼6%-</span>
                                 משנה שעברה
                             </p>
                         </div>
                     </div>
                     <div class="item item4 excluded">
-                        
+                        <canvas id="income-line-graph" class="graph" height="70%" width="100%"></canvas>
+                        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>                           
+                        <script type="text/javascript"> // Chart
+                            var ctx = document.getElementById('income-line-graph').getContext('2d');
+                            var myChart = new Chart(ctx, {
+                                type: 'line',
+                                data: {
+                                    labels: {{ main_lables | safe }},
+                                    datasets: [{
+                                        data: {{ main_values[1] | safe }},
+                                        fill: false, 
+                                        borderColor: '#90EE90', // Light green color
+                                        borderWidth: 4,
+                                        lineTension: 0.4,
+                                        pointRadius: 0, // Remove dots
+                                    }]
+                                },
+                                options: {
+                                    plugins: {
+                                        legend: {
+                                            display: false
+                                        },
+                                        title: {
+                                            display: true,
+                                            text: 'היסטוריית הכנסות המדינה',
+                                        }
+                                    },
+                                    
+                                    scales: {
+                                        y: {
+                                            display: false // Hide y-axis labels
+                                        }
+                                    }
+                                }
+                            });
+                        </script>
                     </div>
                 </div>
                 
