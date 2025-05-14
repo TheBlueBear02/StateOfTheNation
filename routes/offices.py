@@ -177,8 +177,10 @@ def getOfficeBranches(office_id):
     return json_data
 
 def get_offices_data():
-    all_offices = db.session.query(Office).limit(4).all()
-
+    offices = db.session.query(Office.id, Office.name, Office.is_shown).all()
+    print('All offices with their is_shown values:', offices)
+    all_offices = db.session.query(Office).filter_by(is_shown=True).limit(4).all()
+    print('all_offices', all_offices)
     # save the first 4 offices from the database and their ministers data in a list
     offices_list = []
     for office in all_offices:
@@ -208,12 +210,14 @@ def get_offices_data():
 
 @offices_bp.route('/offices')
 def offices():
-
-    # Fetch index info for each office
-    first_office_indexes_info = fetch_indexes(1)
-    second_office_indexes_info = fetch_indexes(2)
-    third_office_indexes_info = fetch_indexes(3)
-    forth_office_indexes_info = fetch_indexes(4)
+    # Get offices data first
+    offices_list = get_offices_data()
+    
+    # Fetch index info for each office using IDs from offices_list
+    first_office_indexes_info = fetch_indexes(offices_list[0]['id'])
+    second_office_indexes_info = fetch_indexes(offices_list[1]['id'])
+    third_office_indexes_info = fetch_indexes(offices_list[2]['id'])
+    forth_office_indexes_info = fetch_indexes(offices_list[3]['id'])
     
     # Cell structures
     upper_left_structure = [
@@ -248,9 +252,6 @@ def offices():
     forth_office_cells = create_cells(forth_office_indexes_info, bottom_right_structure)
    
    
-    offices_list = get_offices_data()
-
-
     # send the page offices and indexes data
     return render_template('offices-screen/offices.html',  offices=offices_list,first_office_cells=first_office_cells, second_office_cells=second_office_cells, third_office_cells=third_office_cells, forth_office_cells=forth_office_cells)
 

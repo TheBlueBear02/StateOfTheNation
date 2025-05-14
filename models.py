@@ -45,6 +45,7 @@ class Office(db.Model):
     info = db.Column(db.String, nullable=True)
     minister_id = db.Column(db.BigInteger, nullable=False)
     news_feed_id = db.Column(db.String, nullable=True)
+    is_shown = db.Column(db.Boolean, default=True, nullable=True)
     
     # Relationships
     indexes = db.relationship('Index', backref='office', lazy=True)
