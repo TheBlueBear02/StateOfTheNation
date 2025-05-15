@@ -52,6 +52,9 @@ function getPartyColor(party) {
         case 'נעם':
             color = 'rgba(173, 216, 230, 1)'; // LightBlue with 50% opacity
             break;
+        case 'כולנו':
+        color = 'rgb(72, 139, 161)'; // LightBlue with 50% opacity
+        break;
         default:
             color = 'rgba(128, 128, 128, 1)'; // Gray with 50% opacity
     }
