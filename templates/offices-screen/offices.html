@@ -426,8 +426,8 @@
             const minValue = Math.min(...values);
             const range = maxValue - minValue;
             // Add 50% of the range both above and below
-            yMax = maxValue + (range * 0.5);
-            yMin = Math.max(0, minValue - (range * 0.5)); // Ensure we don't go below 0
+            yMax = Math.ceil(maxValue + (range * 0.5));
+            yMin = Math.max(0, Math.floor(minValue - (range * 0.5))); // Ensure we don't go below 0
         }
 
         const ctx = document.getElementById(chartId).getContext("2d");
@@ -438,11 +438,11 @@
                 datasets: [{
                     label: name,
                     data: values,
-                    fill: true,
+                    fill: false,
                     borderColor: "#4890FD",
                     backgroundColor: "rgb(208, 226, 252)",
                     borderWidth: 2,
-                    lineTension: 0.5
+                    lineTension: 0.4
                 }]
             },
             options: {
@@ -473,9 +473,6 @@
                                     return formatted.endsWith('.0') ? formatted.slice(0, -2) : formatted;
                                 };
 
-                                if (chart === 'line') {
-                                    return Math.round(value).toString();
-                                }
                                 if (value >= 1000000000) {
                                     return formatWithDecimals(value / 1000000000) + 'B';
                                 } else if (value >= 1000000) {
