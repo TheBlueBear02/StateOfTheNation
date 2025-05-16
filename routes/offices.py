@@ -213,6 +213,18 @@ def offices():
     # Get offices data first
     offices_list = get_offices_data()
     
+    # Shuffle the offices list to get random order
+    #random.shuffle(offices_list)
+
+     # Print the office IDs to see what we're working with
+    print("Available office IDs:", [office['id'] for office in offices_list])
+    
+    # Define the desired order of office IDs based on the actual IDs
+    desired_order = [4, 2, 5, 3]  # This will get the actual IDs
+    
+    # Sort offices_list based on the desired order
+    offices_list.sort(key=lambda x: desired_order.index(x['id']))
+
     # Fetch index info for each office using IDs from offices_list
     first_office_indexes_info = fetch_indexes(offices_list[0]['id'])
     second_office_indexes_info = fetch_indexes(offices_list[1]['id'])

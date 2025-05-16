@@ -45,7 +45,6 @@ body{
     cursor: pointer;
     display: block; /* Ensures it doesn’t behave unexpectedly */
     margin: auto;
-
 }
 #knesschat_logo:hover{
     opacity: 0.8;
