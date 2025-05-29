@@ -93,7 +93,7 @@
         }
         else{
             const tweets_feed = document.getElementById("tweets_feed");
-            tweets_feed.innerHTML = `<rssapp-feed id="${km_feed_id}"></rssapp-feed>`;
+            tweets_feed.innerHTML = `<rssapp-wall id="${km_feed_id}"></rssapp-wall>`;
 
 
             const loding = document.getElementById('loader');
@@ -101,7 +101,7 @@
 
             // Create and append the script element
             const script = document.createElement("script");
-            script.src = "https://widget.rss.app/v1/feed.js";
+            script.src = "https://widget.rss.app/v1/wall.js";
             script.type = "text/javascript";
             script.async = true;
             tweets_feed.appendChild(script);
@@ -118,11 +118,11 @@
     document.addEventListener('DOMContentLoaded', function() {
         
         const tweets_feed = document.getElementById("tweets_feed");
-        tweets_feed.innerHTML = `<rssapp-feed id="${all_km_feed}"></rssapp-feed>`;
+        tweets_feed.innerHTML = `<rssapp-wall id="${all_km_feed}"></rssapp-wall>`;
 
         // Create and append the script element
         const script = document.createElement("script");
-        script.src = "https://widget.rss.app/v1/feed.js";
+        script.src = "https://widget.rss.app/v1/wall.js";
         script.type = "text/javascript";
         script.async = true;
         tweets_feed.appendChild(script);
