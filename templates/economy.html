@@ -91,13 +91,16 @@
                                 </span>
                                 משנה שעברה
                             </p>
+
                         </div>
+                        <p class="change" style="font-size: 2vh;color: #505050;margin: 5vh;text-align: center;margin-right: 20vh;"> נכון לשנת {{ main_lables[-1] }}</p>
+
                     </div>
                     <div class="item item3">
                         <p class="title">ייבוא מחו"ל</p>
                         <i class="fas fa-ship" style="color: #cdcdcd;float: left;"></i> 
-                        <div class="center">
-                            <p class="main-num">
+                        <div class="center" >
+                            <p class="main-num" style="margin-top: 0;">
                                 <span style="font-weight: bold;color:rgb(0, 0, 0);">88.6</span>
                                 <span style="font-size: 4vh;"> מיליארד דולר ($)</span>
                                </p>
@@ -106,6 +109,8 @@
                                 משנה שעברה
                             </p>
                         </div>
+                        <p class="change" style="font-size: 2vh;margin-top: 2vh; color: #505050;text-align: center;margin-right: 20vh;"> נכון לשנת {{ main_lables[-1] }}</p>
+
                     </div>
                     <div class="item item4 excluded">
                         <canvas id="expenses-line-graph" class="graph" height="70%" width="100%"></canvas>
@@ -132,7 +137,7 @@
                                         },
                                         title: {
                                             display: true,
-                                            text: 'היסטוריית הוצאות המדינה',
+                                            text: 'מגמת הוצאות המדינה',
                                         }
                                     },
                                     
@@ -308,12 +313,14 @@
                                 משנה שעברה
                             </p>
                         </div>
+                        <p class="change" style="font-size: 2vh;margin-top: 5vh; color: #505050;text-align: center;margin-right: 20vh;"> נכון לשנת {{ main_lables[-1] }}</p>
+
                     </div>
                     <div class="item item3">
                         <p class="title">ייצוא לחו"ל</p>
                         <i class="fas fa-ship" style="color: #cdcdcd;float: left;"></i> 
                         <div class="center">
-                            <p class="main-num">
+                            <p class="main-num" style="margin-top: 0;">
                                 <span style="font-weight: bold;color:rgb(0, 0, 0);"> 156</span>
                                 <span style="font-size: 4vh;"> מיליארד דולר ($)</span>
                                </p>
@@ -322,6 +329,8 @@
                                 משנה שעברה
                             </p>
                         </div>
+                        <p class="change" style="font-size: 2vh;margin-top: 2vh; color: #505050;text-align: center;margin-right: 20vh;"> נכון לשנת {{ main_lables[-1] }}</p>
+
                     </div>
                     <div class="item item4 excluded">
                         <canvas id="income-line-graph" class="graph" height="70%" width="100%"></canvas>
@@ -348,7 +357,7 @@
                                         },
                                         title: {
                                             display: true,
-                                            text: 'היסטוריית הכנסות המדינה',
+                                            text: 'מגמת הכנסות המדינה',
                                         }
                                     },
                                     
