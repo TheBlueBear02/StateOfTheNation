@@ -1,6 +1,15 @@
 {% extends 'base.html' %}
 {% block body %}
 <head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XQ63XM3CRZ"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-XQ63XM3CRZ');
+    </script>
     <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='images/site icon.svg') }}">
 
     <link rel="stylesheet" href="{{ url_for('static', filename='base_style.css') }}">
