@@ -8,7 +8,7 @@
     background-color: #F6F6F6;
     padding: 0;
     margin: 0;
-    overflow: auto;
+    overflow: hidden;
     cursor: pointer;
     box-shadow: 1px 0 20px rgba(99, 99, 99, 0.3); /* Shadow on the right side */
     z-index: 0;
@@ -33,15 +33,23 @@ height: 0;
     margin-left: .75vw;
 }
 .tweets_div{
+    width: 100%;
     padding: 0;
-    margin:0;
-    margin-left: .3vw;
+    margin: 0;
     padding-top: 1vh;
     background-image: url(/static/images/knesschat_background1.png);
     z-index: 1;
-    position: relative; /* Ensures tooltips are positioned correctly */
-
+    position: relative;
+    height: calc(100% - 11vh); /* Subtract header height */
+    overflow-y: auto; /* Enable vertical scrolling */
 }
+
+/* Define the scrollbar style for tweets_div */
+.tweets_div::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+}
+
 .img_span_close{
     background-size: 90%; /* Increase to zoom in */
     background-position: center; /* Keep focus in the middle */
@@ -68,6 +76,8 @@ height: 0;
     display: block;
     margin-bottom: 1vh;
     z-index: 1;
+    margin-left: .3vw;
+
 }
 .defualt_img:hover{
     transform: scale(1.1);
@@ -93,7 +103,7 @@ height: 0;
     color: white;
     font-weight: bold;
     justify-content: center; 
-    align-items: center; 
+    align-items: center;
   }
   .badge p{
     margin: 0, auto;
