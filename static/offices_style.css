@@ -631,7 +631,7 @@ background: #c5c5c5;
     display: flex;
     height: 6vh;
     width: 100%;
-    background-color: #eee;
+    background-color: transparent;
     margin: 0;
     margin-top: 2vh;
     padding: 0;
@@ -728,6 +728,7 @@ background: #c5c5c5;
     align-items: center;
     width: 95%;
     margin-left: 3%;
+    color: none;
 }
 
 

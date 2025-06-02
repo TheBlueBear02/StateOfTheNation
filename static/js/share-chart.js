@@ -61,7 +61,23 @@ function copyElementAsPngToClipboard(elementId) {
     watermarkDiv.style.visibility = "visible"; // Make it visible during capture
     element.appendChild(watermarkDiv);
 
-    html2canvas(element).then(canvas => {
+    // Configure html2canvas options
+    const options = {
+        backgroundColor: null, // Ensure transparent background
+        scale: 2, // Higher quality
+        useCORS: true, // Enable CORS for images
+        allowTaint: true, // Allow cross-origin images
+        logging: false, // Disable logging
+        onclone: (clonedDoc) => {
+            // Ensure timeline elements are properly rendered in the clone
+            const timeline = clonedDoc.querySelector('.timeline');
+            if (timeline) {
+                timeline.style.backgroundColor = 'transparent';
+            }
+        }
+    };
+
+    html2canvas(element, options).then(canvas => {
         // Remove the watermark after capturing
         watermarkDiv.remove();
 
