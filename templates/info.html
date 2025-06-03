@@ -89,9 +89,10 @@
                             <p style="font-size: 2.5vh;">stateofthenation2025@gmail.com</p>
            
                             <div class="buttons">
-                                <button class="btn btn-circle" onclick="navigator.clipboard.writeText(window.location.origin)">
+                                <button class="btn btn-circle" onclick="copyUrl()">
                                     <i class="fas fa-share-alt"></i>
                                 </button>
+                                <div id="copyNotification" style="display: none; position: fixed; bottom: 20px; right: 20px; background-color: #4CAF50; color: white; padding: 10px 20px; border-radius: 5px; z-index: 1000;">הקישור הועתק!</div>
                                 <a href="https://www.facebook.com/people/%D7%9E%D7%A6%D7%91-%D7%94%D7%90%D7%95%D7%9E%D7%94-State-of-the-Nation-IL/61576933410166/" target="_blank" class="btn btn-circle">
                                     <i class="fab fa-facebook-f"></i>
                                 </a>
@@ -111,6 +112,15 @@
         </div>
     </div>
     <script>
+        function copyUrl() {
+            navigator.clipboard.writeText(window.location.origin);
+            const notification = document.getElementById('copyNotification');
+            notification.style.display = 'block';
+            setTimeout(() => {
+                notification.style.display = 'none';
+            }, 2000);
+        }
+
         document.addEventListener("DOMContentLoaded", function() {
             const paragraphs = document.querySelectorAll(".content-paragraph");
             const observerOptions = {

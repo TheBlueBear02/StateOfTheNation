@@ -34,9 +34,10 @@
                 </p>
                 <p class="cta-desc">היכנסו לאתר מצב האומה מהמחשב או עקבו:</p>
                 <div class="buttons">
-                    <button class="btn btn-circle" >
+                    <button class="btn btn-circle" onclick="copyUrl()">
                         <i class="fas fa-share-alt"></i>
                     </button>
+                    <div id="copyNotification" style="display: none; position: fixed; bottom: 30%; right: 20px; background-color: #4CAF50; color: white; padding: 8px 16px; border-radius: 5px; z-index: 1000; font-size: 14px;">הקישור הועתק!</div>
                     <a href="https://www.facebook.com/people/%D7%9E%D7%A6%D7%91-%D7%94%D7%90%D7%95%D7%9E%D7%94-State-of-the-Nation-IL/61576933410166/" target="_blank" class="btn btn-circle">
                         <i class="fab fa-facebook-f"></i>
                     </a>
@@ -118,4 +119,13 @@
             icon.classList.add('fa-arrow-down');
         }
     });
+
+    function copyUrl() {
+        navigator.clipboard.writeText(window.location.origin);
+        const notification = document.getElementById('copyNotification');
+        notification.style.display = 'block';
+        setTimeout(() => {
+            notification.style.display = 'none';
+        }, 2000);
+    }
 </script>
