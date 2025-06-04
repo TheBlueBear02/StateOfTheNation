@@ -371,6 +371,10 @@
                 script.type = "text/javascript";
                 script.async = true;
                 newsFeed.appendChild(script);
+            } else {
+                // Clear the news feed content if there's no newsFeedId
+                const newsFeed = document.getElementById("news-feed-kpi");
+                newsFeed.innerHTML = '';
             }
             
 
@@ -402,6 +406,10 @@
                 script.type = "text/javascript";
                 script.async = true;
                 newsFeed.appendChild(script);
+            } else {
+                // Clear the news feed content if there's no newsFeedId
+                const newsFeed = document.getElementById("news-feed-policy");
+                newsFeed.innerHTML = '';
             }
 
             updateChart("policies_chart", labels, values, chart, name);
