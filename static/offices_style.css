@@ -833,3 +833,146 @@ background: #c5c5c5;
     visibility: visible;
     opacity: 1;
 }
+#office-indexes-title{
+    font-size: 3vh;
+    margin: 0;
+    padding: 0;
+    margin-bottom: 2vh;
+    font-weight: bold;
+    align-items: center;
+    text-align: center;
+}
+.office-indexes {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2vh 0vh;
+    justify-items: center;
+    align-items: start;
+    width: 100%;
+    max-width: 100%;
+    margin: 0 auto 10vh auto;
+    padding: 0;
+}
+
+.new-index-card {
+    position: relative;
+    width: 31.5vh;
+    height: 13vh;
+    background: #f3f4ff6b;
+    border: .3vh solid #4890FD;
+    border-radius: 1vh;
+    box-shadow: 0 2px 8px rgba(72, 144, 253, 0.08);
+    font-family: 'Assistant', Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+    overflow: visible;
+    animation: entrence 1.3s ease 0s 1 normal forwards;
+
+}
+
+.new-index-bubble-icon {
+    position: relative;
+    top: -10%;
+    left: -50%;
+    width: 5vh;
+    height: 5vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2;
+    box-shadow: 0 2px 8px rgba(72, 144, 253, 0.10);
+}
+
+.new-index-icon {
+    width: 3.2vh;
+    height: 3.2vh;
+    object-fit: contain;
+    display: block;
+}
+
+.new-index-title {
+    position: absolute;
+    top: 1.2vh;
+    right: 1.5vh;
+    font-size: 2.5vh;
+    font-weight: bold;
+    color: #222;
+    text-align: right;
+    z-index: 1;
+}
+
+.new-index-avg {
+    position: relative;
+    top: 0%;
+    left: 45%;
+    transform: translate(-50%, -50%);
+    font-size: 3.2vh;
+    font-weight: bold;
+    color: #222;
+    text-align: center;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    gap: 1vh;
+    direction: rtl;
+}
+
+.index-avg-text {
+    font-size: 2.2vh;
+    font-weight: bold;
+    color: #222;
+    margin-top: 1vh;
+    padding: 0;
+}
+
+.new-index-date {
+    position: absolute;
+    bottom: 0vh;
+    left: 1.5vh;
+    font-size: 2.5vh;
+    color: #888;
+    text-align: left;
+    z-index: 1;
+    
+}
+
+.new-index-percent {
+    position: absolute;
+    bottom: 1.2vh;
+    right: 1.5vh;
+    font-size: 2.1vh;
+    font-weight: bold;
+    text-align: right;
+    z-index: 1;
+}
+
+/* Remove old index-card padding and min sizes for new layout */
+.index-card.new-index-card {
+    min-width: unset;
+    min-height: unset;
+    padding: 0;
+    margin: 0;
+}
+
+.non-kpi-border {
+    border: 1px solid #808080;
+    background-color: #f8f8f883;
+}
+
+.loading-indicator {
+    text-align: center;
+    padding: 20px;
+    font-size: 1.2em;
+    color: #666;
+}
+
+.error-message {
+    text-align: center;
+    padding: 20px;
+    color: #ff0000;
+    font-size: 1.2em;
+}
