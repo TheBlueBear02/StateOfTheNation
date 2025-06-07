@@ -846,7 +846,7 @@ background: #c5c5c5;
 .office-indexes {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 2vh 0vh;
+    gap: 2vh 2vh;
     justify-items: center;
     align-items: start;
     width: 100%;
