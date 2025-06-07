@@ -52,11 +52,139 @@ def create_cells(indexes_info, structure):
         cells.append(row)
     return cells
 
-# Fetch indexes and data for a specific office
+# Add this new function to calculate averages since last minister
+def calculate_index_averages_since_last_minister(office_id):
+    # Get the last two ministers
+    ministers = db.session.query(MinisterHistory)\
+        .filter_by(office_id=office_id)\
+        .order_by(MinisterHistory.id.desc())\
+        .limit(2)\
+        .all()
+    
+    if not ministers:
+        print(f"No ministers found for office_id: {office_id}")
+        return []
+        
+    current_minister = ministers[0]
+    previous_minister = ministers[1] if len(ministers) > 1 else None
+    
+    print(f"\nCurrent minister: {current_minister.name}")
+    print(f"Current minister start date (original): {current_minister.start_date}")
+    current_minister_start = parse_date(current_minister.start_date)
+    print(f"Current minister start date (parsed): {current_minister_start}")
+    
+    if previous_minister:
+        print(f"\nPrevious minister: {previous_minister.name}")
+        print(f"Previous minister start date (original): {previous_minister.start_date}")
+        previous_minister_start = parse_date(previous_minister.start_date)
+        print(f"Previous minister start date (parsed): {previous_minister_start}")
+    
+    # Get all indexes for this office, ordered by is_kpi in descending order
+    indexes = db.session.query(Index).filter_by(office_id=office_id).order_by(Index.is_kpi.desc()).all()
+    index_results = []
+    
+    for index in indexes:
+        print(f"\nProcessing index: {index.name}")
+        # Get all index data
+        index_data = db.session.query(IndexData)\
+            .filter(IndexData.index_id == index.id)\
+            .all()
+        # Get last label
+        last_data = db.session.query(IndexData)\
+            .filter_by(index_id=index.id)\
+            .order_by(IndexData.label.desc())\
+            .first()
+        last_label = last_data.label if last_data else None
+        
+        current_avg = None
+        percent_change = None
+        # Calculate current minister's average
+        current_filtered_data = []
+        for data in index_data:
+            data_date = parse_date(data.label)
+            if data_date:
+                # Handle year-only dates
+                if len(data_date) == 4:  # Year only (e.g., "2022")
+                    data_year = int(data_date)
+                    if len(current_minister_start) == 7:  # Year-month (e.g., "2022-12")
+                        minister_year = int(current_minister_start[:4])
+                        if data_year >= minister_year:
+                            current_filtered_data.append(data)
+                    else:  # Year only
+                        if data_date >= current_minister_start:
+                            current_filtered_data.append(data)
+                else:  # Year-month format
+                    if data_date >= current_minister_start:
+                        current_filtered_data.append(data)
+        if current_filtered_data:
+            current_values = [float(str(row.value).replace(',', '').replace('%', '')) for row in current_filtered_data]
+            current_avg = sum(current_values) / len(current_values)
+            print(f"Current minister data points: {len(current_values)}")
+            print(f"Current minister values: {current_values}")
+            print(f"Current minister average: {current_avg:.2f}")
+        # Calculate previous minister's average if available
+        previous_avg = None
+        if previous_minister:
+            previous_filtered_data = []
+            for data in index_data:
+                data_date = parse_date(data.label)
+                if data_date:
+                    # Handle year-only dates
+                    if len(data_date) == 4:  # Year only (e.g., "2022")
+                        data_year = int(data_date)
+                        if len(previous_minister_start) == 7:  # Year-month (e.g., "2022-12")
+                            prev_year = int(previous_minister_start[:4])
+                            curr_year = int(current_minister_start[:4])
+                            if data_year >= prev_year and data_year < curr_year:
+                                previous_filtered_data.append(data)
+                        else:  # Year only
+                            if data_date >= previous_minister_start and data_date < current_minister_start:
+                                previous_filtered_data.append(data)
+                    else:  # Year-month format
+                        if data_date >= previous_minister_start and data_date < current_minister_start:
+                            previous_filtered_data.append(data)
+            if previous_filtered_data:
+                previous_values = [float(str(row.value).replace(',', '').replace('%', '')) for row in previous_filtered_data]
+                previous_avg = sum(previous_values) / len(previous_values)
+                print(f"Previous minister data points: {len(previous_values)}")
+                print(f"Previous minister values: {previous_values}")
+                print(f"Previous minister average: {previous_avg:.2f}")
+        # Calculate percent change
+        if current_avg is not None and previous_avg is not None and previous_avg != 0:
+            percent_change = ((current_avg - previous_avg) / previous_avg) * 100
+            print(f"Percentage change: {percent_change:.2f}%")
+        # Add to results
+        index_results.append({
+            'name': index.name,
+            'average': current_avg,
+            'percent_change': percent_change,
+            'last_label': last_label,
+            'icon': index.icon,
+            'info': index.info,
+            'is_kpi': index.is_kpi,
+            'alert': index.alert,
+        })
+    return index_results
+
+@offices_bp.route('/get_office_indexes/<int:office_id>')
+def get_office_indexes(office_id):
+    indexes = calculate_index_averages_since_last_minister(office_id)
+    return jsonify({'indexes': indexes})
+
+# Modify the fetch_indexes function to include the new fields
 def fetch_indexes(office_id):
+    print(f"\nFetching indexes for office_id: {office_id}")
     indexes = db.session.query(Index).filter_by(office_id=office_id).order_by(Index.is_kpi.desc()).all()
     indexes_info = []
+    
+    
     for index in indexes:
+        # Get the last label separately
+        last_data = db.session.query(IndexData)\
+            .filter_by(index_id=index.id)\
+            .order_by(IndexData.label.desc())\
+            .first()
+        
         index_data = db.session.query(IndexData).filter_by(index_id=index.id).all()
         labels = parse_dates([row.label for row in index_data])  # Convert dates once
         values = [float(str(row.value).replace(',', '').replace('%', '')) for row in index_data]
@@ -71,8 +199,7 @@ def fetch_indexes(office_id):
             'chart_type': index.chart_type,
             'labels': json.dumps(labels),
             'values': values,
-            'news_feed_id': index.news_feed_id
-
+            'news_feed_id': index.news_feed_id,
         })
     return indexes_info
 
@@ -263,7 +390,7 @@ def offices():
     third_office_cells = create_cells(third_office_indexes_info, bottom_left_structure)
     forth_office_cells = create_cells(forth_office_indexes_info, bottom_right_structure)
    
-   
+
     # send the page offices and indexes data
     return render_template('offices-screen/offices.html',  offices=offices_list,first_office_cells=first_office_cells, second_office_cells=second_office_cells, third_office_cells=third_office_cells, forth_office_cells=forth_office_cells)
 
