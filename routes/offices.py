@@ -62,29 +62,21 @@ def calculate_index_averages_since_last_minister(office_id):
         .all()
     
     if not ministers:
-        print(f"No ministers found for office_id: {office_id}")
         return []
         
     current_minister = ministers[0]
     previous_minister = ministers[1] if len(ministers) > 1 else None
     
-    print(f"\nCurrent minister: {current_minister.name}")
-    print(f"Current minister start date (original): {current_minister.start_date}")
     current_minister_start = parse_date(current_minister.start_date)
-    print(f"Current minister start date (parsed): {current_minister_start}")
     
     if previous_minister:
-        print(f"\nPrevious minister: {previous_minister.name}")
-        print(f"Previous minister start date (original): {previous_minister.start_date}")
         previous_minister_start = parse_date(previous_minister.start_date)
-        print(f"Previous minister start date (parsed): {previous_minister_start}")
     
     # Get all indexes for this office, ordered by is_kpi in descending order
     indexes = db.session.query(Index).filter_by(office_id=office_id).order_by(Index.is_kpi.desc()).all()
     index_results = []
     
     for index in indexes:
-        print(f"\nProcessing index: {index.name}")
         # Get all index data
         index_data = db.session.query(IndexData)\
             .filter(IndexData.index_id == index.id)\
@@ -119,9 +111,6 @@ def calculate_index_averages_since_last_minister(office_id):
         if current_filtered_data:
             current_values = [float(str(row.value).replace(',', '').replace('%', '')) for row in current_filtered_data]
             current_avg = sum(current_values) / len(current_values)
-            print(f"Current minister data points: {len(current_values)}")
-            print(f"Current minister values: {current_values}")
-            print(f"Current minister average: {current_avg:.2f}")
         # Calculate previous minister's average if available
         previous_avg = None
         if previous_minister:
@@ -146,13 +135,9 @@ def calculate_index_averages_since_last_minister(office_id):
             if previous_filtered_data:
                 previous_values = [float(str(row.value).replace(',', '').replace('%', '')) for row in previous_filtered_data]
                 previous_avg = sum(previous_values) / len(previous_values)
-                print(f"Previous minister data points: {len(previous_values)}")
-                print(f"Previous minister values: {previous_values}")
-                print(f"Previous minister average: {previous_avg:.2f}")
         # Calculate percent change
         if current_avg is not None and previous_avg is not None and previous_avg != 0:
             percent_change = ((current_avg - previous_avg) / previous_avg) * 100
-            print(f"Percentage change: {percent_change:.2f}%")
         # Add to results
         index_results.append({
             'name': index.name,
