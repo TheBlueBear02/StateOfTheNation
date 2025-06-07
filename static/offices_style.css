@@ -350,17 +350,16 @@ td {
     margin-left: 1%;
     background-color: white;
     margin-top: 1vh;
-    clip-path: inset(0 round 3vh); /* Clipping the corners */
-
+    clip-path: inset(0 round 3vh);
+    animation: modalEntrance 0.3s ease-out forwards;
 }
 
 .kpi-modal::backdrop {
     background-image: linear-gradient(#fff, #f2f2f2);
-;
+    animation: fadeIn 0.3s ease-out forwards;
 }
 
 .policies-modal {
-
     border: .3vh solid rgb(188, 188, 188);
     width: 94%;
     height: 100%;
@@ -371,12 +370,13 @@ td {
     margin-left: 1%;
     background-color: white;
     margin-top: 1vh;
-    clip-path: inset(0 round 3vh); /* Clipping the corners */
-
+    clip-path: inset(0 round 3vh);
+    animation: modalEntrance 0.3s ease-out forwards;
 }
 
 .policies-modal::backdrop {
     background-image: linear-gradient(#fff, #f2f2f2);
+    animation: fadeIn 0.3s ease-out forwards;
 }
 
 .close_button {
@@ -502,11 +502,12 @@ p {
     background-image: linear-gradient(#fff, #f2f2f2);
     margin-top: 1vh;
     overflow: hidden;
+    animation: modalEntrance 0.3s ease-out forwards;
 }
 
 .info-modal::backdrop {
     background-image: linear-gradient(#fff, #f2f2f2);
-
+    animation: fadeIn 0.3s ease-out forwards;
 }
 
 .policies-modal::-webkit-scrollbar {
@@ -709,13 +710,13 @@ background: #c5c5c5;
     margin-left: 1%;
     background-color: white;
     margin-top: 1vh;
-    clip-path: inset(0 round 3vh); /* Clipping the corners */
-
-    
+    clip-path: inset(0 round 3vh);
+    animation: modalEntrance 0.3s ease-out forwards;
 }
 
 .office-modal::backdrop {
     background-image: linear-gradient(#fff, #f2f2f2);
+    animation: fadeIn 0.3s ease-out forwards;
 }
 
 .office-modal:focus{
@@ -858,7 +859,7 @@ background: #c5c5c5;
     position: relative;
     width: 31.5vh;
     height: 13vh;
-    background: #f3f4ff6b;
+    background: #f8f8f883;
     border: .3vh solid #4890FD;
     border-radius: 1vh;
     box-shadow: 0 2px 8px rgba(72, 144, 253, 0.08);
@@ -975,4 +976,24 @@ background: #c5c5c5;
     padding: 20px;
     color: #ff0000;
     font-size: 1.2em;
+}
+
+@keyframes modalEntrance {
+    0% {
+        opacity: 0;
+        transform: scale(0.8);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
 }
