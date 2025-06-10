@@ -1,8 +1,67 @@
-
 <link rel="stylesheet" href="{{ url_for('static', filename='parliament/election_style.css') }}">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2"></script>
 <div class="election-container">
-    <h1>Election Screen</h1>
-    <!-- Add your election content here -->
+    <h1 style="direction: rtl; text-align: right;">ממוצע 5 הסקרים האחרונים</h1>
+    <canvas id="pollBarChart" width="100%"></canvas>
 </div>
+
+<script>
+    const partyLabels = {{ party_labels|tojson }};
+    const partySeats = {{ party_seats|tojson }};
+    const partyColors = {{ party_colors|tojson }};
+
+    const ctx = document.getElementById('pollBarChart').getContext('2d');
+
+    let chart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: partyLabels,
+            datasets: [{
+                label: 'מספר מנדטים',
+                data: partySeats,
+                backgroundColor: partyColors,
+                borderWidth: 0,
+                borderRadius: 8,
+                hoverBackgroundColor: partyColors.map(color => color + '95')
+            }]
+        },
+        options: {
+            plugins: {
+                legend: { display: false },
+                title: { display: false },
+                datalabels: {
+                    anchor: 'end',
+                    align: 'start',
+                    color: '#fff',
+                    font: { weight: 'bold', size: 24 },
+                    formatter: function(value) {
+                        return value;
+                    },
+                    offset: 0,
+                    clip: true
+                }
+            },
+            layout: {
+                padding: { bottom: 30 }
+            },
+            scales: {
+                x: {
+                    grid: { display: false, drawBorder: false },
+                    ticks: {
+                        font: { size: 14, weight: 'bold' },
+                        color: '#222'
+                    }
+                },
+                y: {
+                    display: false,
+                    grid: { display: false, drawBorder: false }
+                }
+            }
+        },
+        plugins: [ChartDataLabels]
+    });
+</script>
+
 
 
