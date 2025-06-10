@@ -93,3 +93,31 @@ class OfficeBranch(db.Model):
     name = db.Column(db.String, nullable=False)
     office_id = db.Column(db.BigInteger, db.ForeignKey('offices.id'), nullable=False)
     image = db.Column(db.String, nullable=True)
+
+class Poll(db.Model):
+    __tablename__ = 'polls'
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    date = db.Column(db.Date, nullable=False)
+    pollster = db.Column(db.String, nullable=True)
+    publisher = db.Column(db.String, nullable=False)
+    respondents = db.Column(db.Integer, nullable=True)
+    source = db.Column(db.String, nullable=True)
+    created_at = db.Column(db.DateTime, nullable=False, default=db.func.current_timestamp())
+
+    # Relationships
+    results = db.relationship('PollResult', backref='poll', lazy=True)
+
+    def __repr__(self):
+        return f'<Poll {self.pollster} {self.date}>'
+
+
+class PollResult(db.Model):
+    __tablename__ = 'poll_results'
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    poll_id = db.Column(db.Integer, db.ForeignKey('polls.id'), nullable=False)
+    party_name = db.Column(db.String, nullable=False)
+    seats = db.Column(db.Integer, nullable=False)
+    created_at = db.Column(db.DateTime, nullable=False, default=db.func.current_timestamp())
+
+    def __repr__(self):
+        return f'<PollResult {self.party_name}: {self.seats} seats>'

@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, jsonify
+from flask import Blueprint, render_template, request, jsonify, redirect, url_for
 from datetime import datetime
 from pyluach import dates
 from models import db, Tweet, ParliamentMember
@@ -111,5 +111,7 @@ def terms_of_use():
 
 @index_bp.route('/mobile')
 def mobile():
+    if not is_mobile():
+        return redirect(url_for('index.index'))
     return render_template('mobile.html')
 

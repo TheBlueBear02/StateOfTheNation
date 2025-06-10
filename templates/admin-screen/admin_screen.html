@@ -38,6 +38,10 @@
                         <i class="fas fa-plus"></i>
                         <span style="margin-left: 10px;">Add new Index</span>
                     </button>
+                    <button class="nav-btn" onclick="showForm('uploadPollForm')">
+                        <i class="fas fa-poll"></i>
+                        <span style="margin-left: 10px;">Upload Poll CSV</span>
+                    </button>
                 </div>
             </div>
 
@@ -254,6 +258,38 @@
                     </div>
                 </form>
             </div>
+
+            <!-- Upload Poll Form -->
+            <div id="uploadPollForm" style="display: none;">
+                <form class="form-container" id="uploadPollCsvForm">
+                    <h3>Upload Polls CSV</h3>
+                    <div class="form-group full-width">
+                        <label for="pollCsvFile">CSV File</label>
+                        <div style="margin-bottom: 10px; color: #333; font-size: 0.95em;">
+                            The CSV file should have the following columns:<br>
+                            <b>date, pollster, publisher, respondents, source, [party columns...]</b><br>
+                            Each row represents a poll, and each party is a column with the number of seats.<br>
+                            <br>
+                            <b>Example:</b><br>
+                            <code style="display:block; background:#f8f8f8; padding:8px; border-radius:4px;">
+                                date,pollster,publisher,respondents,source,Likud,Yesh Atid,Shas<br>
+                                2023-01-01,Channel 13,News,700,http://example.com,31,12,7<br>
+                                2023-01-27,Channel 12,News,500,http://example.com,30,14,7
+                            </code>
+                        </div>
+                        <input 
+                            type="file" 
+                            id="pollCsvFile" 
+                            name="csv_file" 
+                            accept=".csv" 
+                            required
+                        >
+                    </div>
+                    <div class="btn-container">
+                        <button type="submit">Upload Polls CSV</button>
+                    </div>
+                </form>
+            </div>
         </div>
         <div class="logo-div">
             <img src="/static/images/header/header-logo.png" width="100%"></a></td>
@@ -310,6 +346,7 @@
             document.getElementById("addForm").style.display = "none";
             document.getElementById("resultsTable").style.display = "none";
             document.getElementById("indexDashboard").style.display = "none";
+            document.getElementById("uploadPollForm").style.display = "none";
             
             // Show the selected form/table
             document.getElementById(formId).style.display = "block";
@@ -655,6 +692,29 @@
                     }
                 })
                 .catch(error => console.error("Error submitting form:", error));
+            });
+        });
+    </script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            // Handle form submission for uploading a poll CSV
+            document.getElementById("uploadPollCsvForm")?.addEventListener("submit", function (event) {
+                event.preventDefault();
+                let formData = new FormData(this);
+                fetch("/upload_poll_csv", {
+                    method: "POST",
+                    body: formData
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.error) {
+                        alert("Error: " + data.error);
+                    } else {
+                        alert("Poll CSV uploaded successfully! New records: " + data.new_records);
+                        this.reset();
+                    }
+                })
+                .catch(error => console.error("Error submitting poll CSV form:", error));
             });
         });
     </script>

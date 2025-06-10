@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, request, jsonify, redirect, url_for, session, json
-from models import db, Index, IndexData, Office
+from models import db, Index, IndexData, Office, Poll, PollResult
 from datetime import datetime
 import csv
 import io
@@ -360,4 +360,105 @@ def get_indices_status_endpoint():
     except Exception as e:
         print(f"Error in get_indices_status_endpoint: {e}")
         return jsonify({'error': str(e)}), 500
+
+@admin_bp.route("/upload_poll_csv", methods=["POST"])
+@admin_required
+def upload_poll_csv():
+    try:
+        file = request.files.get("csv_file")
+        if not file:
+            print("No file uploaded")
+            return jsonify({"error": "Missing CSV file"}), 400
+
+        file_content = file.read().decode("utf-8")
+        file_stream = io.StringIO(file_content)
+        csv_reader = csv.reader(file_stream)
+        header = next(csv_reader, None)
+        print(f"CSV header: {header}")
+        if not header or len(header) < 6:
+            print("Header too short")
+            return jsonify({"error": "CSV must have at least: date, pollster, publisher, respondents, source, and at least one party column"}), 400
+
+        meta_cols = ["date", "pollster", "publisher", "respondents", "source"]
+        if header[:5] != meta_cols:
+            print(f"Header columns mismatch: {header[:5]}")
+            return jsonify({"error": f"First columns must be: {', '.join(meta_cols)}"}), 400
+
+        party_names = header[5:]
+        if not party_names:
+            print("No party columns found")
+            return jsonify({"error": "CSV must have at least one party column after the metadata columns"}), 400
+
+        new_polls = 0
+        duplicate_polls = 0
+        invalid_rows = []
+        for i, row in enumerate(csv_reader, start=2):
+            print(f"Processing row {i}: {row}")
+            if len(row) < 5:
+                invalid_rows.append({"row": i, "error": "Not enough columns"})
+                print(f"Row {i} invalid: not enough columns")
+                continue
+            try:
+                poll_date = row[0].strip()
+                pollster = row[1].strip()
+                publisher = row[2].strip()
+                respondents = row[3].strip()
+                source = row[4].strip()
+                try:
+                    try:
+                        date_obj = datetime.strptime(poll_date, "%Y-%m-%d").date()
+                    except ValueError:
+                        date_obj = datetime.strptime(poll_date, "%d/%m/%Y").date()
+                except Exception as e:
+                    invalid_rows.append({"row": i, "error": f"Invalid date: {e}"})
+                    print(f"Row {i} invalid date: {e}")
+                    continue
+                exists_query = db.session.query(Poll).filter_by(date=date_obj, pollster=pollster, publisher=publisher).first()
+                if exists_query:
+                    duplicate_polls += 1
+                    print(f"Row {i} duplicate poll")
+                    continue
+                poll = Poll(
+                    date=date_obj,
+                    pollster=pollster,
+                    publisher=publisher,
+                    respondents=int(respondents) if respondents else None,
+                    source=source
+                )
+                db.session.add(poll)
+                db.session.flush()  # Get poll.id
+                print(f"Added poll: {poll}")
+                for idx, party in enumerate(party_names, start=5):
+                    try:
+                        seats = int(row[idx]) if idx < len(row) and row[idx].strip() else 0
+                    except Exception:
+                        seats = 0
+                    poll_result = PollResult(poll_id=poll.id, party_name=party, seats=seats)
+                    db.session.add(poll_result)
+                    print(f"Added poll result: {poll_result}")
+                new_polls += 1
+            except Exception as e:
+                invalid_rows.append({"row": i, "error": str(e)})
+                print(f"Error in row {i}: {e}")
+        try:
+            db.session.commit()
+            print(f"DB commit successful. New polls: {new_polls}")
+        except Exception as e:
+            db.session.rollback()
+            print(f"DB commit failed: {e}")
+            return jsonify({"error": f"DB commit failed: {e}", "new_polls": new_polls}), 500
+
+        response = {
+            "message": "Processed Poll CSV successfully",
+            "new_polls": new_polls,
+            "duplicate_polls": duplicate_polls,
+            "invalid_rows": invalid_rows,
+            "total_csv_rows": new_polls + duplicate_polls + len(invalid_rows)
+        }
+        print(f"Returning response: {response}")
+        return jsonify(response), 200
+    except Exception as e:
+        db.session.rollback()
+        print(f"Error processing Poll CSV: {str(e)}")
+        return jsonify({"error": str(e), "new_polls": 0}), 500
 
