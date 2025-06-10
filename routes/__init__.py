@@ -6,5 +6,6 @@ from .parliament import parliament_bp
 from .info import info_bp
 from .admin import admin_bp
 from .game import game_bp
+from .election import election_bp
 # Export blueprints for app.py
-__all__ = ['index_bp', 'offices_bp', 'demography_bp', 'economy_bp', 'parliament_bp', 'info_bp', 'admin_bp', 'game_bp']
+__all__ = ['index_bp', 'offices_bp', 'demography_bp', 'economy_bp', 'parliament_bp', 'info_bp', 'admin_bp', 'game_bp', 'election_bp']
