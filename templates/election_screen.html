@@ -6,6 +6,26 @@
     <canvas id="pollBarChart" width="100%"></canvas>
 </div>
 
+<div class="block-container">
+    <h2 style="direction: rtl; text-align: right;">חלוקה לגושים</h2>
+    <div class="block-bar" dir="rtl">
+        {% set total_seats = block_seats | sum %}
+        {% for i in range(block_labels|length) %}
+            {% set block = block_labels[i] %}
+            {% set seats = block_seats[i] %}
+            {% set color = block_colors[i] %}
+            {% set width = (seats / total_seats * 100) | round(2) %}
+            <div class="block-segment"
+                 style="width: {{ width }}%; background: {{ color }};">
+                <div class="block-label">
+                    <span class="block-name">{{ block }}</span>
+                    <span class="block-seats">{{ seats }}</span>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+
 <script>
     const partyLabels = {{ party_labels|tojson }};
     const partySeats = {{ party_seats|tojson }};
@@ -52,6 +72,56 @@
                         font: { size: 14, weight: 'bold' },
                         color: '#222'
                     }
+                },
+                y: {
+                    display: false,
+                    grid: { display: false, drawBorder: false }
+                }
+            }
+        },
+        plugins: [ChartDataLabels]
+    });
+
+    // Block chart data from Flask
+    const blockLabels = {{ block_labels|tojson }};
+    const blockSeats = {{ block_seats|tojson }};
+    const blockColors = {{ block_colors|tojson }};
+
+    const blockCtx = document.getElementById('blockBarChart').getContext('2d');
+    new Chart(blockCtx, {
+        type: 'bar',
+        data: {
+            labels: blockLabels,
+            datasets: [{
+                data: blockSeats,
+                backgroundColor: blockColors,
+                borderWidth: 0,
+                borderRadius: 0,
+                datalabels: {
+                    color: '#fff',
+                    font: { weight: 'bold', size: 28 }
+                }
+            }]
+        },
+        options: {
+            indexAxis: 'x', // horizontal bar
+            plugins: {
+                legend: { display: false },
+                datalabels: {
+                    anchor: 'center',
+                    align: 'center',
+                    color: '#fff',
+                    font: { weight: 'bold', size: 28 },
+                    formatter: function(value, context) {
+                        return value;
+                    }
+                }
+            },
+            scales: {
+                x: {
+                    stacked: true,
+                    grid: { display: false, drawBorder: false },
+                    ticks: { display: false }
                 },
                 y: {
                     display: false,

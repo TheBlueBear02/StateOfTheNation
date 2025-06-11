@@ -8,6 +8,9 @@ import os
 
 election_bp = Blueprint('election', __name__)
 
+def normalize_party_name(name):
+    return name.replace('"', '').replace("'", '').replace('-', '').replace('״', '').replace('׳', '').replace(' ', '') 
+
 @election_bp.route('/election')
 def election():
     # Get the last 5 polls
@@ -33,7 +36,6 @@ def election():
     
     # Calculate total of all averages
     total_seats = sum(party_averages.values())
-    
     # Calculate scaling factor to make total 120
     scaling_factor = 120 / total_seats if total_seats > 0 else 0
     
@@ -105,12 +107,31 @@ def election():
     # Create a list of colors for the chart, matching the order of party_labels
     party_colors = [party_to_color.get(normalize_party_name(party), '#1e88e5') for party in party_labels]
 
+    # Map each party to its block
+    party_to_block = {}
+    for block_key, block in party_blocks.items():
+        for party in block['parties']:
+            party_to_block[normalize_party_name(party)] = block_key
+
+    # Calculate block totals based on final seat allocation
+    block_totals = {block_key: 0 for block_key in party_blocks}
+    for party, seats in filtered_integer_seats.items():
+        block_key = party_to_block.get(normalize_party_name(party))
+        if block_key:
+            block_totals[block_key] += seats
+
+    # Prepare block data for chart
+    block_labels = [party_blocks[key]['name'] for key in party_blocks]
+    block_seats = [block_totals[key] for key in party_blocks]
+    block_colors = [party_blocks[key]['color'] for key in party_blocks]
+
     return render_template('election_screen.html', 
                          polls=latest_polls,
                          party_averages=sorted_parties,
                          party_labels=party_labels,
                          party_seats=party_seats,
-                         party_colors=party_colors)
+                         party_colors=party_colors,
+                         block_labels=block_labels,
+                         block_seats=block_seats,
+                         block_colors=block_colors)
 
-def normalize_party_name(name):
-    return name.replace('"', '').replace("'", '').replace('-', '').replace('״', '').replace('׳', '').replace(' ', '') 
