@@ -2,7 +2,7 @@ import os
 from flask import Flask
 from flask_migrate import Migrate
 from models import db
-from routes import index_bp, offices_bp, demography_bp, economy_bp, parliament_bp, info_bp, admin_bp, game_bp
+from routes import index_bp, offices_bp, demography_bp, economy_bp, parliament_bp, info_bp, admin_bp, game_bp, election_bp
 
 # Create the app factory
 def create_app(config_class=None):
@@ -17,6 +17,7 @@ def create_app(config_class=None):
     app.register_blueprint(info_bp)
     app.register_blueprint(admin_bp)
     app.register_blueprint(game_bp)
+    app.register_blueprint(election_bp)
 
     app.secret_key = os.getenv("ADMIN_PASSWORD")
 
