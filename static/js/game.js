@@ -289,7 +289,7 @@ function copyURLToClipboard(btn) {
     const btnParent = btn.parentNode;
     
     // Use hardcoded URL instead of browser URL
-    const url = "http://192.168.1.25:5000/guessthekm";
+    const url = "stateofthenation.co.il/guessthekm";
     
     // Capture button dimensions and styles before replacing it
     const btnWidth = btn.offsetWidth;
