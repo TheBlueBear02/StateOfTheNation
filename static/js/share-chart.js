@@ -6,6 +6,9 @@ function copyElementAsPngToClipboard(elementId) {
         return;
     }
 
+    // Save the original position style
+    const originalPosition = element.style.position;
+
     // Create a watermark div
     const watermarkDiv = document.createElement("div");
     watermarkDiv.style.position = "absolute";
@@ -80,6 +83,8 @@ function copyElementAsPngToClipboard(elementId) {
     html2canvas(element, options).then(canvas => {
         // Remove the watermark after capturing
         watermarkDiv.remove();
+        // Restore the original position style
+        element.style.position = originalPosition;
 
         // Convert the canvas to a Blob
         canvas.toBlob(blob => {
@@ -102,6 +107,30 @@ function copyElementAsPngToClipboard(elementId) {
             });
         }, "image/png");
     }).catch(error => {
+        // Always clean up even on error
+        watermarkDiv.remove();
+        element.style.position = originalPosition;
         console.error("Error capturing element:", error);
     });
+}
+
+// Popup message functions for sharing
+function closeMessage() {
+    const modal = document.getElementById('share-message');
+    if (modal) {
+        modal.style.display = 'none';
+    }
+}
+function showMessage() {
+    const modal = document.getElementById('share-message');
+    if (modal) {
+        modal.style.display = 'block';
+        setTimeout(() => {
+            closeMessage();
+        }, 2000);
+    }
+}
+function showMessageP() {
+    // For now, just call showMessage (can be customized later)
+    showMessage();
 }
