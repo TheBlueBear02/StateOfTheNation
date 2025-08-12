@@ -543,11 +543,35 @@
             // Add type text based on is_kpi
             const typeText = indexInfo.is_kpi ? 'מדד' : 'מדיניות';
 
+            // Create average data HTML
+            let averageHtml = '';
+            if (indexInfo.current_avg !== null || indexInfo.previous_avg !== null || indexInfo.percent_change !== null) {
+                averageHtml = `
+                    <div class="average-data">
+                        <div class="avg-row">
+                            <span class="avg-label">Current Government:</span>
+                            <span class="avg-value">${indexInfo.current_avg !== null ? indexInfo.current_avg : 'N/A'}</span>
+                        </div>
+                        <div class="avg-row">
+                            <span class="avg-label">Previous Government:</span>
+                            <span class="avg-value">${indexInfo.previous_avg !== null ? indexInfo.previous_avg : 'N/A'}</span>
+                        </div>
+                        <div class="avg-row">
+                            <span class="avg-label">% Change:</span>
+                            <span class="avg-value ${indexInfo.percent_change !== null ? (indexInfo.percent_change >= 0 ? 'positive' : 'negative') : ''}">
+                                ${indexInfo.percent_change !== null ? (indexInfo.percent_change >= 0 ? '+' : '') + indexInfo.percent_change + '%' : 'N/A'}
+                            </span>
+                        </div>
+                    </div>
+                `;
+            }
+
             card.innerHTML = `
                 <h3>${indexName}</h3>
                 <p class="index-type">${typeText}</p>
                 <p>Last Update: ${lastUpdate}</p>
                 <p class="status-text ${indexInfo.status}">Status: ${statusText}</p>
+                ${averageHtml}
             `;
             
             return card;

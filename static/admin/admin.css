@@ -453,6 +453,52 @@ tr:hover {
 .index-card.empty { border-color: #ff9800; }
 .index-card.error { border-color: #9c27b0; }
 
+/* Average data styles */
+.average-data {
+    margin-top: 15px;
+    padding: 10px;
+    background: #f8f9fa;
+    border-radius: 6px;
+    border-left: 4px solid #007bff;
+}
+
+.average-data h4 {
+    margin: 0 0 10px 0;
+    font-size: 14px;
+    color: #495057;
+    font-weight: 600;
+}
+
+.avg-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+    font-size: 13px;
+}
+
+.avg-row:last-child {
+    margin-bottom: 0;
+}
+
+.avg-label {
+    color: #6c757d;
+    font-weight: 500;
+}
+
+.avg-value {
+    font-weight: 600;
+    color: #212529;
+}
+
+.avg-value.positive {
+    color: #28a745;
+}
+
+.avg-value.negative {
+    color: #dc3545;
+}
+
 /* Office section header styles */
 .office-header {
     display: flex;
