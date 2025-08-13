@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, request, jsonify, redirect, url_for, session, json
-from models import db, Index, IndexData, Office, Poll, PollResult
+from models import db, Index, IndexData, Office, Poll, PollResult, MinisterHistory
 from datetime import datetime
 import csv
 import io
@@ -29,6 +29,117 @@ def admin_required(f):
             return redirect(url_for("admin.admin"))
         return f(*args, **kwargs)
     return decorated_function
+
+# Add the parse_date function from offices.py for average calculations
+def parse_date_for_averages(date):
+    """Parse date for average calculations - handles both year and year-month formats"""
+    try:
+        # Try to parse as "DD.MM.YYYY"
+        parsed_date = datetime.strptime(date, "%d.%m.%Y").strftime("%Y-%m")
+    except ValueError:
+        try:
+            # If it fails, try to parse as "YYYY"
+            parsed_date = datetime.strptime(date, "%Y").strftime("%Y")
+        except ValueError:
+            # Handle any other unexpected format here if needed
+            parsed_date = None
+    return parsed_date
+
+# Add the average calculation function from offices.py
+def calculate_index_averages_since_last_minister(office_id):
+    """Calculate average index values for current and previous government eras"""
+    # Get the last two ministers
+    ministers = db.session.query(MinisterHistory)\
+        .filter_by(office_id=office_id)\
+        .order_by(MinisterHistory.id.desc())\
+        .limit(2)\
+        .all()
+    
+    if not ministers:
+        return {}
+        
+    current_minister = ministers[0]
+    previous_minister = ministers[1] if len(ministers) > 1 else None
+    
+    current_minister_start = parse_date_for_averages(current_minister.start_date)
+    
+    if previous_minister:
+        previous_minister_start = parse_date_for_averages(previous_minister.start_date)
+    
+    # Get all indexes for this office
+    indexes = db.session.query(Index).filter_by(office_id=office_id).all()
+    index_results = {}
+    
+    for index in indexes:
+        # Get all index data
+        index_data = db.session.query(IndexData)\
+            .filter(IndexData.index_id == index.id)\
+            .all()
+        
+        current_avg = None
+        previous_avg = None
+        percent_change = None
+        
+        # Calculate current minister's average
+        current_filtered_data = []
+        for data in index_data:
+            data_date = parse_date_for_averages(data.label)
+            if data_date:
+                # Handle year-only dates
+                if len(data_date) == 4:  # Year only (e.g., "2022")
+                    data_year = int(data_date)
+                    if len(current_minister_start) == 7:  # Year-month (e.g., "2022-12")
+                        minister_year = int(current_minister_start[:4])
+                        if data_year >= minister_year:
+                            current_filtered_data.append(data)
+                    else:  # Year only
+                        if data_date >= current_minister_start:
+                            current_filtered_data.append(data)
+                else:  # Year-month format
+                    if data_date >= current_minister_start:
+                        current_filtered_data.append(data)
+        
+        if current_filtered_data:
+            current_values = [float(str(row.value).replace(',', '').replace('%', '')) for row in current_filtered_data]
+            current_avg = sum(current_values) / len(current_values)
+        
+        # Calculate previous minister's average if available
+        if previous_minister:
+            previous_filtered_data = []
+            for data in index_data:
+                data_date = parse_date_for_averages(data.label)
+                if data_date:
+                    # Handle year-only dates
+                    if len(data_date) == 4:  # Year only (e.g., "2022")
+                        data_year = int(data_date)
+                        if len(previous_minister_start) == 7:  # Year-month (e.g., "2022-12")
+                            prev_year = int(previous_minister_start[:4])
+                            curr_year = int(current_minister_start[:4])
+                            if data_year >= prev_year and data_year < curr_year:
+                                previous_filtered_data.append(data)
+                        else:  # Year only
+                            if data_date >= previous_minister_start and data_date < current_minister_start:
+                                previous_filtered_data.append(data)
+                    else:  # Year-month format
+                        if data_date >= previous_minister_start and data_date < current_minister_start:
+                            previous_filtered_data.append(data)
+            
+            if previous_filtered_data:
+                previous_values = [float(str(row.value).replace(',', '').replace('%', '')) for row in previous_filtered_data]
+                previous_avg = sum(previous_values) / len(previous_values)
+        
+        # Calculate percent change
+        if current_avg is not None and previous_avg is not None and previous_avg != 0:
+            percent_change = ((current_avg - previous_avg) / previous_avg) * 100
+        
+        # Add to results
+        index_results[index.name] = {
+            'current_avg': round(current_avg, 2) if current_avg is not None else None,
+            'previous_avg': round(previous_avg, 2) if previous_avg is not None else None,
+            'percent_change': round(percent_change, 2) if percent_change is not None else None
+        }
+    
+    return index_results
 
 @admin_bp.route("/admin", methods=["GET", "POST"])
 def admin():
@@ -273,6 +384,11 @@ def get_indices_status():
         # Initialize sub-dictionaries for each office
         indices_info['offices'] = {office.name: {} for office in offices}
         
+        # Calculate averages for each office
+        office_averages = {}
+        for office in offices:
+            office_averages[office.id] = calculate_index_averages_since_last_minister(office.id)
+        
         indices = db.session.query(Index).all()
         
         for index in indices:
@@ -286,7 +402,10 @@ def get_indices_status():
                     'name': index.name,
                     'last_update': None,
                     'status': 'empty',
-                    'is_kpi': index.is_kpi
+                    'is_kpi': index.is_kpi,
+                    'current_avg': None,
+                    'previous_avg': None,
+                    'percent_change': None
                 }
 
                 if last_record:
@@ -310,6 +429,15 @@ def get_indices_status():
                             'error': 'Invalid date format'
                         })
 
+                # Add average data for office indices
+                if index.office_id < 100 and index.office_id in office_averages:
+                    avg_data = office_averages[index.office_id].get(index.name, {})
+                    index_data.update({
+                        'current_avg': avg_data.get('current_avg'),
+                        'previous_avg': avg_data.get('previous_avg'),
+                        'percent_change': avg_data.get('percent_change')
+                    })
+
                 # Group assignment with office subdivision
                 if index.office_id == 100:
                     indices_info['economy'][index.name] = index_data
@@ -325,7 +453,10 @@ def get_indices_status():
                     'name': index.name,
                     'last_update': None,
                     'status': 'error',
-                    'error': str(e)
+                    'error': str(e),
+                    'current_avg': None,
+                    'previous_avg': None,
+                    'percent_change': None
                 }
                 
                 if index.office_id == 100:

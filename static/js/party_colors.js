@@ -1,5 +1,5 @@
 function normalizePartyName(name) {
-    return name.replace(/["'״׳]/g, '');
+    return name.replace(/["'״׳\-\s]/g, '');
 }
 
 function getPartyColor(party) {
@@ -7,70 +7,70 @@ function getPartyColor(party) {
     party = normalizePartyName(party);
     switch (party) {
         case 'הליכוד':
-            color = 'rgba(65, 105, 225, 1)'; // RoyalBlue with 50% opacity
+            color = 'rgba(65, 105, 225, 1)'; // RoyalBlue
             break;
-        case 'יש עתיד':
-            color = 'rgba(255, 179, 38, 1)'; // Orange with 50% opacity
+        case 'ישעתיד':
+            color = 'rgba(255, 179, 38, 1)'; // Orange
             break;
-        case 'המחנה הממלכתי':
-            color = 'rgba(128, 202, 255, 1)'; // LightBlue with 50% opacity
+        case 'המחנההממלכתי':
+            color = 'rgba(128, 202, 255, 1)'; // LightBlue
             break;
-        case 'כחול לבן':
-            color = 'rgba(128, 202, 255, 1)'; // LightBlue with 50% opacity
+        case 'כחוללבן':
+            color = 'rgba(128, 202, 255, 1)'; // LightBlue
             break;
         case 'עבודה':
-            color = 'rgba(106, 13, 173, 1)'; // Purple with 50% opacity
+            color = 'rgba(106, 13, 173, 1)'; // Purple
             break;
         case 'העבודה':
-            color = 'rgba(106, 13, 173, 1)'; // Purple with 50% opacity
+            color = 'rgba(106, 13, 173, 1)'; // Purple
             break;
         case 'מרצ':
-            color = 'rgb(28, 127, 8)'; // Purple with 50% opacity
+            color = 'rgb(28, 127, 8)'; // Green
             break;
-        case 'עוצמה יהודית':
-            color = 'rgba(255, 112, 46, 1)'; // OrangeRed with 50% opacity
+        case 'עוצמהיהודית':
+            color = 'rgba(255, 112, 46, 1)'; // OrangeRed
             break;
-        case 'הציונות הדתית':
-            color = 'rgba(141, 192, 53, 1)'; // YellowGreen with 50% opacity
+        case 'הציונותהדתית':
+            color = 'rgba(141, 192, 53, 1)'; // YellowGreen
             break;
-        case 'האיחוד הלאומי':
-            color = 'rgba(141, 192, 53, 1)'; // YellowGreen with 50% opacity
+        case 'האיחודהלאומי':
+            color = 'rgba(141, 192, 53, 1)'; // YellowGreen
             break;
         case 'ימינה':
-            color = 'rgba(141, 192, 53, 1)'; // YellowGreen with 50% opacity
+            color = 'rgba(141, 192, 53, 1)'; // YellowGreen
             break;
-        case 'הבית היהודי':
-            color = 'rgba(141, 192, 53, 1)'; // YellowGreen with 50% opacity
+        case 'הביתהיהודי':
+            color = 'rgba(141, 192, 53, 1)'; // YellowGreen
             break;
-        case 'תקווה חדשה':
-            color = 'rgba(0, 0, 139, 1)'; // DarkBlue with 50% opacity
+        case 'תקווהחדשה':
+            color = 'rgba(0, 0, 139, 1)'; // DarkBlue
             break;
         case 'שס':
-            color = 'rgba(54, 54, 54, 1)'; // DarkGray with 50% opacity
+            color = 'rgba(54, 54, 54, 1)'; // DarkGray
             break;
-        case 'יהדות התורה':
-            color = 'rgba(26, 64, 130, 1)'; // DarkBlue with 50% opacity
+        case 'יהדותהתורה':
+            color = 'rgba(26, 64, 130, 1)'; // DarkBlue
             break;
         case 'רעמ':
-            color = 'rgba(0, 128, 0, 1)'; // Green with 50% opacity
+            color = 'rgba(0, 128, 0, 1)'; // Green
             break;
-        case 'חדש-תעל':
-            color = 'rgba(219, 33, 33, 1)'; // Red with 50% opacity
+        case 'חדשתעל':
+            color = 'rgba(219, 33, 33, 1)'; // Red
             break;
-        case 'ישראל ביתנו':
-            color = 'rgba(37, 26, 161, 1)'; // DarkBlue with 50% opacity
+        case 'ישראלביתנו':
+            color = 'rgba(37, 26, 161, 1)'; // DarkBlue
             break;
         case 'נעם':
-            color = 'rgba(173, 216, 230, 1)'; // LightBlue with 50% opacity
+            color = 'rgba(173, 216, 230, 1)'; // LightBlue
             break;
         case 'כולנו':
-            color = 'rgb(72, 139, 161)'; // LightBlue with 50% opacity
+            color = 'rgb(72, 139, 161)'; // LightBlue
             break;
         case 'בלד':
-            color = 'rgb(179, 57, 0)'; // Gray with 50% opacity
+            color = 'rgb(179, 57, 0)'; // Brown
             break;
         default:
-            color = 'rgba(128, 128, 128, 1)'; // Gray with 50% opacity
+            color = 'rgba(128, 128, 128, 1)'; // Gray
     }
     return color;
 }

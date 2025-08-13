@@ -1,9 +1,17 @@
-<link rel="stylesheet" href="{{ url_for('static', filename='parliament/election_style.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='election_style.css') }}">
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2"></script>
 <div class="moving-avg-container">
-    <div class="election-container">
-        <h1 style="direction: rtl; text-align: right;">ממוצע 5 הסקרים האחרונים</h1>
+    <div class="election-container relative-container">
+        <div id="poll-select-list" class="poll-select-list-vertical">
+            <button id="avg-btn" class="poll-select-btn">ממוצע</button>
+            {% for poll in polls %}
+                <button class="poll-select-btn" data-poll-idx="{{ loop.index0 }}">
+                    {{ poll.date.strftime('%d/%m/%Y') }} - {{ poll.publisher }}
+                </button>
+            {% endfor %}
+        </div>
+        <h1 style="direction: rtl; text-align: right;">חמשת הסקרים האחרונים</h1>
         <canvas id="pollBarChart" width="100%"></canvas>
     </div>
     
@@ -44,6 +52,8 @@
     const partyLabels = {{ party_labels|tojson }};
     const partySeats = {{ party_seats|tojson }};
     const partyColors = {{ party_colors|tojson }};
+    const partyToColor = {{ party_to_color_json|tojson }};
+    const polls = {{ polls_json|tojson }};
 
     const ctx = document.getElementById('pollBarChart').getContext('2d');
 
@@ -54,10 +64,9 @@
             datasets: [{
                 label: 'מספר מנדטים',
                 data: partySeats,
-                backgroundColor: partyColors,
+                backgroundColor: partyLabels.map(party => partyToColor[normalizePartyName(party)] || '#888'),
                 borderWidth: 0,
                 borderRadius: 8,
-                hoverBackgroundColor: partyColors.map(color => color + '95')
             }]
         },
         options: {
@@ -95,6 +104,58 @@
         },
         plugins: [ChartDataLabels]
     });
+
+    // --- Poll selection logic ---
+    (function() {
+        const pollBtns = document.querySelectorAll('.poll-select-btn');
+        const avgBtn = document.getElementById('avg-btn');
+        // Helper: get party color
+        function getColorForParty(party) {
+            if (typeof getPartyColor === 'function') return getPartyColor(party);
+            return '#888';
+        }
+        function getBlockColorForParty(party) {
+            return partyToColor[normalizePartyName(party)] || '#888';
+        }
+        // Helper: update chart
+        function updateChart(labels, data) {
+            chart.data.labels = labels;
+            chart.data.datasets[0].data = data;
+            chart.data.datasets[0].backgroundColor = labels.map(getBlockColorForParty);
+            chart.update();
+        }
+        // Show average (default)
+        function showAverage() {
+            updateChart(partyLabels, partySeats);
+            pollBtns.forEach(btn => btn.classList.remove('selected'));
+            avgBtn.classList.add('selected');
+        }
+        // Show poll by index
+        function showPoll(idx) {
+            const poll = polls[idx];
+            if (!poll) return;
+            // Build party->seats map
+            const partyToSeats = {};
+            poll.results.forEach(r => { partyToSeats[r.party_name] = r.seats; });
+            // Only show parties with >=4 seats (like average)
+            const filtered = Object.entries(partyToSeats).filter(([_, seats]) => seats >= 4);
+            // Sort by seats desc
+            filtered.sort((a, b) => b[1] - a[1]);
+            const labels = filtered.map(([party]) => party);
+            const data = filtered.map(([_, seats]) => seats);
+            updateChart(labels, data);
+            pollBtns.forEach(btn => btn.classList.remove('selected'));
+            pollBtns[idx+1].classList.add('selected'); // +1 because avgBtn is first
+        }
+        // Event listeners
+        avgBtn.addEventListener('click', showAverage);
+        pollBtns.forEach((btn, i) => {
+            if (i === 0) return; // skip avgBtn
+            btn.addEventListener('click', () => showPoll(i-1));
+        });
+        // Default: show average
+        showAverage();
+    })();
 
     const pollDates = {{ poll_dates|tojson }};
     const allPartyNames = {{ all_party_names|tojson }};
@@ -182,6 +243,5 @@
         }
     });
 </script>
-
 
 
