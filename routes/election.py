@@ -135,14 +135,32 @@ def election():
     with open(blocks_path, encoding='utf-8') as f:
         party_blocks = json.load(f)
     party_colors, party_to_color = get_party_colors(party_blocks, party_labels)
+    # Serialize party_to_color for JS
+    party_to_color_json = party_to_color
     block_labels, block_seats, block_colors = get_block_data(filtered_integer_seats, party_blocks)
     poll_dates, all_party_names, all_party_colors, poll_party_seats = get_poll_history_data()
+
+    # Serialize polls for JSON
+    def poll_to_dict(poll):
+        return {
+            "id": poll.id,
+            "date": poll.date.strftime('%d/%m/%Y'),
+            "pollster": poll.pollster,
+            "publisher": poll.publisher,
+            "results": [
+                {"party_name": r.party_name, "seats": r.seats} for r in poll.results
+            ]
+        }
+    polls_json = [poll_to_dict(p) for p in latest_polls]
+
     return render_template('election_screen.html',
                          polls=latest_polls,
+                         polls_json=polls_json,
                          party_averages=sorted_parties,
                          party_labels=party_labels,
                          party_seats=party_seats,
                          party_colors=party_colors,
+                         party_to_color_json=party_to_color_json,
                          block_labels=block_labels,
                          block_seats=block_seats,
                          block_colors=block_colors,
