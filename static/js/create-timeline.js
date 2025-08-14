@@ -1,6 +1,6 @@
 function createTimeline(ministers_history, totalDuration1, first_graph_date, lables, dates, type) {
     let currentDate = new Date().toJSON().slice(0, 7);
-
+    console.log(currentDate);
     const colors = ["#FF6B6B", "#6EC1E4", "#90EE90", "#FFD56B", "#C9A0DC"];
  
     
@@ -18,11 +18,21 @@ function createTimeline(ministers_history, totalDuration1, first_graph_date, lab
     }
     timeline.innerHTML = "";  // This removes all child elements
 
-    // Adding today's date to the end of the dates array
+    // Check if the chart dates are years only or years and months
+    // We'll check the length of the first label: "YYYY" is 4, "YYYY-MM" is 7
+    let isYearOnly = false;
+    if (lables.length > 0 && lables[0].length === 4) {
+        isYearOnly = true;
+    }
+
     if (type == 'office') {
         dates.push(currentDate);
     } else{
-        dates.push(lables[labels_length - 1] + "-12");
+        if (isYearOnly){
+            dates.push(lables[labels_length - 1] + "-12");
+        } else {
+            dates.push(lables[labels_length - 1]);
+        }
 
         if (dates[0] < first_graph_date) {
             dates[0] = first_graph_date;
