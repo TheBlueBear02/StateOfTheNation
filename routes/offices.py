@@ -337,7 +337,7 @@ def offices():
     print("Available office IDs:", [office['id'] for office in offices_list])
     
     # Define the desired order of office IDs based on the actual IDs
-    desired_order = [4, 2, 5, 3]  # This will get the actual IDs
+    desired_order = [3, 2, 5, 4]  # This will get the actual IDs
     
     # Sort offices_list based on the desired order
     offices_list.sort(key=lambda x: desired_order.index(x['id']))

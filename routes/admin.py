@@ -378,6 +378,16 @@ def get_indices_status():
         'demography': {}
     }
     
+    def parse_label_to_date(label):
+        try:
+            if '.' in label:
+                return datetime.strptime(label, '%d.%m.%Y')
+            elif label.isdigit():
+                return datetime(int(label), 1, 1)
+        except Exception:
+            return None
+        return None
+
     try:
         # First, get all offices with id < 100
         offices = db.session.query(Office).filter(Office.id < 100).all()
@@ -393,10 +403,16 @@ def get_indices_status():
         
         for index in indices:
             try:
-                last_record = (db.session.query(IndexData)
-                             .filter(IndexData.index_id == index.id)
-                             .order_by(IndexData.label.desc(), IndexData.id.desc())
-                             .first())
+                # Fetch all IndexData rows for this index
+                all_records = db.session.query(IndexData).filter(IndexData.index_id == index.id).all()
+                # Find the record with the latest date
+                latest_record = None
+                latest_date = None
+                for record in all_records:
+                    dt = parse_label_to_date(record.label)
+                    if dt and (latest_date is None or dt > latest_date):
+                        latest_date = dt
+                        latest_record = record
                 
                 index_data = {
                     'name': index.name,
@@ -408,23 +424,20 @@ def get_indices_status():
                     'percent_change': None
                 }
 
-                if last_record:
-                    year, month = parse_date(last_record.label)
-                    
+                if latest_record:
+                    year, month = parse_date(latest_record.label)
                     if year:
                         if month:
-                            is_current = (year == current_year and 
-                                        month == current_month)
+                            is_current = (year == current_year and month == current_month - 1)
                         else:
                             is_current = (year == current_year or year == current_year - 1)
-                        
                         index_data.update({
-                            'last_update': last_record.label,
+                            'last_update': latest_record.label,
                             'status': 'current' if is_current else 'outdated'
                         })
                     else:
                         index_data.update({
-                            'last_update': last_record.label,
+                            'last_update': latest_record.label,
                             'status': 'error',
                             'error': 'Invalid date format'
                         })
@@ -444,7 +457,6 @@ def get_indices_status():
                 elif index.office_id == 101:
                     indices_info['demography'][index.name] = index_data
                 elif index.office_id < 100:
-                    # Get office name
                     office_name = next((office.name for office in offices if office.id == index.office_id), 'Other')
                     indices_info['offices'][office_name][index.name] = index_data
                     
@@ -458,7 +470,6 @@ def get_indices_status():
                     'previous_avg': None,
                     'percent_change': None
                 }
-                
                 if index.office_id == 100:
                     indices_info['economy'][index.name] = error_data
                 elif index.office_id == 101:
