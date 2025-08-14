@@ -171,8 +171,13 @@ def fetch_indexes(office_id):
             .first()
         
         index_data = db.session.query(IndexData).filter_by(index_id=index.id).all()
-        labels = parse_dates([row.label for row in index_data])  # Convert dates once
-        values = [float(str(row.value).replace(',', '').replace('%', '')) for row in index_data]
+        # Sort index_data by parsed date
+        index_data_sorted = sorted(
+            index_data,
+            key=lambda row: parse_date(row.label) if parse_date(row.label) is not None else ''
+        )
+        labels = parse_dates([row.label for row in index_data_sorted])  # Convert dates once
+        values = [float(str(row.value).replace(',', '').replace('%', '')) for row in index_data_sorted]
 
         indexes_info.append({
             'name': index.name,
