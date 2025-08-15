@@ -53,6 +53,10 @@
                         <i class="fas fa-table"></i>
                         <span style="margin-left: 10px;">View Index Data</span>
                     </button>
+                    <button class="nav-btn" onclick="showForm('progressBarReport')">
+                        <i class="fas fa-tasks"></i>
+                        <span style="margin-left: 10px;">Progress Bar</span>
+                    </button>
                 </div>
             </div>
 
@@ -145,6 +149,24 @@
                 </div>
             </div>
 
+            <!-- Progress Bar Report -->
+            <div id="progressBarReport" style="display: none;">
+                <div class="form-container">
+                    <h3>Progress Bar Report</h3>
+                    <div class="progress-bar-container">
+                        <div class="progress-bar-labels">
+                            <span>0%</span>
+                            <span style="float:right">100%</span>
+                        </div>
+                        <div class="progress-bar-outer">
+                            <div class="progress-bar-inner" id="progressBarInner" style="width: 65%;">65%</div>
+                        </div>
+                        <div class="progress-bar-description" style="margin-top:10px; color:#555;" id="progressBarFutureDate">
+                            <!-- The future dates will be inserted here by JS -->
+                        </div>
+                    </div>
+                </div>
+            </div>
     
             <!-- Update Index Form -->
             <div id="updateForm" style="display: none;">
@@ -347,7 +369,7 @@
             document.getElementById("resultsTable").style.display = "none";
             document.getElementById("indexDashboard").style.display = "none";
             document.getElementById("uploadPollForm").style.display = "none";
-            
+            document.getElementById("progressBarReport").style.display = "none";
             // Show the selected form/table
             document.getElementById(formId).style.display = "block";
             
@@ -741,6 +763,76 @@
                 .catch(error => console.error("Error submitting poll CSV form:", error));
             });
         });
+    </script>
+    <script>
+        window.onload = function() {
+            const startDate = "2022-12-29";
+            const endDate = "2026-10-27";
+            const now = new Date();
+            const start = new Date(startDate);
+            const end = new Date(endDate);
+            const progressBar = document.getElementById('progressBarInner');
+            const futureDateDiv = document.getElementById('progressBarFutureDate');
+
+            let percentage = 0;
+            if (now < start) {
+                percentage = 0;
+            } else if (now > end) {
+                percentage = 100;
+            } else {
+                const totalDuration = end - start;
+                const elapsed = now - start;
+                percentage = (elapsed / totalDuration) * 100;
+            }
+            percentage = Math.max(0, Math.min(percentage, 100));
+            const roundedPercentage = Math.ceil(percentage);
+
+            // Calculate the next 5 dates for the next 5 integer percentages
+            let futureDatesHtml = '';
+            if (percentage >= 100) {
+                futureDatesHtml = 'The progress is already at 100%.';
+            } else {
+                const totalDuration = end - start;
+                const msPerPercent = totalDuration / 100;
+                let nextPercentages = [];
+                for (let i = 1; i <= 5; i++) {
+                    let nextP = roundedPercentage + i;
+                    if (nextP > 100) break;
+                    nextPercentages.push(nextP);
+                }
+                if (nextPercentages.length === 0) {
+                    futureDatesHtml = 'The progress is already at 100%.';
+                } else {
+                    futureDatesHtml = '<ul style="margin:0; padding-left:18px;">';
+                    nextPercentages.forEach(nextP => {
+                        const msToNext = msPerPercent * (nextP - percentage);
+                        const futureDate = new Date(now.getTime() + msToNext);
+                        const yyyy = futureDate.getFullYear();
+                        const mm = String(futureDate.getMonth() + 1).padStart(2, '0');
+                        const dd = String(futureDate.getDate()).padStart(2, '0');
+                        futureDatesHtml += `<li>The progress will reach <b>${nextP}%</b> on <b>${yyyy}-${mm}-${dd}</b></li>`;
+                    });
+                    futureDatesHtml += '</ul>';
+                }
+            }
+            futureDateDiv.innerHTML = futureDatesHtml;
+
+            // Animate the progress bar
+            let current = 0;
+            const animate = () => {
+                if (current < roundedPercentage) {
+                    current += 1;
+                    if (current > roundedPercentage) current = roundedPercentage;
+                    progressBar.style.width = current + '%';
+                    progressBar.textContent = current + '%';
+                    requestAnimationFrame(animate);
+                } else {
+                    progressBar.style.width = roundedPercentage + '%';
+                    progressBar.textContent = roundedPercentage + '%';
+                }
+            };
+            animate();
+        };
     </script>
 </body>
 </html>
