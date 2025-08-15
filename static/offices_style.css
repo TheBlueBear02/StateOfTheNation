@@ -997,3 +997,7 @@ background: #c5c5c5;
         opacity: 1;
     }
 }
+
+#office-info-p {
+    font-size: 2.3vh;
+}
