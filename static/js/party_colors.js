@@ -42,7 +42,7 @@ function getPartyColor(party) {
         case 'הבית היהודי':
             color = 'rgba(141, 192, 53, 1)'; // YellowGreen with 50% opacity
             break;
-        case 'תקווה חדשה':
+        case 'הימין הממלכתי':
             color = 'rgba(0, 0, 139, 1)'; // DarkBlue with 50% opacity
             break;
         case 'שס':
