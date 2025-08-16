@@ -66,26 +66,47 @@ function copyElementAsPngToClipboard(elementId) {
 
     // Configure html2canvas options
     const options = {
-        backgroundColor: null, // Ensure transparent background
         scale: 2, // Higher quality
         useCORS: true, // Enable CORS for images
         allowTaint: true, // Allow cross-origin images
         logging: false, // Disable logging
         onclone: (clonedDoc) => {
-            // Ensure timeline elements are properly rendered in the clone
-            const timeline = clonedDoc.querySelector('.timeline');
-            if (timeline) {
-                timeline.style.backgroundColor = 'transparent';
-            }
+            // Inline SVG images for html2canvas
+            const svgImgs = clonedDoc.querySelectorAll('img[src$=".svg"]');
+            svgImgs.forEach(img => {
+                const src = img.getAttribute('src');
+                // Only handle relative URLs (not data URLs or external)
+                if (src && !src.startsWith('data:') && !src.startsWith('http')) {
+                    try {
+                        const xhr = new XMLHttpRequest();
+                        xhr.open('GET', src, false); // synchronous
+                        xhr.send(null);
+                        if (xhr.status === 200) {
+                            const parser = new DOMParser();
+                            const svgDoc = parser.parseFromString(xhr.responseText, 'image/svg+xml');
+                            const svgElem = svgDoc.documentElement;
+                            // Copy over width/height/style from <img>
+                            if (img.width) svgElem.setAttribute('width', img.width);
+                            if (img.height) svgElem.setAttribute('height', img.height);
+                            if (img.getAttribute('style')) svgElem.setAttribute('style', img.getAttribute('style'));
+                            // Add margin-top:10% to the style
+                            let style = img.getAttribute('style') || '';
+                            if (!/margin-top/.test(style)) {
+                                style += (style && !style.trim().endsWith(';') ? ';' : '') + 'margin-top:10%;';
+                            }
+                            svgElem.setAttribute('style', style);
+                            // Replace <img> with inline SVG
+                            img.parentNode.replaceChild(svgElem, img);
+                        }
+                    } catch (e) {
+                        console.error('Failed to inline SVG for', src, e);
+                    }
+                }
+            });
         }
     };
 
     html2canvas(element, options).then(canvas => {
-        // Remove the watermark after capturing
-        watermarkDiv.remove();
-        // Restore the original position style
-        element.style.position = originalPosition;
-
         // Convert the canvas to a Blob
         canvas.toBlob(blob => {
             if (!blob) {
@@ -107,10 +128,13 @@ function copyElementAsPngToClipboard(elementId) {
             });
         }, "image/png");
     }).catch(error => {
-        // Always clean up even on error
-        watermarkDiv.remove();
-        element.style.position = originalPosition;
         console.error("Error capturing element:", error);
+    }).finally(() => {
+        // Always clean up, even on error
+        if (watermarkDiv && watermarkDiv.parentNode) {
+            watermarkDiv.remove();
+        }
+        element.style.position = originalPosition;
     });
 }
 
@@ -131,6 +155,5 @@ function showMessage() {
     }
 }
 function showMessageP() {
-    // For now, just call showMessage (can be customized later)
     showMessage();
 }
