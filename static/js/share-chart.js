@@ -14,7 +14,7 @@ function copyElementAsPngToClipboard(elementId) {
     watermarkDiv.style.position = "absolute";
     watermarkDiv.style.top = ".5vw";
     watermarkDiv.style.left = ".5vw";
-    watermarkDiv.style.backgroundColor = "rgba(255, 255, 255)";
+    watermarkDiv.style.backgroundColor = "#fff";
     watermarkDiv.style.padding = "1vw";
     watermarkDiv.style.borderRadius = "5px";
     watermarkDiv.style.display = "flex";
