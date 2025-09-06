@@ -785,7 +785,7 @@
                 percentage = (elapsed / totalDuration) * 100;
             }
             percentage = Math.max(0, Math.min(percentage, 100));
-            const roundedPercentage = Math.ceil(percentage);
+            const roundedPercentage = Math.round(percentage);
 
             // Calculate the next 5 dates for the next 5 integer percentages
             let futureDatesHtml = '';

@@ -54,7 +54,7 @@
             const elapsed = now - start; // Time span from the start date to now
             percentage = (elapsed / totalDuration) * 100; // Calculate the percentage
         }
-        progressBar.setAttribute('data-label', percentage.toFixed() + "%");
+        progressBar.setAttribute('data-label', Math.round(percentage) + "%");
 
         setInterval(() => {
             const computedStyle = getComputedStyle(progressBar)
