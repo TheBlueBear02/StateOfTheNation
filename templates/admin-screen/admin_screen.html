@@ -319,49 +319,6 @@
     </div>
     
     <script>
-
-        function deleteRow(rowId) {
-            if (confirm('Are you sure you want to delete this record?')) {
-                fetch(`/delete_index_data/${rowId}`, {
-                    method: 'DELETE'
-                })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        // Refresh the table using the results table selectors
-                        const officeId = document.getElementById("officeSelectResults").value;
-                        const indexId = document.getElementById("indexSelectResults").value;
-                        
-                        // Fetch updated data
-                        fetch(`/get_index_data/${officeId}/${indexId}`)
-                            .then(response => response.json())
-                            .then(data => {
-                                const tableBody = document.getElementById('indexDataBody');
-                                tableBody.innerHTML = '';
-                                
-                                // Reverse the data array to show newest entries first
-                                data.reverse().forEach(row => {
-                                    const tr = document.createElement('tr');
-                                    tr.innerHTML = `
-                                        <td>${row.label}</td>
-                                        <td>${row.value}</td>
-                                        <td>
-                                            <button class="delete-btn" onclick="deleteRow(${row.id})">Delete</button>
-                                        </td>
-                                    `;
-                                    tableBody.appendChild(tr);
-                                });
-                            })
-                            .catch(error => console.error('Error:', error));
-                    } else {
-                        alert('Error deleting record');
-                    }
-                })
-                .catch(error => console.error('Error:', error));
-            }
-        }
-    </script>
-    <script>
         function showForm(formId) {
             // Hide all forms and tables
             document.getElementById("updateForm").style.display = "none";

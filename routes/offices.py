@@ -109,7 +109,17 @@ def calculate_index_averages_since_last_minister(office_id):
                     if data_date >= current_minister_start:
                         current_filtered_data.append(data)
         if current_filtered_data:
-            current_values = [float(str(row.value).replace(',', '').replace('%', '')) for row in current_filtered_data]
+            current_values = []
+            for row in current_filtered_data:
+                val_str = str(row.value).replace(',', '').replace('%', '')
+                if val_str == '-':
+                    val = 0.0
+                else:
+                    try:
+                        val = float(val_str)
+                    except Exception:
+                        val = 0.0
+                current_values.append(val)
             current_avg = sum(current_values) / len(current_values)
         # Calculate previous minister's average if available
         previous_avg = None
@@ -133,7 +143,17 @@ def calculate_index_averages_since_last_minister(office_id):
                         if data_date >= previous_minister_start and data_date < current_minister_start:
                             previous_filtered_data.append(data)
             if previous_filtered_data:
-                previous_values = [float(str(row.value).replace(',', '').replace('%', '')) for row in previous_filtered_data]
+                previous_values = []
+                for row in previous_filtered_data:
+                    val_str = str(row.value).replace(',', '').replace('%', '')
+                    if val_str == '-':
+                        val = 0.0
+                    else:
+                        try:
+                            val = float(val_str)
+                        except Exception:
+                            val = 0.0
+                    previous_values.append(val)
                 previous_avg = sum(previous_values) / len(previous_values)
         # Calculate percent change
         if current_avg is not None and previous_avg is not None and previous_avg != 0:

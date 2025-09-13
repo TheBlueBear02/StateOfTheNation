@@ -102,7 +102,7 @@ def index():
     # Knesschat backend
     km_data = get_knesset_members() 
     if is_mobile():
-        return render_template("mobile/temp_mobile.html")  # Render mobile version
+        return redirect(url_for('index.mobile'))  # Redirect to mobile route
     return render_template('index.html', today_date=get_date(), hebrew_date=get_hebrew_date(), km_data=km_data)  # Render desktop version
 
 @index_bp.route('/terms_of_use')
