@@ -100,8 +100,21 @@ def calculate_index_averages_since_last_minister(office_id):
                         current_filtered_data.append(data)
         
         if current_filtered_data:
-            current_values = [float(str(row.value).replace(',', '').replace('%', '')) for row in current_filtered_data]
+            current_values = []
+            for row in current_filtered_data:
+                val_str = str(row.value).replace(',', '').replace('%', '')
+                if val_str == '-':
+                    val = 0.0
+                else:
+                    try:
+                        val = float(val_str)
+                    except Exception:
+                        val = 0.0
+                current_values.append(val)
             current_avg = sum(current_values) / len(current_values)
+            current_sum = sum(current_values)
+        else:
+            current_sum = None
         
         # Calculate previous minister's average if available
         if previous_minister:
@@ -125,8 +138,21 @@ def calculate_index_averages_since_last_minister(office_id):
                             previous_filtered_data.append(data)
             
             if previous_filtered_data:
-                previous_values = [float(str(row.value).replace(',', '').replace('%', '')) for row in previous_filtered_data]
+                previous_values = []
+                for row in previous_filtered_data:
+                    val_str = str(row.value).replace(',', '').replace('%', '')
+                    if val_str == '-':
+                        val = 0.0
+                    else:
+                        try:
+                            val = float(val_str)
+                        except Exception:
+                            val = 0.0
+                    previous_values.append(val)
                 previous_avg = sum(previous_values) / len(previous_values)
+                previous_sum = sum(previous_values)
+            else:
+                previous_sum = None
         
         # Calculate percent change
         if current_avg is not None and previous_avg is not None and previous_avg != 0:
@@ -136,7 +162,9 @@ def calculate_index_averages_since_last_minister(office_id):
         index_results[index.name] = {
             'current_avg': round(current_avg, 2) if current_avg is not None else None,
             'previous_avg': round(previous_avg, 2) if previous_avg is not None else None,
-            'percent_change': round(percent_change, 2) if percent_change is not None else None
+            'percent_change': round(percent_change, 2) if percent_change is not None else None,
+            'current_sum': round(current_sum, 2) if current_sum is not None else None,
+            'previous_sum': round(previous_sum, 2) if previous_sum is not None else None
         }
     
     return index_results
@@ -448,7 +476,9 @@ def get_indices_status():
                     index_data.update({
                         'current_avg': avg_data.get('current_avg'),
                         'previous_avg': avg_data.get('previous_avg'),
-                        'percent_change': avg_data.get('percent_change')
+                        'percent_change': avg_data.get('percent_change'),
+                        'current_sum': avg_data.get('current_sum'),
+                        'previous_sum': avg_data.get('previous_sum')
                     })
 
                 # Group assignment with office subdivision
@@ -459,7 +489,7 @@ def get_indices_status():
                 elif index.office_id < 100:
                     office_name = next((office.name for office in offices if office.id == index.office_id), 'Other')
                     indices_info['offices'][office_name][index.name] = index_data
-                    
+                
             except Exception as e:
                 error_data = {
                     'name': index.name,
@@ -479,8 +509,7 @@ def get_indices_status():
                     indices_info['offices'][office_name][index.name] = error_data
 
     except Exception as e:
-        print(f"Error getting indices: {e}")
-    
+        pass
     return indices_info
 
 @admin_bp.route('/admin/dashboard')

@@ -177,7 +177,18 @@ def fetch_indexes(office_id):
             key=lambda row: parse_date(row.label) if parse_date(row.label) is not None else ''
         )
         labels = parse_dates([row.label for row in index_data_sorted])  # Convert dates once
-        values = [float(str(row.value).replace(',', '').replace('%', '')) for row in index_data_sorted]
+        # Convert '-' to 0, otherwise convert to float
+        values = []
+        for row in index_data_sorted:
+            val_str = str(row.value).replace(',', '').replace('%', '')
+            if val_str == '-':
+                values.append(0)
+            else:
+                try:
+                    v = float(val_str)
+                    values.append(v)
+                except (ValueError, TypeError):
+                    values.append(0)  # fallback: treat any other invalid as 0
 
         indexes_info.append({
             'name': index.name,

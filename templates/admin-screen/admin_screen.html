@@ -571,12 +571,20 @@
                 averageHtml = `
                     <div class="average-data">
                         <div class="avg-row">
-                            <span class="avg-label">Current Government:</span>
+                            <span class="avg-label">Current Government (Avg):</span>
                             <span class="avg-value">${indexInfo.current_avg !== null ? indexInfo.current_avg : 'N/A'}</span>
                         </div>
                         <div class="avg-row">
-                            <span class="avg-label">Previous Government:</span>
+                            <span class="avg-label">Current Government (Sum):</span>
+                            <span class="avg-value">${indexInfo.current_sum !== null ? indexInfo.current_sum : 'N/A'}</span>
+                        </div>
+                        <div class="avg-row">
+                            <span class="avg-label">Previous Government (Avg):</span>
                             <span class="avg-value">${indexInfo.previous_avg !== null ? indexInfo.previous_avg : 'N/A'}</span>
+                        </div>
+                        <div class="avg-row">
+                            <span class="avg-label">Previous Government (Sum):</span>
+                            <span class="avg-value">${indexInfo.previous_sum !== null ? indexInfo.previous_sum : 'N/A'}</span>
                         </div>
                         <div class="avg-row">
                             <span class="avg-label">% Change:</span>
@@ -621,7 +629,7 @@
 
                 const grid = officeSection.querySelector('.indices-grid');
                 if (!indices || Object.keys(indices).length === 0) {
-                    grid.innerHTML = '<p>No indices found</p>';
+                    grid.innerHTML = '<p>No indexes found</p>';
                 } else {
                     for (const [indexName, indexInfo] of Object.entries(indices)) {
                         grid.appendChild(createIndexCard(indexName, indexInfo));
@@ -784,8 +792,7 @@
                 const elapsed = now - start;
                 percentage = (elapsed / totalDuration) * 100;
             }
-            percentage = Math.max(0, Math.min(percentage, 100));
-            const roundedPercentage = Math.round(percentage);
+            const roundedPercentage = Math.floor(percentage);
 
             // Calculate the next 5 dates for the next 5 integer percentages
             let futureDatesHtml = '';
